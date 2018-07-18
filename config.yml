@@ -1,0 +1,9 @@
+PORT: 8000
+PATHS:
+  dist: "dist"
+  assets:
+    - "src/index.html"
+    - "src/gradient.html"
+  javascript:
+    # - "src/js/utils/**/*"
+    - "src/js/utils.js"
