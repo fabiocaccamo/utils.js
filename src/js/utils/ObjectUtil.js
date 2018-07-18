@@ -38,8 +38,7 @@ var ObjectUtil = {
 
     clone: function(obj)
     {
-        // TODO
-        return null;
+        return Object.assign({}, this);
     },
 
     decodeBase64: function(str)
