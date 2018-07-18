@@ -1,4 +1,22 @@
-(function(){
+(function (root, factory) {
+
+    // Environment Detection
+
+    if (typeof(define) === 'function' && define.amd) {
+        // AMD
+        define([], factory);
+    }
+    else if (typeof(module) === 'object') {
+        // CommonJS
+        module.exports = factory();
+    }
+    else {
+        // Script tag import i.e., IIFE
+        root.utils = factory();
+        root.u = factory();
+    }
+
+}(this, function() {
 
     @import './utils/ArrayUtil.js'
     @import './utils/Base64Util.js'
@@ -41,14 +59,5 @@
         url: URLUtil
     };
 
-    if (document.utils == undefined && window.utils == undefined) {
-        document.utils = utils;
-        window.utils = utils;
-    }
-
-    if (document.u == undefined && window.u == undefined) {
-        document.u = utils;
-        window.u = utils;
-    }
-
-}());
+    return utils;
+}));
