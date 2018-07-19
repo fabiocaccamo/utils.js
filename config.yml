@@ -2,7 +2,6 @@ PORT: 8000
 PATHS:
   dist: "dist"
   assets:
-    - "src/*.html"
+    - "src/**/*.html"
   javascript:
-    # - "src/js/utils/**/*"
     - "src/js/utils.js"
