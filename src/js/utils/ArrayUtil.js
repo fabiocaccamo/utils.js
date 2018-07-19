@@ -48,6 +48,11 @@ var ArrayUtil = {
         return dict;
     },
 
+    mask: function(list, index, itemsLeft, itemsRight)
+    {
+        // TODO
+    },
+
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;

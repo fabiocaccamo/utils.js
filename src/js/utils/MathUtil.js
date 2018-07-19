@@ -49,14 +49,9 @@ var MathUtil = {
         return (a * b / (MathUtil.gcd(a, b)));
     },
 
-    lerp: function(a, b, t)
-    {
-        return InterpolationUtil.linear(a, b, t);
-    },
-
     map: function(n, a, b, c, d)
     {
-        return MathUtil.lerp(c, d, MathUtil.normalize(n, a, b));
+        return InterpolationUtil.linear(c, d, MathUtil.normalize(n, a, b));
     },
 
     nearest: function(n, a, b)

@@ -4,7 +4,12 @@
 
     if (typeof(define) === 'function' && define.amd) {
         // AMD
-        define([], factory);
+        define([], function(){
+            return {
+                utils: factory(),
+                u: factory()
+            }
+        });
     }
     else if (typeof(module) === 'object') {
         // CommonJS
@@ -46,7 +51,6 @@
         date: DateUtil,
         func: FunctionUtil,
         hex: HexUtil,
-        interpolation: InterpolationUtil,
         json: JSONUtil,
         math: MathUtil,
         number: NumberUtil,
