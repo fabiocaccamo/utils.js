@@ -140,6 +140,8 @@ var MathUtil = {
             s += values[i];
         }
         return s;
-    }
+    },
+
+    trigo: TrigoUtil
 
 };

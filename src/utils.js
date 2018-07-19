@@ -3,6 +3,7 @@
     if (typeof(define) === 'function' && define.amd) {
         // AMD
         define('@fabiocaccamo/utils.js', factory);
+        define('@fabiocaccamo/utils', factory);
         define('utils', factory);
     }
     else if (typeof(module) === 'object') {
@@ -56,7 +57,6 @@
         object: ObjectUtil,
         random: RandomUtil,
         string: StringUtil,
-        trigo: TrigoUtil,
         type: TypeUtil,
         xml: XMLUtil,
         url: URLUtil
