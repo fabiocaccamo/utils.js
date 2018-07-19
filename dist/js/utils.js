@@ -1277,6 +1277,18 @@
     sign: function(chance)
     {
         return (RandomUtil.boolean(chance) ? 1 : -1);
+    },
+
+    string: function(length, charset, options)
+    {
+        charset = (charset || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;');
+        var e = RandomUtil.element;
+        var i = 0;
+        var s = '';
+        while (i++ < length) {
+            s += e(charset.split(''));
+        }
+        return s;
     }
 };
     var StringUtil = {
