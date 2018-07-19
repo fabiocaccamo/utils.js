@@ -4,16 +4,15 @@ JavaScript utils for lazy devs.
 ## Installation
 `npm install @fabiocaccamo/utils.js`
 
-## Development
+## Usage
 
-#### Watch
-`npm run watch`
-
-#### Build
-`npm run build`
-
+#### RequireJS
+```javascript
+requirejs(['utils'], function(utils) {
+    console.log(utils);
+});
+```
 ## APIs
-APIs are exposed under `utils` or `u` global objects.
 
 - `utils.array`
 - `utils.base64`
@@ -32,3 +31,15 @@ APIs are exposed under `utils` or `u` global objects.
 - `utils.type`
 - `utils.url`
 - `utils.xml`
+
+## Development
+
+#### Watch
+`npm run watch`
+
+#### Build
+`npm run build`
+
+## License
+Released under [MIT License](LICENSE.txt).
+
