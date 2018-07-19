@@ -2,8 +2,7 @@
 node_modules
 npm-debug.log
 bower_components
-dist/index.html
-dist/gradient.html
-src/gradient.html
+dist/*.html
+src/*.html
 *.swp
 package-lock.json
