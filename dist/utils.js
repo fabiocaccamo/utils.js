@@ -1452,7 +1452,7 @@
         return (RandomUtil.boolean(chance) ? 1 : -1);
     },
 
-    string: function(length, charset, options)
+    string: function(length, charset)
     {
         charset = (charset || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;');
         var e = RandomUtil.element;
