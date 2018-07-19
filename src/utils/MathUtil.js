@@ -5,11 +5,6 @@ var MathUtil = {
         return (MathUtil.summation(values) / values.length);
     },
 
-    avg: function(values)
-    {
-        return MathUtil.average(values);
-    },
-
     constrain: function(n, a, b)
     {
         return Math.min(Math.max(n, Math.min(a, b)), Math.max(a, b));

@@ -882,6 +882,20 @@
         return (hex.length == 1 ? '0' + hex : hex);
     }
 };
+    var JSONUtil = {
+
+    decode: function(str)
+    {
+        // http://qnimate.com/json-parse-throws-unexpected-token-error-for-valid-json/
+        // str = str.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\f/g, '\\f');
+        return JSON.parse(str);
+    },
+
+    encode: function(obj)
+    {
+        return JSON.stringify(obj);
+    }
+};
     var InterpolationUtil = {
 
     bilinear: function(a, b, c, d, u, v)
@@ -917,30 +931,94 @@
     }
 
 };
-    var JSONUtil = {
+    var TrigoUtil = {
 
-    decode: function(str)
+    DEG_0: 0.0,
+    DEG_90: 90.0,
+    DEG_180: 180.0,
+    DEG_270: 270.0,
+    DEG_360: 360.0,
+
+    DEG_TO_RAD: (Math.PI / 180.0), // 0.017453292519943295 DEG_TO_RAD
+    RAD_TO_DEG: (180.0 / Math.PI),
+
+    acosD: function(rad)
     {
-        // http://qnimate.com/json-parse-throws-unexpected-token-error-for-valid-json/
-        // str = str.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\f/g, '\\f');
-        return JSON.parse(str);
+        return Math.acos(rad) * TrigoUtil.RAD_TO_DEG;
     },
 
-    encode: function(obj)
+    angleD: function(y, x)
     {
-        return JSON.stringify(obj);
+        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    angleR: function(y, x)
+    {
+        return Math.atan2(y, x);
+    },
+
+    asinD: function(rad)
+    {
+        return Math.asin(rad) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    atanD: function(rad)
+    {
+        return Math.atan(rad) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    atanD2: function(y, x)
+    {
+        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    // cycleD: function(deg)
+    // {
+    //     return MathUtil.cycle(deg, TrigoUtil.DEG_360);
+    // },
+
+    cosD: function(deg)
+    {
+        return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    degToRad: function(deg)
+    {
+        return (deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    fastD: function(degFrom, degTo)
+    {
+        var degDiff = (degTo - degFrom);
+        return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
+    },
+
+    hypo: function(distanceX, distanceY)
+    {
+        return Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
+    },
+
+    radToDeg: function(rad)
+    {
+        return (rad * TrigoUtil.RAD_TO_DEG);
+    },
+
+    sinD: function(deg)
+    {
+        return Math.sin(deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    tanD: function(deg)
+    {
+        return Math.tan(deg * TrigoUtil.DEG_TO_RAD);
     }
+
 };
     var MathUtil = {
 
     average: function(values)
     {
         return (MathUtil.summation(values) / values.length);
-    },
-
-    avg: function(values)
-    {
-        return MathUtil.average(values);
     },
 
     constrain: function(n, a, b)
@@ -1497,89 +1575,6 @@
     }
 
 };
-    var TrigoUtil = {
-
-    DEG_0: 0.0,
-    DEG_90: 90.0,
-    DEG_180: 180.0,
-    DEG_270: 270.0,
-    DEG_360: 360.0,
-
-    DEG_TO_RAD: (Math.PI / 180.0), // 0.017453292519943295 DEG_TO_RAD
-    RAD_TO_DEG: (180.0 / Math.PI),
-
-    acosD: function(rad)
-    {
-        return Math.acos(rad) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    angleD: function(y, x)
-    {
-        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    angleR: function(y, x)
-    {
-        return Math.atan2(y, x);
-    },
-
-    asinD: function(rad)
-    {
-        return Math.asin(rad) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    atanD: function(rad)
-    {
-        return Math.atan(rad) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    atanD2: function(y, x)
-    {
-        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    // cycleD: function(deg)
-    // {
-    //     return MathUtil.cycle(deg, TrigoUtil.DEG_360);
-    // },
-
-    cosD: function(deg)
-    {
-        return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
-    },
-
-    degToRad: function(deg)
-    {
-        return (deg * TrigoUtil.DEG_TO_RAD);
-    },
-
-    fastD: function(degFrom, degTo)
-    {
-        var degDiff = (degTo - degFrom);
-        return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
-    },
-
-    hypo: function(distanceX, distanceY)
-    {
-        return Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
-    },
-
-    radToDeg: function(rad)
-    {
-        return (rad * TrigoUtil.RAD_TO_DEG);
-    },
-
-    sinD: function(deg)
-    {
-        return Math.sin(deg * TrigoUtil.DEG_TO_RAD);
-    },
-
-    tanD: function(deg)
-    {
-        return Math.tan(deg * TrigoUtil.DEG_TO_RAD);
-    }
-
-};
     var TypeUtil = {
 
     isArray: function(val)
@@ -1841,4 +1836,4 @@
 
     return utils;
 }));
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsImZpbGUiOiJ1dGlscy5qcyIsInNvdXJjZXNDb250ZW50IjpbIihmdW5jdGlvbiAocm9vdCwgZmFjdG9yeSkge1xuXG4gICAgaWYgKHR5cGVvZihkZWZpbmUpID09PSAnZnVuY3Rpb24nICYmIGRlZmluZS5hbWQpIHtcbiAgICAgICAgLy8gQU1EXG4gICAgICAgIGRlZmluZSgnQGZhYmlvY2FjY2Ftby91dGlscy5qcycsIGZhY3RvcnkpO1xuICAgICAgICBkZWZpbmUoJ3V0aWxzJywgZmFjdG9yeSk7XG4gICAgfVxuICAgIGVsc2UgaWYgKHR5cGVvZihtb2R1bGUpID09PSAnb2JqZWN0Jykge1xuICAgICAgICAvLyBDb21tb25KU1xuICAgICAgICBtb2R1bGUuZXhwb3J0cyA9IGZhY3RvcnkoKTtcbiAgICB9XG4gICAgZWxzZSB7XG4gICAgICAgIC8vIFNjcmlwdCB0YWcgaW1wb3J0IGkuZS4sIElJRkVcbiAgICAgICAgcm9vdC51dGlscyA9IGZhY3RvcnkoKTtcbiAgICAgICAgcm9vdC51ID0gZmFjdG9yeSgpO1xuICAgIH1cblxufSh0aGlzLCBmdW5jdGlvbigpIHtcblxuICAgICd1c2Ugc3RyaWN0JztcblxuICAgIEBpbXBvcnQgJy4vdXRpbHMvQXJyYXlVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQmFzZTY0VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0NvbG9yQ215a1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvckhleFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvclJnYlV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvclV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9EYXRlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Z1bmN0aW9uVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1BvaW50VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0dlb21VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSGV4VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0ludGVycG9sYXRpb25VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSlNPTlV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9NYXRoVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL051bWJlclV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9PYmplY3RVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvUmFuZG9tVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1N0cmluZ1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Ucmlnb1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9UeXBlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1VSTFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9YTUxVdGlsLmpzJ1xuXG4gICAgdmFyIHV0aWxzID0ge1xuICAgICAgICBhcnJheTogQXJyYXlVdGlsLFxuICAgICAgICBiYXNlNjQ6IEJhc2U2NFV0aWwsXG4gICAgICAgIGNvbG9yOiBDb2xvclV0aWwsXG4gICAgICAgIGRhdGU6IERhdGVVdGlsLFxuICAgICAgICBmdW5jOiBGdW5jdGlvblV0aWwsXG4gICAgICAgIGdlb206IEdlb21VdGlsLFxuICAgICAgICBoZXg6IEhleFV0aWwsXG4gICAgICAgIGpzb246IEpTT05VdGlsLFxuICAgICAgICBtYXRoOiBNYXRoVXRpbCxcbiAgICAgICAgbnVtYmVyOiBOdW1iZXJVdGlsLFxuICAgICAgICBvYmplY3Q6IE9iamVjdFV0aWwsXG4gICAgICAgIHJhbmRvbTogUmFuZG9tVXRpbCxcbiAgICAgICAgc3RyaW5nOiBTdHJpbmdVdGlsLFxuICAgICAgICB0cmlnbzogVHJpZ29VdGlsLFxuICAgICAgICB0eXBlOiBUeXBlVXRpbCxcbiAgICAgICAgeG1sOiBYTUxVdGlsLFxuICAgICAgICB1cmw6IFVSTFV0aWxcbiAgICB9O1xuXG4gICAgcmV0dXJuIHV0aWxzO1xufSkpOyJdfQ==
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsImZpbGUiOiJ1dGlscy5qcyIsInNvdXJjZXNDb250ZW50IjpbIihmdW5jdGlvbiAocm9vdCwgZmFjdG9yeSkge1xuXG4gICAgaWYgKHR5cGVvZihkZWZpbmUpID09PSAnZnVuY3Rpb24nICYmIGRlZmluZS5hbWQpIHtcbiAgICAgICAgLy8gQU1EXG4gICAgICAgIGRlZmluZSgnQGZhYmlvY2FjY2Ftby91dGlscy5qcycsIGZhY3RvcnkpO1xuICAgICAgICBkZWZpbmUoJ3V0aWxzJywgZmFjdG9yeSk7XG4gICAgfVxuICAgIGVsc2UgaWYgKHR5cGVvZihtb2R1bGUpID09PSAnb2JqZWN0Jykge1xuICAgICAgICAvLyBDb21tb25KU1xuICAgICAgICBtb2R1bGUuZXhwb3J0cyA9IGZhY3RvcnkoKTtcbiAgICB9XG4gICAgZWxzZSB7XG4gICAgICAgIC8vIFNjcmlwdCB0YWcgaW1wb3J0IGkuZS4sIElJRkVcbiAgICAgICAgcm9vdC51dGlscyA9IGZhY3RvcnkoKTtcbiAgICAgICAgcm9vdC51ID0gZmFjdG9yeSgpO1xuICAgIH1cblxufSh0aGlzLCBmdW5jdGlvbigpIHtcblxuICAgICd1c2Ugc3RyaWN0JztcblxuICAgIEBpbXBvcnQgJy4vdXRpbHMvQXJyYXlVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQmFzZTY0VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL2NvbG9yL0NvbG9yQ215a1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9jb2xvci9Db2xvckhleFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9jb2xvci9Db2xvclJnYlV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvclV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9EYXRlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Z1bmN0aW9uVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL2dlb20vUG9pbnRVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvR2VvbVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9IZXhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSlNPTlV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9tYXRoL0ludGVycG9sYXRpb25VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvbWF0aC9Ucmlnb1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9NYXRoVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL051bWJlclV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9PYmplY3RVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvUmFuZG9tVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1N0cmluZ1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9UeXBlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1VSTFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9YTUxVdGlsLmpzJ1xuXG4gICAgdmFyIHV0aWxzID0ge1xuICAgICAgICBhcnJheTogQXJyYXlVdGlsLFxuICAgICAgICBiYXNlNjQ6IEJhc2U2NFV0aWwsXG4gICAgICAgIGNvbG9yOiBDb2xvclV0aWwsXG4gICAgICAgIGRhdGU6IERhdGVVdGlsLFxuICAgICAgICBmdW5jOiBGdW5jdGlvblV0aWwsXG4gICAgICAgIGdlb206IEdlb21VdGlsLFxuICAgICAgICBoZXg6IEhleFV0aWwsXG4gICAgICAgIGpzb246IEpTT05VdGlsLFxuICAgICAgICBtYXRoOiBNYXRoVXRpbCxcbiAgICAgICAgbnVtYmVyOiBOdW1iZXJVdGlsLFxuICAgICAgICBvYmplY3Q6IE9iamVjdFV0aWwsXG4gICAgICAgIHJhbmRvbTogUmFuZG9tVXRpbCxcbiAgICAgICAgc3RyaW5nOiBTdHJpbmdVdGlsLFxuICAgICAgICB0cmlnbzogVHJpZ29VdGlsLFxuICAgICAgICB0eXBlOiBUeXBlVXRpbCxcbiAgICAgICAgeG1sOiBYTUxVdGlsLFxuICAgICAgICB1cmw6IFVSTFV0aWxcbiAgICB9O1xuXG4gICAgcmV0dXJuIHV0aWxzO1xufSkpOyJdfQ==
