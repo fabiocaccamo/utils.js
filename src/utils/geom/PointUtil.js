@@ -37,12 +37,12 @@ var PointUtil = {
         return ((a.x === b.x) && (a.y === b.y));
     },
 
-    interpolate: function(a, b, amount)
+    interpolate: function(a, b, t)
     {
         var f = MathUtil.interpolate.linear;
         return {
-            x: f(a.x, b.x, amount),
-            y: f(a.y, b.y, amount)
+            x: f(a.x, b.x, t),
+            y: f(a.y, b.y, t)
         };
     },
 
@@ -57,14 +57,14 @@ var PointUtil = {
     rotate: function(p, angle, pivot)
     {
         var pointPivot = (pivot || { x:0.0, y:0.0 });
-        var pointRel = GeomUtil.point.subtract(p, pointPivot);
+        var pointRel = PointUtil.subtract(p, pointPivot);
         var angleCos = Trigo.cosD(angle);
         var angleSin = Trigo.sinD(angle);
         var pointRot = {
             x: (pointRel.x * angleCos) - (pointRel.y * angleSin),
             y: (pointRel.x * angleSin) + (pointRel.y * angleCos)
         };
-        var pointAbs = GeomUtil.point.subtract(pointRot, pointPivot);
+        var pointAbs = PointUtil.add(pointRot, pointPivot);
         return pointAbs;
     },
 
