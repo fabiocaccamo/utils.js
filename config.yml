@@ -4,4 +4,4 @@ PATHS:
   assets:
     - "src/**/*.html"
   javascript:
-    - "src/js/utils.js"
+    - "src/utils.js"

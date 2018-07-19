@@ -17,6 +17,8 @@
 
 }(this, function() {
 
+    'use strict';
+
     @import './utils/ArrayUtil.js'
     @import './utils/Base64Util.js'
     @import './utils/ColorCmykUtil.js'

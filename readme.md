@@ -8,7 +8,7 @@ JavaScript utils for lazy devs.
 
 #### RequireJS
 ```javascript
-requirejs(['utils'], function(utils) {
+require(['utils'], function(utils) {
     console.log(utils);
 });
 ```
@@ -20,7 +20,6 @@ requirejs(['utils'], function(utils) {
 - `utils.date`
 - `utils.func`
 - `utils.hex`
-- `utils.interpolation`
 - `utils.json`
 - `utils.math`
 - `utils.number`
