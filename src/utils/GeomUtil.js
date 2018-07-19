@@ -1,0 +1,5 @@
+var GeomUtil = {
+
+    point: PointUtil
+
+};

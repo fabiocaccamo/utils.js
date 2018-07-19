@@ -27,6 +27,8 @@
     @import './utils/ColorUtil.js'
     @import './utils/DateUtil.js'
     @import './utils/FunctionUtil.js'
+    @import './utils/PointUtil.js'
+    @import './utils/GeomUtil.js'
     @import './utils/HexUtil.js'
     @import './utils/InterpolationUtil.js'
     @import './utils/JSONUtil.js'
@@ -46,6 +48,7 @@
         color: ColorUtil,
         date: DateUtil,
         func: FunctionUtil,
+        geom: GeomUtil,
         hex: HexUtil,
         json: JSONUtil,
         math: MathUtil,
