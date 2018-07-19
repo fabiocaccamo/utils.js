@@ -1455,11 +1455,12 @@
     string: function(length, charset)
     {
         charset = (charset || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;');
-        var e = RandomUtil.element;
+        var c = charset.split('');
+        var r = RandomUtil.element;
         var i = 0;
         var s = '';
         while (i++ < length) {
-            s += e(charset.split(''));
+            s += r(c);
         }
         return s;
     }
