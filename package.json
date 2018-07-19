@@ -1,12 +1,13 @@
 {
   "name": "@fabiocaccamo/utils.js",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "JavaScript utils for lazy devs.",
   "keywords": [
         "utils", "u", "array", "base64", "color", "date",
         "function", "hex", "json", "math", "number", "object",
         "random", "string", "trigo", "type", "url", "xml"
   ],
+  "license" : "MIT",
   "main": "gulpfile.js",
   "scripts": {
     "watch": "gulp",
