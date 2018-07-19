@@ -1,15 +1,9 @@
 (function (root, factory) {
 
-    // Environment Detection
-
     if (typeof(define) === 'function' && define.amd) {
         // AMD
-        define([], function(){
-            return {
-                utils: factory(),
-                u: factory()
-            }
-        });
+        define('@fabiocaccamo/utils.js', factory);
+        define('utils', factory);
     }
     else if (typeof(module) === 'object') {
         // CommonJS
