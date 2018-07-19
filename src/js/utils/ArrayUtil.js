@@ -122,13 +122,35 @@ var ArrayUtil = {
         return listNew;
     },
 
-    unzip: function(list)
-    {
-        // TODO
-    },
+    unzip: (function(){
+      const _isNumber = item => typeof item === 'number',
+        _compactor = item => _isNumber(item) ? true : Boolean(item),
+        _maxLen=(...a) => max(...a.map(i=>i.length)),
+        _compact=a=>a.filter(item => _isNumber(item) ? true : Boolean(item));
+        function unzip(arr) {
+          let maxLen = _maxLen(arr), res = Array(maxLen).fill().map((i, index1)=>{
+          return _compact(Array(arr.length).fill().map((j,index2)=>{
+            return arr[index2][index1];
+          }));
+        });
+        return res;
+      }
+      return unzip;
+    })(),
 
-    zip: function(list)
-    {
-        // TODO
-    }
+    zip: (function(){
+      const _isNumber = item => typeof item === 'number',
+        _compactor = item => _isNumber(item) ? true : Boolean(item),
+        _maxLen=(...a) => max(...a.map(i=>i.length)),
+        _compact=a=>a.filter(item => _isNumber(item) ? true : Boolean(item));
+      function zip(list) {
+        let maxLen = _maxLen(list), res = Array(maxLen).fill().map((i, index1)=>{
+          return _compact(Array(list.length).fill().map((j,index2)=>{
+            return list[index2][index1];
+          }));
+        });
+        return res;
+      }
+      return zip;    
+    })()
 };
