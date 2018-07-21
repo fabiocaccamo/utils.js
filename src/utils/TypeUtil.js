@@ -130,7 +130,7 @@ var TypeUtil = {
             return 'xml';
         }
         else {
-            return undefined;
+            return 'unknown';
         }
     }
 
