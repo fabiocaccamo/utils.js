@@ -4,6 +4,7 @@
         // AMD
         define('@fabiocaccamo/utils.js', factory);
         define('@fabiocaccamo/utils', factory);
+        define('utils.js', factory);
         define('utils', factory);
     }
     else if (typeof(module) === 'object') {
@@ -693,6 +694,381 @@
         ].join('');
     }
 };
+    var EasingUtil = {
+
+    backIn: function(t, s)
+    {
+        // s = overshoot = 1.70158
+        s = (isNaN(s) ? 1.70158 : s);
+        return t * t * (((s + 1.0) * t) - s);
+    },
+
+    backInOut: function(t, s)
+    {
+        // s = overshoot = 1.70158
+        s = (isNaN(s) ? 1.70158 : s);
+        if ((t /= 0.5) < 1.0) {
+            return 0.5 * (t * t * (((s *= (1.525)) + 1.0) * t - s));
+        } else {
+            return 0.5 * ((t -= 2.0) * t * (((s *= (1.525)) + 1.0) * t + s) + 2.0);
+        }
+    },
+
+    backOut: function(t, s)
+    {
+        // s = overshoot = 1.70158
+        s = (isNaN(s) ? 1.70158 : s);
+        return (t -= 1.0) * t * (((s + 1.0) * t) + s) + 1.0;
+    },
+
+    bounceIn: function(t)
+    {
+        t = (1.0 - t);
+
+        if (t < (1.0 / 2.75)) {
+            return 1.0 - (7.5625 * t * t);
+        }
+        else if (t < (2.0 / 2.75)) {
+            return 1.0 - (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+        }
+        else if (t < (2.5 / 2.75)) {
+            return 1.0 - (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+        }
+        else {
+            return 1.0 - (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+        }
+    },
+
+    bounceInOut: function(t)
+    {
+        if (t < 0.5) {
+            t = (1.0 - t);
+
+            if (t < (1.0 / 2.75)) {
+                return 1.0 - (7.5625 * t * t);
+            }
+            else if (t < (2.0 / 2.75)) {
+                return 1.0 - (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+            }
+            else if (t < (2.5 / 2.75)) {
+                return 1.0 - (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+            }
+            else {
+                return 1.0 - (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+            }
+        } else {
+            if (t < (1.0 / 2.75)) {
+                return (7.5625 * t * t);
+            }
+            else if (t < (2.0 / 2.75)) {
+                return (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+            }
+            else if (t < (2.5 / 2.75)) {
+                return (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+            }
+            else {
+                return (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+            }
+        }
+    },
+
+    bounceOut: function(t)
+    {
+        if (t < (1.0 / 2.75)) {
+            return (7.5625 * t * t);
+        }
+        else if (t < (2.0 / 2.75)) {
+            return (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+        }
+        else if (t < (2.5 / 2.75)) {
+            return (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+        }
+        else {
+            return (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+        }
+    },
+
+    circularIn: function(t)
+    {
+        return -(Math.sqrt(1.0 - t * t) - 1.0);
+    },
+
+    circularInOut: function(t)
+    {
+        if((t /= 0.5) < 1.0){
+            return -0.5 * (Math.sqrt(1.0 - t * t) - 1.0);
+        }
+
+        return 0.5 * (Math.sqrt(1.0 - (t -= 2.0) * t) + 1.0);
+    },
+
+    circularOut: function(t)
+    {
+        return Math.sqrt(1.0 - ((t -= 1.0) * t));
+    },
+
+    cubicIn: function(t)
+    {
+        return (t * t * t);
+    },
+
+    cubicInOut: function(t)
+    {
+        if ((t /= 0.5) < 1.0){
+            return 0.5 * t * t * t;
+        }
+
+        return 0.5 * ((t -= 2.0) * t * t + 2.0);
+    },
+
+    cubicOut: function(t)
+    {
+        return (t -= 1.0) * t * t + 1.0;
+    },
+
+    elasticIn: function(t, a, p)
+    {
+        // a = amplitude = 0.3, p = period = 0.3
+
+        if (t == 0.0) {
+            return 0.0;
+        }
+        if (t == 1.0) {
+            return 1.0;
+        }
+
+        a = (isNaN(a) ? 0.0 : a);
+        p = (isNaN(p) ? 0.3 : p);
+
+        var s;
+
+        if (a < 1.0) {
+            a = 1.0;
+            s = (p / 4.0);
+        } else {
+            s = (p / (2.0 * Math.PI) * Math.asin(1.0 / a));
+        }
+        return -(a * Math.pow(2.0, 10.0 * (t -= 1.0)) * Math.sin((t - s) * (2.0 * Math.PI) / p));
+    },
+
+    elasticInOut: function(t, a, p)
+    {
+        // a = amplitude = 0.3, p = period = 0.3
+
+        if (t == 0.0) {
+            return 0.0;
+        }
+        if ((t /= 0.5) == 2.0) {
+            return 1.0;
+        }
+
+        a = (isNaN(a) ? 0.0 : a);
+        p = (isNaN(p) ? 0.3 : p);
+
+        var s;
+
+        if (p == 0.3) {
+            p *= 1.5;
+        }
+        if (a < 1.0) {
+            a = 1.0;
+            s = (p / 4.0);
+        } else {
+            s = (p / (2.0 * Math.PI) * Math.asin(1.0 / a));
+        }
+        if (t < 1.0) {
+            return -0.5 * (a * Math.pow(2.0, 10.0 * (t -= 1.0)) * Math.sin((t - s) * (2.0 * Math.PI) / p));
+        }
+        return a * Math.pow(2.0, -10.0 * (t -= 1.0)) * Math.sin((t - s) * (2.0 * Math.PI) / p) * 0.5 + 1.0;
+    },
+
+    elasticOut: function(t, a, p)
+    {
+        // a = amplitude = 0.3, p = period = 0.3
+
+        if (t == 0.0) {
+            return 0.0;
+        }
+        if (t == 1.0) {
+            return 1.0;
+        }
+
+        a = (isNaN(a) ? 0.0 : a);
+        p = (isNaN(p) ? 0.3 : p);
+
+        var s;
+
+        if (a < 1.0) {
+            a = 1.0;
+            s = (p / 4.0);
+        } else {
+            s = (p / (2.0 * Math.PI) * Math.asin(1.0 / a));
+        }
+        return (a * Math.pow(2.0, (-10.0 * t)) * Math.sin((t - s) * (2.0 * Math.PI) / p) + 1.0);
+    },
+
+    exponentialIn: function(t)
+    {
+        if (t == 0.0) {
+            return 0.0;
+        }
+        return Math.pow(2.0, (10.0 * (t - 1.0)));
+    },
+
+    exponentialInOut: function(t)
+    {
+        if (t == 0.0) {
+            return 0.0;
+        }
+        if (t == 1.0) {
+            return 1.0;
+        }
+        if ((t /= 0.5) < 1.0) {
+            return 0.5 * Math.pow(2.0, 10.0 * (t - 1.0));
+        }
+        return 0.5 * (-Math.pow(2.0, -10.0 * (t -= 1.0)) + 2.0);
+    },
+
+    exponentialOut: function(t)
+    {
+        if (t == 1.0) {
+            return t;
+        }
+        return -Math.pow(2.0, (-10.0 * t)) + 1.0;
+    },
+
+    none: function(t)
+    {
+        return t;
+    },
+
+    quadraticIn: function(t)
+    {
+        return (t * t);
+    },
+
+    quadraticInOut: function(t)
+    {
+        if ((t /= 0.5) < 1.0) {
+            return 0.5 * t * t;
+        }
+        return -0.5 * ((t -= 1.0) * (t - 2.0) - 1.0);
+    },
+
+    quadraticOut: function(t)
+    {
+        return -t * (t - 2.0);
+    },
+
+    quarticIn: function(t)
+    {
+        return (t * t * t * t);
+    },
+
+    quarticInOut: function(t)
+    {
+        if ((t /= 0.5) < 1.0) {
+            return 0.5 * t * t * t * t;
+        }
+        return -0.5 * ((t -= 2.0) * t * t * t - 2.0);
+    },
+
+    quarticOut: function(t)
+    {
+        return -((t -= 1.0) * t * t * t - 1.0);
+    },
+
+    quinticIn: function(t)
+    {
+        return (t * t * t * t * t);
+    },
+
+    quinticInOut: function(t)
+    {
+        if ((t /= 0.5) < 1.0) {
+            return 0.5 * t * t * t * t * t;
+        }
+        return 0.5 * ((t -= 2.0) * t * t * t * t + 2.0);
+    },
+
+    quinticOut: function(t)
+    {
+        return (t -= 1.0) * t * t * t * t + 1.0;
+    },
+
+    sexticIn: function(t)
+    {
+        return (t * t * t * t * t * t);
+    },
+
+    sexticInOut: function(t)
+    {
+        if ((t /= 0.5) < 1.0) {
+            return 0.5 * t * t * t * t * t * t;
+        }
+        return -0.5 * ((t -= 2.0) * t * t * t * t * t - 2.0);
+    },
+
+    sexticOut: function(t)
+    {
+        return -((t -= 1.0) * t * t * t * t * t - 1.0);
+    },
+
+    sineIn: function(t)
+    {
+        return -Math.cos(t * (Math.PI / 2.0)) + 1.0;
+    },
+
+    sineInOut: function(t)
+    {
+        return -0.5 * (Math.cos(Math.PI * t) - 1.0);
+    },
+
+    sineOut: function(t)
+    {
+        return Math.sin(t * (Math.PI / 2.0));
+    },
+
+    waveCosine: function(t, f, a, i)
+    {
+        // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
+        f = (isNaN(f) ? 1.0 : f);
+        a = (a == undefined ? false : a);
+        i = (i == undefined ? false : i);
+
+        var w = Math.cos(Math.PI * t * f);
+        w = (a ? Math.abs(w) : w);
+        w = (i ? (1.0 - w) : w);
+        return w;
+    },
+
+    waveSawtooth: function(t, f)
+    {
+        // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
+        f = (isNaN(f) ? 1.0 : f);
+        a = (a == undefined ? false : a);
+        i = (i == undefined ? false : i);
+
+        var w = (t * f) % 1.0;
+        w = (a ? Math.abs(w) : w);
+        w = (i ? (1.0 - w) : w);
+        return w;
+    },
+
+    waveSine: function(t)
+    {
+        // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
+        f = (isNaN(f) ? 1.0 : f);
+        a = (a == undefined ? false : a);
+        i = (i == undefined ? false : i);
+
+        var w = Math.sin(Math.PI * t * f);
+        w = (a ? Math.abs(w) : w);
+        w = (i ? (1.0 - w) : w);
+        return w;
+    }
+
+};
     var FunctionUtil = {
 
     args: function(argumentObj, sliceIndex)
@@ -762,6 +1138,44 @@
             f: wrapper,
             id: timeoutID
         };
+    },
+
+    validate: function(args, arg0Types, arg1Types, arg2Types)
+    {
+        console.log(typeof(arguments));
+
+        // FunctionUtil.validate(arguments, 'number', 'string', ['string', 'undefined']);
+
+        var args = FunctionUtil.args(args);
+        var types = FunctionUtil.args(arguments, 1);
+
+        if (args.length < types.length) {
+            throw new TypeError('invalid arguments length: received ' + args.length + ', expected ' + types.length + ' arguments.');
+        }
+
+        var i, j, k, n;
+
+        for (i = 0, j = types.length; i < j; i++) {
+            if (!TypeUtil.isArray(types[i])) {
+                types[i] = [types[i]];
+            }
+            for (k = 0, n = types[i].length; k < n; k++) {
+                if (!TypeUtil.isType(types[i][k])) {
+                    throw new TypeError('invalid argument: type validator "' + String(types[i][k]) + '" is not a valid type.');
+                }
+            }
+        }
+
+        var arg, argType, argTypes;
+
+        for (i = 0, j = args.length; i < j; i++) {
+            arg = args[i];
+            argType = TypeUtil.of(args[i]);
+            argTypes = types[Math.min(i, (types.length - 1))];
+            if (argTypes.indexOf(argType) == -1) {
+                throw new TypeError('invalid argument: type of argument[' + i + '] is "' + argType + '", expected "' + argTypes.join('" or "') + '".');
+            }
+        }
     },
 
     wrap: function(scope, func, args)
@@ -883,20 +1297,6 @@
         return (hex.length == 1 ? '0' + hex : hex);
     }
 };
-    var JSONUtil = {
-
-    decode: function(str)
-    {
-        // http://qnimate.com/json-parse-throws-unexpected-token-error-for-valid-json/
-        // str = str.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\f/g, '\\f');
-        return JSON.parse(str);
-    },
-
-    encode: function(obj)
-    {
-        return JSON.stringify(obj);
-    }
-};
     var InterpolationUtil = {
 
     bilinear: function(a, b, c, d, u, v)
@@ -932,88 +1332,19 @@
     }
 
 };
-    var TrigoUtil = {
+    var JSONUtil = {
 
-    DEG_0: 0.0,
-    DEG_90: 90.0,
-    DEG_180: 180.0,
-    DEG_270: 270.0,
-    DEG_360: 360.0,
-
-    DEG_TO_RAD: (Math.PI / 180.0), // 0.017453292519943295 DEG_TO_RAD
-    RAD_TO_DEG: (180.0 / Math.PI),
-
-    acosD: function(rad)
+    decode: function(str)
     {
-        return Math.acos(rad) * TrigoUtil.RAD_TO_DEG;
+        // http://qnimate.com/json-parse-throws-unexpected-token-error-for-valid-json/
+        // str = str.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\f/g, '\\f');
+        return JSON.parse(str);
     },
 
-    angleD: function(y, x)
+    encode: function(obj)
     {
-        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    angleR: function(y, x)
-    {
-        return Math.atan2(y, x);
-    },
-
-    asinD: function(rad)
-    {
-        return Math.asin(rad) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    atanD: function(rad)
-    {
-        return Math.atan(rad) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    atanD2: function(y, x)
-    {
-        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
-    },
-
-    // cycleD: function(deg)
-    // {
-    //     return MathUtil.cycle(deg, TrigoUtil.DEG_360);
-    // },
-
-    cosD: function(deg)
-    {
-        return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
-    },
-
-    degToRad: function(deg)
-    {
-        return (deg * TrigoUtil.DEG_TO_RAD);
-    },
-
-    fastD: function(degFrom, degTo)
-    {
-        var degDiff = (degTo - degFrom);
-        return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
-    },
-
-    hypo: function(distanceX, distanceY)
-    {
-        return Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
-    },
-
-    radToDeg: function(rad)
-    {
-        return (rad * TrigoUtil.RAD_TO_DEG);
-    },
-
-    sinD: function(deg)
-    {
-        return Math.sin(deg * TrigoUtil.DEG_TO_RAD);
-    },
-
-    tanD: function(deg)
-    {
-        return Math.tan(deg * TrigoUtil.DEG_TO_RAD);
+        return JSON.stringify(obj);
     }
-
 };
     var MathUtil = {
 
@@ -1157,9 +1488,7 @@
             s += values[i];
         }
         return s;
-    },
-
-    trigo: TrigoUtil
+    }
 
 };
     var NumberUtil = {
@@ -1579,6 +1908,237 @@
     }
 
 };
+    var TestUtil = {
+
+    assertArray: function(val)
+    {
+        if (!TypeUtil.isArray(val)) {
+            throw new Error('value is not array.');
+        }
+    },
+
+    assertBase64: function(val)
+    {
+        if (!TypeUtil.isBase64(val)) {
+            throw new Error('value is not base64.');
+        }
+    },
+
+    assertBoolean: function(val)
+    {
+        if (!TypeUtil.isBoolean(val)) {
+            throw new Error('value is not boolean.');
+        }
+    },
+
+    assertDate: function(val)
+    {
+        if (!TypeUtil.isDate(val)) {
+            throw new Error('value is not date.');
+        }
+    },
+
+    assertEquals: function(val1, val2)
+    {
+        if (!ObjectUtil.equals(val1, val2)) {
+            throw new Error('values are not equals.');
+        }
+    },
+
+    assertError: function(val)
+    {
+        if (!TypeUtil.isError(val)) {
+            throw new Error('value is not error.');
+        }
+    },
+
+    assertFalse: function(val)
+    {
+        TestUtil.assertBoolean(val);
+        if (val !== false) {
+            throw new Error('value is not false.');
+        }
+    },
+
+    assertFunction: function(val)
+    {
+        if (!TypeUtil.isFunction(val)) {
+            throw new Error('value is not function.');
+        }
+    },
+
+    assertJSON: function(val)
+    {
+        if (!TypeUtil.isJSON(val)) {
+            throw new Error('value is not json.');
+        }
+    },
+
+    assertLength: function(val, length)
+    {
+        TestUtil.assertArray(val);
+        TestUtil.assertEquals(val.length, length);
+    },
+
+    assertObject: function(val)
+    {
+        if (!TypeUtil.isObject(val)) {
+            throw new Error('value is not object.');
+        }
+    },
+
+    assertNotEquals: function(val1, val2)
+    {
+        if (ObjectUtil.equals(val1, val2)) {
+            throw new Error('values are equals.');
+        }
+    },
+
+    assertNumber: function(val)
+    {
+        if (!TypeUtil.isNumber(val)) {
+            throw new Error('value is not number.');
+        }
+    },
+
+    assertNull: function(val)
+    {
+        if (!TypeUtil.isNull(val)) {
+            throw new Error('value is not null.');
+        }
+    },
+
+    assertRegExp: function(val)
+    {
+        if (!TypeUtil.isRegExp(val)) {
+            throw new Error('value is not regexp.');
+        }
+    },
+
+    assertString: function(val)
+    {
+        if (!TypeUtil.isString(val)) {
+            throw new Error('value is not string.');
+        }
+    },
+
+    assertThrowError: function(val)
+    {
+        TestUtil.assertFunction(val);
+        try {
+            FunctionUtil.call.apply(null, val, FunctionUtil.args(arguments, 1));
+            return;
+        } catch(e) {
+        }
+        throw new Error('value didn\'t throw error.');
+    },
+
+    assertTrue: function(val)
+    {
+        TestUtil.assertBoolean(val);
+        if (val !== true) {
+            throw new Error('value is not true.');
+        }
+    },
+
+    assertUndefined: function(val)
+    {
+        if (!TypeUtil.isUndefined(val)) {
+            throw new Error('value is not undefined.');
+        }
+    },
+
+    assertXML: function(val)
+    {
+        if (!TypeUtil.isXML(val)) {
+            throw new Error('value is not xml.');
+        }
+    }
+
+};
+    var TrigoUtil = {
+
+    DEG_0: 0.0,
+    DEG_90: 90.0,
+    DEG_180: 180.0,
+    DEG_270: 270.0,
+    DEG_360: 360.0,
+
+    DEG_TO_RAD: (Math.PI / 180.0), // 0.017453292519943295 DEG_TO_RAD
+    RAD_TO_DEG: (180.0 / Math.PI),
+
+    acosD: function(rad)
+    {
+        return Math.acos(rad) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    angleD: function(y, x)
+    {
+        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    angleR: function(y, x)
+    {
+        return Math.atan2(y, x);
+    },
+
+    asinD: function(rad)
+    {
+        return Math.asin(rad) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    atanD: function(rad)
+    {
+        return Math.atan(rad) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    atanD2: function(y, x)
+    {
+        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
+    },
+
+    // cycleD: function(deg)
+    // {
+    //     return MathUtil.cycle(deg, TrigoUtil.DEG_360);
+    // },
+
+    cosD: function(deg)
+    {
+        return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    degToRad: function(deg)
+    {
+        return (deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    fastD: function(degFrom, degTo)
+    {
+        var degDiff = (degTo - degFrom);
+        return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
+    },
+
+    hypo: function(distanceX, distanceY)
+    {
+        return Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));
+    },
+
+    radToDeg: function(rad)
+    {
+        return (rad * TrigoUtil.RAD_TO_DEG);
+    },
+
+    sinD: function(deg)
+    {
+        return Math.sin(deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    tanD: function(deg)
+    {
+        return Math.tan(deg * TrigoUtil.DEG_TO_RAD);
+    }
+
+};
     var TypeUtil = {
 
     isArray: function(val)
@@ -1643,7 +2203,7 @@
 
     isNumber: function(val)
     {
-        return (typeof(val) === 'number');
+        return (typeof(val) === 'number' && !isNaN(val) && isFinite(val));
     },
 
     isNull: function(val)
@@ -1659,6 +2219,27 @@
     isString: function(val)
     {
         return (typeof(val) === 'string');
+    },
+
+    isType: function(val)
+    {
+        switch (val) {
+            case 'array':
+            case 'boolean':
+            case 'date':
+            case 'error':
+            case 'function':
+            case 'number':
+            case 'null':
+            case 'object':
+            case 'regexp':
+            case 'string':
+            case 'undefined':
+            case 'xml':
+                return true;
+            default:
+                return false;
+        }
     },
 
     isUndefined: function(val)
@@ -1711,7 +2292,7 @@
             return 'xml';
         }
         else {
-            return undefined;
+            return 'unknown';
         }
     }
 
@@ -1823,15 +2404,20 @@
         base64: Base64Util,
         color: ColorUtil,
         date: DateUtil,
+        easing: EasingUtil,
         func: FunctionUtil,
         geom: GeomUtil,
+            // point: PointUtil,
         hex: HexUtil,
         json: JSONUtil,
         math: MathUtil,
+            // interpolation: InterpolationUtil,
         number: NumberUtil,
         object: ObjectUtil,
         random: RandomUtil,
         string: StringUtil,
+        test: TestUtil,
+        trigo: TrigoUtil,
         type: TypeUtil,
         xml: XMLUtil,
         url: URLUtil
@@ -1839,4 +2425,3 @@
 
     return utils;
 }));
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQSIsImZpbGUiOiJ1dGlscy5qcyIsInNvdXJjZXNDb250ZW50IjpbIihmdW5jdGlvbiAocm9vdCwgZmFjdG9yeSkge1xuXG4gICAgaWYgKHR5cGVvZihkZWZpbmUpID09PSAnZnVuY3Rpb24nICYmIGRlZmluZS5hbWQpIHtcbiAgICAgICAgLy8gQU1EXG4gICAgICAgIGRlZmluZSgnQGZhYmlvY2FjY2Ftby91dGlscy5qcycsIGZhY3RvcnkpO1xuICAgICAgICBkZWZpbmUoJ0BmYWJpb2NhY2NhbW8vdXRpbHMnLCBmYWN0b3J5KTtcbiAgICAgICAgZGVmaW5lKCd1dGlscycsIGZhY3RvcnkpO1xuICAgIH1cbiAgICBlbHNlIGlmICh0eXBlb2YobW9kdWxlKSA9PT0gJ29iamVjdCcpIHtcbiAgICAgICAgLy8gQ29tbW9uSlNcbiAgICAgICAgbW9kdWxlLmV4cG9ydHMgPSBmYWN0b3J5KCk7XG4gICAgfVxuICAgIGVsc2Uge1xuICAgICAgICAvLyBTY3JpcHQgdGFnIGltcG9ydCBpLmUuLCBJSUZFXG4gICAgICAgIHJvb3QudXRpbHMgPSBmYWN0b3J5KCk7XG4gICAgICAgIHJvb3QudSA9IGZhY3RvcnkoKTtcbiAgICB9XG5cbn0odGhpcywgZnVuY3Rpb24oKSB7XG5cbiAgICAndXNlIHN0cmljdCc7XG5cbiAgICBAaW1wb3J0ICcuL3V0aWxzL0FycmF5VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Jhc2U2NFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9jb2xvci9Db2xvckNteWtVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvY29sb3IvQ29sb3JIZXhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvY29sb3IvQ29sb3JSZ2JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvRGF0ZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9GdW5jdGlvblV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9nZW9tL1BvaW50VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0dlb21VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSGV4VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0pTT05VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvbWF0aC9JbnRlcnBvbGF0aW9uVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL21hdGgvVHJpZ29VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvTWF0aFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9OdW1iZXJVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvT2JqZWN0VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1JhbmRvbVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9TdHJpbmdVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvVHlwZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9VUkxVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvWE1MVXRpbC5qcydcblxuICAgIHZhciB1dGlscyA9IHtcbiAgICAgICAgYXJyYXk6IEFycmF5VXRpbCxcbiAgICAgICAgYmFzZTY0OiBCYXNlNjRVdGlsLFxuICAgICAgICBjb2xvcjogQ29sb3JVdGlsLFxuICAgICAgICBkYXRlOiBEYXRlVXRpbCxcbiAgICAgICAgZnVuYzogRnVuY3Rpb25VdGlsLFxuICAgICAgICBnZW9tOiBHZW9tVXRpbCxcbiAgICAgICAgaGV4OiBIZXhVdGlsLFxuICAgICAgICBqc29uOiBKU09OVXRpbCxcbiAgICAgICAgbWF0aDogTWF0aFV0aWwsXG4gICAgICAgIG51bWJlcjogTnVtYmVyVXRpbCxcbiAgICAgICAgb2JqZWN0OiBPYmplY3RVdGlsLFxuICAgICAgICByYW5kb206IFJhbmRvbVV0aWwsXG4gICAgICAgIHN0cmluZzogU3RyaW5nVXRpbCxcbiAgICAgICAgdHlwZTogVHlwZVV0aWwsXG4gICAgICAgIHhtbDogWE1MVXRpbCxcbiAgICAgICAgdXJsOiBVUkxVdGlsXG4gICAgfTtcblxuICAgIHJldHVybiB1dGlscztcbn0pKTsiXX0=
