@@ -22,23 +22,23 @@
 
     @import './utils/ArrayUtil.js'
     @import './utils/Base64Util.js'
-    @import './utils/color/ColorCmykUtil.js'
-    @import './utils/color/ColorHexUtil.js'
-    @import './utils/color/ColorRgbUtil.js'
+    @import './utils/ColorCmykUtil.js'
+    @import './utils/ColorHexUtil.js'
+    @import './utils/ColorRgbUtil.js'
     @import './utils/ColorUtil.js'
     @import './utils/DateUtil.js'
     @import './utils/FunctionUtil.js'
-    @import './utils/geom/PointUtil.js'
+    @import './utils/PointUtil.js'
     @import './utils/GeomUtil.js'
     @import './utils/HexUtil.js'
+    @import './utils/InterpolationUtil.js'
     @import './utils/JSONUtil.js'
-    @import './utils/math/InterpolationUtil.js'
-    @import './utils/math/TrigoUtil.js'
     @import './utils/MathUtil.js'
     @import './utils/NumberUtil.js'
     @import './utils/ObjectUtil.js'
     @import './utils/RandomUtil.js'
     @import './utils/StringUtil.js'
+    @import './utils/TrigoUtil.js'
     @import './utils/TypeUtil.js'
     @import './utils/URLUtil.js'
     @import './utils/XMLUtil.js'
@@ -50,13 +50,16 @@
         date: DateUtil,
         func: FunctionUtil,
         geom: GeomUtil,
+            // point: PointUtil,
         hex: HexUtil,
         json: JSONUtil,
         math: MathUtil,
+            // interpolation: InterpolationUtil,
         number: NumberUtil,
         object: ObjectUtil,
         random: RandomUtil,
         string: StringUtil,
+        trigo: TrigoUtil,
         type: TypeUtil,
         xml: XMLUtil,
         url: URLUtil
