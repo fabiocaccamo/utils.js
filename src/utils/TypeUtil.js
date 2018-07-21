@@ -62,7 +62,7 @@ var TypeUtil = {
 
     isNumber: function(val)
     {
-        return (typeof(val) === 'number');
+        return (typeof(val) === 'number' && !isNaN(val) && isFinite(val));
     },
 
     isNull: function(val)
