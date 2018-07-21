@@ -4,6 +4,7 @@
         // AMD
         define('@fabiocaccamo/utils.js', factory);
         define('@fabiocaccamo/utils', factory);
+        define('utils.js', factory);
         define('utils', factory);
     }
     else if (typeof(module) === 'object') {
