@@ -69,6 +69,44 @@ var FunctionUtil = {
         };
     },
 
+    validate: function(args, arg0Types, arg1Types, arg2Types)
+    {
+        console.log(typeof(arguments));
+
+        // FunctionUtil.validate(arguments, 'number', 'string', ['string', 'undefined']);
+
+        var args = FunctionUtil.args(args);
+        var types = FunctionUtil.args(arguments, 1);
+
+        if (args.length < types.length) {
+            throw new TypeError('invalid arguments length: received ' + args.length + ', expected ' + types.length + ' arguments.');
+        }
+
+        var i, j, k, n;
+
+        for (i = 0, j = types.length; i < j; i++) {
+            if (!TypeUtil.isArray(types[i])) {
+                types[i] = [types[i]];
+            }
+            for (k = 0, n = types[i].length; k < n; k++) {
+                if (!TypeUtil.isType(types[i][k])) {
+                    throw new TypeError('invalid argument: type validator "' + String(types[i][k]) + '" is not a valid type.');
+                }
+            }
+        }
+
+        var arg, argType, argTypes;
+
+        for (i = 0, j = args.length; i < j; i++) {
+            arg = args[i];
+            argType = TypeUtil.of(args[i]);
+            argTypes = types[Math.min(i, (types.length - 1))];
+            if (argTypes.indexOf(argType) == -1) {
+                throw new TypeError('invalid argument: type of argument[' + i + '] is "' + argType + '", expected "' + argTypes.join('" or "') + '".');
+            }
+        }
+    },
+
     wrap: function(scope, func, args)
     {
         return function(){
