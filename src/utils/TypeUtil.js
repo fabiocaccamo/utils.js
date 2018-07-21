@@ -80,6 +80,27 @@ var TypeUtil = {
         return (typeof(val) === 'string');
     },
 
+    isType: function(val)
+    {
+        switch (val) {
+            case 'array':
+            case 'boolean':
+            case 'date':
+            case 'error':
+            case 'function':
+            case 'number':
+            case 'null':
+            case 'object':
+            case 'regexp':
+            case 'string':
+            case 'undefined':
+            case 'xml':
+                return true;
+            default:
+                return false;
+        }
+    },
+
     isUndefined: function(val)
     {
         return (typeof(val) === 'undefined');
