@@ -12,26 +12,44 @@ require(['utils'], function(utils) {
     console.log(utils);
 });
 ```
+or
+```javascript
+require(['@fabiocaccamo/utils.js'], function(utils) {
+    console.log(utils);
+});
+```
 ## APIs
 
 - `utils.array`
 - `utils.base64`
 - `utils.color`
+- `utils.color.cmyk`
+- `utils.color.hex`
+- `utils.color.rgb`
 - `utils.date`
+- `utils.easing`
 - `utils.func`
+- `utils.geom`
+- `utils.geom.point`
 - `utils.hex`
 - `utils.json`
 - `utils.math`
+- `utils.math.interpolation`
 - `utils.number`
 - `utils.object`
 - `utils.random`
 - `utils.string`
+- `utils.test`
 - `utils.trigo`
 - `utils.type`
 - `utils.url`
 - `utils.xml`
 
 ## Development
+
+#### Setup
+- `git clone https://github.com/fabiocaccamo/utils.js.git`
+- `npm install`
 
 #### Watch
 `npm run watch`
@@ -40,5 +58,5 @@ require(['utils'], function(utils) {
 `npm run build`
 
 ## License
-Released under [MIT License](LICENSE.txt).
+Released under [MIT License](https://github.com/fabiocaccamo/utils.js/blob/master/LICENSE.txt).
 

@@ -1,13 +1,37 @@
 {
   "name": "@fabiocaccamo/utils.js",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "description": "JavaScript utils for lazy devs.",
   "keywords": [
-        "utils", "u", "array", "base64", "color", "date",
-        "function", "hex", "json", "math", "number", "object",
-        "random", "string", "trigo", "type", "url", "xml"
+    "utils",
+    "u",
+    "array",
+    "base64",
+    "color",
+    "date",
+    "easing",
+    "function",
+    "geom",
+    "hex",
+    "interpolation",
+    "json",
+    "math",
+    "number",
+    "object",
+    "random",
+    "string",
+    "test",
+    "trigo",
+    "trigonometry",
+    "type",
+    "url",
+    "xml"
   ],
-  "license" : "MIT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabiocaccamo/utils.js"
+  },
   "main": "gulpfile.js",
   "scripts": {
     "watch": "gulp",
