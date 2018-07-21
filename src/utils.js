@@ -38,6 +38,7 @@
     @import './utils/ObjectUtil.js'
     @import './utils/RandomUtil.js'
     @import './utils/StringUtil.js'
+    @import './utils/TestUtil.js'
     @import './utils/TrigoUtil.js'
     @import './utils/TypeUtil.js'
     @import './utils/URLUtil.js'
@@ -59,6 +60,7 @@
         object: ObjectUtil,
         random: RandomUtil,
         string: StringUtil,
+        test: TestUtil,
         trigo: TrigoUtil,
         type: TypeUtil,
         xml: XMLUtil,
