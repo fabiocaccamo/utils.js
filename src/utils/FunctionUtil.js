@@ -5,6 +5,18 @@ var FunctionUtil = {
         return [].slice.call(argumentObj, (sliceIndex || 0));
     },
 
+    attempt: function(scope, funcName)
+    {
+        try {
+            var func = scope[funcName];
+            var args = FunctionUtil.args(arguments, 2);
+            var result = func.apply(scope, args);
+            return result;
+        }
+        catch(e) {
+        }
+    },
+
     bind: function(scope, func)
     {
         var args = FunctionUtil.args(arguments, 2);
