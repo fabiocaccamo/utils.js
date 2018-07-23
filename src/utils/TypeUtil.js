@@ -60,6 +60,28 @@ var TypeUtil = {
         return (typeof(val) === 'object');
     },
 
+    isOk: function(val)
+    {
+        switch (TypeUtil.of(val)) {
+            case 'array':
+                return (val.length > 0);
+            case 'boolean':
+                return val;
+            case 'number':
+                return (val !== 0.0);
+            case 'null':
+                return false;
+            case 'object':
+                return (Objectutil.length(val) > 0);
+            case 'string':
+                return (StringUtil.strip(val) !== '');
+            case 'undefined':
+                return false;
+            default:
+                return Boolean(val);
+        }
+    },
+
     isNumber: function(val)
     {
         return (typeof(val) === 'number' && !isNaN(val) && isFinite(val));
