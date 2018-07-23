@@ -25,13 +25,9 @@ var FunctionUtil = {
 
     call: function(scope, func)
     {
-        if (typeof(func) === 'function') {
-            return null;
-        }
-
         var args = FunctionUtil.args(arguments, 2);
-        var value = func.apply(scope, args);
-        return value;
+        var result = func.apply(scope, args);
+        return result;
     },
 
     delay: function(scope, func, milliseconds)
