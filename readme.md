@@ -51,6 +51,9 @@ require(['@fabiocaccamo/utils.js'], function(utils) {
 - `git clone https://github.com/fabiocaccamo/utils.js.git`
 - `npm install`
 
+#### Test
+`npm run test`
+
 #### Watch
 `npm run watch`
 
