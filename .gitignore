@@ -6,3 +6,4 @@ dist/*.html
 src/*.html
 *.swp
 package-lock.json
+.nyc_output

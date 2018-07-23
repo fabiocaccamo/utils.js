@@ -1,5 +1,5 @@
 var assert = require('assert');
-var utils = require('../dist/utils.min.js');
+var utils = require('../dist/utils.js');
 
 describe('base64', function() {
     describe('decode', function() {

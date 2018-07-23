@@ -1,5 +1,5 @@
 var assert = require('assert');
-var utils = require('../dist/utils.min.js');
+var utils = require('../dist/utils.js');
 
 describe('object', function() {
     describe('assign', function() {
