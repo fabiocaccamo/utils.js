@@ -153,6 +153,15 @@ var ObjectUtil = {
         return ObjectUtil.keys(obj).length;
     },
 
+    map: function(obj, func)
+    {
+        var m = {};
+        ObjectUtil.keys(obj).forEach(function(k) {
+            m[k] = func.call(null, obj[k], k, obj);
+        });
+        return m;
+    },
+
     merge: function(obj1, obj2, obj3)
     {
         var obj = {};
