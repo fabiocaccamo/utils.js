@@ -346,7 +346,7 @@ var EasingUtil = {
         return w;
     },
 
-    waveSawtooth: function(t, f)
+    waveSawtooth: function(t, f, a, i)
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
@@ -359,7 +359,7 @@ var EasingUtil = {
         return w;
     },
 
-    waveSine: function(t)
+    waveSine: function(t, f, a, i)
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
