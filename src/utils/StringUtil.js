@@ -85,6 +85,10 @@ var StringUtil = {
         return str;
     },
 
+    slugify: function(str)
+    {
+    },
+
     strip: function(str)
     {
         if (str.length == 0){
@@ -93,11 +97,15 @@ var StringUtil = {
         return str.replace(/\s+/gm, '');
     },
 
-    toLowerCaseFirst: function(str)
+    toConstantCase: function(str)
     {
     },
 
     toRandomCase: function(str)
+    {
+    },
+
+    toTitleCase: function(str)
     {
     },
 
