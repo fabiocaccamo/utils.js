@@ -77,6 +77,13 @@ var TestUtil = {
         }
     },
 
+    assertOk: function(val)
+    {
+        if (!TypeUtil.isOk(val)) {
+            throw new Error('value is not ok.');
+        }
+    },
+
     assertNotEquals: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
