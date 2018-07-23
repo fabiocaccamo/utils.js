@@ -7,7 +7,12 @@ var ColorUtil = {
     cmykToHsv: ColorCmykUtil.toHsv,
     cmykToRgb: ColorCmykUtil.toRgb,
 
-    grayscale: undefined,
+    // grayscale: ColorGrayscaleUtil,
+    // grayscaleToGrayscale: ColorGrayscaleUtil.toGrayscale,
+    // grayscaleToHex: ColorGrayscaleUtil.toHex,
+    // grayscaleToHsl: ColorGrayscaleUtil.toHsl,
+    // grayscaleToHsv: ColorGrayscaleUtil.toHsv,
+    // grayscaleToRgb: ColorGrayscaleUtil.toRgb,
 
     hex: ColorHexUtil,
     hexToCmyk: ColorHexUtil.toCmyk,
@@ -16,9 +21,19 @@ var ColorUtil = {
     hexToHsv: ColorHexUtil.toHsv,
     hexToRgb: ColorHexUtil.toRgb,
 
-    hsl: undefined,
+    // hsl: ColorHslUtil,
+    // hslToGrayscale: ColorHslUtil.toGrayscale,
+    // hslToHex: ColorHslUtil.toHex,
+    // hslToHsl: ColorHslUtil.toHsl,
+    // hslToHsv: ColorHslUtil.toHsv,
+    // hslToRgb: ColorHslUtil.toRgb,
 
-    hsv: undefined,
+    // hsv: ColorHsvUtil,
+    // hsvToGrayscale: ColorHsvUtil.toGrayscale,
+    // hsvToHex: ColorHsvUtil.toHex,
+    // hsvToHsl: ColorHsvUtil.toHsl,
+    // hsvToHsv: ColorHsvUtil.toHsv,
+    // hsvToRgb: ColorHsvUtil.toRgb,
 
     rgb: ColorRgbUtil,
     rgbToCmyk: ColorRgbUtil.toCmyk,
