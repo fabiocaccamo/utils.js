@@ -2,24 +2,25 @@ var ArrayUtil = {
 
     clean: function(list, hard)
     {
-        list = list.filter(function(el, index, arr){
-            return (!TypeUtil.isNone(el));
+        var items = list.slice();
+        items = items.filter(function(item, index, arr){
+            return (!TypeUtil.isNone(item));
         });
         if (hard === true) {
-            list = list.map(function(el, index, arr) {
-                switch (TypeUtil.of(el)) {
+            items = items.map(function(item, index, arr) {
+                switch (TypeUtil.of(item)) {
                     case TypeUtil.ARRAY:
-                        return ArrayUtil.clean(el, hard);
+                        return ArrayUtil.clean(item, hard);
                     case TypeUtil.OBJECT:
-                        return ObjectUtil.clean(el, hard);
+                        return ObjectUtil.clean(item, hard);
                     default:
-                        return el;
+                        return item;
                 }
-            }).filter(function(el, index, arr){
-                return TypeUtil.isSetAndNotEmpty(el);
+            }).filter(function(item, index, arr){
+                return TypeUtil.isSetAndNotEmpty(item);
             });
         }
-        return list;
+        return items;
     },
 
     equals: function(listA, listB)
@@ -29,15 +30,15 @@ var ArrayUtil = {
 
     flatten: function(list)
     {
-        var listNew = [];
+        var items = [];
         for (var i = 0, j = list.length; i < j; i++) {
             if (TypeUtil.isArray(list[i])) {
-                listNew.push.apply(listNew, ArrayUtil.flatten(list[i]));
+                items.push.apply(items, ArrayUtil.flatten(list[i]));
             } else {
-                listNew.push(list[i]);
+                items.push(list[i]);
             }
         }
-        return listNew;
+        return items;
     },
 
     index: function(list, keys, flat)
@@ -72,11 +73,6 @@ var ArrayUtil = {
         return dict;
     },
 
-    mask: function(list, index, itemsLeft, itemsRight)
-    {
-        // TODO
-    },
-
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;
@@ -90,59 +86,77 @@ var ArrayUtil = {
         return pages;
     },
 
+    scroll: function(list, count)
+    {
+        var cursor = MathUtil.cycle(count, list.length);
+        return list.slice(cursor).concat(list.slice(0, cursor));
+    },
+
     shuffle: function(list)
     {
-        var listNew = list.slice();
+        var items = list.slice();
         var randomIndex;
         var randomItems;
         var sortedItems = list.length;
         while (sortedItems) {
             randomIndex = RandomUtil.integer(0, --sortedItems);
-            randomItems = listNew.splice(randomIndex, 1);
-            listNew.push.apply(listNew, randomItems);
+            randomItems = items.splice(randomIndex, 1);
+            items.push.apply(items, randomItems);
         }
-        return listNew;
+        return items;
     },
 
-    sortNumerically: function(list)
+    sort: function(list, key)
     {
         var compare = function(a, b)
         {
-            return (a - b);
-        }
+            var aVal;
+            var bVal;
 
-        return list.sort(compare);
-    },
+            if (TypeUtil.isString(key)) {
+                aVal = (key in a ? a[key] : a);
+                bVal = (key in b ? b[key] : b);
+            } else {
+                aVal = a;
+                bVal = b;
+            }
 
-    sortOn: function(list, key)
-    {
-        var compare = function(a, b)
-        {
-            if (a[key] < b[key]){
+            var aValIsNum = TypeUtil.isNumber(aVal);
+            var bValIsNum = TypeUtil.isNumber(bVal);
+
+            if (aValIsNum && bValIsNum) {
+                return (aVal <= bVal ? -1 : 1);
+            }
+            else if (aValIsNum) {
                 return -1;
             }
-            else if (a[key] > b[key]){
+            else if (bValIsNum) {
                 return 1;
             }
             else {
-                return 0;
+                var ab = [aVal, bVal];
+                ab.sort();
+                return (ab.indexOf(aVal) <= ab.indexOf(bVal) ? -1 : 1);
             }
-        }
+        };
 
         return list.sort(compare);
     },
 
     unique: function(list)
     {
-        var listNew = [];
+        var items = [];
+        var itemsNotEquals = function(itemUnique){
+            return !ObjectUtil.equals(item, itemUnique);
+        };
         var item;
         for (var i = 0, j = list.length; i < j; i++) {
             item = list[i];
-            if (listNew.indexOf(item) == -1) {
-                listNew.push(item);
+            if (items.every(itemsNotEquals)) {
+                items.push(item);
             }
         }
-        return listNew;
+        return items;
     },
 
     unzip: function(list)
