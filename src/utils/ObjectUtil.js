@@ -24,13 +24,27 @@ var ObjectUtil = {
         return obj;
     },
 
-    clean: function(obj)
+    clean: function(obj, hard)
     {
         var key, val;
         for (key in obj) {
             val = obj[key];
-            if (val === '' || val === null || val === undefined) {
+            if (hard === true) {
+                switch (TypeUtil.of(val)) {
+                    case TypeUtil.ARRAY:
+                        val = obj[key] = ArrayUtil.clean(val, hard);
+                        break;
+                    case TypeUtil.OBJECT:
+                        val = obj[key] = ObjectUtil.clean(val, hard);
+                        break;
+                }
+                if (!TypeUtil.isSetAndNotEmpty(val)) {
+                    val = null;
+                }
+            }
+            if (TypeUtil.isNone(val)) {
                 delete obj[key];
+                continue;
             }
         }
         return obj;
