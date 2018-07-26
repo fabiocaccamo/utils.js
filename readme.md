@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fabiocaccamo/utils.js.svg?branch=master)](https://travis-ci.org/fabiocaccamo/utils.js)
+
 # utils.js
 JavaScript utils for lazy devs.
 
