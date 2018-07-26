@@ -1,9 +1,12 @@
 var TestUtil = {
 
-    assertArray: function(val)
+    assertArray: function(val, len)
     {
         if (!TypeUtil.isArray(val)) {
             throw new Error('value is not array.');
+        }
+        if (TypeUtil.isNumber(len)) {
+            TestUtil.assertEquals(val.length, len);
         }
     },
 
@@ -64,23 +67,10 @@ var TestUtil = {
         }
     },
 
-    assertLength: function(val, length)
+    assertNone: function(val)
     {
-        TestUtil.assertArray(val);
-        TestUtil.assertEquals(val.length, length);
-    },
-
-    assertObject: function(val)
-    {
-        if (!TypeUtil.isObject(val)) {
-            throw new Error('value is not object.');
-        }
-    },
-
-    assertOk: function(val)
-    {
-        if (!TypeUtil.isOk(val)) {
-            throw new Error('value is not ok.');
+        if (!TypeUtil.isNone(val)) {
+            throw new Error('value is not none.');
         }
     },
 
@@ -88,6 +78,13 @@ var TestUtil = {
     {
         if (ObjectUtil.equals(val1, val2)) {
             throw new Error('values are equals.');
+        }
+    },
+
+    assertNotNone: function(val)
+    {
+        if (TypeUtil.isNone(val)) {
+            throw new Error('value is none.');
         }
     },
 
@@ -102,6 +99,13 @@ var TestUtil = {
     {
         if (!TypeUtil.isNull(val)) {
             throw new Error('value is not null.');
+        }
+    },
+
+    assertObject: function(val)
+    {
+        if (!TypeUtil.isObject(val)) {
+            throw new Error('value is not object.');
         }
     },
 
