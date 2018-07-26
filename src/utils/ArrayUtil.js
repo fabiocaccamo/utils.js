@@ -1,17 +1,41 @@
 var ArrayUtil = {
 
-    clean: function(list)
+    clean: function(list, hard)
     {
-        return list.filter(function(val){
-            return !(Object.is(val, undefined) || Object.is(val, null) || Object.is(val, NaN));
+        list = list.filter(function(el, index, arr){
+            return (!TypeUtil.isNone(el));
         });
+        if (hard === true) {
+            list = list.map(function(el, index, arr) {
+                switch (TypeUtil.of(el)) {
+                    case TypeUtil.ARRAY:
+                        return ArrayUtil.clean(el, hard);
+                    case TypeUtil.OBJECT:
+                        return ObjectUtil.clean(el, hard);
+                    default:
+                        return el;
+                }
+            }).filter(function(el, index, arr){
+                return TypeUtil.isSetAndNotEmpty(el);
+            });
+        }
+        return list;
+    },
+
+    equals: function(listA, listB)
+    {
+        return ObjectUtil.equals(listA, listB);
     },
 
     flatten: function(list)
     {
         var listNew = [];
         for (var i = 0, j = list.length; i < j; i++) {
-            listNew.push.apply(null, (TypeUtil.isArray(list[i]) ? list[i] : [list[i]]));
+            if (TypeUtil.isArray(list[i])) {
+                listNew.push.apply(listNew, ArrayUtil.flatten(list[i]));
+            } else {
+                listNew.push(list[i]);
+            }
         }
         return listNew;
     },
@@ -20,7 +44,7 @@ var ArrayUtil = {
     {
         var dict = {}, item, key, val;
 
-        if (typeof(keys) === 'string') {
+        if (TypeUtil.isString(keys)) {
             keys = [keys];
         }
 
@@ -56,7 +80,7 @@ var ArrayUtil = {
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;
-        var pagesTotal = Math.ceil(itemsTotal / itemsPerPage);
+        var pagesTotal = (itemsPerPage > 0 ? Math.ceil(itemsTotal / itemsPerPage) : 0);
         var pages = [];
         var i, j;
         for (i = 0, j = 0; i < pagesTotal; i++) {
@@ -68,13 +92,12 @@ var ArrayUtil = {
 
     shuffle: function(list)
     {
-        var listNew = list.concat();
+        var listNew = list.slice();
         var randomIndex;
         var randomItems;
-        var length = list.length;
-        while (length) {
-            // randomIndex = Math.floor(Math.random() * (length--));
-            randomIndex = RandomUtil.integer(0, --length);
+        var sortedItems = list.length;
+        while (sortedItems) {
+            randomIndex = RandomUtil.integer(0, --sortedItems);
             randomItems = listNew.splice(randomIndex, 1);
             listNew.push.apply(listNew, randomItems);
         }
