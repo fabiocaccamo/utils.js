@@ -1,5 +1,19 @@
 var TypeUtil = {
 
+    ARRAY: 'array',
+    BOOLEAN: 'boolean',
+    DATE: 'date',
+    ERROR: 'error',
+    FUNCTION: 'function',
+    NUMBER: 'number',
+    NULL: 'null',
+    OBJECT: 'object',
+    REGEXP: 'regexp',
+    STRING: 'string',
+    UNDEFINED: 'undefined',
+    UNKNOWN: 'unknown',
+    XML: 'xml',
+
     isArray: function(val)
     {
         // https://stackoverflow.com/questions/4775722/check-if-object-is-array
@@ -55,31 +69,9 @@ var TypeUtil = {
         return false;
     },
 
-    isObject: function(val)
+    isNone: function(val)
     {
-        return (typeof(val) === 'object');
-    },
-
-    isOk: function(val)
-    {
-        switch (TypeUtil.of(val)) {
-            case 'array':
-                return (val.length > 0);
-            case 'boolean':
-                return val;
-            case 'number':
-                return (val !== 0.0);
-            case 'null':
-                return false;
-            case 'object':
-                return (Objectutil.length(val) > 0);
-            case 'string':
-                return (StringUtil.strip(val) !== '');
-            case 'undefined':
-                return false;
-            default:
-                return Boolean(val);
-        }
+        return (Object.is(val, undefined) || Object.is(val, null) || Object.is(val, NaN));
     },
 
     isNumber: function(val)
@@ -92,9 +84,33 @@ var TypeUtil = {
         return (val === null);
     },
 
+    isObject: function(val)
+    {
+        return (typeof(val) === 'object');
+    },
+
     isRegExp: function(val)
     {
         return (val instanceof RegExp);
+    },
+
+    isSetAndNotEmpty: function(val)
+    {
+        if (TypeUtil.isNone(val)) {
+            return false;
+        }
+        switch (TypeUtil.of(val)) {
+            case TypeUtil.ARRAY:
+                return (val.length > 0);
+            // case TypeUtil.NUMBER:
+            //     return (val !== 0);
+            case TypeUtil.OBJECT:
+                return (ObjectUtil.length(val) > 0);
+            case TypeUtil.STRING:
+                return (StringUtil.trim(val).length > 0);
+            default:
+                return true;
+        }
     },
 
     isString: function(val)
@@ -105,18 +121,19 @@ var TypeUtil = {
     isType: function(val)
     {
         switch (val) {
-            case 'array':
-            case 'boolean':
-            case 'date':
-            case 'error':
-            case 'function':
-            case 'number':
-            case 'null':
-            case 'object':
-            case 'regexp':
-            case 'string':
-            case 'undefined':
-            case 'xml':
+            case TypeUtil.ARRAY:
+            case TypeUtil.BOOLEAN:
+            case TypeUtil.DATE:
+            case TypeUtil.ERROR:
+            case TypeUtil.FUNCTION:
+            case TypeUtil.NUMBER:
+            case TypeUtil.NULL:
+            case TypeUtil.OBJECT:
+            case TypeUtil.REGEXP:
+            case TypeUtil.STRING:
+            case TypeUtil.UNDEFINED:
+            case TypeUtil.UNKNOWN:
+            case TypeUtil.XML:
                 return true;
             default:
                 return false;
@@ -137,43 +154,43 @@ var TypeUtil = {
     of: function(val)
     {
         if (TypeUtil.isArray(val)) {
-            return 'array';
+            return TypeUtil.ARRAY;
         }
         else if (TypeUtil.isBoolean(val)) {
-            return 'boolean';
+            return TypeUtil.BOOLEAN;
         }
         else if (TypeUtil.isDate(val)) {
-            return 'date';
+            return TypeUtil.DATE;
         }
         else if (TypeUtil.isError(val)) {
-            return 'error';
+            return TypeUtil.ERROR;
         }
         else if (TypeUtil.isFunction(val)) {
-            return 'function';
+            return TypeUtil.FUNCTION;
         }
         else if (TypeUtil.isNumber(val)) {
-            return 'number';
+            return TypeUtil.NUMBER;
         }
         else if (TypeUtil.isNull(val)) {
-            return 'null';
-        }
-        else if (TypeUtil.isObject(val)) {
-            return 'object';
+            return TypeUtil.NULL;
         }
         else if (TypeUtil.isRegExp(val)) {
-            return 'regexp';
+            return TypeUtil.REGEXP;
         }
         else if (TypeUtil.isString(val)) {
-            return 'string';
+            return TypeUtil.STRING;
         }
         else if (TypeUtil.isUndefined(val)) {
-            return 'undefined';
+            return TypeUtil.UNDEFINED;
         }
         else if (TypeUtil.isXML(val)) {
-            return 'xml';
+            return TypeUtil.XML;
+        }
+        else if (TypeUtil.isObject(val)) {
+            return TypeUtil.OBJECT;
         }
         else {
-            return 'unknown';
+            return TypeUtil.UNKNOWN;
         }
     }
 
