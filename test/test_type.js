@@ -37,12 +37,12 @@ describe('type', function() {
             assert.ok(true);
         });
     });
-    describe('isObject', function() {
+    describe('isNone', function() {
         it('test description', function() {
             assert.ok(true);
         });
     });
-    describe('isOk', function() {
+    describe('isObject', function() {
         it('test description', function() {
             assert.ok(true);
         });
@@ -62,7 +62,7 @@ describe('type', function() {
             assert.ok(true);
         });
     });
-    describe('isString', function() {
+    describe('isSetAndNotEmpty', function() {
         it('test description', function() {
             assert.ok(true);
         });

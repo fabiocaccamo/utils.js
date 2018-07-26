@@ -37,11 +37,6 @@ describe('string', function() {
             assert.ok(true);
         });
     });
-    describe('strip', function() {
-        it('test description', function() {
-            assert.ok(true);
-        });
-    });
     describe('toConstantCase', function() {
         it('test description', function() {
             assert.ok(true);
@@ -58,6 +53,11 @@ describe('string', function() {
         });
     });
     describe('toUpperCaseFirst', function() {
+        it('test description', function() {
+            assert.ok(true);
+        });
+    });
+    describe('trim', function() {
         it('test description', function() {
             assert.ok(true);
         });

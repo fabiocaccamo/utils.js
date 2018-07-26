@@ -52,16 +52,6 @@ describe('test', function() {
             assert.ok(true);
         });
     });
-    describe('assertObject', function() {
-        it('test description', function() {
-            assert.ok(true);
-        });
-    });
-    describe('assertOk', function() {
-        it('test description', function() {
-            assert.ok(true);
-        });
-    });
     describe('assertNotEquals', function() {
         it('test description', function() {
             assert.ok(true);
@@ -77,6 +67,16 @@ describe('test', function() {
             assert.ok(true);
         });
     });
+    describe('assertObject', function() {
+        it('test description', function() {
+            assert.ok(true);
+        });
+    });
+    // describe('assertOk', function() {
+    //     it('test description', function() {
+    //         assert.ok(true);
+    //     });
+    // });
     describe('assertRegExp', function() {
         it('test description', function() {
             assert.ok(true);
