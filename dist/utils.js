@@ -23,27 +23,52 @@
 
     var ArrayUtil = {
 
-    clean: function(list)
+    clean: function(list, hard)
     {
-        return list.filter(function(val){
-            return !(Object.is(val, undefined) || Object.is(val, null) || Object.is(val, NaN));
+        var items = list.slice();
+        items = items.filter(function(item, index, arr){
+            return (!TypeUtil.isNone(item));
         });
+        if (hard === true) {
+            items = items.map(function(item, index, arr) {
+                switch (TypeUtil.of(item)) {
+                    case TypeUtil.ARRAY:
+                        return ArrayUtil.clean(item, hard);
+                    case TypeUtil.OBJECT:
+                        return ObjectUtil.clean(item, hard);
+                    default:
+                        return item;
+                }
+            }).filter(function(item, index, arr){
+                return TypeUtil.isSetAndNotEmpty(item);
+            });
+        }
+        return items;
+    },
+
+    equals: function(listA, listB)
+    {
+        return ObjectUtil.equals(listA, listB);
     },
 
     flatten: function(list)
     {
-        var listNew = [];
+        var items = [];
         for (var i = 0, j = list.length; i < j; i++) {
-            listNew.push.apply(null, (TypeUtil.isArray(list[i]) ? list[i] : [list[i]]));
+            if (TypeUtil.isArray(list[i])) {
+                items.push.apply(items, ArrayUtil.flatten(list[i]));
+            } else {
+                items.push(list[i]);
+            }
         }
-        return listNew;
+        return items;
     },
 
     index: function(list, keys, flat)
     {
         var dict = {}, item, key, val;
 
-        if (typeof(keys) === 'string') {
+        if (TypeUtil.isString(keys)) {
             keys = [keys];
         }
 
@@ -71,15 +96,10 @@
         return dict;
     },
 
-    mask: function(list, index, itemsLeft, itemsRight)
-    {
-        // TODO
-    },
-
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;
-        var pagesTotal = Math.ceil(itemsTotal / itemsPerPage);
+        var pagesTotal = (itemsPerPage > 0 ? Math.ceil(itemsTotal / itemsPerPage) : 0);
         var pages = [];
         var i, j;
         for (i = 0, j = 0; i < pagesTotal; i++) {
@@ -89,60 +109,77 @@
         return pages;
     },
 
+    scroll: function(list, count)
+    {
+        var cursor = MathUtil.cycle(count, list.length);
+        return list.slice(cursor).concat(list.slice(0, cursor));
+    },
+
     shuffle: function(list)
     {
-        var listNew = list.concat();
+        var items = list.slice();
         var randomIndex;
         var randomItems;
-        var length = list.length;
-        while (length) {
-            // randomIndex = Math.floor(Math.random() * (length--));
-            randomIndex = RandomUtil.integer(0, --length);
-            randomItems = listNew.splice(randomIndex, 1);
-            listNew.push.apply(listNew, randomItems);
+        var sortedItems = list.length;
+        while (sortedItems) {
+            randomIndex = RandomUtil.integer(0, --sortedItems);
+            randomItems = items.splice(randomIndex, 1);
+            items.push.apply(items, randomItems);
         }
-        return listNew;
+        return items;
     },
 
-    sortNumerically: function(list)
+    sort: function(list, key)
     {
         var compare = function(a, b)
         {
-            return (a - b);
-        }
+            var aVal;
+            var bVal;
 
-        return list.sort(compare);
-    },
+            if (TypeUtil.isString(key)) {
+                aVal = (key in a ? a[key] : a);
+                bVal = (key in b ? b[key] : b);
+            } else {
+                aVal = a;
+                bVal = b;
+            }
 
-    sortOn: function(list, key)
-    {
-        var compare = function(a, b)
-        {
-            if (a[key] < b[key]){
+            var aValIsNum = TypeUtil.isNumber(aVal);
+            var bValIsNum = TypeUtil.isNumber(bVal);
+
+            if (aValIsNum && bValIsNum) {
+                return (aVal <= bVal ? -1 : 1);
+            }
+            else if (aValIsNum) {
                 return -1;
             }
-            else if (a[key] > b[key]){
+            else if (bValIsNum) {
                 return 1;
             }
             else {
-                return 0;
+                var ab = [aVal, bVal];
+                ab.sort();
+                return (ab.indexOf(aVal) <= ab.indexOf(bVal) ? -1 : 1);
             }
-        }
+        };
 
         return list.sort(compare);
     },
 
     unique: function(list)
     {
-        var listNew = [];
+        var items = [];
+        var itemsNotEquals = function(itemUnique){
+            return !ObjectUtil.equals(item, itemUnique);
+        };
         var item;
         for (var i = 0, j = list.length; i < j; i++) {
             item = list[i];
-            if (listNew.indexOf(item) == -1) {
-                listNew.push(item);
+            if (items.every(itemsNotEquals)) {
+                items.push(item);
             }
         }
-        return listNew;
+        return items;
     },
 
     unzip: function(list)
@@ -652,7 +689,12 @@
     cmykToHsv: ColorCmykUtil.toHsv,
     cmykToRgb: ColorCmykUtil.toRgb,
 
-    grayscale: undefined,
+    // grayscale: ColorGrayscaleUtil,
+    // grayscaleToGrayscale: ColorGrayscaleUtil.toGrayscale,
+    // grayscaleToHex: ColorGrayscaleUtil.toHex,
+    // grayscaleToHsl: ColorGrayscaleUtil.toHsl,
+    // grayscaleToHsv: ColorGrayscaleUtil.toHsv,
+    // grayscaleToRgb: ColorGrayscaleUtil.toRgb,
 
     hex: ColorHexUtil,
     hexToCmyk: ColorHexUtil.toCmyk,
@@ -661,9 +703,19 @@
     hexToHsv: ColorHexUtil.toHsv,
     hexToRgb: ColorHexUtil.toRgb,
 
-    hsl: undefined,
+    // hsl: ColorHslUtil,
+    // hslToGrayscale: ColorHslUtil.toGrayscale,
+    // hslToHex: ColorHslUtil.toHex,
+    // hslToHsl: ColorHslUtil.toHsl,
+    // hslToHsv: ColorHslUtil.toHsv,
+    // hslToRgb: ColorHslUtil.toRgb,
 
-    hsv: undefined,
+    // hsv: ColorHsvUtil,
+    // hsvToGrayscale: ColorHsvUtil.toGrayscale,
+    // hsvToHex: ColorHsvUtil.toHex,
+    // hsvToHsl: ColorHsvUtil.toHsl,
+    // hsvToHsv: ColorHsvUtil.toHsv,
+    // hsvToRgb: ColorHsvUtil.toRgb,
 
     rgb: ColorRgbUtil,
     rgbToCmyk: ColorRgbUtil.toCmyk,
@@ -1042,7 +1094,7 @@
         return w;
     },
 
-    waveSawtooth: function(t, f)
+    waveSawtooth: function(t, f, a, i)
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
@@ -1055,7 +1107,7 @@
         return w;
     },
 
-    waveSine: function(t)
+    waveSine: function(t, f, a, i)
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
@@ -1076,6 +1128,18 @@
         return [].slice.call(argumentObj, (sliceIndex || 0));
     },
 
+    attempt: function(scope, funcName)
+    {
+        try {
+            var func = scope[funcName];
+            var args = FunctionUtil.args(arguments, 2);
+            var result = func.apply(scope, args);
+            return result;
+        }
+        catch(e) {
+        }
+    },
+
     bind: function(scope, func)
     {
         var args = FunctionUtil.args(arguments, 2);
@@ -1084,13 +1148,9 @@
 
     call: function(scope, func)
     {
-        if (typeof(func) === 'function') {
-            return null;
-        }
-
         var args = FunctionUtil.args(arguments, 2);
-        var value = func.apply(scope, args);
-        return value;
+        var result = func.apply(scope, args);
+        return result;
     },
 
     delay: function(scope, func, milliseconds)
@@ -1583,13 +1643,27 @@
         return obj;
     },
 
-    clean: function(obj)
+    clean: function(obj, hard)
     {
         var key, val;
         for (key in obj) {
             val = obj[key];
-            if (val === '' || val === null || val === undefined) {
+            if (hard === true) {
+                switch (TypeUtil.of(val)) {
+                    case TypeUtil.ARRAY:
+                        val = obj[key] = ArrayUtil.clean(val, hard);
+                        break;
+                    case TypeUtil.OBJECT:
+                        val = obj[key] = ObjectUtil.clean(val, hard);
+                        break;
+                }
+                if (!TypeUtil.isSetAndNotEmpty(val)) {
+                    val = null;
+                }
+            }
+            if (TypeUtil.isNone(val)) {
                 delete obj[key];
+                continue;
             }
         }
         return obj;
@@ -1710,6 +1784,15 @@
     length: function(obj)
     {
         return ObjectUtil.keys(obj).length;
+    },
+
+    map: function(obj, func)
+    {
+        var m = {};
+        ObjectUtil.keys(obj).forEach(function(k) {
+            m[k] = func.call(null, obj[k], k, obj);
+        });
+        return m;
     },
 
     merge: function(obj1, obj2, obj3)
@@ -1884,19 +1967,87 @@
         return str;
     },
 
-    strip: function(str)
+    slugify: function(str)
     {
-        if (str.length == 0){
-            return str;
+        var sep = '-';
+        var chars = {
+            // Latin
+            'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Æ': 'AE',
+            'Ç': 'C', 'È': 'E', 'É': 'E', 'Ê': 'E', 'Ë': 'E', 'Ì': 'I', 'Í': 'I',
+            'Î': 'I', 'Ï': 'I', 'Ð': 'D', 'Ñ': 'N', 'Ò': 'O', 'Ó': 'O', 'Ô': 'O',
+            'Õ': 'O', 'Ö': 'O', 'Ő': 'O', 'Ø': 'O', 'Ù': 'U', 'Ú': 'U', 'Û': 'U',
+            'Ü': 'U', 'Ű': 'U', 'Ý': 'Y', 'Þ': 'TH', 'ß': 'ss', 'à': 'a', 'á': 'a',
+            'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'æ': 'ae', 'ç': 'c', 'è': 'e',
+            'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
+            'ð': 'd', 'ñ': 'n', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
+            'ő': 'o', 'ø': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ű': 'u',
+            'ý': 'y', 'þ': 'th', 'ÿ': 'y', 'ẞ': 'SS', 'œ': 'oe', 'Œ': 'OE',
+            // Greek
+            'α': 'a', 'β': 'b', 'γ': 'g', 'δ': 'd', 'ε': 'e', 'ζ': 'z', 'η': 'h',
+            'θ': '8', 'ι': 'i', 'κ': 'k', 'λ': 'l', 'μ': 'm', 'ν': 'n', 'ξ': '3',
+            'ο': 'o', 'π': 'p', 'ρ': 'r', 'σ': 's', 'τ': 't', 'υ': 'y', 'φ': 'f',
+            'χ': 'x', 'ψ': 'ps', 'ω': 'w', 'ά': 'a', 'έ': 'e', 'ί': 'i', 'ό': 'o',
+            'ύ': 'y', 'ή': 'h', 'ώ': 'w', 'ς': 's', 'ϊ': 'i', 'ΰ': 'y', 'ϋ': 'y',
+            'ΐ': 'i', 'Α': 'A', 'Β': 'B', 'Γ': 'G', 'Δ': 'D', 'Ε': 'E', 'Ζ': 'Z',
+            'Η': 'H', 'Θ': '8', 'Ι': 'I', 'Κ': 'K', 'Λ': 'L', 'Μ': 'M', 'Ν': 'N',
+            'Ξ': '3', 'Ο': 'O', 'Π': 'P', 'Ρ': 'R', 'Σ': 'S', 'Τ': 'T', 'Υ': 'Y',
+            'Φ': 'F', 'Χ': 'X', 'Ψ': 'PS', 'Ω': 'W', 'Ά': 'A', 'Έ': 'E', 'Ί': 'I',
+            'Ό': 'O', 'Ύ': 'Y', 'Ή': 'H', 'Ώ': 'W', 'Ϊ': 'I', 'Ϋ': 'Y',
+            // Turkish
+            'ş': 's', 'Ş': 'S', 'ı': 'i', 'İ': 'I', 'ğ': 'g', 'Ğ': 'G',
+            // Russian
+            'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
+            'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k', 'л': 'l', 'м': 'm',
+            'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
+            'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'sh', 'ъ': 'u',
+            'ы': 'y', 'э': 'e', 'ю': 'yu', 'я': 'ya', 'А': 'A', 'Б': 'B',
+            'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh', 'З': 'Z',
+            'И': 'I', 'Й': 'J', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O',
+            'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'H',
+            'Ц': 'C', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sh', 'Ъ': 'U', 'Ы': 'Y',
+            'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
+            // Ukranian
+            'Є': 'Ye', 'І': 'I', 'Ї': 'Yi', 'Ґ': 'G',
+            'є': 'ye', 'і': 'i', 'ї': 'yi', 'ґ': 'g',
+            // Czech
+            'č': 'c', 'ď': 'd', 'ě': 'e', 'ň': 'n', 'ř': 'r', 'š': 's',
+            'ť': 't', 'ů': 'u', 'ž': 'z', 'Č': 'C', 'Ď': 'D', 'Ě': 'E',
+            'Ň': 'N', 'Ř': 'R', 'Š': 'S', 'Ť': 'T', 'Ů': 'U', 'Ž': 'Z',
+            // Polish
+            'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ś': 's',
+            'ź': 'z', 'ż': 'z', 'Ą': 'A', 'Ć': 'C', 'Ę': 'e', 'Ł': 'L',
+            'Ń': 'N', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
+            // Latvian
+            'ā': 'a', 'ē': 'e', 'ģ': 'g', 'ī': 'i', 'ķ': 'k', 'ļ': 'l',
+            'ņ': 'n', 'ū': 'u', 'Ā': 'A', 'Ē': 'E', 'Ģ': 'G', 'Ī': 'i',
+            'Ķ': 'k', 'Ļ': 'L', 'Ņ': 'N', 'Ū': 'u'
+        };
+
+        // transliterate non-english characters for their english equivalent
+        for (var i = 0, len = str.length; i < len; i++) {
+            if (chars[str.charAt(i)]) {
+                str = str.replace(str.charAt(i), chars[str.charAt(i)]);
+            }
         }
-        return str.replace(/\s+/gm, '');
+
+        str = str.toLowerCase();
+        str = str.replace(/[^a-z0-9]/g, sep);
+        // replace multiple sep with single sep
+        str = str.replace(/[-]+/g, sep);
+        // strip sep from the beginning and fron the end
+        str = str.replace(/^[-]|[-]$/g,sep);
+        return str;
     },
 
-    toLowerCaseFirst: function(str)
+    toConstantCase: function(str)
     {
     },
 
     toRandomCase: function(str)
+    {
+    },
+
+    toTitleCase: function(str)
     {
     },
 
@@ -1905,15 +2056,26 @@
         var f = str.substr(0, 1).toUpperCase();
         var r = str.substr(1);
         return (f + ((toLowerCaseRest === true) ? r.toLowerCase() : r));
+    },
+
+    trim: function(str)
+    {
+        if (String.prototype.trim) {
+            return str.trim();
+        }
+        return str.replace(/^\s+|\s+$/gm, '');
     }
 
 };
     var TestUtil = {
 
-    assertArray: function(val)
+    assertArray: function(val, len)
     {
         if (!TypeUtil.isArray(val)) {
             throw new Error('value is not array.');
+        }
+        if (TypeUtil.isNumber(len)) {
+            TestUtil.assertEquals(val.length, len);
         }
     },
 
@@ -1941,7 +2103,8 @@
     assertEquals: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are not equals.');
+            // throw new Error('values are not equals.');
+            throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
         }
     },
 
@@ -1974,16 +2137,10 @@
         }
     },
 
-    assertLength: function(val, length)
+    assertNone: function(val)
     {
-        TestUtil.assertArray(val);
-        TestUtil.assertEquals(val.length, length);
-    },
-
-    assertObject: function(val)
-    {
-        if (!TypeUtil.isObject(val)) {
-            throw new Error('value is not object.');
+        if (!TypeUtil.isNone(val)) {
+            throw new Error('value is not none.');
         }
     },
 
@@ -1991,6 +2148,13 @@
     {
         if (ObjectUtil.equals(val1, val2)) {
             throw new Error('values are equals.');
+        }
+    },
+
+    assertNotNone: function(val)
+    {
+        if (TypeUtil.isNone(val)) {
+            throw new Error('value is none.');
         }
     },
 
@@ -2005,6 +2169,13 @@
     {
         if (!TypeUtil.isNull(val)) {
             throw new Error('value is not null.');
+        }
+    },
+
+    assertObject: function(val)
+    {
+        if (!TypeUtil.isObject(val)) {
+            throw new Error('value is not object.');
         }
     },
 
@@ -2141,6 +2312,20 @@
 };
     var TypeUtil = {
 
+    ARRAY: 'array',
+    BOOLEAN: 'boolean',
+    DATE: 'date',
+    ERROR: 'error',
+    FUNCTION: 'function',
+    NUMBER: 'number',
+    NULL: 'null',
+    OBJECT: 'object',
+    REGEXP: 'regexp',
+    STRING: 'string',
+    UNDEFINED: 'undefined',
+    UNKNOWN: 'unknown',
+    XML: 'xml',
+
     isArray: function(val)
     {
         // https://stackoverflow.com/questions/4775722/check-if-object-is-array
@@ -2196,9 +2381,9 @@
         return false;
     },
 
-    isObject: function(val)
+    isNone: function(val)
     {
-        return (typeof(val) === 'object');
+        return (Object.is(val, undefined) || Object.is(val, null) || Object.is(val, NaN));
     },
 
     isNumber: function(val)
@@ -2211,9 +2396,33 @@
         return (val === null);
     },
 
+    isObject: function(val)
+    {
+        return (typeof(val) === 'object');
+    },
+
     isRegExp: function(val)
     {
         return (val instanceof RegExp);
+    },
+
+    isSetAndNotEmpty: function(val)
+    {
+        if (TypeUtil.isNone(val)) {
+            return false;
+        }
+        switch (TypeUtil.of(val)) {
+            case TypeUtil.ARRAY:
+                return (val.length > 0);
+            // case TypeUtil.NUMBER:
+            //     return (val !== 0);
+            case TypeUtil.OBJECT:
+                return (ObjectUtil.length(val) > 0);
+            case TypeUtil.STRING:
+                return (StringUtil.trim(val).length > 0);
+            default:
+                return true;
+        }
     },
 
     isString: function(val)
@@ -2224,18 +2433,19 @@
     isType: function(val)
     {
         switch (val) {
-            case 'array':
-            case 'boolean':
-            case 'date':
-            case 'error':
-            case 'function':
-            case 'number':
-            case 'null':
-            case 'object':
-            case 'regexp':
-            case 'string':
-            case 'undefined':
-            case 'xml':
+            case TypeUtil.ARRAY:
+            case TypeUtil.BOOLEAN:
+            case TypeUtil.DATE:
+            case TypeUtil.ERROR:
+            case TypeUtil.FUNCTION:
+            case TypeUtil.NUMBER:
+            case TypeUtil.NULL:
+            case TypeUtil.OBJECT:
+            case TypeUtil.REGEXP:
+            case TypeUtil.STRING:
+            case TypeUtil.UNDEFINED:
+            case TypeUtil.UNKNOWN:
+            case TypeUtil.XML:
                 return true;
             default:
                 return false;
@@ -2256,43 +2466,43 @@
     of: function(val)
     {
         if (TypeUtil.isArray(val)) {
-            return 'array';
+            return TypeUtil.ARRAY;
         }
         else if (TypeUtil.isBoolean(val)) {
-            return 'boolean';
+            return TypeUtil.BOOLEAN;
         }
         else if (TypeUtil.isDate(val)) {
-            return 'date';
+            return TypeUtil.DATE;
         }
         else if (TypeUtil.isError(val)) {
-            return 'error';
+            return TypeUtil.ERROR;
         }
         else if (TypeUtil.isFunction(val)) {
-            return 'function';
+            return TypeUtil.FUNCTION;
         }
         else if (TypeUtil.isNumber(val)) {
-            return 'number';
+            return TypeUtil.NUMBER;
         }
         else if (TypeUtil.isNull(val)) {
-            return 'null';
-        }
-        else if (TypeUtil.isObject(val)) {
-            return 'object';
+            return TypeUtil.NULL;
         }
         else if (TypeUtil.isRegExp(val)) {
-            return 'regexp';
+            return TypeUtil.REGEXP;
         }
         else if (TypeUtil.isString(val)) {
-            return 'string';
+            return TypeUtil.STRING;
         }
         else if (TypeUtil.isUndefined(val)) {
-            return 'undefined';
+            return TypeUtil.UNDEFINED;
         }
         else if (TypeUtil.isXML(val)) {
-            return 'xml';
+            return TypeUtil.XML;
+        }
+        else if (TypeUtil.isObject(val)) {
+            return TypeUtil.OBJECT;
         }
         else {
-            return 'unknown';
+            return TypeUtil.UNKNOWN;
         }
     }
 
@@ -2425,3 +2635,4 @@
 
     return utils;
 }));
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJmaWxlIjoidXRpbHMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gKHJvb3QsIGZhY3RvcnkpIHtcblxuICAgIGlmICh0eXBlb2YoZGVmaW5lKSA9PT0gJ2Z1bmN0aW9uJyAmJiBkZWZpbmUuYW1kKSB7XG4gICAgICAgIC8vIEFNRFxuICAgICAgICBkZWZpbmUoJ0BmYWJpb2NhY2NhbW8vdXRpbHMuanMnLCBmYWN0b3J5KTtcbiAgICAgICAgZGVmaW5lKCdAZmFiaW9jYWNjYW1vL3V0aWxzJywgZmFjdG9yeSk7XG4gICAgICAgIGRlZmluZSgndXRpbHMuanMnLCBmYWN0b3J5KTtcbiAgICAgICAgZGVmaW5lKCd1dGlscycsIGZhY3RvcnkpO1xuICAgIH1cbiAgICBlbHNlIGlmICh0eXBlb2YobW9kdWxlKSA9PT0gJ29iamVjdCcpIHtcbiAgICAgICAgLy8gQ29tbW9uSlNcbiAgICAgICAgbW9kdWxlLmV4cG9ydHMgPSBmYWN0b3J5KCk7XG4gICAgfVxuICAgIGVsc2Uge1xuICAgICAgICAvLyBTY3JpcHQgdGFnIGltcG9ydCBpLmUuLCBJSUZFXG4gICAgICAgIHJvb3QudXRpbHMgPSBmYWN0b3J5KCk7XG4gICAgICAgIHJvb3QudSA9IGZhY3RvcnkoKTtcbiAgICB9XG5cbn0odGhpcywgZnVuY3Rpb24oKSB7XG5cbiAgICAndXNlIHN0cmljdCc7XG5cbiAgICBAaW1wb3J0ICcuL3V0aWxzL0FycmF5VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Jhc2U2NFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvckNteWtVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JIZXhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JSZ2JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvRGF0ZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9FYXNpbmdVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvRnVuY3Rpb25VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvUG9pbnRVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvR2VvbVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9IZXhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSW50ZXJwb2xhdGlvblV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9KU09OVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL01hdGhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvTnVtYmVyVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL09iamVjdFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9SYW5kb21VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvU3RyaW5nVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1Rlc3RVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvVHJpZ29VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvVHlwZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9VUkxVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvWE1MVXRpbC5qcydcblxuICAgIHZhciB1dGlscyA9IHtcbiAgICAgICAgYXJyYXk6IEFycmF5VXRpbCxcbiAgICAgICAgYmFzZTY0OiBCYXNlNjRVdGlsLFxuICAgICAgICBjb2xvcjogQ29sb3JVdGlsLFxuICAgICAgICBkYXRlOiBEYXRlVXRpbCxcbiAgICAgICAgZWFzaW5nOiBFYXNpbmdVdGlsLFxuICAgICAgICBmdW5jOiBGdW5jdGlvblV0aWwsXG4gICAgICAgIGdlb206IEdlb21VdGlsLFxuICAgICAgICAgICAgLy8gcG9pbnQ6IFBvaW50VXRpbCxcbiAgICAgICAgaGV4OiBIZXhVdGlsLFxuICAgICAgICBqc29uOiBKU09OVXRpbCxcbiAgICAgICAgbWF0aDogTWF0aFV0aWwsXG4gICAgICAgICAgICAvLyBpbnRlcnBvbGF0aW9uOiBJbnRlcnBvbGF0aW9uVXRpbCxcbiAgICAgICAgbnVtYmVyOiBOdW1iZXJVdGlsLFxuICAgICAgICBvYmplY3Q6IE9iamVjdFV0aWwsXG4gICAgICAgIHJhbmRvbTogUmFuZG9tVXRpbCxcbiAgICAgICAgc3RyaW5nOiBTdHJpbmdVdGlsLFxuICAgICAgICB0ZXN0OiBUZXN0VXRpbCxcbiAgICAgICAgdHJpZ286IFRyaWdvVXRpbCxcbiAgICAgICAgdHlwZTogVHlwZVV0aWwsXG4gICAgICAgIHhtbDogWE1MVXRpbCxcbiAgICAgICAgdXJsOiBVUkxVdGlsXG4gICAgfTtcblxuICAgIHJldHVybiB1dGlscztcbn0pKTsiXX0=
