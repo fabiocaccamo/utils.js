@@ -20,6 +20,7 @@ require(['@fabiocaccamo/utils.js'], function(utils) {
 ```
 ## APIs
 
+#### Packages
 - `utils.array`
 - `utils.base64`
 - `utils.color`
