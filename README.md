@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/fabiocaccamo/utils.js.svg?branch=master)](https://travis-ci.org/fabiocaccamo/utils.js)
+[![codecov](https://codecov.io/gh/fabiocaccamo/utils.js/branch/master/graph/badge.svg)](https://codecov.io/gh/fabiocaccamo/utils.js)
+[![npm version](https://badge.fury.io/js/%40fabiocaccamo%2Futils.js.svg)](https://badge.fury.io/js/%40fabiocaccamo%2Futils.js)
 
 # utils.js
 JavaScript utils for lazy devs.
