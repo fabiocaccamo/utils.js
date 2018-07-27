@@ -36,12 +36,14 @@
   "scripts": {
     "test": "nyc mocha",
     "watch": "gulp",
-    "build": "gulp build --production"
+    "build": "gulp build --production",
+    "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.7.2",
     "browser-sync": "^2.24.5",
+    "codecov": "^3.0.4",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-babel": "^7.0.1",
     "gulp-cli": "^2.0.1",
