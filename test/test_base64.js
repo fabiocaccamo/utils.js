@@ -1,15 +1,15 @@
-var assert = require('assert');
 var utils = require('../dist/utils.js');
+var test = utils.test;
 
 describe('base64', function() {
     describe('decode', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('encode', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
 });

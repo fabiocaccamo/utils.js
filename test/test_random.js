@@ -1,55 +1,55 @@
-var assert = require('assert');
 var utils = require('../dist/utils.js');
+var test = utils.test;
 
 describe('random', function() {
     describe('argument', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('bit', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('boolean', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('color', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('element', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('float', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('index', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('integer', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sign', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('string', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
 });

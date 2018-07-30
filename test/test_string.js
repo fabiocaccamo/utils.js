@@ -1,65 +1,65 @@
-var assert = require('assert');
 var utils = require('../dist/utils.js');
+var test = utils.test;
 
 describe('string', function() {
     describe('contains', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('icontains', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('levenshteinDistance', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('levenshteinSimilarity', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('padLeft', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('padRight', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('slugify', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('toConstantCase', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('toRandomCase', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('toTitleCase', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('toUpperCaseFirst', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('trim', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
 });

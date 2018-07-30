@@ -1,190 +1,190 @@
-var assert = require('assert');
 var utils = require('../dist/utils.js');
+var test = utils.test;
 
 describe('easing', function() {
     describe('backIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('backInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('backOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('bounceIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('bounceInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('bounceOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('circularIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('circularInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('circularOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('cubicIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('cubicInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('cubicOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('elasticIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('elasticInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('elasticOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('exponentialIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('exponentialInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('exponentialOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('none', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quadraticIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quadraticInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quadraticOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quarticIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quarticInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quarticOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quinticIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quinticInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('quinticOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sexticIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sexticInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sexticOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sineIn', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sineInOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('sineOut', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('waveCosine', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('waveSawtooth', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('waveSine', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
 });

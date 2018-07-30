@@ -1,25 +1,25 @@
-var assert = require('assert');
 var utils = require('../dist/utils.js');
+var test = utils.test;
 
 describe('interpolation', function() {
     describe('bilinear', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('linear', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('multilinear', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
     describe('scalar', function() {
-        it('test description', function() {
-            assert.ok(true);
+        it('TODO', function() {
+            test.assertTrue(true);
         });
     });
 });

@@ -1,80 +1,80 @@
-var assert = require('assert');
 var utils = require('../dist/utils.js');
+var test = utils.test;
 
 describe('utils', function() {
     it('utils', function() {
-        assert.ok(utils);
+        test.assertObject(utils);
     });
     it('utils.array', function() {
-        assert.ok(utils.array);
+        test.assertObject(utils.array);
     });
     it('utils.base64', function() {
-        assert.ok(utils.base64);
+        test.assertObject(utils.base64);
     });
     it('utils.color', function() {
-        assert.ok(utils.color);
+        test.assertObject(utils.color);
     });
     it('utils.color.cmyk', function() {
-        assert.ok(utils.color.cmyk);
+        test.assertObject(utils.color.cmyk);
     });
     it('utils.color.hex', function() {
-        assert.ok(utils.color.hex);
+        test.assertObject(utils.color.hex);
     });
     it('utils.color.rgb', function() {
-        assert.ok(utils.color.rgb);
+        test.assertObject(utils.color.rgb);
     });
     it('utils.date', function() {
-        assert.ok(utils.date);
+        test.assertObject(utils.date);
     });
     it('utils.easing', function() {
-        assert.ok(utils.easing);
+        test.assertObject(utils.easing);
     });
     it('utils.func', function() {
-        assert.ok(utils.func);
+        test.assertObject(utils.func);
     });
     it('utils.geom', function() {
-        assert.ok(utils.geom);
+        test.assertObject(utils.geom);
     });
     it('utils.geom.point', function() {
-        assert.ok(utils.geom.point);
+        test.assertObject(utils.geom.point);
     });
     it('utils.hex', function() {
-        assert.ok(utils.hex);
+        test.assertObject(utils.hex);
     });
     it('utils.json', function() {
-        assert.ok(utils.json);
+        test.assertObject(utils.json);
     });
     it('utils.math', function() {
-        assert.ok(utils.math);
+        test.assertObject(utils.math);
     });
     it('utils.math.interpolation', function() {
-        assert.ok(utils.math.interpolation);
+        test.assertObject(utils.math.interpolation);
     });
     it('utils.number', function() {
-        assert.ok(utils.number);
+        test.assertObject(utils.number);
     });
     it('utils.object', function() {
-        assert.ok(utils.object);
+        test.assertObject(utils.object);
     });
     it('utils.random', function() {
-        assert.ok(utils.random);
+        test.assertObject(utils.random);
     });
     it('utils.string', function() {
-        assert.ok(utils.string);
+        test.assertObject(utils.string);
     });
     it('utils.test', function() {
-        assert.ok(utils.test);
+        test.assertObject(utils.test);
     });
     it('utils.trigo', function() {
-        assert.ok(utils.trigo);
+        test.assertObject(utils.trigo);
     });
     it('utils.type', function() {
-        assert.ok(utils.type);
+        test.assertObject(utils.type);
     });
     it('utils.url', function() {
-        assert.ok(utils.url);
+        test.assertObject(utils.url);
     });
     it('utils.xml', function() {
-        assert.ok(utils.xml);
+        test.assertObject(utils.xml);
     });
 });
