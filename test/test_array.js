@@ -395,6 +395,28 @@ describe('array', function() {
             test.assertTrue(c);
         });
     });
+    describe('reduce', function() {
+        var f = utils.array.reduce;
+        var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        it('test value', function() {
+            var r = function(accumulator, value, index, list){
+                return (accumulator + value);
+            };
+            test.assertEquals(f(a, r), 45);
+        });
+        it('test initial value', function() {
+            var r = function(accumulator, value, index, list){
+                return (accumulator + value);
+            };
+            test.assertEquals(f(a, r, 1), 46);
+        });
+        it('test index', function() {
+            var r = function(accumulator, value, index, list){
+                return (accumulator + index);
+            };
+            test.assertEquals(f(a, r), 45);
+        });
+    });
     describe('scroll', function() {
         var f = utils.array.scroll;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];

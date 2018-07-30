@@ -109,6 +109,15 @@
         return pages;
     },
 
+    reduce: function(list, reducer, initialValue)
+    {
+        var value = (initialValue === undefined ? 0 : initialValue);
+        for (var i = 0, j = list.length; i < j; i++) {
+            value = reducer(value, list[i], i, list);
+        }
+        return value;
+    },
+
     scroll: function(list, count)
     {
         var cursor = MathUtil.cycle(count, list.length);
@@ -1430,6 +1439,11 @@
             f *= i;
         }
         return f;
+
+        // factorial
+        // return ArrayUtil.reduce(new Array(n), function(value, item, index, arr) {
+        //     return (value * (index + 1));
+        // }, 1);
     },
 
     gcd: function(a, b)
@@ -1469,17 +1483,17 @@
 
     proportion: function(a, b, x, y)
     {
-        //a : b = x : y
-        if (isNaN(a)) {
+        // a : b = x : y
+        if (isNaN(a) || Object.is(a, NaN)) {
             return ((b * x) / y);
         }
-        else if (isNaN(b)) {
+        else if (isNaN(b) || Object.is(b, NaN)) {
             return ((a * y) / x);
         }
-        else if (isNaN(x)) {
+        else if (isNaN(x) || Object.is(x, NaN)) {
             return ((y * a) / b);
         }
-        else if (isNaN(y)) {
+        else if (isNaN(y) || Object.is(y, NaN)) {
             return ((x * b) / a);
         }
         return Number.NaN;
@@ -1548,6 +1562,11 @@
             s += values[i];
         }
         return s;
+
+        // summation
+        // return ArrayUtil.reduce(list, function(value, item, index, arr) {
+        //     return (value + item);
+        // },);
     }
 
 };

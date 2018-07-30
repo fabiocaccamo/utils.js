@@ -86,6 +86,15 @@ var ArrayUtil = {
         return pages;
     },
 
+    reduce: function(list, reducer, initialValue)
+    {
+        var value = (initialValue === undefined ? 0 : initialValue);
+        for (var i = 0, j = list.length; i < j; i++) {
+            value = reducer(value, list[i], i, list);
+        }
+        return value;
+    },
+
     scroll: function(list, count)
     {
         var cursor = MathUtil.cycle(count, list.length);
