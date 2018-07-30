@@ -92,7 +92,7 @@ var TypeUtil = {
 
     isObject: function(val)
     {
-        return (typeof(val) === 'object');
+        return (typeof(val) === 'object' && Object.prototype.toString.call(val) === '[object Object]');
     },
 
     isRegExp: function(val)
