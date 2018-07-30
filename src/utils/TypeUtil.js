@@ -70,7 +70,7 @@ var TypeUtil = {
         return false;
     },
 
-    isNan: function(val)
+    isNaN: function(val)
     {
         return Object.is(val, NaN);
     },
@@ -175,7 +175,7 @@ var TypeUtil = {
         else if (TypeUtil.isFunction(val)) {
             return TypeUtil.FUNCTION;
         }
-        else if (TypeUtil.isNan(val)) {
+        else if (TypeUtil.isNaN(val)) {
             return TypeUtil.NAN;
         }
         else if (TypeUtil.isNumber(val)) {

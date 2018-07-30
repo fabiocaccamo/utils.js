@@ -143,6 +143,32 @@ describe('type', function() {
             test.assertTrue(true);
         });
     });
+    describe('isNaN', function() {
+        it('test isNaN against all types', function() {
+            var f = type.isNaN;
+            test.assertFalse(f([]));
+            test.assertFalse(f(true));
+            test.assertFalse(f(false));
+            test.assertFalse(f(new Date()));
+            test.assertFalse(f(new Error()));
+            test.assertFalse(f(function(){}));
+            test.assertTrue(f(NaN));
+            test.assertFalse(f(0));
+            test.assertFalse(f(1));
+            test.assertFalse(f(null));
+            test.assertFalse(f({}));
+            test.assertFalse(f(/^[a-z]+$/));
+            test.assertFalse(f(''));
+            test.assertFalse(f('0'));
+            test.assertFalse(f('1'));
+            test.assertFalse(f('true'));
+            test.assertFalse(f('false'));
+            test.assertFalse(f('NaN'));
+            test.assertFalse(f('null'));
+            test.assertFalse(f('undefined'));
+            test.assertFalse(f(undefined));
+        });
+    });
     describe('isNone', function() {
         it('test isNone against all types', function() {
             var f = type.isNone;
