@@ -5,6 +5,7 @@ var TypeUtil = {
     DATE: 'date',
     ERROR: 'error',
     FUNCTION: 'function',
+    NAN: 'nan',
     NUMBER: 'number',
     NULL: 'null',
     OBJECT: 'object',
@@ -69,6 +70,11 @@ var TypeUtil = {
         return false;
     },
 
+    isNan: function(val)
+    {
+        return Object.is(val, NaN);
+    },
+
     isNone: function(val)
     {
         return (Object.is(val, undefined) || Object.is(val, null) || Object.is(val, NaN));
@@ -126,6 +132,7 @@ var TypeUtil = {
             case TypeUtil.DATE:
             case TypeUtil.ERROR:
             case TypeUtil.FUNCTION:
+            case TypeUtil.NAN:
             case TypeUtil.NUMBER:
             case TypeUtil.NULL:
             case TypeUtil.OBJECT:
@@ -167,6 +174,9 @@ var TypeUtil = {
         }
         else if (TypeUtil.isFunction(val)) {
             return TypeUtil.FUNCTION;
+        }
+        else if (TypeUtil.isNan(val)) {
+            return TypeUtil.NAN;
         }
         else if (TypeUtil.isNumber(val)) {
             return TypeUtil.NUMBER;
