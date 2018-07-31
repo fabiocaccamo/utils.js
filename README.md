@@ -48,6 +48,7 @@ require(['@fabiocaccamo/utils.js'], function(utils) {
 - `utils.trigo`
 - `utils.type`
 - `utils.url`
+- `utils.utf8`
 - `utils.xml`
 
 ## Development
