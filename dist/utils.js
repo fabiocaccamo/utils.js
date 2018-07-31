@@ -736,7 +736,7 @@
 };
     var DateUtil = {
 
-    now: function()
+    timestamp: function()
     {
         return new Date().getTime();
     },
@@ -1439,11 +1439,6 @@
             f *= i;
         }
         return f;
-
-        // factorial
-        // return ArrayUtil.reduce(new Array(n), function(value, item, index, arr) {
-        //     return (value * (index + 1));
-        // }, 1);
     },
 
     gcd: function(a, b)
@@ -1484,16 +1479,16 @@
     proportion: function(a, b, x, y)
     {
         // a : b = x : y
-        if (isNaN(a) || Object.is(a, NaN)) {
+        if (!TypeUtil.isNumber(a)) {
             return ((b * x) / y);
         }
-        else if (isNaN(b) || Object.is(b, NaN)) {
+        else if (!TypeUtil.isNumber(b)) {
             return ((a * y) / x);
         }
-        else if (isNaN(x) || Object.is(x, NaN)) {
+        else if (!TypeUtil.isNumber(x)) {
             return ((y * a) / b);
         }
-        else if (isNaN(y) || Object.is(y, NaN)) {
+        else if (!TypeUtil.isNumber(y)) {
             return ((x * b) / a);
         }
         return Number.NaN;
@@ -1562,11 +1557,6 @@
             s += values[i];
         }
         return s;
-
-        // summation
-        // return ArrayUtil.reduce(list, function(value, item, index, arr) {
-        //     return (value + item);
-        // },);
     }
 
 };
@@ -2401,7 +2391,7 @@
         return false;
     },
 
-    isNan: function(val)
+    isNaN: function(val)
     {
         return Object.is(val, NaN);
     },
@@ -2506,7 +2496,7 @@
         else if (TypeUtil.isFunction(val)) {
             return TypeUtil.FUNCTION;
         }
-        else if (TypeUtil.isNan(val)) {
+        else if (TypeUtil.isNaN(val)) {
             return TypeUtil.NAN;
         }
         else if (TypeUtil.isNumber(val)) {

@@ -1,6 +1,6 @@
 var DateUtil = {
 
-    now: function()
+    timestamp: function()
     {
         return new Date().getTime();
     },
