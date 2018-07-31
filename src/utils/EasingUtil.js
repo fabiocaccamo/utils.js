@@ -337,8 +337,8 @@ var EasingUtil = {
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
-        a = (a == undefined ? false : a);
-        i = (i == undefined ? false : i);
+        a = (a === true ? true : false);
+        i = (i === true ? true : false);
 
         var w = Math.cos(Math.PI * t * f);
         w = (a ? Math.abs(w) : w);
@@ -350,8 +350,8 @@ var EasingUtil = {
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
-        a = (a == undefined ? false : a);
-        i = (i == undefined ? false : i);
+        a = (a === true ? true : false);
+        i = (i === true ? true : false);
 
         var w = (t * f) % 1.0;
         w = (a ? Math.abs(w) : w);
@@ -363,8 +363,8 @@ var EasingUtil = {
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
-        a = (a == undefined ? false : a);
-        i = (i == undefined ? false : i);
+        a = (a === true ? true : false);
+        i = (i === true ? true : false);
 
         var w = Math.sin(Math.PI * t * f);
         w = (a ? Math.abs(w) : w);
