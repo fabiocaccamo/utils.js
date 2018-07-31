@@ -61,17 +61,17 @@ var MathUtil = {
 
     proportion: function(a, b, x, y)
     {
-        //a : b = x : y
-        if (isNaN(a)) {
+        // a : b = x : y
+        if (!TypeUtil.isNumber(a)) {
             return ((b * x) / y);
         }
-        else if (isNaN(b)) {
+        else if (!TypeUtil.isNumber(b)) {
             return ((a * y) / x);
         }
-        else if (isNaN(x)) {
+        else if (!TypeUtil.isNumber(x)) {
             return ((y * a) / b);
         }
-        else if (isNaN(y)) {
+        else if (!TypeUtil.isNumber(y)) {
             return ((x * b) / a);
         }
         return Number.NaN;
