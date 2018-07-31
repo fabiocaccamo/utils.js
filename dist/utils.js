@@ -203,14 +203,113 @@
 };
     var Base64Util = {
 
+    CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+    CHARS_LIST: [
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+        'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/', '='
+    ],
+    CHARS_TABLE: {
+        'A':  0, 'B':  1, 'C':  2, 'D':  3, 'E':  4, 'F':  5, 'G':  6, 'H':  7, 'I':  8, 'J':  9, 'K': 10, 'L': 11, 'M': 12,
+        'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
+        'a': 26, 'b': 27, 'c': 28, 'd': 29, 'e': 30, 'f': 31, 'g': 32, 'h': 33, 'i': 34, 'j': 35, 'k': 36, 'l': 37, 'm': 38,
+        'n': 39, 'o': 40, 'p': 41, 'q': 42, 'r': 43, 's': 44, 't': 45, 'u': 46, 'v': 47, 'w': 48, 'x': 49, 'y': 50, 'z': 51,
+        '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
+    },
+
     decode: function(str)
     {
-        return window.atob(str);
+        var input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+        var output = '';
+
+        try {
+            output = window.atob(input);
+            return output;
+        } catch (e){
+        }
+
+        // var chars = Base64Util.CHARS;
+        var chars = Base64Util.CHARS_TABLE;
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+
+        var i = 0;
+        var j = input.length;
+
+        while (i < j) {
+            // enc1 = chars.indexOf(input.charAt(i++));
+            // enc2 = chars.indexOf(input.charAt(i++));
+            // enc3 = chars.indexOf(input.charAt(i++));
+            // enc4 = chars.indexOf(input.charAt(i++));
+
+            enc1 = chars[ input.charAt(i++) ];
+            enc2 = chars[ input.charAt(i++) ];
+            enc3 = chars[ input.charAt(i++) ];
+            enc4 = chars[ input.charAt(i++) ];
+
+            chr1 = ((enc1 << 2) | (enc2 >> 4));
+            chr2 = (((enc2 & 15) << 4) | (enc3 >> 2));
+            chr3 = (((enc3 & 3) << 6) | enc4);
+
+            output += String.fromCharCode(chr1);
+
+            if (enc3 != 64) {
+                output += String.fromCharCode(chr2);
+            }
+            if (enc4 != 64) {
+                output += String.fromCharCode(chr3);
+            }
+        }
+
+        output = UTF8Util.decode(output);
+
+        return output;
     },
 
     encode: function(str)
     {
-        return window.btoa(str);
+        var input = str;
+        var output = '';
+
+        try {
+            output = window.btoa(input);
+            return output;
+        } catch (e){
+        }
+
+        // var chars = Base64Util.CHARS;
+        var chars = Base64Util.CHARS_LIST;
+        var chr1, chr2, chr3;
+        var enc1, enc2, enc3, enc4;
+
+        input = UTF8Util.encode(input);
+
+        var i = 0;
+        var j = input.length;
+
+        while (i < j) {
+            chr1 = input.charCodeAt(i++);
+            chr2 = input.charCodeAt(i++);
+            chr3 = input.charCodeAt(i++);
+
+            enc1 = (chr1 >> 2);
+            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+            enc4 = (chr3 & 63);
+
+            if (isNaN(chr2)) {
+                enc3 = enc4 = 64;
+            } else if (isNaN(chr3)) {
+                enc4 = 64;
+            }
+
+            // output += (chars.charAt(enc1) + chars.charAt(enc2) + chars.charAt(enc3) + chars.charAt(enc4));
+            output += (chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4]);
+        }
+
+        return output;
     }
 };
     var ColorCmykUtil = {
@@ -1094,8 +1193,8 @@
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
-        a = (a == undefined ? false : a);
-        i = (i == undefined ? false : i);
+        a = (a === true ? true : false);
+        i = (i === true ? true : false);
 
         var w = Math.cos(Math.PI * t * f);
         w = (a ? Math.abs(w) : w);
@@ -1107,8 +1206,8 @@
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
-        a = (a == undefined ? false : a);
-        i = (i == undefined ? false : i);
+        a = (a === true ? true : false);
+        i = (i === true ? true : false);
 
         var w = (t * f) % 1.0;
         w = (a ? Math.abs(w) : w);
@@ -1120,8 +1219,8 @@
     {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = (isNaN(f) ? 1.0 : f);
-        a = (a == undefined ? false : a);
-        i = (i == undefined ? false : i);
+        a = (a === true ? true : false);
+        i = (i === true ? true : false);
 
         var w = Math.sin(Math.PI * t * f);
         w = (a ? Math.abs(w) : w);
@@ -2618,6 +2717,72 @@
     }
 
 };
+    var UTF8Util = {
+
+    decode: function(input)
+    {
+        return decodeURIComponent(escape(input));
+
+        // var output = '';
+        // var i = 0;
+        // var j = input.length;
+        // var c, c1, c2;
+
+        // while (i < j)
+        // {
+        //     c = input.charCodeAt(i);
+
+        //     if (c < 128) {
+        //         output += String.fromCharCode(c);
+        //         i++;
+        //     }
+        //     else if((c > 191) && (c < 224)) {
+        //         c2 = input.charCodeAt(i + 1);
+        //         output += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+        //         i += 2;
+        //     }
+        //     else {
+        //         c2 = input.charCodeAt(i + 1);
+        //         c3 = input.charCodeAt(i + 2);
+        //         output += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+        //         i += 3;
+        //     }
+        // }
+
+        // return output;
+    },
+
+    encode: function(input)
+    {
+        return unescape(encodeURIComponent(input));
+
+        // input = input.replace(/\r\n/g, '\n');
+
+        // var output = '';
+        // var i = 0;
+        // var j = input.length;
+        // var c;
+
+        // for (i; i < j; i++)
+        // {
+        //     c = input.charCodeAt(i);
+        //     if (c < 128) {
+        //         output += String.fromCharCode(c);
+        //     }
+        //     else if ((c > 127) && (c < 2048)) {
+        //         output += String.fromCharCode((c >> 6) | 192);
+        //         output += String.fromCharCode((c & 63) | 128);
+        //     }
+        //     else {
+        //         output += String.fromCharCode((c >> 12) | 224);
+        //         output += String.fromCharCode(((c >> 6) & 63) | 128);
+        //         output += String.fromCharCode((c & 63) | 128);
+        //     }
+        // }
+
+        // return output;
+    }
+};
     var XMLUtil = {
 
     removeNamespaces: function(str)
@@ -2649,7 +2814,8 @@
         trigo: TrigoUtil,
         type: TypeUtil,
         xml: XMLUtil,
-        url: URLUtil
+        url: URLUtil,
+        utf8: UTF8Util
     };
 
     return utils;

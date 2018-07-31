@@ -44,6 +44,7 @@
     @import './utils/TrigoUtil.js'
     @import './utils/TypeUtil.js'
     @import './utils/URLUtil.js'
+    @import './utils/UTF8Util.js'
     @import './utils/XMLUtil.js'
 
     var utils = {
@@ -67,7 +68,8 @@
         trigo: TrigoUtil,
         type: TypeUtil,
         xml: XMLUtil,
-        url: URLUtil
+        url: URLUtil,
+        utf8: UTF8Util
     };
 
     return utils;
