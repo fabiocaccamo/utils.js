@@ -543,12 +543,33 @@ describe('array', function() {
             test.assertEquals(f([undefined, undefined, undefined]), [undefined]);
         });
     });
-    describe('unzip', function() {
-        it('TODO', function() {
+    describe('zip / unzip', function() {
+        var z = utils.array.zip;
+        var u = utils.array.unzip;
+        var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var b = ['a', 'b', 'c', 'd', 'e', 'f'];
+        var c = [true, false, true, false, true, undefined];
+        var l = Math.min(a.length, b.length, c.length);
+        var unzipped = [a.slice(0, l), b.slice(0, l), c.slice(0, l)];
+        var zipped = [
+            [0, 'a', true],
+            [1, 'b', false],
+            [2, 'c', true],
+            [3, 'd', false],
+            [4, 'e', true],
+            [5, 'f', undefined]
+        ];
+        it('test zip', function() {
+            test.assertEquals(z(a, b, c), zipped);
         });
-    });
-    describe('zip', function() {
-        it('TODO', function() {
+        it('test unzip', function() {
+            test.assertEquals(u(zipped), unzipped);
+        });
+        it('test zip/unzip', function() {
+            test.assertEquals(u(z(a, b, c)), unzipped);
+        });
+        it('test unzip/zip', function() {
+            test.assertEquals(z.apply(null, (u(zipped))), zipped);
         });
     });
 });

@@ -170,11 +170,24 @@ var ArrayUtil = {
 
     unzip: function(list)
     {
-        // TODO
+        return ArrayUtil.zip.apply(null, list);
     },
 
-    zip: function(list)
+    zip: function(list1, list2)
     {
-        // TODO
+        var lists = FunctionUtil.args(arguments);
+        var listLength = 0;
+        lists.forEach(function(item) {
+            listLength = (listLength == 0 ? item.length : Math.min(listLength, item.length));
+        });
+        var list = [];
+        for (var i = 0; i < listLength; i++) {
+            list[i] = [];
+            for (var j = 0, k = lists.length; j < k; j++) {
+                list[i][j] = lists[j][i];
+            }
+        }
+        return list;
     }
+
 };

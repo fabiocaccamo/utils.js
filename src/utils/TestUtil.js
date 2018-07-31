@@ -34,7 +34,8 @@ var TestUtil = {
     assertEquals: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are not equals.');
+            // throw new Error('values are not equals.');
+            throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
         }
     },
 
