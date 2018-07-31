@@ -23,6 +23,7 @@ var Base64Util = {
 
         try {
             output = window.atob(input);
+            output = UTF8Util.decode(output);
             return output;
         } catch (e){
         }
@@ -67,7 +68,7 @@ var Base64Util = {
 
     encode: function(str)
     {
-        var input = str;
+        var input = UTF8Util.encode(str);
         var output = '';
 
         try {
@@ -80,8 +81,6 @@ var Base64Util = {
         var chars = Base64Util.CHARS_LIST;
         var chr1, chr2, chr3;
         var enc1, enc2, enc3, enc4;
-
-        input = UTF8Util.encode(input);
 
         var i = 0;
         var j = input.length;
