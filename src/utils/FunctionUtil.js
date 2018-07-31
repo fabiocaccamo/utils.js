@@ -1,8 +1,8 @@
 var FunctionUtil = {
 
-    args: function(argumentObj, sliceIndex)
+    args: function(argumentsObj, sliceIndex)
     {
-        return [].slice.call(argumentObj, (sliceIndex || 0));
+        return [].slice.call(argumentsObj, (sliceIndex || 0));
     },
 
     attempt: function(scope, funcName)
@@ -79,8 +79,6 @@ var FunctionUtil = {
 
     validate: function(args, arg0Types, arg1Types, arg2Types)
     {
-        console.log(typeof(arguments));
-
         // FunctionUtil.validate(arguments, 'number', 'string', ['string', 'undefined']);
 
         var args = FunctionUtil.args(args);
