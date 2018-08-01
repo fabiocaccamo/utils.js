@@ -1000,7 +1000,7 @@
 
     elasticIn: function(t, a, p)
     {
-        // a = amplitude = 0.3, p = period = 0.3
+        // a = amplitude = 0.0, p = period = 0.3
 
         if (t == 0.0) {
             return 0.0;
@@ -1025,7 +1025,7 @@
 
     elasticInOut: function(t, a, p)
     {
-        // a = amplitude = 0.3, p = period = 0.3
+        // a = amplitude = 0.0, p = period = 0.3
 
         if (t == 0.0) {
             return 0.0;
@@ -1056,7 +1056,7 @@
 
     elasticOut: function(t, a, p)
     {
-        // a = amplitude = 0.3, p = period = 0.3
+        // a = amplitude = 0.0, p = period = 0.3
 
         if (t == 0.0) {
             return 0.0;

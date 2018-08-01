@@ -1,190 +1,557 @@
 var utils = require('../dist/utils.js');
 var test = utils.test;
-
+var ease = utils.ease;
 describe('ease', function() {
+    var assertAlmostEquals = function(a, b) {
+        test.assertTrue(Math.abs(a - b) < 0.0000000001);
+    };
     describe('backIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.backIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 0.0', function() {
+            assertAlmostEquals(f(0.0, 0.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 1.0', function() {
+            assertAlmostEquals(f(0.0, 1.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 2.0', function() {
+            assertAlmostEquals(f(0.0, 2.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 0.0', function() {
+            assertAlmostEquals(f(1.0, 0.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 1.0', function() {
+            assertAlmostEquals(f(1.0, 1.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 2.0', function() {
+            assertAlmostEquals(f(1.0, 2.0), 1.0);
         });
     });
     describe('backInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.backInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 0.0', function() {
+            assertAlmostEquals(f(0.0, 0.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 1.0', function() {
+            assertAlmostEquals(f(0.0, 1.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 2.0', function() {
+            assertAlmostEquals(f(0.0, 2.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 0.0', function() {
+            assertAlmostEquals(f(1.0, 0.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 1.0', function() {
+            assertAlmostEquals(f(1.0, 1.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 2.0', function() {
+            assertAlmostEquals(f(1.0, 2.0), 1.0);
         });
     });
     describe('backOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.backOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 0.0', function() {
+            assertAlmostEquals(f(0.0, 0.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 1.0', function() {
+            assertAlmostEquals(f(0.0, 1.0), 0.0);
+        });
+        it('t = 0.0, overshoot = 2.0', function() {
+            assertAlmostEquals(f(0.0, 2.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 0.0', function() {
+            assertAlmostEquals(f(1.0, 0.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 1.0', function() {
+            assertAlmostEquals(f(1.0, 1.0), 1.0);
+        });
+        it('t = 1.0, overshoot = 2.0', function() {
+            assertAlmostEquals(f(1.0, 2.0), 1.0);
         });
     });
     describe('bounceIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.bounceIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('bounceInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.bounceInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('bounceOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.bounceOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('circularIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.circularIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('circularInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.circularInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('circularOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.circularOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('cubicIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.cubicIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('cubicInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.cubicInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('cubicOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.cubicOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('elasticIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.elasticIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 0.0, amplitude = 0.5, period = 0.5', function() {
+            assertAlmostEquals(f(0.0, 0.5, 0.5), 0.0);
+        });
+        it('t = 0.0, amplitude = 1.0, period = 1.0', function() {
+            assertAlmostEquals(f(0.0, 1.0, 1.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = 1.0, amplitude = 0.5, period = 0.5', function() {
+            assertAlmostEquals(f(1.0, 0.5, 0.5), 1.0);
+        });
+        it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
+            assertAlmostEquals(f(1.0, 1.0, 1.0), 1.0);
         });
     });
     describe('elasticInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.elasticInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 0.0, amplitude = 0.5, period = 0.5', function() {
+            assertAlmostEquals(f(0.0, 0.5, 0.5), 0.0);
+        });
+        it('t = 0.0, amplitude = 1.0, period = 1.0', function() {
+            assertAlmostEquals(f(0.0, 1.0, 1.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = 1.0, amplitude = 0.5, period = 0.5', function() {
+            assertAlmostEquals(f(1.0, 0.5, 0.5), 1.0);
+        });
+        it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
+            assertAlmostEquals(f(1.0, 1.0, 1.0), 1.0);
         });
     });
     describe('elasticOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.elasticOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 0.0, amplitude = 0.5, period = 0.5', function() {
+            assertAlmostEquals(f(0.0, 0.5, 0.5), 0.0);
+        });
+        it('t = 0.0, amplitude = 1.0, period = 1.0', function() {
+            assertAlmostEquals(f(0.0, 1.0, 1.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = 1.0, amplitude = 0.5, period = 0.5', function() {
+            assertAlmostEquals(f(1.0, 0.5, 0.5), 1.0);
+        });
+        it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
+            assertAlmostEquals(f(1.0, 1.0, 1.0), 1.0);
         });
     });
     describe('exponentialIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.exponentialIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('exponentialInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.exponentialInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('exponentialOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.exponentialOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('none', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.none;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quadraticIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quadraticIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quadraticInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quadraticInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quadraticOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quadraticOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quarticIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quarticIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quarticInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quarticInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quarticOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quarticOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quinticIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quinticIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quinticInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quinticInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('quinticOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.quinticOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('sexticIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.sexticIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('sexticInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.sexticInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('sexticOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.sexticOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('sineIn', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.sineIn;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('sineInOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.sineInOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('sineOut', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.sineOut;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 1.0);
         });
     });
     describe('waveCosine', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.waveCosine;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 1.0);
         });
+        it('t = 0.0, frequency = 1.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 1.0, false, false), 1.0);
+        });
+        it('t = 0.0, frequency = 2.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 2.0, false, false), 1.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = true, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 1.0, true, false), 1.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = true, inverse = true', function() {
+            assertAlmostEquals(f(0.0, 1.0, true, true), 0.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = false, inverse = true', function() {
+            assertAlmostEquals(f(0.0, 1.0, false, true), 0.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), -1.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 1.0, false, false), -1.0);
+        });
+        it('t = 1.0, frequency = 2.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 2.0, false, false), 1.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = true, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 1.0, true, false), 1.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = true, inverse = true', function() {
+            assertAlmostEquals(f(1.0, 1.0, true, true), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = false, inverse = true', function() {
+            assertAlmostEquals(f(1.0, 1.0, false, true), 2.0);
+        });
+        // console.log(0.0, f(0.0));
+        // console.log(0.0, f(0.0, 1.0, false, false));
+        // console.log(0.0, f(0.0, 2.0, false, false));
+        // console.log(0.0, f(0.0, 1.0, true, false));
+        // console.log(0.0, f(0.0, 1.0, true, true));
+        // console.log(0.0, f(0.0, 1.0, false, true));
+        // console.log(1.0, f(1.0));
+        // console.log(1.0, f(1.0, 1.0, false, false));
+        // console.log(1.0, f(1.0, 2.0, false, false));
+        // console.log(1.0, f(1.0, 1.0, true, false));
+        // console.log(1.0, f(1.0, 1.0, true, true));
+        // console.log(1.0, f(1.0, 1.0, false, true));
     });
     describe('waveSawtooth', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.waveSawtooth;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
         });
+        it('t = 0.0, frequency = 1.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 1.0, false, false), 0.0);
+        });
+        it('t = 0.0, frequency = 2.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 2.0, false, false), 0.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = true, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 1.0, true, false), 0.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = true, inverse = true', function() {
+            assertAlmostEquals(f(0.0, 1.0, true, true), 1.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = false, inverse = true', function() {
+            assertAlmostEquals(f(0.0, 1.0, false, true), 1.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 1.0, false, false), 0.0);
+        });
+        it('t = 1.0, frequency = 2.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 2.0, false, false), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = true, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 1.0, true, false), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = true, inverse = true', function() {
+            assertAlmostEquals(f(1.0, 1.0, true, true), 1.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = false, inverse = true', function() {
+            assertAlmostEquals(f(1.0, 1.0, false, true), 1.0);
+        });
+        // console.log(0.0, f(0.0));
+        // console.log(0.0, f(0.0, 1.0, false, false));
+        // console.log(0.0, f(0.0, 2.0, false, false));
+        // console.log(0.0, f(0.0, 1.0, true, false));
+        // console.log(0.0, f(0.0, 1.0, true, true));
+        // console.log(0.0, f(0.0, 1.0, false, true));
+        // console.log(1.0, f(1.0));
+        // console.log(1.0, f(1.0, 1.0, false, false));
+        // console.log(1.0, f(1.0, 2.0, false, false));
+        // console.log(1.0, f(1.0, 1.0, true, false));
+        // console.log(1.0, f(1.0, 1.0, true, true));
+        // console.log(1.0, f(1.0, 1.0, false, true));
     });
     describe('waveSine', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = ease.waveSine;
+        it('t = 0.0', function() {
+            assertAlmostEquals(f(0.0), 0.0);
         });
+        it('t = 0.0, frequency = 1.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 1.0, false, false), 0.0);
+        });
+        it('t = 0.0, frequency = 2.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 2.0, false, false), 0.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = true, inverse = false', function() {
+            assertAlmostEquals(f(0.0, 1.0, true, false), 0.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = true, inverse = true', function() {
+            assertAlmostEquals(f(0.0, 1.0, true, true), 1.0);
+        });
+        it('t = 0.0, frequency = 1.0, absolute = false, inverse = true', function() {
+            assertAlmostEquals(f(0.0, 1.0, false, true), 1.0);
+        });
+        it('t = 1.0', function() {
+            assertAlmostEquals(f(1.0), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 1.0, false, false), 0.0);
+        });
+        it('t = 1.0, frequency = 2.0, absolute = false, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 2.0, false, false), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = true, inverse = false', function() {
+            assertAlmostEquals(f(1.0, 1.0, true, false), 0.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = true, inverse = true', function() {
+            assertAlmostEquals(f(1.0, 1.0, true, true), 1.0);
+        });
+        it('t = 1.0, frequency = 1.0, absolute = false, inverse = true', function() {
+            assertAlmostEquals(f(1.0, 1.0, false, true), 1.0);
+        });
+        // console.log(0.0, f(0.0));
+        // console.log(0.0, f(0.0, 1.0, false, false));
+        // console.log(0.0, f(0.0, 2.0, false, false));
+        // console.log(0.0, f(0.0, 1.0, true, false));
+        // console.log(0.0, f(0.0, 1.0, true, true));
+        // console.log(0.0, f(0.0, 1.0, false, true));
+        // console.log(1.0, f(1.0));
+        // console.log(1.0, f(1.0, 1.0, false, false));
+        // console.log(1.0, f(1.0, 2.0, false, false));
+        // console.log(1.0, f(1.0, 1.0, true, false));
+        // console.log(1.0, f(1.0, 1.0, true, true));
+        // console.log(1.0, f(1.0, 1.0, false, true));
     });
 });
