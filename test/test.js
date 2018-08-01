@@ -74,6 +74,9 @@ describe('utils', function() {
     it('utils.url', function() {
         test.assertObject(utils.url);
     });
+    it('utils.utf8', function() {
+        test.assertObject(utils.utf8);
+    });
     it('utils.xml', function() {
         test.assertObject(utils.xml);
     });
