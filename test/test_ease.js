@@ -5,6 +5,13 @@ describe('ease', function() {
     var assertAlmostEquals = function(a, b) {
         test.assertTrue(Math.abs(a - b) < 0.0000000001);
     };
+    var assertAlwaysNumber = function(f) {
+        var t = 0.0;
+        while (t <= 1.0) {
+            test.assertNumber(f(t));
+            t += 0.05;
+        }
+    };
     describe('backIn', function() {
         var f = ease.backIn;
         it('t = 0.0', function() {
@@ -30,6 +37,9 @@ describe('ease', function() {
         });
         it('t = 1.0, overshoot = 2.0', function() {
             assertAlmostEquals(f(1.0, 2.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('backInOut', function() {
@@ -58,6 +68,9 @@ describe('ease', function() {
         it('t = 1.0, overshoot = 2.0', function() {
             assertAlmostEquals(f(1.0, 2.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('backOut', function() {
         var f = ease.backOut;
@@ -85,6 +98,9 @@ describe('ease', function() {
         it('t = 1.0, overshoot = 2.0', function() {
             assertAlmostEquals(f(1.0, 2.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('bounceIn', function() {
         var f = ease.bounceIn;
@@ -93,6 +109,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('bounceInOut', function() {
@@ -103,6 +122,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('bounceOut', function() {
         var f = ease.bounceOut;
@@ -111,6 +133,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('circularIn', function() {
@@ -121,6 +146,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('circularInOut', function() {
         var f = ease.circularInOut;
@@ -129,6 +157,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('circularOut', function() {
@@ -139,6 +170,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('cubicIn', function() {
         var f = ease.cubicIn;
@@ -147,6 +181,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('cubicInOut', function() {
@@ -157,6 +194,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('cubicOut', function() {
         var f = ease.cubicOut;
@@ -165,6 +205,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('elasticIn', function() {
@@ -187,6 +230,9 @@ describe('ease', function() {
         it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
             assertAlmostEquals(f(1.0, 1.0, 1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('elasticInOut', function() {
         var f = ease.elasticInOut;
@@ -207,6 +253,9 @@ describe('ease', function() {
         });
         it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
             assertAlmostEquals(f(1.0, 1.0, 1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('elasticOut', function() {
@@ -229,6 +278,9 @@ describe('ease', function() {
         it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
             assertAlmostEquals(f(1.0, 1.0, 1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('exponentialIn', function() {
         var f = ease.exponentialIn;
@@ -237,6 +289,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('exponentialInOut', function() {
@@ -247,6 +302,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('exponentialOut', function() {
         var f = ease.exponentialOut;
@@ -255,6 +313,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('none', function() {
@@ -265,6 +326,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('quadraticIn', function() {
         var f = ease.quadraticIn;
@@ -273,6 +337,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('quadraticInOut', function() {
@@ -283,6 +350,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('quadraticOut', function() {
         var f = ease.quadraticOut;
@@ -291,6 +361,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('quarticIn', function() {
@@ -301,6 +374,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('quarticInOut', function() {
         var f = ease.quarticInOut;
@@ -309,6 +385,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('quarticOut', function() {
@@ -319,6 +398,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('quinticIn', function() {
         var f = ease.quinticIn;
@@ -327,6 +409,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('quinticInOut', function() {
@@ -337,6 +422,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('quinticOut', function() {
         var f = ease.quinticOut;
@@ -345,6 +433,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('sexticIn', function() {
@@ -355,6 +446,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('sexticInOut', function() {
         var f = ease.sexticInOut;
@@ -363,6 +457,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('sexticOut', function() {
@@ -373,6 +470,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('sineIn', function() {
         var f = ease.sineIn;
@@ -381,6 +481,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('sineInOut', function() {
@@ -391,6 +494,9 @@ describe('ease', function() {
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
     });
     describe('sineOut', function() {
         var f = ease.sineOut;
@@ -399,6 +505,9 @@ describe('ease', function() {
         });
         it('t = 1.0', function() {
             assertAlmostEquals(f(1.0), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
     });
     describe('waveCosine', function() {
@@ -438,6 +547,9 @@ describe('ease', function() {
         });
         it('t = 1.0, frequency = 1.0, absolute = false, inverse = true', function() {
             assertAlmostEquals(f(1.0, 1.0, false, true), 2.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
         // console.log(0.0, f(0.0));
         // console.log(0.0, f(0.0, 1.0, false, false));
@@ -490,6 +602,9 @@ describe('ease', function() {
         it('t = 1.0, frequency = 1.0, absolute = false, inverse = true', function() {
             assertAlmostEquals(f(1.0, 1.0, false, true), 1.0);
         });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
+        });
         // console.log(0.0, f(0.0));
         // console.log(0.0, f(0.0, 1.0, false, false));
         // console.log(0.0, f(0.0, 2.0, false, false));
@@ -540,6 +655,9 @@ describe('ease', function() {
         });
         it('t = 1.0, frequency = 1.0, absolute = false, inverse = true', function() {
             assertAlmostEquals(f(1.0, 1.0, false, true), 1.0);
+        });
+        it('t = { loop from 0.0 to 1.0 }', function() {
+            assertAlwaysNumber(f);
         });
         // console.log(0.0, f(0.0));
         // console.log(0.0, f(0.0, 1.0, false, false));
