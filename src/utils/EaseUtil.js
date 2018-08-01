@@ -1,4 +1,4 @@
-var EasingUtil = {
+var EaseUtil = {
 
     backIn: function(t, s)
     {

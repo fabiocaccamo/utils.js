@@ -866,7 +866,7 @@
         ].join('');
     }
 };
-    var EasingUtil = {
+    var EaseUtil = {
 
     backIn: function(t, s)
     {
@@ -2808,7 +2808,7 @@
         base64: Base64Util,
         color: ColorUtil,
         date: DateUtil,
-        easing: EasingUtil,
+        ease: EaseUtil,
         func: FunctionUtil,
         geom: GeomUtil,
             // point: PointUtil,

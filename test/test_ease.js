@@ -1,7 +1,7 @@
 var utils = require('../dist/utils.js');
 var test = utils.test;
 
-describe('easing', function() {
+describe('ease', function() {
     describe('backIn', function() {
         it('TODO', function() {
             test.assertTrue(true);

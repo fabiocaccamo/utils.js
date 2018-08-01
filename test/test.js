@@ -26,8 +26,8 @@ describe('utils', function() {
     it('utils.date', function() {
         test.assertObject(utils.date);
     });
-    it('utils.easing', function() {
-        test.assertObject(utils.easing);
+    it('utils.ease', function() {
+        test.assertObject(utils.ease);
     });
     it('utils.func', function() {
         test.assertObject(utils.func);

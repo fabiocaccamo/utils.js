@@ -32,7 +32,7 @@ require(['@fabiocaccamo/utils.js'], function(utils) {
 - `utils.color.hex`
 - `utils.color.rgb`
 - `utils.date`
-- `utils.easing`
+- `utils.ease`
 - `utils.func`
 - `utils.geom`
 - `utils.geom.point`

@@ -28,7 +28,7 @@
     @import './utils/ColorRgbUtil.js'
     @import './utils/ColorUtil.js'
     @import './utils/DateUtil.js'
-    @import './utils/EasingUtil.js'
+    @import './utils/EaseUtil.js'
     @import './utils/FunctionUtil.js'
     @import './utils/PointUtil.js'
     @import './utils/GeomUtil.js'
@@ -52,7 +52,7 @@
         base64: Base64Util,
         color: ColorUtil,
         date: DateUtil,
-        easing: EasingUtil,
+        ease: EaseUtil,
         func: FunctionUtil,
         geom: GeomUtil,
             // point: PointUtil,
