@@ -1,50 +1,56 @@
 var FunctionUtil = {
 
-    args: function(argumentsObj, sliceIndex)
+    args: function(argumentsObj, skipCount)
     {
-        return [].slice.call(argumentsObj, (sliceIndex || 0));
+        return [].slice.call(argumentsObj, (skipCount || 0));
     },
 
-    attempt: function(scope, funcName)
+    attempt: function(func, scope)
     {
         try {
-            var func = scope[funcName];
-            var args = FunctionUtil.args(arguments, 2);
-            var result = func.apply(scope, args);
+            var args = FunctionUtil.args(arguments);
+            var result = FunctionUtil.call.apply(null, args);
             return result;
         }
         catch(e) {
+            return e;
         }
     },
 
-    bind: function(scope, func)
+    bind: function(func, scope)
     {
-        var args = FunctionUtil.args(arguments, 2);
-        return FunctionUtil.wrap(scope, func, args);
+        var args = FunctionUtil.args(arguments);
+        return function(){
+            var result = FunctionUtil.call.apply(null, args);
+            return result;
+        };
     },
 
-    call: function(scope, func)
+    call: function(func, scope)
     {
+        if (TypeUtil.isString(func)) {
+            func = scope[func];
+        }
         var args = FunctionUtil.args(arguments, 2);
         var result = func.apply(scope, args);
         return result;
     },
 
-    delay: function(scope, func, milliseconds)
+    delay: function(timeout, func, scope)
     {
         var args = FunctionUtil.args(arguments, 3);
-        var wrapper = FunctionUtil.wrap(scope, func, args);
-        var timeoutID = setTimeout(wrapper, milliseconds);
+        var wrapper = FunctionUtil.bind.apply(null, [func, scope].concat(args));
+        var timeoutID = setTimeout(wrapper, timeout);
         return {
             cancel: function() {
                 clearTimeout(timeoutID);
             },
-            f: wrapper,
+            func: wrapper,
             id: timeoutID
         };
     },
 
-    memoize: function(scope, func)
+    memoize: function(func, scope)
     {
         var cache = {};
 
@@ -61,9 +67,10 @@ var FunctionUtil = {
 
     noop: function()
     {
+        return true;
     },
 
-    repeat: function(scope, func, milliseconds)
+    repeat: function(func, scope, milliseconds, count)
     {
         var args = FunctionUtil.args(arguments, 3);
         var wrapper = FunctionUtil.wrap(scope, func, args);
@@ -111,12 +118,5 @@ var FunctionUtil = {
                 throw new TypeError('invalid argument: type of argument[' + i + '] is "' + argType + '", expected "' + argTypes.join('" or "') + '".');
             }
         }
-    },
-
-    wrap: function(scope, func, args)
-    {
-        return function(){
-            func.apply(scope, args);
-        };
     }
 };
