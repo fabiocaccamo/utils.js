@@ -124,13 +124,13 @@ var TestUtil = {
         }
     },
 
-    assertThrowError: function(val)
+    assertThrows: function(val)
     {
         TestUtil.assertFunction(val);
         try {
             FunctionUtil.call.apply(null, val, FunctionUtil.args(arguments, 1));
-            return;
         } catch(e) {
+            return;
         }
         throw new Error('value didn\'t throw error.');
     },
