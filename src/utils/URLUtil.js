@@ -22,7 +22,12 @@ var URLUtil = {
 
     getURL: function()
     {
-        return window.location.href;
+        var url = '';
+        try {
+            url = window.location.href;
+        } catch(e) {
+        }
+        return url;
     },
 
     isFile: function(url)
