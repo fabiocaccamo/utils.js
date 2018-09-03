@@ -128,7 +128,10 @@ var TestUtil = {
     {
         TestUtil.assertFunction(val);
         try {
-            FunctionUtil.call.apply(null, val, FunctionUtil.args(arguments, 1));
+            var scope = null;
+            var args = FunctionUtil.args(arguments, 1);
+            args = [val, scope].concat(args);
+            FunctionUtil.call.apply(null, args);
         } catch(e) {
             return;
         }

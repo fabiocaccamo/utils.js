@@ -1279,17 +1279,17 @@
         return result;
     },
 
-    delay: function(timeout, func, scope)
+    delay: function(milliseconds, func, scope)
     {
         var args = FunctionUtil.args(arguments, 3);
         var wrapper = FunctionUtil.bind.apply(null, [func, scope].concat(args));
-        var timeoutID = setTimeout(wrapper, timeout);
+        var timeoutId = setTimeout(wrapper, milliseconds);
         return {
             cancel: function() {
-                clearTimeout(timeoutID);
+                clearTimeout(timeoutId);
             },
             func: wrapper,
-            id: timeoutID
+            id: timeoutId
         };
     },
 
@@ -1299,10 +1299,10 @@
 
         return function()
         {
-            var args = FunctionUtil.args(arguments, 0);
+            var args = FunctionUtil.args(arguments);
             var key = String(args);
-            if(!(key in cache)){
-                cache[key] = func.apply(scope, args);
+            if (!(key in cache)) {
+                cache[key] = FunctionUtil.call.apply(null, [func, scope].concat(args));
             }
             return cache[key];
         };
@@ -1313,30 +1313,26 @@
         return true;
     },
 
-    repeat: function(func, scope, milliseconds, count)
+    repeat: function(milliseconds, func, scope)
     {
         var args = FunctionUtil.args(arguments, 3);
-        var wrapper = FunctionUtil.wrap(scope, func, args);
-        var intervalID = setInterval(wrapper, milliseconds);
+        var wrapper = FunctionUtil.bind.apply(null, [func, scope].concat(args));
+        var intervalId = setInterval(wrapper, milliseconds);
         return {
             cancel: function() {
-                clearInterval(intervalID);
+                clearInterval(intervalId);
             },
-            f: wrapper,
-            id: timeoutID
+            func: wrapper,
+            id: intervalId
         };
     },
 
-    validate: function(args, arg0Types, arg1Types, arg2Types)
+    validate: function(argumentsObj)
     {
         // FunctionUtil.validate(arguments, 'number', 'string', ['string', 'undefined']);
 
-        var args = FunctionUtil.args(args);
+        var args = FunctionUtil.args(argumentsObj);
         var types = FunctionUtil.args(arguments, 1);
-
-        if (args.length < types.length) {
-            throw new TypeError('invalid arguments length: received ' + args.length + ', expected ' + types.length + ' arguments.');
-        }
 
         var i, j, k, n;
 
@@ -1344,15 +1340,28 @@
             if (!TypeUtil.isArray(types[i])) {
                 types[i] = [types[i]];
             }
+        }
+
+        var argsExpectedCount = types.length;
+        while (argsExpectedCount > 0) {
+            if (types[(argsExpectedCount - 1)].indexOf('undefined') === -1) {
+                break;
+            }
+            argsExpectedCount--;
+        }
+        if (args.length < argsExpectedCount) {
+            throw new TypeError('invalid arguments count: received ' + args.length + ', expected ' + argsExpectedCount + ' arguments.');
+        }
+
+        for (i = 0, j = types.length; i < j; i++) {
             for (k = 0, n = types[i].length; k < n; k++) {
                 if (!TypeUtil.isType(types[i][k])) {
-                    throw new TypeError('invalid argument: type validator "' + String(types[i][k]) + '" is not a valid type.');
+                    throw new TypeError('invalid argument: expected type "' + String(types[i][k]) + '" is not a valid type.');
                 }
             }
         }
 
         var arg, argType, argTypes;
-
         for (i = 0, j = args.length; i < j; i++) {
             arg = args[i];
             argType = TypeUtil.of(args[i]);
@@ -2315,7 +2324,10 @@
     {
         TestUtil.assertFunction(val);
         try {
-            FunctionUtil.call.apply(null, val, FunctionUtil.args(arguments, 1));
+            var scope = null;
+            var args = FunctionUtil.args(arguments, 1);
+            args = [val, scope].concat(args);
+            FunctionUtil.call.apply(null, args);
         } catch(e) {
             return;
         }
