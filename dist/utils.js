@@ -2395,7 +2395,7 @@
     {
         TestUtil.assertNumber(val1);
         TestUtil.assertNumber(val2);
-        if (TypeUtil.isNaN(tolerance)) {
+        if (!TypeUtil.isNumber(tolerance)) {
             tolerance = 0.0000000001;
         }
         TestUtil.assertTrue(Math.abs(val1 - val2) <= tolerance);
