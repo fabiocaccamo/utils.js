@@ -1488,7 +1488,8 @@
 
     bilinear: function(a, b, c, d, u, v)
     {
-        return linear(linear(a, b, u), linear(c, d, u), v);
+        var f = InterpolationUtil.linear;
+        return f(f(a, b, u), f(c, d, u), v);
     },
 
     linear: function(a, b, t)
@@ -1499,9 +1500,9 @@
 
     multilinear: function(list, t)
     {
-        var s = scalar((list.length - 1), t);
+        var s = InterpolationUtil.scalar((list.length - 1), t);
         var i = s.index;
-        return linear(list[i], list[(i + 1)], s.t);
+        return InterpolationUtil.linear(list[i], list[(i + 1)], s.t);
     },
 
     scalar: function(parts, t)
@@ -1514,7 +1515,6 @@
 
         var tIndex = MathUtil.constrain(tScaledIndex, tMinIndex, tMaxIndex);
         var tReduced = (tScaled - tIndex);
-
         return { index:tIndex, t:tReduced };
     }
 
@@ -1578,6 +1578,11 @@
     lcm: function(a, b)
     {
         return (a * b / (MathUtil.gcd(a, b)));
+    },
+
+    lerp: function(a, b, t)
+    {
+        return InterpolationUtil.linear(a, b, t);
     },
 
     map: function(n, a, b, c, d)
