@@ -37,6 +37,11 @@ describe('math', function() {
             test.assertTrue(true);
         });
     });
+    describe('lerp', function() {
+        it('TODO', function() {
+            test.assertTrue(true);
+        });
+    });
     describe('map', function() {
         it('TODO', function() {
             test.assertTrue(true);
