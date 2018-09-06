@@ -28,8 +28,9 @@ var TypeUtil = {
     {
         if (TypeUtil.isString(val)) {
             try {
-                Base64Util.decode(val);
-                return true;
+                if (Base64Util.decode(val) !== '') {
+                    return true;
+                }
             }
             catch(e){
             }

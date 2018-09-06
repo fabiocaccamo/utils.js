@@ -30,8 +30,19 @@ describe('type', function() {
         });
     });
     describe('isBase64', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = type.isBase64;
+        it('test isBase64 against empty string', function() {
+            test.assertFalse(f(''));
+        });
+        it('test isBase64 against invalid string', function() {
+            test.assertFalse(f('kjhsdafjksadhf'));
+            test.assertTrue(f('QGZhYmlvY2FjY2Ftby91dGlscy5qcw'));
+        });
+        it('test isBase64 against valid string', function() {
+            test.assertTrue(f('QGZhYmlvY2FjY2Ftby91dGlscy5qcw=='));
+        });
+        it('test isBase64 against valid string with extra white-space', function() {
+            test.assertTrue(f('  QGZhYmlvY2FjY2Ftby91dGlscy5qcw==  '));
         });
     });
     describe('isBoolean', function() {
