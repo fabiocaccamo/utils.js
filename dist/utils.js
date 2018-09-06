@@ -1524,6 +1524,7 @@
     decode: function(str)
     {
         // http://qnimate.com/json-parse-throws-unexpected-token-error-for-valid-json/
+        // https://stackoverflow.com/questions/22200588/json-lint-says-its-valid-but-json-parse-throws-error/22200674
         // str = str.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\f/g, '\\f');
         return JSON.parse(str);
     },
@@ -2202,7 +2203,7 @@
             throw new Error('value is not array.');
         }
         if (TypeUtil.isNumber(len)) {
-            TestUtil.assertEquals(val.length, len);
+            TestUtil.assertEqual(val.length, len);
         }
     },
 
@@ -2227,7 +2228,7 @@
         }
     },
 
-    assertEquals: function(val1, val2)
+    assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
             // throw new Error('values are not equals.');
@@ -2271,10 +2272,59 @@
         }
     },
 
+    assertNotArray: function(val)
+    {
+        if (TypeUtil.isArray(val)) {
+            throw new Error('value is array.');
+        }
+    },
+
+    assertNotBase64: function(val)
+    {
+        if (TypeUtil.isBase64(val)) {
+            throw new Error('value is base64.');
+        }
+    },
+
+    assertNotBoolean: function(val)
+    {
+        if (TypeUtil.isBoolean(val)) {
+            throw new Error('value is boolean.');
+        }
+    },
+
+    assertNotDate: function(val)
+    {
+        if (TypeUtil.isDate(val)) {
+            throw new Error('value is date.');
+        }
+    },
+
     assertNotEquals: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are equals.');
+            throw new Error('values are equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+        }
+    },
+
+    assertNotError: function(val)
+    {
+        if (TypeUtil.isError(val)) {
+            throw new Error('value is error.');
+        }
+    },
+
+    assertNotFunction: function(val)
+    {
+        if (TypeUtil.isFunction(val)) {
+            throw new Error('value is function.');
+        }
+    },
+
+    assertNotJSON: function(val)
+    {
+        if (TypeUtil.isJSON(val)) {
+            throw new Error('value is json.');
         }
     },
 
@@ -2285,11 +2335,70 @@
         }
     },
 
+    assertNotNumber: function(val)
+    {
+        if (TypeUtil.isNumber(val)) {
+            throw new Error('value is number.');
+        }
+    },
+
+    assertNotNull: function(val)
+    {
+        if (TypeUtil.isNull(val)) {
+            throw new Error('value is null.');
+        }
+    },
+
+    assertNotObject: function(val)
+    {
+        if (TypeUtil.isObject(val)) {
+            throw new Error('value is object.');
+        }
+    },
+
+    assertNotRegExp: function(val)
+    {
+        if (TypeUtil.isRegExp(val)) {
+            throw new Error('value is regexp.');
+        }
+    },
+
+    assertNotString: function(val)
+    {
+        if (TypeUtil.isString(val)) {
+            throw new Error('value is string.');
+        }
+    },
+
+    assertNotUndefined: function(val)
+    {
+        if (TypeUtil.isUndefined(val)) {
+            throw new Error('value is undefined.');
+        }
+    },
+
+    assertNotXML: function(val)
+    {
+        if (TypeUtil.isXML(val)) {
+            throw new Error('value is xml.');
+        }
+    },
+
     assertNumber: function(val)
     {
         if (!TypeUtil.isNumber(val)) {
             throw new Error('value is not number.');
         }
+    },
+
+    assertNumberAlmostEqual: function(val1, val2, tolerance)
+    {
+        TestUtil.assertNumber(val1);
+        TestUtil.assertNumber(val2);
+        if (TypeUtil.isNaN(tolerance)) {
+            tolerance = 0.0000000001;
+        }
+        TestUtil.assertTrue(Math.abs(val1 - val2) <= tolerance);
     },
 
     assertNull: function(val)
@@ -2847,3 +2956,4 @@
 
     return utils;
 }));
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwiZmlsZSI6InV0aWxzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uIChyb290LCBmYWN0b3J5KSB7XG5cbiAgICBpZiAodHlwZW9mKGRlZmluZSkgPT09ICdmdW5jdGlvbicgJiYgZGVmaW5lLmFtZCkge1xuICAgICAgICAvLyBBTURcbiAgICAgICAgZGVmaW5lKCdAZmFiaW9jYWNjYW1vL3V0aWxzLmpzJywgZmFjdG9yeSk7XG4gICAgICAgIGRlZmluZSgnQGZhYmlvY2FjY2Ftby91dGlscycsIGZhY3RvcnkpO1xuICAgICAgICBkZWZpbmUoJ3V0aWxzLmpzJywgZmFjdG9yeSk7XG4gICAgICAgIGRlZmluZSgndXRpbHMnLCBmYWN0b3J5KTtcbiAgICB9XG4gICAgZWxzZSBpZiAodHlwZW9mKG1vZHVsZSkgPT09ICdvYmplY3QnKSB7XG4gICAgICAgIC8vIENvbW1vbkpTXG4gICAgICAgIG1vZHVsZS5leHBvcnRzID0gZmFjdG9yeSgpO1xuICAgIH1cbiAgICBlbHNlIHtcbiAgICAgICAgLy8gU2NyaXB0IHRhZyBpbXBvcnQgaS5lLiwgSUlGRVxuICAgICAgICByb290LnV0aWxzID0gZmFjdG9yeSgpO1xuICAgICAgICByb290LnUgPSBmYWN0b3J5KCk7XG4gICAgfVxuXG59KHRoaXMsIGZ1bmN0aW9uKCkge1xuXG4gICAgJ3VzZSBzdHJpY3QnO1xuXG4gICAgQGltcG9ydCAnLi91dGlscy9BcnJheVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9CYXNlNjRVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JDbXlrVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0NvbG9ySGV4VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0NvbG9yUmdiVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0NvbG9yVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0RhdGVVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvRWFzZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9GdW5jdGlvblV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Qb2ludFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9HZW9tVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0hleFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9JbnRlcnBvbGF0aW9uVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0pTT05VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvTWF0aFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9OdW1iZXJVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvT2JqZWN0VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1JhbmRvbVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9TdHJpbmdVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvVGVzdFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Ucmlnb1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9UeXBlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1VSTFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9VVEY4VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1hNTFV0aWwuanMnXG5cbiAgICB2YXIgdXRpbHMgPSB7XG4gICAgICAgIGFycmF5OiBBcnJheVV0aWwsXG4gICAgICAgIGJhc2U2NDogQmFzZTY0VXRpbCxcbiAgICAgICAgY29sb3I6IENvbG9yVXRpbCxcbiAgICAgICAgZGF0ZTogRGF0ZVV0aWwsXG4gICAgICAgIGVhc2U6IEVhc2VVdGlsLFxuICAgICAgICBmdW5jOiBGdW5jdGlvblV0aWwsXG4gICAgICAgIGdlb206IEdlb21VdGlsLFxuICAgICAgICAgICAgLy8gcG9pbnQ6IFBvaW50VXRpbCxcbiAgICAgICAgaGV4OiBIZXhVdGlsLFxuICAgICAgICBqc29uOiBKU09OVXRpbCxcbiAgICAgICAgbWF0aDogTWF0aFV0aWwsXG4gICAgICAgICAgICAvLyBpbnRlcnBvbGF0aW9uOiBJbnRlcnBvbGF0aW9uVXRpbCxcbiAgICAgICAgbnVtYmVyOiBOdW1iZXJVdGlsLFxuICAgICAgICBvYmplY3Q6IE9iamVjdFV0aWwsXG4gICAgICAgIHJhbmRvbTogUmFuZG9tVXRpbCxcbiAgICAgICAgc3RyaW5nOiBTdHJpbmdVdGlsLFxuICAgICAgICB0ZXN0OiBUZXN0VXRpbCxcbiAgICAgICAgdHJpZ286IFRyaWdvVXRpbCxcbiAgICAgICAgdHlwZTogVHlwZVV0aWwsXG4gICAgICAgIHhtbDogWE1MVXRpbCxcbiAgICAgICAgdXJsOiBVUkxVdGlsLFxuICAgICAgICB1dGY4OiBVVEY4VXRpbFxuICAgIH07XG5cbiAgICByZXR1cm4gdXRpbHM7XG59KSk7Il19

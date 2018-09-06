@@ -22,7 +22,7 @@ describe('test', function() {
             test.assertTrue(true);
         });
     });
-    describe('assertEquals', function() {
+    describe('assertEqual', function() {
         it('TODO', function() {
             test.assertTrue(true);
         });

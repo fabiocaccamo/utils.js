@@ -6,7 +6,7 @@ var TestUtil = {
             throw new Error('value is not array.');
         }
         if (TypeUtil.isNumber(len)) {
-            TestUtil.assertEquals(val.length, len);
+            TestUtil.assertEqual(val.length, len);
         }
     },
 
@@ -31,7 +31,7 @@ var TestUtil = {
         }
     },
 
-    assertEquals: function(val1, val2)
+    assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
             // throw new Error('values are not equals.');
@@ -75,10 +75,59 @@ var TestUtil = {
         }
     },
 
+    assertNotArray: function(val)
+    {
+        if (TypeUtil.isArray(val)) {
+            throw new Error('value is array.');
+        }
+    },
+
+    assertNotBase64: function(val)
+    {
+        if (TypeUtil.isBase64(val)) {
+            throw new Error('value is base64.');
+        }
+    },
+
+    assertNotBoolean: function(val)
+    {
+        if (TypeUtil.isBoolean(val)) {
+            throw new Error('value is boolean.');
+        }
+    },
+
+    assertNotDate: function(val)
+    {
+        if (TypeUtil.isDate(val)) {
+            throw new Error('value is date.');
+        }
+    },
+
     assertNotEquals: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are equals.');
+            throw new Error('values are equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+        }
+    },
+
+    assertNotError: function(val)
+    {
+        if (TypeUtil.isError(val)) {
+            throw new Error('value is error.');
+        }
+    },
+
+    assertNotFunction: function(val)
+    {
+        if (TypeUtil.isFunction(val)) {
+            throw new Error('value is function.');
+        }
+    },
+
+    assertNotJSON: function(val)
+    {
+        if (TypeUtil.isJSON(val)) {
+            throw new Error('value is json.');
         }
     },
 
@@ -89,11 +138,70 @@ var TestUtil = {
         }
     },
 
+    assertNotNumber: function(val)
+    {
+        if (TypeUtil.isNumber(val)) {
+            throw new Error('value is number.');
+        }
+    },
+
+    assertNotNull: function(val)
+    {
+        if (TypeUtil.isNull(val)) {
+            throw new Error('value is null.');
+        }
+    },
+
+    assertNotObject: function(val)
+    {
+        if (TypeUtil.isObject(val)) {
+            throw new Error('value is object.');
+        }
+    },
+
+    assertNotRegExp: function(val)
+    {
+        if (TypeUtil.isRegExp(val)) {
+            throw new Error('value is regexp.');
+        }
+    },
+
+    assertNotString: function(val)
+    {
+        if (TypeUtil.isString(val)) {
+            throw new Error('value is string.');
+        }
+    },
+
+    assertNotUndefined: function(val)
+    {
+        if (TypeUtil.isUndefined(val)) {
+            throw new Error('value is undefined.');
+        }
+    },
+
+    assertNotXML: function(val)
+    {
+        if (TypeUtil.isXML(val)) {
+            throw new Error('value is xml.');
+        }
+    },
+
     assertNumber: function(val)
     {
         if (!TypeUtil.isNumber(val)) {
             throw new Error('value is not number.');
         }
+    },
+
+    assertNumberAlmostEqual: function(val1, val2, tolerance)
+    {
+        TestUtil.assertNumber(val1);
+        TestUtil.assertNumber(val2);
+        if (TypeUtil.isNaN(tolerance)) {
+            tolerance = 0.0000000001;
+        }
+        TestUtil.assertTrue(Math.abs(val1 - val2) <= tolerance);
     },
 
     assertNull: function(val)
