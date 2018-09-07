@@ -43,7 +43,6 @@ describe('base64', function() {
         });
     });
     describe('encode', function() {
-        var f = b.encode;
         it('test encode empty', function() {
             test.assertEqual(e(''), '');
         });
