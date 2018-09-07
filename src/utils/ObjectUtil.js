@@ -61,9 +61,19 @@ var ObjectUtil = {
         return JSONUtil.decode(Base64Util.decode(str));
     },
 
+    decodeJSON: function(str)
+    {
+        return JSONUtil.decode(str);
+    },
+
     encodeBase64: function(obj)
     {
         return Base64Util.encode(JSONUtil.encode(obj));
+    },
+
+    encodeJSON: function(obj)
+    {
+        return JSONUtil.encode(obj);
     },
 
     equals: function(obj1, obj2)

@@ -1523,9 +1523,6 @@
 
     decode: function(str)
     {
-        // http://qnimate.com/json-parse-throws-unexpected-token-error-for-valid-json/
-        // https://stackoverflow.com/questions/22200588/json-lint-says-its-valid-but-json-parse-throws-error/22200674
-        // str = str.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t').replace(/\f/g, '\\f');
         return JSON.parse(str);
     },
 
@@ -1813,9 +1810,19 @@
         return JSONUtil.decode(Base64Util.decode(str));
     },
 
+    decodeJSON: function(str)
+    {
+        return JSONUtil.decode(str);
+    },
+
     encodeBase64: function(obj)
     {
         return Base64Util.encode(JSONUtil.encode(obj));
+    },
+
+    encodeJSON: function(obj)
+    {
+        return JSONUtil.encode(obj);
     },
 
     equals: function(obj1, obj2)
@@ -2236,8 +2243,8 @@
     assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            // throw new Error('values are not equals.');
-            throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+            throw new Error('values are not equals: "' + String(val1) + '" != "' + val2 + '"');
+            // throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
         }
     },
 
