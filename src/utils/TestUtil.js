@@ -34,8 +34,8 @@ var TestUtil = {
     assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            // throw new Error('values are not equals.');
-            throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+            throw new Error('values are not equals: "' + String(val1) + '" != "' + val2 + '"');
+            // throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
         }
     },
 
@@ -65,6 +65,13 @@ var TestUtil = {
     {
         if (!TypeUtil.isJSON(val)) {
             throw new Error('value is not json.');
+        }
+    },
+
+    assertNaN: function(val)
+    {
+        if (!TypeUtil.isNaN(val)) {
+            throw new Error('value is not NaN. ' + val);
         }
     },
 
@@ -201,7 +208,9 @@ var TestUtil = {
         if (!TypeUtil.isNumber(tolerance)) {
             tolerance = 0.0000000001;
         }
-        TestUtil.assertTrue(Math.abs(val1 - val2) <= tolerance);
+        if (Math.abs(val1 - val2) > tolerance) {
+            throw new Error('values are not almost equals (tolerance = ' + tolerance.toString() + '): ' + val1.toString() + ' != ' + val2.toString() + '.');
+        }
     },
 
     assertNull: function(val)

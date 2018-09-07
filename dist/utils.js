@@ -1594,11 +1594,17 @@
 
     normalize: function(n, a, b)
     {
-        return MathUtil.constrain((n - a) / (b - a), 0.0, 1.0);
+        return ((n - a) / (b - a));
     },
 
     proportion: function(a, b, x, y)
     {
+        var args = FunctionUtil.args(arguments);
+        var argsOk = ArrayUtil.clean(args);
+        if (argsOk.length != 3) {
+            return NaN;
+        }
+
         // a : b = x : y
         if (!TypeUtil.isNumber(a)) {
             return ((b * x) / y);
@@ -1612,7 +1618,7 @@
         else if (!TypeUtil.isNumber(y)) {
             return ((x * b) / a);
         }
-        return Number.NaN;
+        return NaN;
     },
 
     roundDecimals: function(n, decimalsPlaces)
@@ -1627,12 +1633,12 @@
 
     roundToNearest: function(n, values, returnIndex)
     {
-        var a = ArrayUtil.sortNumerically(values.concat());
+        var a = ArrayUtil.sort(values.concat());
         var f = MathUtil.nearest;
         var i, j, k = a.length;
 
         if (k == 0) {
-            return Number.NaN;
+            return NaN;
         }
         else if (k == 1) {
             return a[0];
@@ -1644,7 +1650,7 @@
             i = 0;
             j = (k - 1);
             while (j < k) {
-                i = int((j + k) / 2.0);
+                i = Math.floor((j + k) / 2.0);
 
                 if (n < a[i]) {
                     k = i;
@@ -1663,7 +1669,7 @@
 
     roundToPower: function(n, base)
     {
-        return MathUtil.power(base, Math.ceil(Math.log(n) / Math.log(base)));
+        return Math.pow(base, Math.round(Math.log(n) / Math.log(base)));
     },
 
     sign: function(n)
@@ -1674,7 +1680,7 @@
     summation: function(values)
     {
         var s = 0.0;
-        for (i = 0, j = values.length; i < j; i++) {
+        for (var i = 0, j = values.length; i < j; i++) {
             s += values[i];
         }
         return s;
@@ -2277,6 +2283,13 @@
         }
     },
 
+    assertNaN: function(val)
+    {
+        if (!TypeUtil.isNaN(val)) {
+            throw new Error('value is not NaN. ' + val);
+        }
+    },
+
     assertNone: function(val)
     {
         if (!TypeUtil.isNone(val)) {
@@ -2410,7 +2423,9 @@
         if (!TypeUtil.isNumber(tolerance)) {
             tolerance = 0.0000000001;
         }
-        TestUtil.assertTrue(Math.abs(val1 - val2) <= tolerance);
+        if (Math.abs(val1 - val2) > tolerance) {
+            throw new Error('values are not almost equals (tolerance = ' + tolerance.toString() + '): ' + val1.toString() + ' != ' + val2.toString() + '.');
+        }
     },
 
     assertNull: function(val)
