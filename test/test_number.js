@@ -87,7 +87,7 @@ describe('number', function() {
         it('test numbers from 0 to 15', function() {
             test.assertFalse(f(0));
             test.assertFalse(f(1));
-            test.assertFalse(f(2));
+            test.assertTrue(f(2));
             test.assertTrue(f(3));
             test.assertFalse(f(4));
             test.assertTrue(f(5));
