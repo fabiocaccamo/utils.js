@@ -7,17 +7,12 @@ var NumberUtil = {
 
     isEven: function(n)
     {
-        return ((n % 2.0) == 0.0);
+        return ((n % 2.0) == 0.0 && !NumberUtil.isFloat(n));
     },
 
     isFloat: function(n)
     {
         return ((n % 1) !== 0);
-    },
-
-    isInt: function(n)
-    {
-        return ((n % 1) === 0);
     },
 
     isNegative: function(n)
@@ -27,7 +22,7 @@ var NumberUtil = {
 
     isOdd: function(n)
     {
-        return ((n % 2.0) != 0.0);
+        return ((n % 2.0) != 0.0 && !NumberUtil.isFloat(n));
     },
 
     isPositive: function(n)
@@ -37,30 +32,21 @@ var NumberUtil = {
 
     isPrime: function(n)
     {
-        if (!NumberUtil.isUint(n)) {
+        if (n < 0 || NumberUtil.isFloat(n)) {
             return false;
         }
-
         if (n == 1 || (n % 2) == 0) {
             return false;
         }
-
         if (n == 2) {
             return true;
         }
-
         for (var i = 3; (i * i) <= n; i += 2) {
             if((n % i) == 0){
                 return false;
             }
         }
-
         return true;
-    },
-
-    isUint: function(n)
-    {
-        return (((n % 1) === 0) && (n >= 0));
     }
 
 };
