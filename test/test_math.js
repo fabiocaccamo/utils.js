@@ -160,31 +160,23 @@ describe('math', function() {
             test.assertNumberAlmostEqual(f(20, 10), 20);
         });
     });
-    // describe('roundToNearest', function() {
-    //     var f = math.roundToNearest;
-    //     var values = [-1000, 20, 100, 5, -75, 0, 9, 2000, -300];
-    //     it('test simple - return value', function() {
-    //         test.assertNumberAlmostEqual(f(0, values), 0);
-    //         test.assertNumberAlmostEqual(f(-1, values), 0);
-    //         test.assertNumberAlmostEqual(f(1, values), 0);
-    //         test.assertNumberAlmostEqual(f(10, values), 9);
-    //         test.assertNumberAlmostEqual(f(-50, values), -75);
-    //         test.assertNumberAlmostEqual(f(1500, values), 2000);
-    //         test.assertNumberAlmostEqual(f(10000, values), 2000);
-    //         test.assertNumberAlmostEqual(f(-10000, values), -1000);
-    //     });
-    //     it('test simple - return index', function() {
-    //         var values = [-1000, 20, 100, 5, -75, 0, 9, 2000, -300];
-    //         test.assertNumberAlmostEqual(f(0, values), 5);
-    //         test.assertNumberAlmostEqual(f(-1, values), 5);
-    //         test.assertNumberAlmostEqual(f(1, values), 5);
-    //         test.assertNumberAlmostEqual(f(10, values), 6);
-    //         test.assertNumberAlmostEqual(f(-50, values), 4);
-    //         test.assertNumberAlmostEqual(f(1500, values), 7);
-    //         test.assertNumberAlmostEqual(f(10000, values), 7);
-    //         test.assertNumberAlmostEqual(f(-10000, values), 0);
-    //     });
-    // });
+    describe('roundToNearest', function() {
+        var f = math.roundToNearest;
+        var values = [-1000, 20, 100, 5, -75, 0, 9, 2000, -300];
+        it('test simple', function() {
+            test.assertNumberAlmostEqual(f(0, values), 0);
+            test.assertNumberAlmostEqual(f(-1, values), 0);
+            test.assertNumberAlmostEqual(f(1, values), 0);
+            test.assertNumberAlmostEqual(f(10, values), 9);
+            test.assertNumberAlmostEqual(f(-50, values), -75);
+            test.assertNumberAlmostEqual(f(1500, values), 2000);
+            test.assertNumberAlmostEqual(f(10000, values), 2000);
+            test.assertNumberAlmostEqual(f(-10000, values), -1000);
+            test.assertEqual(f(10, []), NaN);
+            test.assertNumberAlmostEqual(f(10, [9]), 9);
+            test.assertNumberAlmostEqual(f(10, [8, 11]), 11);
+        });
+    });
     describe('roundToPower', function() {
         var f = math.roundToPower;
         it('test simple', function() {

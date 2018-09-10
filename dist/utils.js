@@ -1631,40 +1631,27 @@
         return (Math.round(n / multiplier) * multiplier);
     },
 
-    roundToNearest: function(n, values, returnIndex)
+    roundToNearest: function(n, values)
     {
         var a = ArrayUtil.sort(values.concat());
-        var f = MathUtil.nearest;
-        var i, j, k = a.length;
-
+        var i = 0, j = 0, k = a.length;
         if (k == 0) {
             return NaN;
         }
-        else if (k == 1) {
-            return a[0];
-        }
-        else if (k == 2) {
-            return f(n, a[0], a[1]);
-        }
         else if (k > 2) {
-            i = 0;
-            j = (k - 1);
-            while (j < k) {
+            while(j < k) {
                 i = Math.floor((j + k) / 2.0);
-
                 if (n < a[i]) {
                     k = i;
-                }
-                else if (n > a[(i + 1)]) {
+                } else if (n > a[(i + 1)]) {
                     j = (i + 1);
-                }
-                else {
+                } else {
                     break;
                 }
             }
-            j = Math.min((i + 1), (a.length - 1));
-            return f(n, a[i], a[j]);
         }
+        j = ((i + 1) in a ? (i + 1) : i);
+        return MathUtil.nearest(n, a[i], a[j]);
     },
 
     roundToPower: function(n, base)
