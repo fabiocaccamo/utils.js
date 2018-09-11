@@ -43,6 +43,16 @@ describe('math', function() {
             test.assertNumberAlmostEqual(f(-13, 10), 7);
         });
     });
+    describe('equals', function() {
+        var f = math.equals;
+        it('test simple', function() {
+            test.assertTrue(f(0, 0));
+            test.assertTrue(f(0.5, 0.5));
+            test.assertTrue(f(0.5000000000000001, 0.5000000000000000));
+            test.assertFalse(f(0.5000000000000001, 0.5000000000000000, 0.0));
+            test.assertTrue(f(0.505, 0.500, 0.01));
+        });
+    });
     describe('factorial', function() {
         var f = math.factorial;
         it('test 0', function() {

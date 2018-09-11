@@ -15,6 +15,14 @@ var MathUtil = {
         return (((n % cycleLength) + cycleLength) % cycleLength);
     },
 
+    equals: function(a, b, tolerance)
+    {
+        if (isNaN(tolerance)) {
+            tolerance = 0.0000000001;
+        }
+        return (Math.abs(a - b) <= tolerance);
+    },
+
     factorial: function(n)
     {
         var f = 1;
