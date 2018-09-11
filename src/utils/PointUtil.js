@@ -32,14 +32,15 @@ var PointUtil = {
         return ((a.x * b.x) + (a.y * b.y));
     },
 
-    equals: function(a, b)
+    equals: function(a, b, tolerance)
     {
-        return ((a.x === b.x) && (a.y === b.y));
+        var f = MathUtil.equals;
+        return (f(a.x, b.x, tolerance) && f(a.y, b.y, tolerance));
     },
 
     interpolate: function(a, b, t)
     {
-        var f = MathUtil.interpolate.linear;
+        var f = InterpolationUtil.linear;
         return {
             x: f(a.x, b.x, t),
             y: f(a.y, b.y, t)
@@ -58,8 +59,8 @@ var PointUtil = {
     {
         var pointPivot = (pivot || { x:0.0, y:0.0 });
         var pointRel = PointUtil.subtract(p, pointPivot);
-        var angleCos = Trigo.cosD(angle);
-        var angleSin = Trigo.sinD(angle);
+        var angleCos = TrigoUtil.cosD(angle);
+        var angleSin = TrigoUtil.sinD(angle);
         var pointRot = {
             x: (pointRel.x * angleCos) - (pointRel.y * angleSin),
             y: (pointRel.x * angleSin) + (pointRel.y * angleCos)
@@ -71,8 +72,8 @@ var PointUtil = {
     scale: function(p, amount)
     {
         return {
-            x: (a.x * amount),
-            y: (a.y * amount)
+            x: (p.x * amount),
+            y: (p.y * amount)
         };
     },
 
@@ -86,9 +87,10 @@ var PointUtil = {
 
     translate: function(p, x, y)
     {
-        p.x += x;
-        p.y += y;
-        return p;
+        return {
+            x: (p.x + x),
+            y: (p.y + y)
+        };
     }
 
 };

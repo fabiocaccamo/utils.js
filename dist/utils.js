@@ -1406,14 +1406,15 @@
         return ((a.x * b.x) + (a.y * b.y));
     },
 
-    equals: function(a, b)
+    equals: function(a, b, tolerance)
     {
-        return ((a.x === b.x) && (a.y === b.y));
+        var f = MathUtil.equals;
+        return (f(a.x, b.x, tolerance) && f(a.y, b.y, tolerance));
     },
 
     interpolate: function(a, b, t)
     {
-        var f = MathUtil.interpolate.linear;
+        var f = InterpolationUtil.linear;
         return {
             x: f(a.x, b.x, t),
             y: f(a.y, b.y, t)
@@ -1432,8 +1433,8 @@
     {
         var pointPivot = (pivot || { x:0.0, y:0.0 });
         var pointRel = PointUtil.subtract(p, pointPivot);
-        var angleCos = Trigo.cosD(angle);
-        var angleSin = Trigo.sinD(angle);
+        var angleCos = TrigoUtil.cosD(angle);
+        var angleSin = TrigoUtil.sinD(angle);
         var pointRot = {
             x: (pointRel.x * angleCos) - (pointRel.y * angleSin),
             y: (pointRel.x * angleSin) + (pointRel.y * angleCos)
@@ -1445,8 +1446,8 @@
     scale: function(p, amount)
     {
         return {
-            x: (a.x * amount),
-            y: (a.y * amount)
+            x: (p.x * amount),
+            y: (p.y * amount)
         };
     },
 
@@ -1460,9 +1461,10 @@
 
     translate: function(p, x, y)
     {
-        p.x += x;
-        p.y += y;
-        return p;
+        return {
+            x: (p.x + x),
+            y: (p.y + y)
+        };
     }
 
 };
@@ -1546,6 +1548,14 @@
     cycle: function(n, cycleLength)
     {
         return (((n % cycleLength) + cycleLength) % cycleLength);
+    },
+
+    equals: function(a, b, tolerance)
+    {
+        if (isNaN(tolerance)) {
+            tolerance = 0.0000000001;
+        }
+        return (Math.abs(a - b) <= tolerance);
     },
 
     factorial: function(n)
@@ -1708,14 +1718,17 @@
 
     isPrime: function(n)
     {
-        if (n < 0 || NumberUtil.isFloat(n)) {
+        if (n <= 0 || NumberUtil.isFloat(n)) {
             return false;
         }
-        if (n == 1 || (n % 2) == 0) {
+        if (n == 1) {
             return false;
         }
-        if (n == 2) {
+        else if (n == 2) {
             return true;
+        }
+        else if ((n % 2) == 0) {
+            return false;
         }
         for (var i = 3; (i * i) <= n; i += 2) {
             if((n % i) == 0){
@@ -2012,17 +2025,11 @@
 
     contains: function(str, occurrence)
     {
-        if (str.length == 0){
-            return false;
-        }
         return Boolean(str.indexOf(occurrence) > -1);
     },
 
     icontains: function(str, occurrence)
     {
-        if (str.length == 0){
-            return false;
-        }
         return StringUtil.contains(str.toLowerCase(), occurrence.toLowerCase());
     },
 
@@ -2393,11 +2400,8 @@
     {
         TestUtil.assertNumber(val1);
         TestUtil.assertNumber(val2);
-        if (!TypeUtil.isNumber(tolerance)) {
-            tolerance = 0.0000000001;
-        }
-        if (Math.abs(val1 - val2) > tolerance) {
-            throw new Error('values are not almost equals (tolerance = ' + tolerance.toString() + '): ' + val1.toString() + ' != ' + val2.toString() + '.');
+        if (!MathUtil.equals(val1, val2, tolerance)) {
+            throw new Error('values are not almost equals (tolerance = ' + String(tolerance) + '): ' + String(val1) + ' != ' + String(val2) + '.');
         }
     },
 
@@ -2507,14 +2511,14 @@
         return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
     },
 
-    // cycleD: function(deg)
-    // {
-    //     return MathUtil.cycle(deg, TrigoUtil.DEG_360);
-    // },
-
     cosD: function(deg)
     {
         return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    cycleD: function(deg)
+    {
+        return MathUtil.cycle(deg, TrigoUtil.DEG_360);
     },
 
     degToRad: function(deg)
@@ -2792,11 +2796,6 @@
     isFile: function(url)
     {
         return ((url || URLUtil.getURL()).indexOf('file://') === 0);
-    },
-
-    isFtp: function(url)
-    {
-        return ((url || URLUtil.getURL()).indexOf('ftp://') === 0);
     },
 
     isHttp: function(url)

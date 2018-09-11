@@ -39,14 +39,14 @@ var TrigoUtil = {
         return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
     },
 
-    // cycleD: function(deg)
-    // {
-    //     return MathUtil.cycle(deg, TrigoUtil.DEG_360);
-    // },
-
     cosD: function(deg)
     {
         return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
+    },
+
+    cycleD: function(deg)
+    {
+        return MathUtil.cycle(deg, TrigoUtil.DEG_360);
     },
 
     degToRad: function(deg)

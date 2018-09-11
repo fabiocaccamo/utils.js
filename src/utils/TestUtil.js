@@ -206,7 +206,7 @@ var TestUtil = {
         TestUtil.assertNumber(val1);
         TestUtil.assertNumber(val2);
         if (!MathUtil.equals(val1, val2, tolerance)) {
-            throw new Error('values are not almost equals (tolerance = ' + tolerance.toString() + '): ' + val1.toString() + ' != ' + val2.toString() + '.');
+            throw new Error('values are not almost equals (tolerance = ' + String(tolerance) + '): ' + String(val1) + ' != ' + String(val2) + '.');
         }
     },
 
