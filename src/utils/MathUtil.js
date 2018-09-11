@@ -19,6 +19,8 @@ var MathUtil = {
     {
         if (isNaN(tolerance)) {
             tolerance = 0.0000000001;
+        } else if (tolerance > 0.0) {
+            tolerance += 0.0000000001;
         }
         return (Math.abs(a - b) <= tolerance);
     },

@@ -34,8 +34,8 @@ var TestUtil = {
     assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are not equals: "' + String(val1) + '" != "' + val2 + '"');
-            // throw new Error('values are not equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+            throw new Error('values are not equal: "' + String(val1) + '" != "' + val2 + '"');
+            // throw new Error('values are not equal: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
         }
     },
 
@@ -110,10 +110,10 @@ var TestUtil = {
         }
     },
 
-    assertNotEquals: function(val1, val2)
+    assertNotEqual: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are equals: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+            throw new Error('values are equal: ' + String(val1) + ' == ' + String(val2) + '.');
         }
     },
 
