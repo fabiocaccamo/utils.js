@@ -26,21 +26,27 @@
     clean: function(list, hard)
     {
         var items = list.slice();
-        items = items.filter(function(item, index, arr){
+        items = items.filter(function(item, index, arr) {
             return (!TypeUtil.isNone(item));
         });
         if (hard === true) {
             items = items.map(function(item, index, arr) {
+                var itemClean;
                 switch (TypeUtil.of(item)) {
                     case TypeUtil.ARRAY:
-                        return ArrayUtil.clean(item, hard);
+                        itemClean = ArrayUtil.clean(item, hard);
+                        return (itemClean.length > 0 ? itemClean : null);
                     case TypeUtil.OBJECT:
-                        return ObjectUtil.clean(item, hard);
+                        itemClean = ObjectUtil.clean(item, hard);
+                        return (ObjectUtil.length(itemClean) > 0 ? itemClean : null);
+                    case TypeUtil.STRING:
+                        itemClean = StringUtil.trim(item);
+                        return (itemClean !== '' ? item : null);
                     default:
                         return item;
                 }
-            }).filter(function(item, index, arr){
-                return TypeUtil.isSetAndNotEmpty(item);
+            }).filter(function(item, index, arr) {
+                return (!TypeUtil.isNone(item));
             });
         }
         return items;
@@ -72,11 +78,11 @@
             keys = [keys];
         }
 
-        for(var i = 0, j = list.length; i < j; i++)
+        for (var i = 0, j = list.length; i < j; i++)
         {
             item = list[i];
 
-            for(var m = 0, n = keys.length; m < n; m++ )
+            for (var m = 0, n = keys.length; m < n; m++ )
             {
                 key = String(keys[m]);
                 val = String(item[key]);
@@ -1743,27 +1749,15 @@
 };
     var ObjectUtil = {
 
-    assign: function(obj)
+    assign: function(obj, obj1, obj2, obj3)
     {
-        // https://stackoverflow.com/questions/41746946/assign-to-object-passed-as-argument-in-es5
-        // if (obj == null) {
-        //     throw new TypeError('Cannot convert undefined or null to object');
-        // }
-
-        obj = Object(obj);
-
-        var args = FunctionUtil.args(arguments);
-        for (var i = 1, j = args.length; i < j; i++) {
-            var source = args[i];
-            if (source != null) {
-                for (var key in source) {
-                    if (Object.prototype.hasOwnProperty.call(source, key)) {
-                        obj[key] = source[key];
-                    }
-                }
+        var objs = FunctionUtil.args(arguments, 1);
+        var i, j, k;
+        for (i = 0, j = objs.length; i < j; i++) {
+            for (k in objs[i]) {
+                obj[k] = objs[i][k];
             }
         }
-
         return obj;
     },
 
@@ -1776,13 +1770,22 @@
                 switch (TypeUtil.of(val)) {
                     case TypeUtil.ARRAY:
                         val = obj[key] = ArrayUtil.clean(val, hard);
+                        if (val.length === 0) {
+                            val = null;
+                        }
                         break;
                     case TypeUtil.OBJECT:
                         val = obj[key] = ObjectUtil.clean(val, hard);
+                        if (ObjectUtil.length(val) === 0) {
+                            val = null;
+                        }
                         break;
-                }
-                if (!TypeUtil.isSetAndNotEmpty(val)) {
-                    val = null;
+                    case TypeUtil.STRING:
+                        val = obj[key] = StringUtil.trim(val);
+                        if (val === '') {
+                            val = null;
+                        }
+                        break;
                 }
             }
             if (TypeUtil.isNone(val)) {
@@ -1893,7 +1896,11 @@
             var cursor = obj;
             for (var i = 0, j = keys.length; i < j; i++) {
                 key = keys[i];
-                cursor = cursor[key];
+                try {
+                    cursor = cursor[key];
+                } catch(e) {
+                    return defaultValue;
+                }
             }
             return ((cursor !== undefined) ? cursor : defaultValue);
         },
@@ -1905,12 +1912,14 @@
             var cursor = obj;
             for (var i = 0, j = keys.length; i < j; i++) {
                 key = keys[i];
+                if (!TypeUtil.isObject(cursor[key])) {
+                    cursor[key] = {};
+                }
                 if (i < (j - 1)) {
-                    cursor[key] = (cursor[key] || {});
+                    cursor = cursor[key];
                 } else {
                     cursor[key] = value;
                 }
-                cursor = cursor[key];
             }
         }
     },
@@ -1931,14 +1940,8 @@
 
     merge: function(obj1, obj2, obj3)
     {
-        var obj = {};
-        var objs = FunctionUtil.args(arguments);
-        var i, j, k;
-        for (i = 0, j = objs.length; i < j; i++) {
-            for (k in objs[i]) {
-                obj[k] = objs[i][k];
-            }
-        }
+        var args = [{}].concat(FunctionUtil.args(arguments));
+        var obj = ObjectUtil.assign.apply(null, args);
         return obj;
     },
 
@@ -2016,18 +2019,17 @@
 };
     var StringUtil = {
 
-    // endsWith
-    // reverse
-    // startsWith
-    // toRandomCase
-    // toUpperCaseFirst
-    // trim
-    // trimLeft
-    // trimRight
-
     contains: function(str, occurrence)
     {
         return Boolean(str.indexOf(occurrence) > -1);
+    },
+
+    endsWith: function(str, search)
+    {
+        // if (String.prototype.endsWith) {
+        //     return str.endsWith(search);
+        // }
+        return (str.substring((str.length - search.length), str.length) === search);
     },
 
     icontains: function(str, occurrence)
@@ -2093,6 +2095,13 @@
             i++;
         }
         return str;
+    },
+
+    reverse: function(str)
+    {
+        var chars = str.split('');
+        chars.reverse();
+        return chars.join('');
     },
 
     slugify: function(str)
@@ -2167,16 +2176,31 @@
         return str;
     },
 
+    startsWith: function(str, search)
+    {
+        // if (String.prototype.startsWith) {
+        //     return str.startsWith(search);
+        // }
+        return (str.substr(0, search.length) === search);
+    },
+
     toConstantCase: function(str)
     {
+        return str.replace(' ', '_').toUpperCase();
     },
 
     toRandomCase: function(str)
     {
+        return str.replace(/./g, function (match) {
+            return (RandomUtil.boolean() ? match.toUpperCase() : match.toLowerCase());
+        });
     },
 
     toTitleCase: function(str)
     {
+        return str.replace(/\w*/g, function (match) {
+            return match.charAt(0).toUpperCase() + match.substr(1).toLowerCase();
+        });
     },
 
     toUpperCaseFirst: function(str, toLowerCaseRest)
@@ -2188,10 +2212,26 @@
 
     trim: function(str)
     {
-        if (String.prototype.trim) {
-            return str.trim();
-        }
+        // if (String.prototype.trim) {
+        //     return str.trim();
+        // }
         return str.replace(/^\s+|\s+$/gm, '');
+    },
+
+    trimLeft: function(str)
+    {
+        // if (String.prototype.trimStart) {
+        //     return str.trimStart();
+        // }
+        return str.replace(/\s+$/gm, '');
+    },
+
+    trimRight: function(str)
+    {
+        // if (String.prototype.trimEnd) {
+        //     return str.trimEnd();
+        // }
+        return str.replace(/\s+$/gm, '');
     }
 
 };
@@ -2656,25 +2696,6 @@
     isRegExp: function(val)
     {
         return (val instanceof RegExp);
-    },
-
-    isSetAndNotEmpty: function(val)
-    {
-        if (TypeUtil.isNone(val)) {
-            return false;
-        }
-        switch (TypeUtil.of(val)) {
-            case TypeUtil.ARRAY:
-                return (val.length > 0);
-            // case TypeUtil.NUMBER:
-            //     return (val !== 0);
-            case TypeUtil.OBJECT:
-                return (ObjectUtil.length(val) > 0);
-            case TypeUtil.STRING:
-                return (StringUtil.trim(val).length > 0);
-            default:
-                return true;
-        }
     },
 
     isString: function(val)

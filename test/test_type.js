@@ -313,34 +313,6 @@ describe('type', function() {
             test.assertFalse(f(undefined));
         });
     });
-    describe('isSetAndNotEmpty', function() {
-        it('test isSetAndNotEmpty against all types', function() {
-            var f = type.isSetAndNotEmpty;
-            test.assertFalse(f([]));
-            test.assertTrue(f([true]));
-            test.assertTrue(f(true));
-            test.assertTrue(f(false));
-            test.assertTrue(f(new Date()));
-            test.assertTrue(f(new Error()));
-            test.assertTrue(f(function(){}));
-            test.assertFalse(f(NaN));
-            test.assertTrue(f(0));
-            test.assertTrue(f(1));
-            test.assertFalse(f(null));
-            test.assertFalse(f({}));
-            test.assertTrue(f({ a:true }));
-            test.assertTrue(f(/^[a-z]+$/));
-            test.assertFalse(f(''));
-            test.assertTrue(f('0'));
-            test.assertTrue(f('1'));
-            test.assertTrue(f('true'));
-            test.assertTrue(f('false'));
-            test.assertTrue(f('NaN'));
-            test.assertTrue(f('null'));
-            test.assertTrue(f('undefined'));
-            test.assertFalse(f(undefined));
-        });
-    });
     describe('isType', function() {
         it('test isType against all types', function() {
             var f = type.isType;

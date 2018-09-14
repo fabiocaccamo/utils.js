@@ -3,21 +3,27 @@ var ArrayUtil = {
     clean: function(list, hard)
     {
         var items = list.slice();
-        items = items.filter(function(item, index, arr){
+        items = items.filter(function(item, index, arr) {
             return (!TypeUtil.isNone(item));
         });
         if (hard === true) {
             items = items.map(function(item, index, arr) {
+                var itemClean;
                 switch (TypeUtil.of(item)) {
                     case TypeUtil.ARRAY:
-                        return ArrayUtil.clean(item, hard);
+                        itemClean = ArrayUtil.clean(item, hard);
+                        return (itemClean.length > 0 ? itemClean : null);
                     case TypeUtil.OBJECT:
-                        return ObjectUtil.clean(item, hard);
+                        itemClean = ObjectUtil.clean(item, hard);
+                        return (ObjectUtil.length(itemClean) > 0 ? itemClean : null);
+                    case TypeUtil.STRING:
+                        itemClean = StringUtil.trim(item);
+                        return (itemClean !== '' ? item : null);
                     default:
                         return item;
                 }
-            }).filter(function(item, index, arr){
-                return TypeUtil.isSetAndNotEmpty(item);
+            }).filter(function(item, index, arr) {
+                return (!TypeUtil.isNone(item));
             });
         }
         return items;
@@ -49,11 +55,11 @@ var ArrayUtil = {
             keys = [keys];
         }
 
-        for(var i = 0, j = list.length; i < j; i++)
+        for (var i = 0, j = list.length; i < j; i++)
         {
             item = list[i];
 
-            for(var m = 0, n = keys.length; m < n; m++ )
+            for (var m = 0, n = keys.length; m < n; m++ )
             {
                 key = String(keys[m]);
                 val = String(item[key]);

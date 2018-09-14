@@ -101,25 +101,6 @@ var TypeUtil = {
         return (val instanceof RegExp);
     },
 
-    isSetAndNotEmpty: function(val)
-    {
-        if (TypeUtil.isNone(val)) {
-            return false;
-        }
-        switch (TypeUtil.of(val)) {
-            case TypeUtil.ARRAY:
-                return (val.length > 0);
-            // case TypeUtil.NUMBER:
-            //     return (val !== 0);
-            case TypeUtil.OBJECT:
-                return (ObjectUtil.length(val) > 0);
-            case TypeUtil.STRING:
-                return (StringUtil.trim(val).length > 0);
-            default:
-                return true;
-        }
-    },
-
     isString: function(val)
     {
         return (typeof(val) === 'string');

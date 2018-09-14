@@ -1,26 +1,14 @@
 var ObjectUtil = {
 
-    assign: function(obj)
+    assign: function(obj, obj1, obj2, obj3)
     {
-        // https://stackoverflow.com/questions/41746946/assign-to-object-passed-as-argument-in-es5
-        // if (obj == null) {
-        //     throw new TypeError('Cannot convert undefined or null to object');
-        // }
-
-        obj = Object(obj);
-
-        var args = FunctionUtil.args(arguments);
-        for (var i = 1, j = args.length; i < j; i++) {
-            var source = args[i];
-            if (source != null) {
-                for (var key in source) {
-                    if (Object.prototype.hasOwnProperty.call(source, key)) {
-                        obj[key] = source[key];
-                    }
-                }
+        var objs = FunctionUtil.args(arguments, 1);
+        var i, j, k;
+        for (i = 0, j = objs.length; i < j; i++) {
+            for (k in objs[i]) {
+                obj[k] = objs[i][k];
             }
         }
-
         return obj;
     },
 
@@ -33,13 +21,22 @@ var ObjectUtil = {
                 switch (TypeUtil.of(val)) {
                     case TypeUtil.ARRAY:
                         val = obj[key] = ArrayUtil.clean(val, hard);
+                        if (val.length === 0) {
+                            val = null;
+                        }
                         break;
                     case TypeUtil.OBJECT:
                         val = obj[key] = ObjectUtil.clean(val, hard);
+                        if (ObjectUtil.length(val) === 0) {
+                            val = null;
+                        }
                         break;
-                }
-                if (!TypeUtil.isSetAndNotEmpty(val)) {
-                    val = null;
+                    case TypeUtil.STRING:
+                        val = obj[key] = StringUtil.trim(val);
+                        if (val === '') {
+                            val = null;
+                        }
+                        break;
                 }
             }
             if (TypeUtil.isNone(val)) {
@@ -150,7 +147,11 @@ var ObjectUtil = {
             var cursor = obj;
             for (var i = 0, j = keys.length; i < j; i++) {
                 key = keys[i];
-                cursor = cursor[key];
+                try {
+                    cursor = cursor[key];
+                } catch(e) {
+                    return defaultValue;
+                }
             }
             return ((cursor !== undefined) ? cursor : defaultValue);
         },
@@ -162,12 +163,14 @@ var ObjectUtil = {
             var cursor = obj;
             for (var i = 0, j = keys.length; i < j; i++) {
                 key = keys[i];
+                if (!TypeUtil.isObject(cursor[key])) {
+                    cursor[key] = {};
+                }
                 if (i < (j - 1)) {
-                    cursor[key] = (cursor[key] || {});
+                    cursor = cursor[key];
                 } else {
                     cursor[key] = value;
                 }
-                cursor = cursor[key];
             }
         }
     },
@@ -188,14 +191,8 @@ var ObjectUtil = {
 
     merge: function(obj1, obj2, obj3)
     {
-        var obj = {};
-        var objs = FunctionUtil.args(arguments);
-        var i, j, k;
-        for (i = 0, j = objs.length; i < j; i++) {
-            for (k in objs[i]) {
-                obj[k] = objs[i][k];
-            }
-        }
+        var args = [{}].concat(FunctionUtil.args(arguments));
+        var obj = ObjectUtil.assign.apply(null, args);
         return obj;
     },
 
