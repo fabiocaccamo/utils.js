@@ -53,6 +53,9 @@ describe('string', function() {
     });
     describe('levenshteinSimilarity', function() {
         var f = string.levenshteinSimilarity;
+        it('test empty strings', function() {
+            test.assertEqual(f('', ''), 1.0);
+        });
         it('test same strings', function() {
             test.assertEqual(f('torino', 'torino'), 1.0);
         });
@@ -186,6 +189,9 @@ describe('string', function() {
         var s = 'lorem ipsum tempor. Ex adipisicing aliqua consectetur. Duis voluptate quis sunt. Aute sint laborum tempor.'
         it('test uppercase first', function() {
             test.assertEqual(f(s), 'Lorem ipsum tempor. Ex adipisicing aliqua consectetur. Duis voluptate quis sunt. Aute sint laborum tempor.');
+        });
+        it('test uppercase first empty string', function() {
+            test.assertEqual(f(''), '');
         });
         it('test uppercase first and lowercase rest', function() {
             test.assertEqual(f(s, true), 'Lorem ipsum tempor. ex adipisicing aliqua consectetur. duis voluptate quis sunt. aute sint laborum tempor.');

@@ -81,6 +81,9 @@ describe('test', function() {
             test.assertThrows(function(){
                 test.assertFalse(null);
             });
+            test.assertThrows(function(){
+                test.assertFalse(true);
+            });
         });
     });
     describe('assertFunction', function() {

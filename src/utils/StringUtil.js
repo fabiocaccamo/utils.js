@@ -22,9 +22,6 @@ var StringUtil = {
     {
         // taken from GitHub here:
         // https://gist.github.com/andrei-m/982927#gistcomment-586471
-        if (!a || !b) {
-            return (a || b || '').length;
-        }
         var m = [];
         for (var i = 0; i <= b.length; i++) {
             m[i] = [i];
