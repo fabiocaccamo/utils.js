@@ -101,7 +101,7 @@ var ArrayUtil = {
         return value;
     },
 
-    scroll: function(list, count)
+    rotate: function(list, count)
     {
         var cursor = MathUtil.cycle(count, list.length);
         return list.slice(cursor).concat(list.slice(0, cursor));

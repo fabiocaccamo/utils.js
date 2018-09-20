@@ -417,10 +417,10 @@ describe('array', function() {
             test.assertEqual(f(a, r), 45);
         });
     });
-    describe('scroll', function() {
-        var f = utils.array.scroll;
+    describe('rotate', function() {
+        var f = utils.array.rotate;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        it('test scroll negative', function() {
+        it('test rotate negative', function() {
             test.assertEqual(f(a, -0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
             test.assertEqual(f(a, -1), [9, 0, 1, 2, 3, 4, 5, 6, 7, 8]);
             test.assertEqual(f(a, -2), [8, 9, 0, 1, 2, 3, 4, 5, 6, 7]);
@@ -438,7 +438,7 @@ describe('array', function() {
             test.assertEqual(f(a, -14), [6, 7, 8, 9, 0, 1, 2, 3, 4, 5]);
             test.assertEqual(f(a, -15), [5, 6, 7, 8, 9, 0, 1, 2, 3, 4]);
         });
-        it('test scroll positive', function() {
+        it('test rotate positive', function() {
             test.assertEqual(f(a, 1), [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]);
             test.assertEqual(f(a, 2), [2, 3, 4, 5, 6, 7, 8, 9, 0, 1]);
             test.assertEqual(f(a, 3), [3, 4, 5, 6, 7, 8, 9, 0, 1, 2]);
@@ -455,7 +455,7 @@ describe('array', function() {
             test.assertEqual(f(a, 14), [4, 5, 6, 7, 8, 9, 0, 1, 2, 3]);
             test.assertEqual(f(a, 15), [5, 6, 7, 8, 9, 0, 1, 2, 3, 4]);
         });
-        it('test scroll 0-1 length', function() {
+        it('test rotate 0-1 length', function() {
             for (var i = -5; i <= 5; i++) {
                 test.assertEqual(f([], i), []);
                 test.assertEqual(f([1], i), [1]);
