@@ -10,8 +10,8 @@ var PointUtil = {
 
     angle: function(a, b)
     {
-        var angle = TrigoUtil.angleD((b.y - a.y), (b.x - a.x));
-        return TrigoUtil.cycleD(angle);
+        var angle = TrigoUtil.angleDeg((b.y - a.y), (b.x - a.x));
+        return TrigoUtil.cycleDeg(angle);
     },
 
     cross: function(a, b)
@@ -50,8 +50,8 @@ var PointUtil = {
     project: function(p, distance, angle)
     {
         return {
-            x: (p.x + (distance * TrigoUtil.cosD(angle))),
-            y: (p.y + (distance * TrigoUtil.sinD(angle)))
+            x: (p.x + (distance * TrigoUtil.cosDeg(angle))),
+            y: (p.y + (distance * TrigoUtil.sinDeg(angle)))
         }
     },
 
@@ -59,8 +59,8 @@ var PointUtil = {
     {
         var pointPivot = (pivot || { x:0.0, y:0.0 });
         var pointRel = PointUtil.subtract(p, pointPivot);
-        var angleCos = TrigoUtil.cosD(angle);
-        var angleSin = TrigoUtil.sinD(angle);
+        var angleCos = TrigoUtil.cosDeg(angle);
+        var angleSin = TrigoUtil.sinDeg(angle);
         var pointRot = {
             x: (pointRel.x * angleCos) - (pointRel.y * angleSin),
             y: (pointRel.x * angleSin) + (pointRel.y * angleCos)
