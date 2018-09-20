@@ -1661,7 +1661,6 @@
         else if (!TypeUtil.isNumber(y)) {
             return ((x * b) / a);
         }
-        return NaN;
     },
 
     roundDecimals: function(n, decimalsPlaces)
@@ -2600,6 +2599,11 @@
     {
         var degDiff = (degTo - degFrom);
         return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
+    },
+
+    haversine: function(lat1, lng1, lat2, lng2, miles)
+    {
+        // TODO
     },
 
     hypo: function(distanceX, distanceY)
