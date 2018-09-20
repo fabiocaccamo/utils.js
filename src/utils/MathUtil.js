@@ -95,7 +95,6 @@ var MathUtil = {
         else if (!TypeUtil.isNumber(y)) {
             return ((x * b) / a);
         }
-        return NaN;
     },
 
     roundDecimals: function(n, decimalsPlaces)
