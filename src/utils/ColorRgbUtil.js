@@ -10,6 +10,14 @@ var ColorRgbUtil = {
         return color;
     },
 
+    distance: function(colorA, colorB)
+    {
+        var rDiff = (colorA.r - colorB.r);
+        var gDiff = (colorA.g - colorB.g);
+        var bDiff = (colorA.b - colorB.b);
+        return Math.sqrt((rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff));
+    },
+
     gradient: function(colors, steps)
     {
         var colorsOutput = [];
@@ -142,6 +150,22 @@ var ColorRgbUtil = {
         var s = InterpolationUtil.scalar((colors.length - 1), t);
         var i = s.index;
         return ColorRgbUtil.interpolateLinear(colors[i], colors[(i + 1)], s.t);
+    },
+
+    nearest: function(colorSearch, colors)
+    {
+        var calcDistance = ColorRgbUtil.distance;
+        var tempDistance;
+        var nearestDistance = (calcDistance({ r:0, g:0, b:0 }, { r:255, g:255, b:255 }) + 1.0);
+        var nearestColor = null;
+        for (var i = 0, j = colors.length; i < j; i++) {
+            tempDistance = calcDistance(colorSearch, colors[i]);
+            if (tempDistance < nearestDistance) {
+                nearestDistance = tempDistance;
+                nearestColor = colors[i];
+            }
+        }
+        return nearestColor;
     },
 
     toCmyk: function(color)

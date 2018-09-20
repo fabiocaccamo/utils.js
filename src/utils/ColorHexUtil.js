@@ -8,6 +8,13 @@ var ColorHexUtil = {
             }));
     },
 
+    distance: function(colorA, colorB)
+    {
+        return ColorRgbUtil.distance(
+            ColorHexUtil.toRgb(colorA),
+            ColorHexUtil.toRgb(colorB));
+    },
+
     gradient: function(colors, steps)
     {
         return ColorRgbUtil.gradient(
@@ -26,7 +33,7 @@ var ColorHexUtil = {
 
     interpolateBilinear: function(a, b, c, d, u, v)
     {
-        return ColorRgbUtil.toCmyk(
+        return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateBilinear(
                 ColorHexUtil.toRgb(a),
                 ColorHexUtil.toRgb(b),
@@ -36,7 +43,7 @@ var ColorHexUtil = {
 
     interpolateLinear: function(colorFrom, colorTo, t)
     {
-        return ColorRgbUtil.toCmyk(
+        return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateLinear(
                 ColorHexUtil.toRgb(colorFrom),
                 ColorHexUtil.toRgb(colorTo), t));
@@ -48,6 +55,17 @@ var ColorHexUtil = {
             colors.map(function(color){
                 return ColorHexUtil.toRgb(color);
             }), t);
+    },
+
+    nearest: function(colorSearch, colors)
+    {
+        return ColorRgbUtil.toHex(
+            ColorRgbUtil.nearest(
+                ColorHexUtil.toRgb(colorSearch),
+                colors.map(function(color){
+                    return ColorHexUtil.toRgb(color);
+                })
+            ));
     },
 
     toCmyk: function(color)
