@@ -447,6 +447,13 @@
             }));
     },
 
+    distance: function(colorA, colorB)
+    {
+        return ColorRgbUtil.distance(
+            ColorHexUtil.toRgb(colorA),
+            ColorHexUtil.toRgb(colorB));
+    },
+
     gradient: function(colors, steps)
     {
         return ColorRgbUtil.gradient(
@@ -465,7 +472,7 @@
 
     interpolateBilinear: function(a, b, c, d, u, v)
     {
-        return ColorRgbUtil.toCmyk(
+        return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateBilinear(
                 ColorHexUtil.toRgb(a),
                 ColorHexUtil.toRgb(b),
@@ -475,7 +482,7 @@
 
     interpolateLinear: function(colorFrom, colorTo, t)
     {
-        return ColorRgbUtil.toCmyk(
+        return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateLinear(
                 ColorHexUtil.toRgb(colorFrom),
                 ColorHexUtil.toRgb(colorTo), t));
@@ -487,6 +494,17 @@
             colors.map(function(color){
                 return ColorHexUtil.toRgb(color);
             }), t);
+    },
+
+    nearest: function(colorSearch, colors)
+    {
+        return ColorRgbUtil.toHex(
+            ColorRgbUtil.nearest(
+                ColorHexUtil.toRgb(colorSearch),
+                colors.map(function(color){
+                    return ColorHexUtil.toRgb(color);
+                })
+            ));
     },
 
     toCmyk: function(color)
@@ -594,6 +612,14 @@
             color = lerp(color, colors[i], 0.5);
         }
         return color;
+    },
+
+    distance: function(colorA, colorB)
+    {
+        var rDiff = (colorA.r - colorB.r);
+        var gDiff = (colorA.g - colorB.g);
+        var bDiff = (colorA.b - colorB.b);
+        return Math.sqrt((rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff));
     },
 
     gradient: function(colors, steps)
@@ -728,6 +754,22 @@
         var s = InterpolationUtil.scalar((colors.length - 1), t);
         var i = s.index;
         return ColorRgbUtil.interpolateLinear(colors[i], colors[(i + 1)], s.t);
+    },
+
+    nearest: function(colorSearch, colors)
+    {
+        var calcDistance = ColorRgbUtil.distance;
+        var tempDistance;
+        var nearestDistance = (calcDistance({ r:0, g:0, b:0 }, { r:255, g:255, b:255 }) + 1.0);
+        var nearestColor = null;
+        for (var i = 0, j = colors.length; i < j; i++) {
+            tempDistance = calcDistance(colorSearch, colors[i]);
+            if (tempDistance < nearestDistance) {
+                nearestDistance = tempDistance;
+                nearestColor = colors[i];
+            }
+        }
+        return nearestColor;
     },
 
     toCmyk: function(color)
@@ -2547,45 +2589,45 @@
     DEG_270: 270.0,
     DEG_360: 360.0,
 
-    DEG_TO_RAD: (Math.PI / 180.0), // 0.017453292519943295 DEG_TO_RAD
-    RAD_TO_DEG: (180.0 / Math.PI),
+    DEG_TO_RAD: (Math.PI / 180.0), // 0.017453292519943295
+    RAD_TO_DEG: (180.0 / Math.PI), // 57.29577951308232
 
-    acosD: function(rad)
+    acosDeg: function(rad)
     {
         return Math.acos(rad) * TrigoUtil.RAD_TO_DEG;
     },
 
-    angleD: function(y, x)
+    angleDeg: function(y, x)
     {
-        return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
+        return TrigoUtil.atan2Deg(y, x);
     },
 
-    angleR: function(y, x)
+    angleRad: function(y, x)
     {
         return Math.atan2(y, x);
     },
 
-    asinD: function(rad)
+    asinDeg: function(rad)
     {
         return Math.asin(rad) * TrigoUtil.RAD_TO_DEG;
     },
 
-    atanD: function(rad)
+    atanDeg: function(rad)
     {
         return Math.atan(rad) * TrigoUtil.RAD_TO_DEG;
     },
 
-    atanD2: function(y, x)
+    atan2Deg: function(y, x)
     {
         return Math.atan2(y, x) * TrigoUtil.RAD_TO_DEG;
     },
 
-    cosD: function(deg)
+    cosDeg: function(deg)
     {
         return Math.cos(deg * TrigoUtil.DEG_TO_RAD);
     },
 
-    cycleD: function(deg)
+    cycleDeg: function(deg)
     {
         return MathUtil.cycle(deg, TrigoUtil.DEG_360);
     },
@@ -2595,15 +2637,10 @@
         return (deg * TrigoUtil.DEG_TO_RAD);
     },
 
-    fastD: function(degFrom, degTo)
+    fastDeg: function(degFrom, degTo)
     {
         var degDiff = (degTo - degFrom);
         return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
-    },
-
-    haversine: function(lat1, lng1, lat2, lng2, miles)
-    {
-        // TODO
     },
 
     hypo: function(distanceX, distanceY)
@@ -2616,12 +2653,12 @@
         return (rad * TrigoUtil.RAD_TO_DEG);
     },
 
-    sinD: function(deg)
+    sinDeg: function(deg)
     {
         return Math.sin(deg * TrigoUtil.DEG_TO_RAD);
     },
 
-    tanD: function(deg)
+    tanDeg: function(deg)
     {
         return Math.tan(deg * TrigoUtil.DEG_TO_RAD);
     }
