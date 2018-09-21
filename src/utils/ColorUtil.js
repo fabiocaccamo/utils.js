@@ -1,10 +1,10 @@
 var ColorUtil = {
 
     cmyk: ColorCmykUtil,
-    cmykToGrayscale: ColorCmykUtil.toGrayscale,
+    // cmykToGrayscale: ColorCmykUtil.toGrayscale,
     cmykToHex: ColorCmykUtil.toHex,
-    cmykToHsl: ColorCmykUtil.toHsl,
-    cmykToHsv: ColorCmykUtil.toHsv,
+    // cmykToHsl: ColorCmykUtil.toHsl,
+    // cmykToHsv: ColorCmykUtil.toHsv,
     cmykToRgb: ColorCmykUtil.toRgb,
 
     // grayscale: ColorGrayscaleUtil,
@@ -16,9 +16,9 @@ var ColorUtil = {
 
     hex: ColorHexUtil,
     hexToCmyk: ColorHexUtil.toCmyk,
-    hexToGrayscale: ColorHexUtil.toGrayscale,
-    hexToHsl: ColorHexUtil.toHsl,
-    hexToHsv: ColorHexUtil.toHsv,
+    // hexToGrayscale: ColorHexUtil.toGrayscale,
+    // hexToHsl: ColorHexUtil.toHsl,
+    // hexToHsv: ColorHexUtil.toHsv,
     hexToRgb: ColorHexUtil.toRgb,
 
     // hsl: ColorHslUtil,
@@ -37,9 +37,9 @@ var ColorUtil = {
 
     rgb: ColorRgbUtil,
     rgbToCmyk: ColorRgbUtil.toCmyk,
-    rgbToGrayscale: ColorRgbUtil.toGrayscale,
-    rgbToHex: ColorRgbUtil.toRgb,
-    rgbToHsl: ColorRgbUtil.toHsl,
-    rgbToHsv: ColorRgbUtil.toHsv
+    // rgbToGrayscale: ColorRgbUtil.toGrayscale,
+    rgbToHex: ColorRgbUtil.toRgb
+    // rgbToHsl: ColorRgbUtil.toHsl,
+    // rgbToHsv: ColorRgbUtil.toHsv
 
 };

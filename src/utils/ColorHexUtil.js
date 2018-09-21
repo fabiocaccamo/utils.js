@@ -73,11 +73,11 @@ var ColorHexUtil = {
         return color;
     },
 
-    toGrayscale: function(color)
-    {
-        return ColorRgbUtil.toGrayscale(
-            ColorHexUtil.toRgb(color));
-    },
+    // toGrayscale: function(color)
+    // {
+    //     return ColorRgbUtil.toGrayscale(
+    //         ColorHexUtil.toRgb(color));
+    // },
 
     toHex: function(color, prefix)
     {
@@ -85,17 +85,17 @@ var ColorHexUtil = {
             ColorHexUtil.toRgb(color), prefix);
     },
 
-    toHsl: function(color)
-    {
-        return ColorRgbUtil.toHsl(
-            ColorHexUtil.toRgb(color));
-    },
+    // toHsl: function(color)
+    // {
+    //     return ColorRgbUtil.toHsl(
+    //         ColorHexUtil.toRgb(color));
+    // },
 
-    toHsv: function(color)
-    {
-        return ColorRgbUtil.toHsv(
-            ColorHexUtil.toRgb(color));
-    },
+    // toHsv: function(color)
+    // {
+    //     return ColorRgbUtil.toHsv(
+    //         ColorHexUtil.toRgb(color));
+    // },
 
     toRgb: function(color)
     {

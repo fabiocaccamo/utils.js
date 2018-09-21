@@ -2,12 +2,27 @@ var ColorRgbUtil = {
 
     average: function(colors)
     {
-        var color = colors[0];
-        var lerp = ColorRgbUtil.interpolateLinear;
-        for (var i = 1, j = colors.length; i < j; i++) {
-            color = lerp(color, colors[i], 0.5);
+        // var color = colors[0];
+        // var lerp = ColorRgbUtil.interpolateLinear;
+        // for (var i = 1, j = colors.length; i < j; i++) {
+        //     color = lerp(color, colors[i], 0.5);
+        // }
+        // return color;
+        var c;
+        var r = 0;
+        var g = 0;
+        var b = 0;
+        for (var i = 0, j = colors.length; i < j; i++) {
+            c = colors[i];
+            r += c.r;
+            g += c.g;
+            b += c.b;
         }
-        return color;
+        var round = Math.round;
+        r = round(r / j);
+        g = round(g / j);
+        b = round(b / j);
+        return { r:r, g:g, b:b };
     },
 
     distance: function(colorA, colorB)
@@ -137,11 +152,12 @@ var ColorRgbUtil = {
     interpolateLinear: function(colorFrom, colorTo, t)
     {
         var lerp = InterpolationUtil.linear;
+        var round = Math.round;
         return {
-            r: lerp(colorFrom.r, colorTo.r, t),
-            g: lerp(colorFrom.g, colorTo.g, t),
-            b: lerp(colorFrom.b, colorTo.b, t),
-            a: lerp(colorFrom.a, colorTo.a, t)
+            r: round(lerp(colorFrom.r, colorTo.r, t)),
+            g: round(lerp(colorFrom.g, colorTo.g, t)),
+            b: round(lerp(colorFrom.b, colorTo.b, t)),
+            a: round(lerp(colorFrom.a, colorTo.a, t))
         }
     },
 
@@ -174,7 +190,7 @@ var ColorRgbUtil = {
         var g = (color.g / 255);
         var b = (color.b / 255);
 
-        var k = Math.min(1.0 - r, 1.0 - g, 1.0 - b);
+        var k = Math.min((1.0 - r), (1.0 - g), (1.0 - b));
         var c = (1.0 - r - k);
         var m = (1.0 - g - k);
         var y = (1.0 - b - k);
@@ -195,45 +211,45 @@ var ColorRgbUtil = {
         return { c:c, m:m, y:y, k:k };
     },
 
-    toGrayscale: function(color, algorithm)
-    {
-        // TODO
-        // http://cadik.posvete.cz/color_to_gray_evaluation/
-    },
+    // toGrayscale: function(color, algorithm)
+    // {
+    //     // TODO
+    //     // http://cadik.posvete.cz/color_to_gray_evaluation/
+    // },
 
     toHex: function(color, prefix)
     {
         // { r:255, g:255, b:255, a:1.0 }
         // prefix 0x | #
-        var a = (isNaN(color.a) ? (isNaN(color.alpha) ? 1.0 : color.alpha) : color.a);
+        var a = (isNaN(color.a) ? (isNaN(color.alpha) ? null : color.alpha) : color.a);
         var r = (isNaN(color.r) ? (isNaN(color.red) ? 0 : color.red) : color.r);
         var g = (isNaN(color.g) ? (isNaN(color.green) ? 0 : color.green) : color.g);
         var b = (isNaN(color.b) ? (isNaN(color.blue) ? 0 : color.blue) : color.b);
-        var toHex = HexUtil.encodeInt;
-        var aHex = toHex(a * 255);
-        var rHex = toHex(r);
-        var gHex = toHex(g);
-        var bHex = toHex(b);
-        return String((prefix || '#') + (a >= 1.0 ? '' : aHex) + rHex + gHex + bHex);
+        var hex = HexUtil.encodeInt;
+        return String((prefix || '#') + (a == null ? '' : hex(a * 255)) + hex(r) + hex(g) + hex(b));
     },
 
-    toHsl: function(color)
-    {
-        // TODO
-    },
+    // toHsl: function(color)
+    // {
+    //     // TODO
+    // },
 
-    toHsv: function(color)
-    {
-        // TODO
-        // https://gist.github.com/felipesabino/5066336/revisions
-    },
+    // toHsv: function(color)
+    // {
+    //     // TODO
+    //     // https://gist.github.com/felipesabino/5066336/revisions
+    // },
 
     toRgb: function(color)
     {
-        return color;
+        return {
+            r: color.r,
+            g: color.g,
+            b: color.b
+        };
     },
 
-    toString: function()
+    toString: function(color)
     {
         return '{ r:' + String(color.r) + ', g:' + String(color.g) + ', b:' + String(color.b) + ', a:' + String(isNaN(color.a) ? 1.0 : color.a) + ' }';
     },
