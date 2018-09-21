@@ -1,23 +1,22 @@
 var URLUtil = {
 
-    getParameterByName: function(name, url)
+    getParameterByName: function(url, name, defaultValue)
     {
-        var param = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + param + '(=([^&#]*)|&|#|$)');
-        var results = regex.exec((url || URLUtil.getURL()));
-        if (!results) {
-            return null;
-        }
-        if (!results[2]) {
-            return '';
-        }
-        return decodeURIComponent(results[2]);
+        var paramsDict = URLUtil.getParameters(url);
+        return ((name in paramsDict) ? paramsDict[name] : defaultValue);
     },
 
     getParameters: function(url)
     {
-        // TODO
-        return {};
+        var paramsRE = /(([\w]+){1}\=([^\&\n\r\t]*){1})/g;
+        var paramsList = (url.match(paramsRE) || []);
+        var paramsDict = {};
+        var paramKV;
+        for (var i = 0, j = paramsList.length; i < j; i++) {
+            paramKV = paramsList[i].split('=');
+            paramsDict[paramKV[0]] = decodeURIComponent(paramKV[1]);
+        }
+        return paramsDict;
     },
 
     getURL: function()
