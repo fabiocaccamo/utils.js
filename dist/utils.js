@@ -340,6 +340,13 @@
             }));
     },
 
+    // distance: function(colorA, colorB)
+    // {
+    //     return ColorRgbUtil.distance(
+    //         ColorCmykUtil.toRgb(colorA),
+    //         ColorCmykUtil.toRgb(colorB));
+    // },
+
     gradient: function(colors, steps)
     {
         return ColorRgbUtil.gradient(
@@ -381,6 +388,17 @@
                 return ColorCmykUtil.toRgb(color);
             }), t);
     },
+
+    // nearest: function(colorSearch, colors)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.nearest(
+    //             ColorCmykUtil.toRgb(colorSearch),
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             })
+    //         ));
+    // },
 
     toCmyk: function(color)
     {
@@ -606,27 +624,24 @@
 
     average: function(colors)
     {
-        // var color = colors[0];
-        // var lerp = ColorRgbUtil.interpolateLinear;
-        // for (var i = 1, j = colors.length; i < j; i++) {
-        //     color = lerp(color, colors[i], 0.5);
-        // }
-        // return color;
         var c;
         var r = 0;
         var g = 0;
         var b = 0;
+        var a = 0;
         for (var i = 0, j = colors.length; i < j; i++) {
             c = colors[i];
             r += c.r;
             g += c.g;
             b += c.b;
+            a += (isNaN(c.a) ? 1.0 : c.a);
         }
         var round = Math.round;
         r = round(r / j);
         g = round(g / j);
         b = round(b / j);
-        return { r:r, g:g, b:b };
+        a = round(a / j);
+        return { r:r, g:g, b:b, a:a };
     },
 
     distance: function(colorA, colorB)
@@ -634,7 +649,8 @@
         var rDiff = (colorA.r - colorB.r);
         var gDiff = (colorA.g - colorB.g);
         var bDiff = (colorA.b - colorB.b);
-        return Math.sqrt((rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff));
+        var aDiff = ((isNaN(colorA.a) ? 1.0 : colorA.a) - (isNaN(colorB.a) ? 1.0 : colorB.a));
+        return Math.sqrt((rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff) + (aDiff * aDiff));
     },
 
     gradient: function(colors, steps)
@@ -668,12 +684,11 @@
         var colorLeft = colors.left;
         var colorCenter = colors.center;
         var colorAvg = ColorRgbUtil.average;
-        var colorBerp = ColorRgbUtil.interpolateBilinear
+        var colorBerp = ColorRgbUtil.interpolateBilinear;
 
-        // if (!colorTopLeft) {
-        //     colorTopLeft = (colorTop || colorRight || colorBottomLeft || colorBottomRight);
-        // }
-
+        if (!colorTopLeft || !colorTopRight || !colorBottomLeft || !colorBottomRight) {
+            return [];
+        }
         if (!colorTop) {
             colorTop = colorAvg([colorTopLeft, colorTopRight]);
         }
@@ -747,10 +762,12 @@
         return colorsMatrix;
     },
 
-    interpolateBilinear: function(a, b, c, d, u, v)
+    interpolateBilinear: function(colorTopLeft, colorBottomLeft, colorTopRight, colorBottomRight, ty, tx)
     {
         var lerp = ColorRgbUtil.interpolateLinear;
-        return lerp(lerp(a, b, u), lerp(c, d, u), v);
+        return lerp(
+            lerp(colorTopLeft, colorBottomLeft, ty),
+            lerp(colorTopRight, colorBottomRight, ty), tx);
     },
 
     interpolateLinear: function(colorFrom, colorTo, t)
@@ -761,7 +778,7 @@
             r: round(lerp(colorFrom.r, colorTo.r, t)),
             g: round(lerp(colorFrom.g, colorTo.g, t)),
             b: round(lerp(colorFrom.b, colorTo.b, t)),
-            a: round(lerp(colorFrom.a, colorTo.a, t))
+            a: round(lerp((isNaN(colorFrom.a) ? 1.0 : colorFrom.a), (isNaN(colorTo.a) ? 1.0 : colorTo.a), t))
         }
     },
 
@@ -823,14 +840,13 @@
 
     toHex: function(color, prefix)
     {
-        // { r:255, g:255, b:255, a:1.0 }
-        // prefix 0x | #
-        var a = (isNaN(color.a) ? (isNaN(color.alpha) ? null : color.alpha) : color.a);
-        var r = (isNaN(color.r) ? (isNaN(color.red) ? 0 : color.red) : color.r);
-        var g = (isNaN(color.g) ? (isNaN(color.green) ? 0 : color.green) : color.g);
-        var b = (isNaN(color.b) ? (isNaN(color.blue) ? 0 : color.blue) : color.b);
+        var a = (isNaN(color.a) ? null : color.a);
+        var r = (isNaN(color.r) ? 0 : color.r);
+        var g = (isNaN(color.g) ? 0 : color.g);
+        var b = (isNaN(color.b) ? 0 : color.b);
         var hex = HexUtil.encodeInt;
-        return String((prefix || '#') + (a == null ? '' : hex(a * 255)) + hex(r) + hex(g) + hex(b));
+        // return String((prefix || '#') + hex(r) + hex(g) + hex(b));
+        return String((prefix || '#') + ((a == null || a >= 1.0) ? '' : hex(Math.round(a * 255))) + hex(r) + hex(g) + hex(b));
     },
 
     // toHsl: function(color)
@@ -849,7 +865,8 @@
         return {
             r: color.r,
             g: color.g,
-            b: color.b
+            b: color.b,
+            a: (isNaN(color.a) ? 1.0 : color.a)
         };
     },
 
@@ -1894,19 +1911,23 @@
             return false;
         }
 
-        if (type1 !== 'array' && type1 !== 'object') {
-            return String(obj1) == String(obj2);
+        switch (type1) {
+            case 'array':
+            case 'object':
+                break;
+            case 'number':
+                return MathUtil.equals(obj1, obj2);
+            default:
+                return String(obj1) == String(obj2);
         }
 
-        for (key in obj2)
-        {
+        for (key in obj2) {
             if (!(key in obj1)) {
                 return false;
             }
         }
 
-        for (key in obj1)
-        {
+        for (key in obj1) {
             val1 = obj1[key];
             val2 = obj2[key];
 
@@ -1914,21 +1935,8 @@
                 continue;
             }
 
-            if (String(val1) != String(val2)) {
+            if (!ObjectUtil.equals(val1, val2)) {
                 return false;
-            }
-
-            type1 = TypeUtil.of(val1);
-            type2 = TypeUtil.of(val2);
-
-            if (type1 !== type2) {
-                return false;
-            }
-
-            if (type1 === 'array' || type1 === 'object') {
-                if (!ObjectUtil.equals(val1, val2)) {
-                    return false;
-                }
             }
         }
 
@@ -2331,8 +2339,11 @@
     assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are not equal: "' + String(val1) + '" != "' + val2 + '"');
-            // throw new Error('values are not equal: ' + JSONUtil.encode(val1) + ' != ' + JSONUtil.encode(val2) + '.');
+            if (TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) {
+                throw new Error('values are not equal: \n' + JSONUtil.encode(val1) + '\n != \n' + JSONUtil.encode(val2));
+            } else {
+                throw new Error('values are not equal: ' + String(val1) + ' != ' + String(val2) + '.');
+            }
         }
     },
 
@@ -2410,7 +2421,11 @@
     assertNotEqual: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
-            throw new Error('values are equal: ' + String(val1) + ' == ' + String(val2) + '.');
+            if (TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) {
+                throw new Error('values are equal: \n' + JSONUtil.encode(val1) + '\n == \n' + JSONUtil.encode(val2));
+            } else {
+                throw new Error('values are equal: ' + String(val1) + ' == ' + String(val2) + '.');
+            }
         }
     },
 
