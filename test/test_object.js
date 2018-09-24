@@ -165,6 +165,13 @@ describe('object', function() {
             test.assertFalse(f(a, c));
             test.assertFalse(f(b, c));
         });
+        it('test objects containing numbers', function() {
+            var a = { x:0.0, y:0.0 };
+            var b = { x:0.0, y:0.0000000001 };
+            var c = { x:0.0, y:0.0001 };
+            test.assertTrue(f(a, b));
+            test.assertFalse(f(a, c));
+        });
     });
     describe('keys', function() {
         var f = obj.keys;

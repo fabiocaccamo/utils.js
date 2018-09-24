@@ -88,19 +88,23 @@ var ObjectUtil = {
             return false;
         }
 
-        if (type1 !== 'array' && type1 !== 'object') {
-            return String(obj1) == String(obj2);
+        switch (type1) {
+            case 'array':
+            case 'object':
+                break;
+            case 'number':
+                return MathUtil.equals(obj1, obj2);
+            default:
+                return String(obj1) == String(obj2);
         }
 
-        for (key in obj2)
-        {
+        for (key in obj2) {
             if (!(key in obj1)) {
                 return false;
             }
         }
 
-        for (key in obj1)
-        {
+        for (key in obj1) {
             val1 = obj1[key];
             val2 = obj2[key];
 
@@ -108,21 +112,8 @@ var ObjectUtil = {
                 continue;
             }
 
-            if (String(val1) != String(val2)) {
+            if (!ObjectUtil.equals(val1, val2)) {
                 return false;
-            }
-
-            type1 = TypeUtil.of(val1);
-            type2 = TypeUtil.of(val2);
-
-            if (type1 !== type2) {
-                return false;
-            }
-
-            if (type1 === 'array' || type1 === 'object') {
-                if (!ObjectUtil.equals(val1, val2)) {
-                    return false;
-                }
             }
         }
 
