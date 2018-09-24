@@ -8,6 +8,13 @@ var ColorCmykUtil = {
             }));
     },
 
+    // distance: function(colorA, colorB)
+    // {
+    //     return ColorRgbUtil.distance(
+    //         ColorCmykUtil.toRgb(colorA),
+    //         ColorCmykUtil.toRgb(colorB));
+    // },
+
     gradient: function(colors, steps)
     {
         return ColorRgbUtil.gradient(
@@ -49,6 +56,17 @@ var ColorCmykUtil = {
                 return ColorCmykUtil.toRgb(color);
             }), t);
     },
+
+    // nearest: function(colorSearch, colors)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.nearest(
+    //             ColorCmykUtil.toRgb(colorSearch),
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             })
+    //         ));
+    // },
 
     toCmyk: function(color)
     {

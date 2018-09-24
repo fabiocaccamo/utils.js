@@ -20,28 +20,137 @@ describe('color.rgb', function() {
         });
     });
     describe('gradient', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = rgb.gradient;
+        it('test 2 colors and 1 step', function() {
+            r = f([{ r:255, g:0, b:0 }, { r:0, g:255, b:0 }], 1);
+            test.assertEqual(r, [{ r:255, g:0, b:0, a:1 }]);
+        });
+        it('test 2 colors and 2 steps', function() {
+            r = f([{ r:255, g:0, b:0 }, { r:0, g:255, b:0 }], 2);
+            test.assertEqual(r, [{ r:255, g:0, b:0, a:1 }, { r:0, g:255, b:0, a:1 }]);
+        });
+        it('test 2 colors and 3 steps', function() {
+            r = f([{ r:255, g:0, b:0 }, { r:0, g:255, b:0 }], 3);
+            test.assertEqual(r, [{ r:255, g:0, b:0, a:1 }, { r:128, g:128, b:0, a:1 }, { r:0, g:255, b:0, a:1 }]);
+        });
+        it('test 2 colors and 4 steps', function() {
+            r = f([{ r:255, g:0, b:0 }, { r:0, g:255, b:0 }], 4);
+            test.assertEqual(r, [{ r:255, g:0, b:0, a:1 }, { r:170, g:85, b:0, a:1 }, { r:85, g:170, b:0, a:1 }, { r:0, g:255, b:0, a:1 }]);
         });
     });
     describe('gradientMatrix', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = rgb.gradientMatrix;
+        it('test 5x4 matrix with 4 required points', function() {
+            r = f({
+                topLeft: { r:255, g:0, b:0 },
+                topRight: { r:0, g:255, b:0 },
+                bottomRight: { r:0, g:0, b:255 },
+                bottomLeft: { r:255, g:255, b:0 }
+            }, 5, 4);
+            test.assertEqual(r, [
+                [{ r:255, g:0, b:0, a:1 }, { r:192, g:64, b:0, a:1 }, { r:128, g:128, b:0, a:1 }, { r:64, g:192, b:0, a:1 }, { r:0, g:255, b:0, a:1}],
+                [{ r:255, g:85, b:0, a:1 }, { r:192, g:107, b:22, a:1 }, { r:128, g:128, b:43, a:1 }, { r:64, g:149, b:64, a:1 }, { r:0, g:170, b:85, a:1}],
+                [{ r:255, g:170, b:0, a:1 }, { r:192, g:149, b:43, a:1 }, { r:128, g:128, b:85, a:1 }, { r:64, g:107, b:128, a:1 }, { r:0, g:85, b:170, a:1}],
+                [{ r:255, g:255, b:0, a:1 }, { r:192, g:192, b:64, a:1 }, { r:128, g:128, b:128, a:1 }, { r:64, g:64, b:192, a:1 }, { r:0, g:0, b:255, a:1 }]
+            ]);
+        });
+        it('test 5x4 matrix with 4 required points and optional points', function() {
+            // TODO
+        });
+        it('test invalid points', function() {
+            // TODO
         });
     });
     describe('interpolateBilinear', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = rgb.interpolateBilinear;
+        var a = { r:255, g:255, b:255 }
+        var b = { r:255, g:0, b:0 };
+        var c = { r:0, g:255, b:0 };
+        var d = { r:0, g:0, b:255 };
+        it('test interpolate 0.0 - 0.0', function() {
+            r = f(a, b, c, d, 0.0, 0.0);
+            test.assertNumberAlmostEqual(r.r, 255);
+            test.assertNumberAlmostEqual(r.g, 255);
+            test.assertNumberAlmostEqual(r.b, 255);
+        });
+        it('test interpolate 0.5 - 0.0', function() {
+            r = f(a, b, c, d, 0.5, 0.0);
+            test.assertNumberAlmostEqual(r.r, 255);
+            test.assertNumberAlmostEqual(r.g, 128);
+            test.assertNumberAlmostEqual(r.b, 128);
+        });
+        it('test interpolate 0.0 - 0.5', function() {
+            r = f(a, b, c, d, 0.0, 0.5);
+            test.assertNumberAlmostEqual(r.r, 128);
+            test.assertNumberAlmostEqual(r.g, 255);
+            test.assertNumberAlmostEqual(r.b, 128);
+        });
+        it('test interpolate 0.5 - 0.5', function() {
+            r = f(a, b, c, d, 0.5, 0.5);
+            test.assertNumberAlmostEqual(r.r, 128);
+            test.assertNumberAlmostEqual(r.g, 128);
+            test.assertNumberAlmostEqual(r.b, 128);
+        });
+        it('test interpolate 1.0 - 1.0', function() {
+            r = f(a, b, c, d, 1.0, 1.0);
+            test.assertNumberAlmostEqual(r.r, 0);
+            test.assertNumberAlmostEqual(r.g, 0);
+            test.assertNumberAlmostEqual(r.b, 255);
         });
     });
     describe('interpolateLinear', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = rgb.interpolateLinear;
+        it('test interpolate 0.0', function() {
+            r = f({ r:0, g:50, b:100 }, { r:50, g:150, b:200 }, 0.0);
+            test.assertNumberAlmostEqual(r.r, 0);
+            test.assertNumberAlmostEqual(r.g, 50);
+            test.assertNumberAlmostEqual(r.b, 100);
+        });
+        it('test interpolate 0.5', function() {
+            r = f({ r:0, g:50, b:100 }, { r:50, g:150, b:200 }, 0.5);
+            test.assertNumberAlmostEqual(r.r, 25);
+            test.assertNumberAlmostEqual(r.g, 100);
+            test.assertNumberAlmostEqual(r.b, 150);
+        });
+        it('test interpolate 1.0', function() {
+            r = f({ r:0, g:50, b:100 }, { r:50, g:150, b:200 }, 1.0);
+            test.assertNumberAlmostEqual(r.r, 50);
+            test.assertNumberAlmostEqual(r.g, 150);
+            test.assertNumberAlmostEqual(r.b, 200);
         });
     });
     describe('interpolateMultilinear', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = rgb.interpolateMultilinear;
+        var c = [{ r:255, g:255, b:255 }, { r:255, g:0, b:0 }, { r:0, g:0, b:0 }];
+        it('test interpolate 0.0', function() {
+            r = f(c, 0.0);
+            test.assertNumberAlmostEqual(r.r, 255);
+            test.assertNumberAlmostEqual(r.g, 255);
+            test.assertNumberAlmostEqual(r.b, 255);
+        });
+        it('test interpolate 0.25', function() {
+            r = f(c, 0.25);
+            test.assertNumberAlmostEqual(r.r, 255);
+            test.assertNumberAlmostEqual(r.g, 128);
+            test.assertNumberAlmostEqual(r.b, 128);
+        });
+        it('test interpolate 0.5', function() {
+            r = f(c, 0.5);
+            test.assertNumberAlmostEqual(r.r, 255);
+            test.assertNumberAlmostEqual(r.g, 0);
+            test.assertNumberAlmostEqual(r.b, 0);
+        });
+        it('test interpolate 0.75', function() {
+            r = f(c, 0.75);
+            test.assertNumberAlmostEqual(r.r, 128);
+            test.assertNumberAlmostEqual(r.g, 0);
+            test.assertNumberAlmostEqual(r.b, 0);
+        });
+        it('test interpolate 1.0', function() {
+            r = f(c, 1.0);
+            test.assertNumberAlmostEqual(r.r, 0);
+            test.assertNumberAlmostEqual(r.g, 0);
+            test.assertNumberAlmostEqual(r.b, 0);
         });
     });
     describe('nearest', function() {
@@ -110,7 +219,7 @@ describe('color.rgb', function() {
         });
         it('test alpha 100%', function() {
             s = f({ r:0, g:0, b:0, a:1 });
-            test.assertEqual(s, '#FF000000');
+            test.assertEqual(s, '#000000');
         });
         it('test black', function() {
             s = f({ r:0, g:0, b:0 });
