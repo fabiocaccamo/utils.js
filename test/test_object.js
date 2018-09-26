@@ -8,9 +8,7 @@ describe('object', function() {
         it('test same instance', function() {
             var o1 = { a:1, b:2, c:3 };
             var r = f(o1, o1);
-            test.assertEqual(r['a'], 1);
-            test.assertEqual(r['b'], 2);
-            test.assertEqual(r['c'], 3);
+            test.assertEqual(r, { a:1, b:2, c:3 });
         });
         it('test diff instance', function() {
             var o1 = { a:1, b:2, c:3 };
@@ -19,12 +17,7 @@ describe('object', function() {
             test.assertTrue(o1 !== o2);
             test.assertTrue(o1 === r);
             test.assertTrue(o2 !== r);
-            test.assertEqual(r['a'], 1);
-            test.assertEqual(r['b'], 2);
-            test.assertEqual(r['c'], 3);
-            test.assertEqual(r['d'], 4);
-            test.assertEqual(r['e'], 5);
-            test.assertEqual(r['f'], 6);
+            test.assertEqual(r, { a:1, b:2, c:3, d:4, e:5, f:6 });
         });
         it('test multiple instances', function() {
             var o1 = { a:1, b:2, c:3 };
@@ -32,15 +25,7 @@ describe('object', function() {
             var o3 = { g:7, h:8, i:9 };
             var o4 = { a:0, e:0, i:0 };
             var r = f(o1, o2, o3, o4);
-            test.assertEqual(r['a'], 0);
-            test.assertEqual(r['b'], 2);
-            test.assertEqual(r['c'], 3);
-            test.assertEqual(r['d'], 4);
-            test.assertEqual(r['e'], 0);
-            test.assertEqual(r['f'], 6);
-            test.assertEqual(r['g'], 7);
-            test.assertEqual(r['h'], 8);
-            test.assertEqual(r['i'], 0);
+            test.assertEqual(r, { a:0, b:2, c:3, d:4, e:0, f:6, g:7, h:8, i:0 });
         });
         it('test props overwrite', function() {
             var o1 = { a:1, b:2, c:3 };
@@ -49,6 +34,7 @@ describe('object', function() {
             test.assertEqual(r['a'], 4);
             test.assertEqual(r['b'], 5);
             test.assertEqual(r['c'], 6);
+            test.assertEqual(r, { a:4, b:5, c:6 });
         });
     });
     describe('clean', function() {
@@ -57,31 +43,13 @@ describe('object', function() {
             var o1 = { a:1, b:undefined, c:3, d:null, e:'', f:0, g:NaN, h:false, i:[null], j:{ k:null } };
             var r = f(o1);
             test.assertEqual(obj.length(r), 7);
-            test.assertEqual(r['a'], 1);
-            test.assertEqual(r['b'], undefined);
-            test.assertEqual(r['c'], 3);
-            test.assertEqual(r['d'], undefined);
-            test.assertEqual(r['e'], '');
-            test.assertEqual(r['f'], 0);
-            test.assertEqual(r['g'], undefined);
-            test.assertEqual(r['h'], false);
-            test.assertEqual(r['i'], [null]);
-            test.assertEqual(r['j'], { k:null });
+            test.assertEqual(r, { a:1, c:3, e:'', f:0, h:false, i:[null], j:{ k:null } });
         });
         it('test hard', function() {
             var o1 = { a:1, b:undefined, c:3, d:null, e:'', f:0, g:NaN, h:false, i:[null], j:{ k:null } };
             var r = f(o1, true);
             test.assertEqual(obj.length(r), 4);
-            test.assertEqual(r['a'], 1);
-            test.assertEqual(r['b'], undefined);
-            test.assertEqual(r['c'], 3);
-            test.assertEqual(r['d'], undefined);
-            test.assertEqual(r['e'], undefined);
-            test.assertEqual(r['f'], 0);
-            test.assertEqual(r['g'], undefined);
-            test.assertEqual(r['h'], false);
-            test.assertEqual(r['i'], undefined);
-            test.assertEqual(r['j'], undefined);
+            test.assertEqual(r, { a:1, c:3, f:0, h:false });
         });
     });
     describe('clone', function() {
@@ -322,9 +290,7 @@ describe('object', function() {
             var o1 = { a:1, b:2, c:3 };
             var r = f(o1, o1);
             test.assertFalse(o1 === r);
-            test.assertEqual(r['a'], 1);
-            test.assertEqual(r['b'], 2);
-            test.assertEqual(r['c'], 3);
+            test.assertEqual(r, { a:1, b:2, c:3 });
         });
         it('test diff instance', function() {
             var o1 = { a:1, b:2, c:3 };
@@ -333,12 +299,7 @@ describe('object', function() {
             test.assertTrue(o1 !== o2);
             test.assertTrue(o1 !== r);
             test.assertTrue(o2 !== r);
-            test.assertEqual(r['a'], 1);
-            test.assertEqual(r['b'], 2);
-            test.assertEqual(r['c'], 3);
-            test.assertEqual(r['d'], 4);
-            test.assertEqual(r['e'], 5);
-            test.assertEqual(r['f'], 6);
+            test.assertEqual(r, { a:1, b:2, c:3, d:4, e:5, f:6 });
         });
         it('test multiple instances', function() {
             var o1 = { a:1, b:2, c:3 };
@@ -346,23 +307,13 @@ describe('object', function() {
             var o3 = { g:7, h:8, i:9 };
             var o4 = { a:0, e:0, i:0 };
             var r = f(o1, o2, o3, o4);
-            test.assertEqual(r['a'], 0);
-            test.assertEqual(r['b'], 2);
-            test.assertEqual(r['c'], 3);
-            test.assertEqual(r['d'], 4);
-            test.assertEqual(r['e'], 0);
-            test.assertEqual(r['f'], 6);
-            test.assertEqual(r['g'], 7);
-            test.assertEqual(r['h'], 8);
-            test.assertEqual(r['i'], 0);
+            test.assertEqual(r, { a:0, b:2, c:3, d:4, e:0, f:6, g:7, h:8, i:0 });
         });
         it('test props overwrite', function() {
             var o1 = { a:1, b:2, c:3 };
             var o2 = { a:4, b:5, c:6 };
             var r = f(o1, o2);
-            test.assertEqual(r['a'], 4);
-            test.assertEqual(r['b'], 5);
-            test.assertEqual(r['c'], 6);
+            test.assertEqual(r, { a:4, b:5, c:6 });
         });
     });
     describe('values', function() {

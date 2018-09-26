@@ -10,15 +10,13 @@ describe('point', function() {
             a = { x:0, y:10 };
             b = { x:50, y:100 };
             r = f(a, b);
-            test.assertNumberAlmostEqual(r.x, 50);
-            test.assertNumberAlmostEqual(r.y, 110);
+            test.assertEqual(r, { x:50, y:110 });
         });
         it('test negative coords', function() {
             a = { x:-10, y:-20 };
             b = { x:-30, y:-40 };
             r = f(a, b);
-            test.assertNumberAlmostEqual(r.x, -40);
-            test.assertNumberAlmostEqual(r.y, -60);
+            test.assertEqual(r, { x:-40, y:-60 });
         });
     });
     describe('angle', function() {
@@ -105,8 +103,7 @@ describe('point', function() {
         var f = point.interpolate;
         it('test simple', function() {
             r = f({ x:0, y:100 }, { x:50, y:1000 }, 0.5);
-            test.assertNumberAlmostEqual(r.x, 25);
-            test.assertNumberAlmostEqual(r.y, 550);
+            test.assertEqual(r, { x:25, y:550 });
         });
     });
     describe('project', function() {
@@ -114,44 +111,37 @@ describe('point', function() {
         it('test project 0°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 0);
-            test.assertNumberAlmostEqual(r.x, 100);
-            test.assertNumberAlmostEqual(r.y, 0);
+            test.assertEqual(r, { x:100, y:0 });
         });
         it('test project 45°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 45);
-            test.assertNumberAlmostEqual(r.x, 70.71067811865476);
-            test.assertNumberAlmostEqual(r.y, 70.71067811865476);
+            test.assertEqual(r, { x:70.71067811865476, y:70.71067811865476 });
         });
         it('test project 90°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 90);
-            test.assertNumberAlmostEqual(r.x, 0);
-            test.assertNumberAlmostEqual(r.y, 100);
+            test.assertEqual(r, { x:0, y:100 });
         });
         it('test project 180°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 180);
-            test.assertNumberAlmostEqual(r.x, -100);
-            test.assertNumberAlmostEqual(r.y, 0);
+            test.assertEqual(r, { x:-100, y:0 });
         });
         it('test project 225°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 225);
-            test.assertNumberAlmostEqual(r.x, -70.71067811865476);
-            test.assertNumberAlmostEqual(r.y, -70.71067811865476);
+            test.assertEqual(r, { x:-70.71067811865476, y:-70.71067811865476 });
         });
         it('test project 360°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 360);
-            test.assertNumberAlmostEqual(r.x, 100);
-            test.assertNumberAlmostEqual(r.y, 0);
+            test.assertEqual(r, { x:100, y:0 });
         });
         it('test project 0°', function() {
             a = { x:0, y:0 };
             r = f(a, 100, 720);
-            test.assertNumberAlmostEqual(r.x, 100);
-            test.assertNumberAlmostEqual(r.y, 0);
+            test.assertEqual(r, { x:100, y:0 });
         });
     });
     describe('rotate', function() {
@@ -159,44 +149,37 @@ describe('point', function() {
         it('test rotate 0°', function() {
             a = { x:100, y:100 };
             r = f(a, 0);
-            test.assertNumberAlmostEqual(r.x, 100);
-            test.assertNumberAlmostEqual(r.y, 100);
+            test.assertEqual(r, { x:100, y:100 });
         });
         it('test rotate 45°', function() {
             a = { x:100, y:100 };
             r = f(a, 45);
-            test.assertNumberAlmostEqual(r.x, 0);
-            test.assertNumberAlmostEqual(r.y, 141.4213562373095);
+            test.assertEqual(r, { x:0, y:141.4213562373095 });
         });
         it('test rotate 90°', function() {
             a = { x:100, y:0 };
             r = f(a, 90);
-            test.assertNumberAlmostEqual(r.x, 0);
-            test.assertNumberAlmostEqual(r.y, 100);
+            test.assertEqual(r, { x:0, y:100 });
         });
         it('test rotate 180°', function() {
             a = { x:100, y:100 };
             r = f(a, 180);
-            test.assertNumberAlmostEqual(r.x, -100);
-            test.assertNumberAlmostEqual(r.y, -100);
+            test.assertEqual(r, { x:-100, y:-100 });
         });
         it('test rotate 225°', function() {
             a = { x:100, y:0 };
             r = f(a, 225);
-            test.assertNumberAlmostEqual(r.x, -70.71067811865477);
-            test.assertNumberAlmostEqual(r.y, -70.71067811865477);
+            test.assertEqual(r, { x:-70.71067811865477, y:-70.71067811865477 });
         });
         it('test rotate 360°', function() {
             a = { x:50, y:50 };
             r = f(a, 360);
-            test.assertNumberAlmostEqual(r.x, 50);
-            test.assertNumberAlmostEqual(r.y, 50);
+            test.assertEqual(r, { x:50, y:50 });
         });
         it('test rotate 720°', function() {
             a = { x:50, y:50 };
             r = f(a, 720);
-            test.assertNumberAlmostEqual(r.x, 50);
-            test.assertNumberAlmostEqual(r.y, 50);
+            test.assertEqual(r, { x:50, y:50 });
         });
     });
     describe('scale', function() {
@@ -204,14 +187,12 @@ describe('point', function() {
         it('test double size', function() {
             a = { x:10, y:20 };
             r = f(a, 2.0);
-            test.assertNumberAlmostEqual(r.x, 20);
-            test.assertNumberAlmostEqual(r.y, 40);
+            test.assertEqual(r, { x:20, y:40 });
         });
         it('test half size', function() {
             a = { x:10, y:20 };
             r = f(a, 0.5);
-            test.assertNumberAlmostEqual(r.x, 5);
-            test.assertNumberAlmostEqual(r.y, 10);
+            test.assertEqual(r, { x:5, y:10 });
         });
     });
     describe('subtract', function() {
@@ -220,15 +201,13 @@ describe('point', function() {
             a = { x:0, y:10 };
             b = { x:50, y:100 };
             r = f(a, b);
-            test.assertNumberAlmostEqual(r.x, -50);
-            test.assertNumberAlmostEqual(r.y, -90);
+            test.assertEqual(r, { x:-50, y:-90 });
         });
         it('test negative coords', function() {
             a = { x:-10, y:-20 };
             b = { x:-30, y:-40 };
             r = f(a, b);
-            test.assertNumberAlmostEqual(r.x, 20);
-            test.assertNumberAlmostEqual(r.y, 20);
+            test.assertEqual(r, { x:20, y:20 });
         });
     });
     describe('translate', function() {
@@ -236,14 +215,12 @@ describe('point', function() {
         it('test positive coords', function() {
             a = { x:0, y:10 };
             r = f(a, 100, 200);
-            test.assertNumberAlmostEqual(r.x, 100);
-            test.assertNumberAlmostEqual(r.y, 210);
+            test.assertEqual(r, { x:100, y:210 });
         });
         it('test negative coords', function() {
             a = { x:-10, y:-20 };
             r = f(a, -30, 40);
-            test.assertNumberAlmostEqual(r.x, -40);
-            test.assertNumberAlmostEqual(r.y, 20);
+            test.assertEqual(r, { x:-40, y:20 });
         });
     });
 });
