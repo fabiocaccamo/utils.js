@@ -34,11 +34,9 @@ var TestUtil = {
     assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            if (TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) {
-                throw new Error('values are not equal: \n' + JSONUtil.encode(val1) + '\n != \n' + JSONUtil.encode(val2));
-            } else {
-                throw new Error('values are not equal: ' + String(val1) + ' != ' + String(val2) + '.');
-            }
+            var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
+            var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
+            throw new Error('values are not equal: ' + out1 + ' != ' + out2);
         }
     },
 
@@ -116,11 +114,9 @@ var TestUtil = {
     assertNotEqual: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
-            if (TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) {
-                throw new Error('values are equal: \n' + JSONUtil.encode(val1) + '\n == \n' + JSONUtil.encode(val2));
-            } else {
-                throw new Error('values are equal: ' + String(val1) + ' == ' + String(val2) + '.');
-            }
+            var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
+            var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
+            throw new Error('values are equal: ' + out1 + ' == ' + out2);
         }
     },
 
