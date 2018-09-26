@@ -103,13 +103,17 @@ var ColorCmykUtil = {
         var m = (color.m / 100);
         var y = (color.y / 100);
         var k = (color.k / 100);
-        var r = (1.0 - Math.min(1.0, (c * (1.0 - k)) + k));
-        var g = (1.0 - Math.min(1.0, (m * (1.0 - k)) + k));
-        var b = (1.0 - Math.min(1.0, (y * (1.0 - k)) + k));
-        r = Math.round(r * 255);
-        g = Math.round(g * 255);
-        b = Math.round(b * 255);
-        return { r:r, g:g, b:b };
+        var ik = (1.0 - k);
+
+        var r = (1.0 - Math.min(1.0, ((c * ik) + k)));
+        var g = (1.0 - Math.min(1.0, ((m * ik) + k)));
+        var b = (1.0 - Math.min(1.0, ((y * ik) + k)));
+
+        r = Math.floor(r * 255);
+        g = Math.floor(g * 255);
+        b = Math.floor(b * 255);
+
+        return { r:r, g:g, b:b, a:1.0 };
     },
 
     toString: function(color)
