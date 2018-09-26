@@ -2,10 +2,12 @@ var ColorHexUtil = {
 
     average: function(colors)
     {
-        return ColorRgbUtil.average(
-            colors.map(function(color){
-                return ColorHexUtil.toRgb(color);
-            }));
+        return ColorRgbUtil.toHex(
+            ColorRgbUtil.average(
+                colors.map(function(color){
+                    return ColorHexUtil.toRgb(color);
+                })
+            ));
     },
 
     distance: function(colorA, colorB)
@@ -17,18 +19,45 @@ var ColorHexUtil = {
 
     gradient: function(colors, steps)
     {
-        return ColorRgbUtil.gradient(
-            colors.map(function(color){
+        // var colorsRgb = colors.map(function(color){
+        //     return ColorHexUtil.toRgb(color);
+        // });
+        // var gradientRgb = ColorRgbUtil.gradient(colorsRgb, steps);
+        // var gradientHex = gradientRgb.map(function(color){
+        //     return ColorRgbUtil.toHex(color);
+        // });
+        // return gradientHex;
+
+        return ColorRgbUtil.gradient(colors.map(function(color){
                 return ColorHexUtil.toRgb(color);
-            }), steps);
+            }), steps).map(function(color){
+                return ColorRgbUtil.toHex(color);
+            });
     },
 
     gradientMatrix: function(colors, stepsX, stepsY)
     {
+        // var colorsRgb = ObjectUtil.map(colors, function(color){
+        //     return ColorHexUtil.toRgb(color);
+        // });
+        // var matrixRgb = ColorRgbUtil.gradientMatrix(colorsRgb, stepsX, stepsY);
+        // var matrixHex = [];
+        // for (var i = 0; i < matrixRgb.length; i++) {
+        //     matrixHex[i] = [];
+        //     for (var k = 0; k < matrixRgb[i].length; k++) {
+        //         matrixHex[i][k] = ColorRgbUtil.toHex(matrixRgb[i][k]);
+        //     }
+        // }
+        // return matrixHex;
+
         return ColorRgbUtil.gradientMatrix(
-            colors.map(function(color){
+            ObjectUtil.map(colors, function(color){
                 return ColorHexUtil.toRgb(color);
-            }), stepsX, stepsY);
+            }), stepsX, stepsY).map(function(colors){
+                return colors.map(function(color){
+                    return ColorRgbUtil.toHex(color);
+                });
+            });
     },
 
     interpolateBilinear: function(a, b, c, d, u, v)
@@ -51,10 +80,11 @@ var ColorHexUtil = {
 
     interpolateMultilinear: function(colors, t)
     {
-        return ColorRgbUtil.interpolateMultilinear(
-            colors.map(function(color){
-                return ColorHexUtil.toRgb(color);
-            }), t);
+        return ColorRgbUtil.toHex(
+            ColorRgbUtil.interpolateMultilinear(
+                colors.map(function(color){
+                    return ColorHexUtil.toRgb(color);
+                }), t));
     },
 
     nearest: function(colorSearch, colors)
@@ -70,7 +100,8 @@ var ColorHexUtil = {
 
     toCmyk: function(color)
     {
-        return color;
+        return ColorRgbUtil.toCmyk(
+            ColorHexUtil.toRgb(color));
     },
 
     // toGrayscale: function(color)
@@ -78,12 +109,6 @@ var ColorHexUtil = {
     //     return ColorRgbUtil.toGrayscale(
     //         ColorHexUtil.toRgb(color));
     // },
-
-    toHex: function(color, prefix)
-    {
-        return ColorRgbUtil.toHex(
-            ColorHexUtil.toRgb(color), prefix);
-    },
 
     // toHsl: function(color)
     // {
@@ -140,7 +165,7 @@ var ColorHexUtil = {
                 // eg. #FF000000
                 comps = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
                 rgb = {
-                    a: (fromHex(comps[1]) / 255),
+                    a: MathUtil.roundDecimals(fromHex(comps[1]) / 255, 2),
                     r: fromHex(comps[2]),
                     g: fromHex(comps[3]),
                     b: fromHex(comps[4])
@@ -152,14 +177,15 @@ var ColorHexUtil = {
         return rgb;
     },
 
-    toString: function(color)
+    toString: function(color, prefix)
     {
-        return ColorHexUtil.toHex(color, '0x');
+        return ColorRgbUtil.toHex(
+            ColorHexUtil.toRgb(color), prefix);
     },
 
     toStringCSS: function(color)
     {
-        return ColorHexUtil.toHex(color, '#');
+        return ColorHexUtil.toString(color, '#');
     }
 
 };

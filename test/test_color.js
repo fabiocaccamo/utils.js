@@ -1,10 +1,11 @@
 var utils = require('../dist/utils.js');
 var test = utils.test;
+var color = utils.color;
 
 describe('color', function() {
     describe('cmyk', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        it('test utility object', function() {
+            test.assertObject(color.cmyk);
         });
     });
     // describe('cmykToGrayscale', function() {
@@ -63,30 +64,35 @@ describe('color', function() {
     //     });
     // });
     describe('hex', function() {
+        it('test utility object', function() {
+            test.assertObject(color.hex);
+        });
+    });
+    describe('hexToCmyk', function() {
         it('TODO', function() {
             test.assertTrue(true);
         });
     });
-    describe('hexToGrayscale', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('hexToHex', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('hexToHsl', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('hexToHsv', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
+    // describe('hexToGrayscale', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('hexToHex', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('hexToHsl', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('hexToHsv', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
     describe('hexToRgb', function() {
         it('TODO', function() {
             test.assertTrue(true);
@@ -153,6 +159,11 @@ describe('color', function() {
     //     });
     // });
     describe('rgb', function() {
+        it('test utility object', function() {
+            test.assertObject(color.rgb);
+        });
+    });
+    describe('rgbToCmyk', function() {
         it('TODO', function() {
             test.assertTrue(true);
         });
@@ -177,9 +188,4 @@ describe('color', function() {
     //         test.assertTrue(true);
     //     });
     // });
-    describe('rgbToRgb', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
 });
