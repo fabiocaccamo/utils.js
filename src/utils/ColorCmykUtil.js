@@ -8,12 +8,12 @@ var ColorCmykUtil = {
             }));
     },
 
-    // distance: function(colorA, colorB)
-    // {
-    //     return ColorRgbUtil.distance(
-    //         ColorCmykUtil.toRgb(colorA),
-    //         ColorCmykUtil.toRgb(colorB));
-    // },
+    distance: function(colorA, colorB)
+    {
+        return ColorRgbUtil.distance(
+            ColorCmykUtil.toRgb(colorA),
+            ColorCmykUtil.toRgb(colorB));
+    },
 
     gradient: function(colors, steps)
     {
@@ -57,20 +57,15 @@ var ColorCmykUtil = {
             }), t);
     },
 
-    // nearest: function(colorSearch, colors)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.nearest(
-    //             ColorCmykUtil.toRgb(colorSearch),
-    //             colors.map(function(color){
-    //                 return ColorCmykUtil.toRgb(color);
-    //             })
-    //         ));
-    // },
-
-    toCmyk: function(color)
+    nearest: function(colorSearch, colors)
     {
-        return color;
+        return ColorRgbUtil.toCmyk(
+            ColorRgbUtil.nearest(
+                ColorCmykUtil.toRgb(colorSearch),
+                colors.map(function(color){
+                    return ColorCmykUtil.toRgb(color);
+                })
+            ));
     },
 
     // toGrayscale: function(color)
@@ -109,9 +104,10 @@ var ColorCmykUtil = {
         var g = (1.0 - Math.min(1.0, ((m * ik) + k)));
         var b = (1.0 - Math.min(1.0, ((y * ik) + k)));
 
-        r = Math.floor(r * 255);
-        g = Math.floor(g * 255);
-        b = Math.floor(b * 255);
+        var round = Math.floor;
+        r = round(r * 255);
+        g = round(g * 255);
+        b = round(b * 255);
 
         return { r:r, g:g, b:b, a:1.0 };
     },
