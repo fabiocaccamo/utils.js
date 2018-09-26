@@ -340,12 +340,12 @@
             }));
     },
 
-    // distance: function(colorA, colorB)
-    // {
-    //     return ColorRgbUtil.distance(
-    //         ColorCmykUtil.toRgb(colorA),
-    //         ColorCmykUtil.toRgb(colorB));
-    // },
+    distance: function(colorA, colorB)
+    {
+        return ColorRgbUtil.distance(
+            ColorCmykUtil.toRgb(colorA),
+            ColorCmykUtil.toRgb(colorB));
+    },
 
     gradient: function(colors, steps)
     {
@@ -389,20 +389,15 @@
             }), t);
     },
 
-    // nearest: function(colorSearch, colors)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.nearest(
-    //             ColorCmykUtil.toRgb(colorSearch),
-    //             colors.map(function(color){
-    //                 return ColorCmykUtil.toRgb(color);
-    //             })
-    //         ));
-    // },
-
-    toCmyk: function(color)
+    nearest: function(colorSearch, colors)
     {
-        return color;
+        return ColorRgbUtil.toCmyk(
+            ColorRgbUtil.nearest(
+                ColorCmykUtil.toRgb(colorSearch),
+                colors.map(function(color){
+                    return ColorCmykUtil.toRgb(color);
+                })
+            ));
     },
 
     // toGrayscale: function(color)
@@ -435,13 +430,18 @@
         var m = (color.m / 100);
         var y = (color.y / 100);
         var k = (color.k / 100);
-        var r = (1.0 - Math.min(1.0, (c * (1.0 - k)) + k));
-        var g = (1.0 - Math.min(1.0, (m * (1.0 - k)) + k));
-        var b = (1.0 - Math.min(1.0, (y * (1.0 - k)) + k));
-        r = Math.round(r * 255);
-        g = Math.round(g * 255);
-        b = Math.round(b * 255);
-        return { r:r, g:g, b:b };
+        var ik = (1.0 - k);
+
+        var r = (1.0 - Math.min(1.0, ((c * ik) + k)));
+        var g = (1.0 - Math.min(1.0, ((m * ik) + k)));
+        var b = (1.0 - Math.min(1.0, ((y * ik) + k)));
+
+        var round = Math.floor;
+        r = round(r * 255);
+        g = round(g * 255);
+        b = round(b * 255);
+
+        return { r:r, g:g, b:b, a:1.0 };
     },
 
     toString: function(color)
@@ -459,10 +459,12 @@
 
     average: function(colors)
     {
-        return ColorRgbUtil.average(
-            colors.map(function(color){
-                return ColorHexUtil.toRgb(color);
-            }));
+        return ColorRgbUtil.toHex(
+            ColorRgbUtil.average(
+                colors.map(function(color){
+                    return ColorHexUtil.toRgb(color);
+                })
+            ));
     },
 
     distance: function(colorA, colorB)
@@ -474,18 +476,45 @@
 
     gradient: function(colors, steps)
     {
-        return ColorRgbUtil.gradient(
-            colors.map(function(color){
+        // var colorsRgb = colors.map(function(color){
+        //     return ColorHexUtil.toRgb(color);
+        // });
+        // var gradientRgb = ColorRgbUtil.gradient(colorsRgb, steps);
+        // var gradientHex = gradientRgb.map(function(color){
+        //     return ColorRgbUtil.toHex(color);
+        // });
+        // return gradientHex;
+
+        return ColorRgbUtil.gradient(colors.map(function(color){
                 return ColorHexUtil.toRgb(color);
-            }), steps);
+            }), steps).map(function(color){
+                return ColorRgbUtil.toHex(color);
+            });
     },
 
     gradientMatrix: function(colors, stepsX, stepsY)
     {
+        // var colorsRgb = ObjectUtil.map(colors, function(color){
+        //     return ColorHexUtil.toRgb(color);
+        // });
+        // var matrixRgb = ColorRgbUtil.gradientMatrix(colorsRgb, stepsX, stepsY);
+        // var matrixHex = [];
+        // for (var i = 0; i < matrixRgb.length; i++) {
+        //     matrixHex[i] = [];
+        //     for (var k = 0; k < matrixRgb[i].length; k++) {
+        //         matrixHex[i][k] = ColorRgbUtil.toHex(matrixRgb[i][k]);
+        //     }
+        // }
+        // return matrixHex;
+
         return ColorRgbUtil.gradientMatrix(
-            colors.map(function(color){
+            ObjectUtil.map(colors, function(color){
                 return ColorHexUtil.toRgb(color);
-            }), stepsX, stepsY);
+            }), stepsX, stepsY).map(function(colors){
+                return colors.map(function(color){
+                    return ColorRgbUtil.toHex(color);
+                });
+            });
     },
 
     interpolateBilinear: function(a, b, c, d, u, v)
@@ -508,10 +537,11 @@
 
     interpolateMultilinear: function(colors, t)
     {
-        return ColorRgbUtil.interpolateMultilinear(
-            colors.map(function(color){
-                return ColorHexUtil.toRgb(color);
-            }), t);
+        return ColorRgbUtil.toHex(
+            ColorRgbUtil.interpolateMultilinear(
+                colors.map(function(color){
+                    return ColorHexUtil.toRgb(color);
+                }), t));
     },
 
     nearest: function(colorSearch, colors)
@@ -527,7 +557,8 @@
 
     toCmyk: function(color)
     {
-        return color;
+        return ColorRgbUtil.toCmyk(
+            ColorHexUtil.toRgb(color));
     },
 
     // toGrayscale: function(color)
@@ -535,12 +566,6 @@
     //     return ColorRgbUtil.toGrayscale(
     //         ColorHexUtil.toRgb(color));
     // },
-
-    toHex: function(color, prefix)
-    {
-        return ColorRgbUtil.toHex(
-            ColorHexUtil.toRgb(color), prefix);
-    },
 
     // toHsl: function(color)
     // {
@@ -597,7 +622,7 @@
                 // eg. #FF000000
                 comps = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
                 rgb = {
-                    a: (fromHex(comps[1]) / 255),
+                    a: MathUtil.roundDecimals(fromHex(comps[1]) / 255, 2),
                     r: fromHex(comps[2]),
                     g: fromHex(comps[3]),
                     b: fromHex(comps[4])
@@ -609,14 +634,15 @@
         return rgb;
     },
 
-    toString: function(color)
+    toString: function(color, prefix)
     {
-        return ColorHexUtil.toHex(color, '0x');
+        return ColorRgbUtil.toHex(
+            ColorHexUtil.toRgb(color), prefix);
     },
 
     toStringCSS: function(color)
     {
-        return ColorHexUtil.toHex(color, '#');
+        return ColorHexUtil.toString(color, '#');
     }
 
 };
@@ -684,6 +710,7 @@
         var colorLeft = colors.left;
         var colorCenter = colors.center;
         var colorAvg = ColorRgbUtil.average;
+        // var colorLerp = ColorRgbUtil.interpolateLinear;
         var colorBerp = ColorRgbUtil.interpolateBilinear;
 
         if (!colorTopLeft || !colorTopRight || !colorBottomLeft || !colorBottomRight) {
@@ -691,18 +718,23 @@
         }
         if (!colorTop) {
             colorTop = colorAvg([colorTopLeft, colorTopRight]);
+            // colorTop = colorLerp(colorTopLeft, colorTopRight, 0.5);
         }
         if (!colorRight) {
             colorRight = colorAvg([colorBottomRight, colorTopRight]);
+            // colorRight = colorLerp(colorBottomRight, colorTopRight, 0.5);
         }
         if (!colorBottom) {
             colorBottom = colorAvg([colorBottomLeft, colorBottomRight]);
+            // colorBottom = colorLerp(colorBottomLeft, colorBottomRight, 0.5);
         }
         if (!colorLeft) {
             colorLeft = colorAvg([colorTopLeft, colorBottomLeft]);
+            // colorLeft = colorLerp(colorTopLeft, colorBottomLeft, 0.5);
         }
         if (!colorCenter) {
             colorCenter = colorAvg([colorTop, colorLeft, colorBottom, colorRight]);
+            // colorCenter = colorBerp(colorTop, colorBottom, colorLeft, colorLeft, 0.5, 0.5);
         }
 
         var colorsTopLeft = [colorTopLeft, colorLeft, colorCenter, colorTop];
@@ -811,23 +843,21 @@
         var g = (color.g / 255);
         var b = (color.b / 255);
 
-        var k = Math.min((1.0 - r), (1.0 - g), (1.0 - b));
-        var c = (1.0 - r - k);
-        var m = (1.0 - g - k);
-        var y = (1.0 - b - k);
-
+        var ir = (1.0 - r);
+        var ig = (1.0 - g);
+        var ib = (1.0 - b);
+        var k = Math.min(ir, ig, ib);
         var ik = (1.0 - k);
-        if (ik > 0.0) {
-            c = (c / ik);
-            m = (m / ik);
-            y = (y / ik);
-            k = (k / ik);
-        }
 
-        c = Math.round(c * 100);
-        m = Math.round(m * 100);
-        y = Math.round(y * 100);
-        k = Math.round(k * 100);
+        var c = ((k < 1.0) ? ((ir - k) / ik) : 0);
+        var m = ((k < 1.0) ? ((ig - k) / ik) : 0);
+        var y = ((k < 1.0) ? ((ib - k) / ik) : 0);
+
+        var round = Math.round;
+        c = round(c * 100);
+        m = round(m * 100);
+        y = round(y * 100);
+        k = round(k * 100);
 
         return { c:c, m:m, y:y, k:k };
     },
@@ -845,8 +875,7 @@
         var g = (isNaN(color.g) ? 0 : color.g);
         var b = (isNaN(color.b) ? 0 : color.b);
         var hex = HexUtil.encodeInt;
-        // return String((prefix || '#') + hex(r) + hex(g) + hex(b));
-        return String((prefix || '#') + ((a == null || a >= 1.0) ? '' : hex(Math.round(a * 255))) + hex(r) + hex(g) + hex(b));
+        return String((prefix || '#') + ((a == null || a >= 1.0) ? '' : hex(a * 255)) + hex(r) + hex(g) + hex(b));
     },
 
     // toHsl: function(color)
@@ -860,16 +889,6 @@
     //     // https://gist.github.com/felipesabino/5066336/revisions
     // },
 
-    toRgb: function(color)
-    {
-        return {
-            r: color.r,
-            g: color.g,
-            b: color.b,
-            a: (isNaN(color.a) ? 1.0 : color.a)
-        };
-    },
-
     toString: function(color)
     {
         return '{ r:' + String(color.r) + ', g:' + String(color.g) + ', b:' + String(color.b) + ', a:' + String(isNaN(color.a) ? 1.0 : color.a) + ' }';
@@ -882,6 +901,8 @@
 
 };
     var ColorUtil = {
+
+    // https://gist.github.com/felipesabino/5066336
 
     cmyk: ColorCmykUtil,
     // cmykToGrayscale: ColorCmykUtil.toGrayscale,
@@ -2339,11 +2360,9 @@
     assertEqual: function(val1, val2)
     {
         if (!ObjectUtil.equals(val1, val2)) {
-            if (TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) {
-                throw new Error('values are not equal: \n' + JSONUtil.encode(val1) + '\n != \n' + JSONUtil.encode(val2));
-            } else {
-                throw new Error('values are not equal: ' + String(val1) + ' != ' + String(val2) + '.');
-            }
+            var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
+            var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
+            throw new Error('values are not equal: ' + out1 + ' != ' + out2);
         }
     },
 
@@ -2421,11 +2440,9 @@
     assertNotEqual: function(val1, val2)
     {
         if (ObjectUtil.equals(val1, val2)) {
-            if (TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) {
-                throw new Error('values are equal: \n' + JSONUtil.encode(val1) + '\n == \n' + JSONUtil.encode(val2));
-            } else {
-                throw new Error('values are equal: ' + String(val1) + ' == ' + String(val2) + '.');
-            }
+            var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
+            var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
+            throw new Error('values are equal: ' + out1 + ' == ' + out2);
         }
     },
 
