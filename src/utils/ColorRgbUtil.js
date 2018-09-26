@@ -189,23 +189,21 @@ var ColorRgbUtil = {
         var g = (color.g / 255);
         var b = (color.b / 255);
 
-        var k = Math.min((1.0 - r), (1.0 - g), (1.0 - b));
-        var c = (1.0 - r - k);
-        var m = (1.0 - g - k);
-        var y = (1.0 - b - k);
-
+        var ir = (1.0 - r);
+        var ig = (1.0 - g);
+        var ib = (1.0 - b);
+        var k = Math.min(ir, ig, ib);
         var ik = (1.0 - k);
-        if (ik > 0.0) {
-            c = (c / ik);
-            m = (m / ik);
-            y = (y / ik);
-            k = (k / ik);
-        }
 
-        c = Math.round(c * 100);
-        m = Math.round(m * 100);
-        y = Math.round(y * 100);
-        k = Math.round(k * 100);
+        var c = ((k < 1.0) ? ((ir - k) / ik) : 0);
+        var m = ((k < 1.0) ? ((ig - k) / ik) : 0);
+        var y = ((k < 1.0) ? ((ib - k) / ik) : 0);
+
+        var round = Math.round;
+        c = round(c * 100);
+        m = round(m * 100);
+        y = round(y * 100);
+        k = round(k * 100);
 
         return { c:c, m:m, y:y, k:k };
     },
