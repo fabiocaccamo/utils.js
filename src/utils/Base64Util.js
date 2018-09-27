@@ -23,46 +23,37 @@ var Base64Util = {
 
         try {
             output = window.atob(input);
-            output = UTF8Util.decode(output);
-            return output;
-        } catch (e){
         }
+        catch (e) {
+            var chars = Base64Util.CHARS_TABLE;
+            var chr1, chr2, chr3;
+            var enc1, enc2, enc3, enc4;
 
-        // var chars = Base64Util.CHARS;
-        var chars = Base64Util.CHARS_TABLE;
-        var chr1, chr2, chr3;
-        var enc1, enc2, enc3, enc4;
+            var i = 0;
+            var j = input.length;
 
-        var i = 0;
-        var j = input.length;
+            while (i < j) {
+                enc1 = chars[ input.charAt(i++) ];
+                enc2 = chars[ input.charAt(i++) ];
+                enc3 = chars[ input.charAt(i++) ];
+                enc4 = chars[ input.charAt(i++) ];
 
-        while (i < j) {
-            // enc1 = chars.indexOf(input.charAt(i++));
-            // enc2 = chars.indexOf(input.charAt(i++));
-            // enc3 = chars.indexOf(input.charAt(i++));
-            // enc4 = chars.indexOf(input.charAt(i++));
+                chr1 = ((enc1 << 2) | (enc2 >> 4));
+                chr2 = (((enc2 & 15) << 4) | (enc3 >> 2));
+                chr3 = (((enc3 & 3) << 6) | enc4);
 
-            enc1 = chars[ input.charAt(i++) ];
-            enc2 = chars[ input.charAt(i++) ];
-            enc3 = chars[ input.charAt(i++) ];
-            enc4 = chars[ input.charAt(i++) ];
+                output += String.fromCharCode(chr1);
 
-            chr1 = ((enc1 << 2) | (enc2 >> 4));
-            chr2 = (((enc2 & 15) << 4) | (enc3 >> 2));
-            chr3 = (((enc3 & 3) << 6) | enc4);
-
-            output += String.fromCharCode(chr1);
-
-            if (enc3 != 64) {
-                output += String.fromCharCode(chr2);
-            }
-            if (enc4 != 64) {
-                output += String.fromCharCode(chr3);
+                if (enc3 != 64) {
+                    output += String.fromCharCode(chr2);
+                }
+                if (enc4 != 64) {
+                    output += String.fromCharCode(chr3);
+                }
             }
         }
 
         output = UTF8Util.decode(output);
-
         return output;
     },
 
@@ -73,36 +64,34 @@ var Base64Util = {
 
         try {
             output = window.btoa(input);
-            return output;
-        } catch (e){
         }
+        catch (e) {
+            var chars = Base64Util.CHARS_LIST;
+            var chr1, chr2, chr3;
+            var enc1, enc2, enc3, enc4;
 
-        // var chars = Base64Util.CHARS;
-        var chars = Base64Util.CHARS_LIST;
-        var chr1, chr2, chr3;
-        var enc1, enc2, enc3, enc4;
+            var i = 0;
+            var j = input.length;
 
-        var i = 0;
-        var j = input.length;
+            while (i < j) {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
 
-        while (i < j) {
-            chr1 = input.charCodeAt(i++);
-            chr2 = input.charCodeAt(i++);
-            chr3 = input.charCodeAt(i++);
+                enc1 = (chr1 >> 2);
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = (chr3 & 63);
 
-            enc1 = (chr1 >> 2);
-            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-            enc4 = (chr3 & 63);
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
 
-            if (isNaN(chr2)) {
-                enc3 = enc4 = 64;
-            } else if (isNaN(chr3)) {
-                enc4 = 64;
+                // output += (chars.charAt(enc1) + chars.charAt(enc2) + chars.charAt(enc3) + chars.charAt(enc4));
+                output += (chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4]);
             }
-
-            // output += (chars.charAt(enc1) + chars.charAt(enc2) + chars.charAt(enc3) + chars.charAt(enc4));
-            output += (chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4]);
         }
 
         return output;

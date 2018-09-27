@@ -58,11 +58,23 @@ describe('color.hex', function() {
                 ['#000000', '#000040', '#000080', '#0000C0', '#0000FF']
             ]);
         });
-        it('test 5x4 matrix with 4 required points and optional points', function() {
-            // TODO
-        });
-        it('test invalid points', function() {
-            // TODO
+        it('test 5x4 matrix with 4 required points and 4 optional points', function() {
+            r = f({
+                topLeft: '#FF0000',
+                top: '#FFFF00',
+                topRight: '#00FF00',
+                right: '#00FFFF',
+                bottomRight: '#0000FF',
+                bottom: '#FFFFFF',
+                bottomLeft: '#000000',
+                left: '#FF00FF'
+            }, 5, 4);
+            test.assertEqual(r, [
+                ['#FF0000', '#FF8000', '#FFFF00', '#80FF00', '#00FF00'],
+                ['#FF00AA', '#EA6B95', '#D5D580', '#6BEA95', '#00FFAA'],
+                ['#AA00AA', '#C06BC0', '#D5D5D5', '#6BC0EA', '#00AAFF'],
+                ['#000000', '#808080', '#FFFFFF', '#8080FF', '#0000FF']
+            ]);
         });
     });
     describe('interpolateBilinear', function() {
@@ -237,20 +249,40 @@ describe('color.hex', function() {
             r = f('#000000');
             test.assertEqual(r, { r:0, g:0, b:0, a:1.0 });
         });
+        it('test black (html short format)', function() {
+            r = f('#000');
+            test.assertEqual(r, { r:0, g:0, b:0, a:1.0 });
+        });
         it('test white', function() {
             r = f('#FFFFFF');
+            test.assertEqual(r, { r:255, g:255, b:255, a:1.0 });
+        });
+        it('test white (html short format)', function() {
+            r = f('#FFF');
             test.assertEqual(r, { r:255, g:255, b:255, a:1.0 });
         });
         it('test red', function() {
             r = f('#FF0000');
             test.assertEqual(r, { r:255, g:0, b:0, a:1.0 });
         });
+        it('test red (html short format)', function() {
+            r = f('#F00');
+            test.assertEqual(r, { r:255, g:0, b:0, a:1.0 });
+        });
         it('test green', function() {
             r = f('#00FF00');
             test.assertEqual(r, { r:0, g:255, b:0, a:1.0 });
         });
+        it('test green (html short format)', function() {
+            r = f('#0F0');
+            test.assertEqual(r, { r:0, g:255, b:0, a:1.0 });
+        });
         it('test blue', function() {
             r = f('#0000FF');
+            test.assertEqual(r, { r:0, g:0, b:255, a:1.0 });
+        });
+        it('test blue (html short format)', function() {
+            r = f('#00F');
             test.assertEqual(r, { r:0, g:0, b:255, a:1.0 });
         });
         it('test prefix', function() {

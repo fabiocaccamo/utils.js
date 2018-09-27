@@ -57,11 +57,37 @@ describe('color.rgb', function() {
                 [{ r:255, g:255, b:0, a:1 }, { r:192, g:192, b:64, a:1 }, { r:128, g:128, b:128, a:1 }, { r:64, g:64, b:192, a:1 }, { r:0, g:0, b:255, a:1 }]
             ]);
         });
-        it('test 5x4 matrix with 4 required points and optional points', function() {
-            // TODO
+        it('test 5x4 matrix with 4 required points but invalid topLeft', function() {
+            r = f({
+                topRight: { r:0, g:255, b:0 },
+                bottomRight: { r:0, g:0, b:255 },
+                bottomLeft: { r:255, g:255, b:0 }
+            }, 5, 4);
+            test.assertEqual(r, null);
         });
-        it('test invalid points', function() {
-            // TODO
+        it('test 5x4 matrix with 4 required points but invalid topRight', function() {
+            r = f({
+                topLeft: { r:255, g:0, b:0 },
+                bottomRight: { r:0, g:0, b:255 },
+                bottomLeft: { r:255, g:255, b:0 }
+            }, 5, 4);
+            test.assertEqual(r, null);
+        });
+        it('test 5x4 matrix with 4 required points but invalid bottomRight', function() {
+            r = f({
+                topLeft: { r:255, g:0, b:0 },
+                topRight: { r:0, g:255, b:0 },
+                bottomLeft: { r:255, g:255, b:0 }
+            }, 5, 4);
+            test.assertEqual(r, null);
+        });
+        it('test 5x4 matrix with 4 required points but invalid bottomLeft', function() {
+            r = f({
+                topLeft: { r:255, g:0, b:0 },
+                topRight: { r:0, g:255, b:0 },
+                bottomRight: { r:0, g:0, b:255 }
+            }, 5, 4);
+            test.assertEqual(r, null);
         });
     });
     describe('interpolateBilinear', function() {

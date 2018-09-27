@@ -227,6 +227,9 @@ describe('ease', function() {
         it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
             test.assertNumberAlmostEqual(f(1.0, 1.0, 1.0), 1.0);
         });
+        it('t = 1.0, amplitude = 2.0, period = 1.0', function() {
+            test.assertNumberAlmostEqual(f(1.0, 2.0, 1.0), 1.0);
+        });
         it('t = { loop from 0.0 to 1.0 }', function() {
             assertReturnAlwaysNumber(f);
         });
@@ -251,6 +254,9 @@ describe('ease', function() {
         it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
             test.assertNumberAlmostEqual(f(1.0, 1.0, 1.0), 1.0);
         });
+        it('t = 1.0, amplitude = 2.0, period = 1.0', function() {
+            test.assertNumberAlmostEqual(f(1.0, 2.0, 1.0), 1.0);
+        });
         it('t = { loop from 0.0 to 1.0 }', function() {
             assertReturnAlwaysNumber(f);
         });
@@ -274,6 +280,9 @@ describe('ease', function() {
         });
         it('t = 1.0, amplitude = 1.0, period = 1.0', function() {
             test.assertNumberAlmostEqual(f(1.0, 1.0, 1.0), 1.0);
+        });
+        it('t = 1.0, amplitude = 2.0, period = 1.0', function() {
+            test.assertNumberAlmostEqual(f(1.0, 2.0, 1.0), 1.0);
         });
         it('t = { loop from 0.0 to 1.0 }', function() {
             assertReturnAlwaysNumber(f);
