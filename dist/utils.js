@@ -245,46 +245,37 @@
 
         try {
             output = window.atob(input);
-            output = UTF8Util.decode(output);
-            return output;
-        } catch (e){
         }
+        catch (e) {
+            var chars = Base64Util.CHARS_TABLE;
+            var chr1, chr2, chr3;
+            var enc1, enc2, enc3, enc4;
 
-        // var chars = Base64Util.CHARS;
-        var chars = Base64Util.CHARS_TABLE;
-        var chr1, chr2, chr3;
-        var enc1, enc2, enc3, enc4;
+            var i = 0;
+            var j = input.length;
 
-        var i = 0;
-        var j = input.length;
+            while (i < j) {
+                enc1 = chars[ input.charAt(i++) ];
+                enc2 = chars[ input.charAt(i++) ];
+                enc3 = chars[ input.charAt(i++) ];
+                enc4 = chars[ input.charAt(i++) ];
 
-        while (i < j) {
-            // enc1 = chars.indexOf(input.charAt(i++));
-            // enc2 = chars.indexOf(input.charAt(i++));
-            // enc3 = chars.indexOf(input.charAt(i++));
-            // enc4 = chars.indexOf(input.charAt(i++));
+                chr1 = ((enc1 << 2) | (enc2 >> 4));
+                chr2 = (((enc2 & 15) << 4) | (enc3 >> 2));
+                chr3 = (((enc3 & 3) << 6) | enc4);
 
-            enc1 = chars[ input.charAt(i++) ];
-            enc2 = chars[ input.charAt(i++) ];
-            enc3 = chars[ input.charAt(i++) ];
-            enc4 = chars[ input.charAt(i++) ];
+                output += String.fromCharCode(chr1);
 
-            chr1 = ((enc1 << 2) | (enc2 >> 4));
-            chr2 = (((enc2 & 15) << 4) | (enc3 >> 2));
-            chr3 = (((enc3 & 3) << 6) | enc4);
-
-            output += String.fromCharCode(chr1);
-
-            if (enc3 != 64) {
-                output += String.fromCharCode(chr2);
-            }
-            if (enc4 != 64) {
-                output += String.fromCharCode(chr3);
+                if (enc3 != 64) {
+                    output += String.fromCharCode(chr2);
+                }
+                if (enc4 != 64) {
+                    output += String.fromCharCode(chr3);
+                }
             }
         }
 
         output = UTF8Util.decode(output);
-
         return output;
     },
 
@@ -295,36 +286,34 @@
 
         try {
             output = window.btoa(input);
-            return output;
-        } catch (e){
         }
+        catch (e) {
+            var chars = Base64Util.CHARS_LIST;
+            var chr1, chr2, chr3;
+            var enc1, enc2, enc3, enc4;
 
-        // var chars = Base64Util.CHARS;
-        var chars = Base64Util.CHARS_LIST;
-        var chr1, chr2, chr3;
-        var enc1, enc2, enc3, enc4;
+            var i = 0;
+            var j = input.length;
 
-        var i = 0;
-        var j = input.length;
+            while (i < j) {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
 
-        while (i < j) {
-            chr1 = input.charCodeAt(i++);
-            chr2 = input.charCodeAt(i++);
-            chr3 = input.charCodeAt(i++);
+                enc1 = (chr1 >> 2);
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc4 = (chr3 & 63);
 
-            enc1 = (chr1 >> 2);
-            enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-            enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-            enc4 = (chr3 & 63);
+                if (isNaN(chr2)) {
+                    enc3 = enc4 = 64;
+                } else if (isNaN(chr3)) {
+                    enc4 = 64;
+                }
 
-            if (isNaN(chr2)) {
-                enc3 = enc4 = 64;
-            } else if (isNaN(chr3)) {
-                enc4 = 64;
+                // output += (chars.charAt(enc1) + chars.charAt(enc2) + chars.charAt(enc3) + chars.charAt(enc4));
+                output += (chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4]);
             }
-
-            // output += (chars.charAt(enc1) + chars.charAt(enc2) + chars.charAt(enc3) + chars.charAt(enc4));
-            output += (chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4]);
         }
 
         return output;
@@ -709,32 +698,32 @@
         var colorBottomRight = colors.bottomRight;
         var colorLeft = colors.left;
         var colorCenter = colors.center;
-        var colorAvg = ColorRgbUtil.average;
-        // var colorLerp = ColorRgbUtil.interpolateLinear;
+        // var colorAvg = ColorRgbUtil.average;
+        var colorLerp = ColorRgbUtil.interpolateLinear;
         var colorBerp = ColorRgbUtil.interpolateBilinear;
 
         if (!colorTopLeft || !colorTopRight || !colorBottomLeft || !colorBottomRight) {
-            return [];
+            return null;
         }
         if (!colorTop) {
-            colorTop = colorAvg([colorTopLeft, colorTopRight]);
-            // colorTop = colorLerp(colorTopLeft, colorTopRight, 0.5);
+            // colorTop = colorAvg([colorTopLeft, colorTopRight]);
+            colorTop = colorLerp(colorTopLeft, colorTopRight, 0.5);
         }
         if (!colorRight) {
-            colorRight = colorAvg([colorBottomRight, colorTopRight]);
-            // colorRight = colorLerp(colorBottomRight, colorTopRight, 0.5);
+            // colorRight = colorAvg([colorBottomRight, colorTopRight]);
+            colorRight = colorLerp(colorBottomRight, colorTopRight, 0.5);
         }
         if (!colorBottom) {
-            colorBottom = colorAvg([colorBottomLeft, colorBottomRight]);
-            // colorBottom = colorLerp(colorBottomLeft, colorBottomRight, 0.5);
+            // colorBottom = colorAvg([colorBottomLeft, colorBottomRight]);
+            colorBottom = colorLerp(colorBottomLeft, colorBottomRight, 0.5);
         }
         if (!colorLeft) {
-            colorLeft = colorAvg([colorTopLeft, colorBottomLeft]);
-            // colorLeft = colorLerp(colorTopLeft, colorBottomLeft, 0.5);
+            // colorLeft = colorAvg([colorTopLeft, colorBottomLeft]);
+            colorLeft = colorLerp(colorTopLeft, colorBottomLeft, 0.5);
         }
         if (!colorCenter) {
-            colorCenter = colorAvg([colorTop, colorLeft, colorBottom, colorRight]);
-            // colorCenter = colorBerp(colorTop, colorBottom, colorLeft, colorLeft, 0.5, 0.5);
+            // colorCenter = colorAvg([colorTop, colorLeft, colorBottom, colorRight]);
+            colorCenter = colorBerp(colorTop, colorBottom, colorLeft, colorRight, 0.5, 0.5);
         }
 
         var colorsTopLeft = [colorTopLeft, colorLeft, colorCenter, colorTop];
@@ -1490,10 +1479,16 @@
         return TrigoUtil.cycleDeg(angle);
     },
 
+    // convex: function(points)
+    // {
+    //     // TODO
+    //     // https://en.wikipedia.org/wiki/Convex_hull
+    // },
+
     cross: function(a, b)
     {
         // z coordinate of the cross product; x and y coordinates are zero
-        return ((a.y * b.x) - (a.x * b.y));
+        return ((a.x * b.y) - (a.y * b.x));
     },
 
     distance: function(a, b)
@@ -1523,12 +1518,52 @@
         };
     },
 
+    length: function(p)
+    {
+        return PointUtil.distance(p, { x:0, y:0 });
+    },
+
+    magnitude: function(p)
+    {
+        return PointUtil.length(p);
+    },
+
+    // nearest: function(p, points)
+    // {
+    //     // TODO
+    // },
+
     project: function(p, distance, angle)
     {
         return {
             x: (p.x + (distance * TrigoUtil.cosDeg(angle))),
             y: (p.y + (distance * TrigoUtil.sinDeg(angle)))
         }
+    },
+
+    rect: function(points)
+    {
+        var point, pointsX = [], pointsY = [];
+
+        for (var i = 0, j = points.length; i < j; i++) {
+            point = points[i];
+            pointsX.push(point.x);
+            pointsY.push(point.y);
+        }
+
+        var minF = Math.min;
+        var minX = minF.apply(null, pointsX);
+        var minY = minF.apply(null, pointsY);
+        var maxF = Math.max;
+        var maxX  = maxF.apply(null, pointsX);
+        var maxY = maxF.apply(null, pointsY);
+
+        return {
+            topLeft: { x:minX, y:minY },
+            topRight: { x:maxX, y:minY },
+            bottomRight: { x:maxX, y:maxY },
+            bottomLeft: { x:minX, y:maxY }
+        };
     },
 
     rotate: function(p, angle, pivot)
@@ -1891,31 +1926,31 @@
         return obj;
     },
 
-    clone: function(obj)
-    {
-        // TODO
-        return null;
-    },
+    // clone: function(obj)
+    // {
+    //     // TODO
+    //     return null;
+    // },
 
-    decodeBase64: function(str)
-    {
-        return JSONUtil.decode(Base64Util.decode(str));
-    },
+    // decodeBase64: function(str)
+    // {
+    //     return JSONUtil.decode(Base64Util.decode(str));
+    // },
 
-    decodeJSON: function(str)
-    {
-        return JSONUtil.decode(str);
-    },
+    // decodeJSON: function(str)
+    // {
+    //     return JSONUtil.decode(str);
+    // },
 
-    encodeBase64: function(obj)
-    {
-        return Base64Util.encode(JSONUtil.encode(obj));
-    },
+    // encodeBase64: function(obj)
+    // {
+    //     return Base64Util.encode(JSONUtil.encode(obj));
+    // },
 
-    encodeJSON: function(obj)
-    {
-        return JSONUtil.encode(obj);
-    },
+    // encodeJSON: function(obj)
+    // {
+    //     return JSONUtil.encode(obj);
+    // },
 
     equals: function(obj1, obj2)
     {
@@ -2516,12 +2551,12 @@
         }
     },
 
-    assertNotXML: function(val)
-    {
-        if (TypeUtil.isXML(val)) {
-            throw new Error('value is xml.');
-        }
-    },
+    // assertNotXML: function(val)
+    // {
+    //     if (TypeUtil.isXML(val)) {
+    //         throw new Error('value is xml.');
+    //     }
+    // },
 
     assertNumber: function(val)
     {
@@ -2594,14 +2629,14 @@
         if (!TypeUtil.isUndefined(val)) {
             throw new Error('value is not undefined.');
         }
-    },
-
-    assertXML: function(val)
-    {
-        if (!TypeUtil.isXML(val)) {
-            throw new Error('value is not xml.');
-        }
     }
+
+    // assertXML: function(val)
+    // {
+    //     if (!TypeUtil.isXML(val)) {
+    //         throw new Error('value is not xml.');
+    //     }
+    // }
 
 };
     var TrigoUtil = {
@@ -2702,7 +2737,7 @@
     STRING: 'string',
     UNDEFINED: 'undefined',
     UNKNOWN: 'unknown',
-    XML: 'xml',
+    // XML: 'xml',
 
     isArray: function(val)
     {
@@ -2811,7 +2846,7 @@
             case TypeUtil.STRING:
             case TypeUtil.UNDEFINED:
             case TypeUtil.UNKNOWN:
-            case TypeUtil.XML:
+            // case TypeUtil.XML:
                 return true;
             default:
                 return false;
@@ -2823,11 +2858,11 @@
         return (typeof(val) === 'undefined');
     },
 
-    isXML: function(val)
-    {
-        // TODO
-        return false;
-    },
+    // isXML: function(val)
+    // {
+    //     // TODO
+    //     return false;
+    // },
 
     of: function(val)
     {
@@ -2864,9 +2899,9 @@
         else if (TypeUtil.isUndefined(val)) {
             return TypeUtil.UNDEFINED;
         }
-        else if (TypeUtil.isXML(val)) {
-            return TypeUtil.XML;
-        }
+        // else if (TypeUtil.isXML(val)) {
+        //     return TypeUtil.XML;
+        // }
         else if (TypeUtil.isObject(val)) {
             return TypeUtil.OBJECT;
         }
@@ -3039,6 +3074,32 @@
     }
 };
     var XMLUtil = {
+
+    // decode: function(str)
+    // {
+    //     // https://stackoverflow.com/questions/17604071/parse-xml-using-javascript
+    //     var doc = null;
+    //         try {
+    //             if (window.DOMParser) {
+    //             parser = new DOMParser();
+    //             doc = parser.parseFromString(str, 'text/xml');
+    //         } else {
+    //             // Internet Explorer
+    //             doc = new ActiveXObject('Microsoft.XMLDOM');
+    //             doc.async = false;
+    //             doc.loadXML(str);
+    //         }
+    //     } catch(e) {
+    //     }
+    //     return doc;
+    // },
+
+    // encode: function(doc)
+    // {
+    //     var ser = new XMLSerializer();
+    //     var str = ser.serializeToString(doc);
+    //     return str;
+    // },
 
     removeNamespaces: function(str)
     {
