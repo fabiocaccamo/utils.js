@@ -116,7 +116,7 @@ describe('point', function() {
         });
     });
     describe('magnitude', function() {
-        var f = point.length;
+        var f = point.magnitude;
         it('test simple', function() {
             r = f({ x:200, y:100 });
             test.assertEqual(r, 223.60679774997897);
