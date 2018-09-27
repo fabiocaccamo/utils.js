@@ -17,7 +17,7 @@ var PointUtil = {
     cross: function(a, b)
     {
         // z coordinate of the cross product; x and y coordinates are zero
-        return ((a.y * b.x) - (a.x * b.y));
+        return ((a.x * b.y) - (a.y * b.x));
     },
 
     distance: function(a, b)
@@ -45,6 +45,16 @@ var PointUtil = {
             x: f(a.x, b.x, t),
             y: f(a.y, b.y, t)
         };
+    },
+
+    length: function(p)
+    {
+        return PointUtil.distance(p, { x:0, y:0 });
+    },
+
+    magnitude: function(p)
+    {
+        return PointUtil.length(p);
     },
 
     project: function(p, distance, angle)

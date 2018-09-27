@@ -53,8 +53,9 @@ describe('point', function() {
         });
     });
     describe('cross', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = point.cross;
+        it('test simple', function() {
+            test.assertEqual(f({ x:1, y:2 }, { x:3, y:4 }), -2);
         });
     });
     describe('distance', function() {
@@ -85,8 +86,9 @@ describe('point', function() {
         });
     });
     describe('dot', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
+        var f = point.dot;
+        it('test simple', function() {
+            test.assertEqual(f({ x:1, y:2 }, { x:3, y:4 }), 11);
         });
     });
     describe('equals', function() {
@@ -104,6 +106,20 @@ describe('point', function() {
         it('test simple', function() {
             r = f({ x:0, y:100 }, { x:50, y:1000 }, 0.5);
             test.assertEqual(r, { x:25, y:550 });
+        });
+    });
+    describe('length', function() {
+        var f = point.length;
+        it('test simple', function() {
+            r = f({ x:200, y:100 });
+            test.assertEqual(r, 223.60679774997897);
+        });
+    });
+    describe('magnitude', function() {
+        var f = point.length;
+        it('test simple', function() {
+            r = f({ x:200, y:100 });
+            test.assertEqual(r, 223.60679774997897);
         });
     });
     describe('project', function() {
