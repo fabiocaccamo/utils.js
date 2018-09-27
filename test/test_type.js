@@ -329,7 +329,7 @@ describe('type', function() {
             test.assertTrue(f(type.STRING));
             test.assertTrue(f(type.UNDEFINED));
             test.assertTrue(f(type.UNKNOWN));
-            test.assertTrue(f(type.XML));
+            // test.assertTrue(f(type.XML));
             test.assertFalse(f(''));
         });
     });
@@ -359,11 +359,11 @@ describe('type', function() {
             test.assertTrue(f(undefined));
         });
     });
-    describe('isXML', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
+    // describe('isXML', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
     describe('of', function(){
         it('test of against all types', function(){
             var f = type.of;

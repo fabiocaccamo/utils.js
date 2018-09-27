@@ -190,12 +190,12 @@ var TestUtil = {
         }
     },
 
-    assertNotXML: function(val)
-    {
-        if (TypeUtil.isXML(val)) {
-            throw new Error('value is xml.');
-        }
-    },
+    // assertNotXML: function(val)
+    // {
+    //     if (TypeUtil.isXML(val)) {
+    //         throw new Error('value is xml.');
+    //     }
+    // },
 
     assertNumber: function(val)
     {
@@ -268,13 +268,13 @@ var TestUtil = {
         if (!TypeUtil.isUndefined(val)) {
             throw new Error('value is not undefined.');
         }
-    },
-
-    assertXML: function(val)
-    {
-        if (!TypeUtil.isXML(val)) {
-            throw new Error('value is not xml.');
-        }
     }
+
+    // assertXML: function(val)
+    // {
+    //     if (!TypeUtil.isXML(val)) {
+    //         throw new Error('value is not xml.');
+    //     }
+    // }
 
 };

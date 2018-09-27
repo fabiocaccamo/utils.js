@@ -13,7 +13,7 @@ var TypeUtil = {
     STRING: 'string',
     UNDEFINED: 'undefined',
     UNKNOWN: 'unknown',
-    XML: 'xml',
+    // XML: 'xml',
 
     isArray: function(val)
     {
@@ -122,7 +122,7 @@ var TypeUtil = {
             case TypeUtil.STRING:
             case TypeUtil.UNDEFINED:
             case TypeUtil.UNKNOWN:
-            case TypeUtil.XML:
+            // case TypeUtil.XML:
                 return true;
             default:
                 return false;
@@ -134,11 +134,11 @@ var TypeUtil = {
         return (typeof(val) === 'undefined');
     },
 
-    isXML: function(val)
-    {
-        // TODO
-        return false;
-    },
+    // isXML: function(val)
+    // {
+    //     // TODO
+    //     return false;
+    // },
 
     of: function(val)
     {
@@ -175,9 +175,9 @@ var TypeUtil = {
         else if (TypeUtil.isUndefined(val)) {
             return TypeUtil.UNDEFINED;
         }
-        else if (TypeUtil.isXML(val)) {
-            return TypeUtil.XML;
-        }
+        // else if (TypeUtil.isXML(val)) {
+        //     return TypeUtil.XML;
+        // }
         else if (TypeUtil.isObject(val)) {
             return TypeUtil.OBJECT;
         }

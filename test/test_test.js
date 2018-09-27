@@ -282,11 +282,11 @@ describe('test', function() {
             });
         });
     });
-    describe('assertNotXML', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
+    // describe('assertNotXML', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
     describe('assertNumber', function() {
         it('test assertNumber', function() {
             test.assertNumber(1);
@@ -391,9 +391,9 @@ describe('test', function() {
             });
         });
     });
-    describe('assertXML', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
+    // describe('assertXML', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
 });
