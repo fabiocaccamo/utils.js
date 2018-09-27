@@ -61,26 +61,32 @@ var ColorRgbUtil = {
         var colorBottomRight = colors.bottomRight;
         var colorLeft = colors.left;
         var colorCenter = colors.center;
-        var colorAvg = ColorRgbUtil.average;
+        // var colorAvg = ColorRgbUtil.average;
+        var colorLerp = ColorRgbUtil.interpolateLinear;
         var colorBerp = ColorRgbUtil.interpolateBilinear;
 
         if (!colorTopLeft || !colorTopRight || !colorBottomLeft || !colorBottomRight) {
-            return [];
+            return null;
         }
         if (!colorTop) {
-            colorTop = colorAvg([colorTopLeft, colorTopRight]);
+            // colorTop = colorAvg([colorTopLeft, colorTopRight]);
+            colorTop = colorLerp(colorTopLeft, colorTopRight, 0.5);
         }
         if (!colorRight) {
-            colorRight = colorAvg([colorBottomRight, colorTopRight]);
+            // colorRight = colorAvg([colorBottomRight, colorTopRight]);
+            colorRight = colorLerp(colorBottomRight, colorTopRight, 0.5);
         }
         if (!colorBottom) {
-            colorBottom = colorAvg([colorBottomLeft, colorBottomRight]);
+            // colorBottom = colorAvg([colorBottomLeft, colorBottomRight]);
+            colorBottom = colorLerp(colorBottomLeft, colorBottomRight, 0.5);
         }
         if (!colorLeft) {
-            colorLeft = colorAvg([colorTopLeft, colorBottomLeft]);
+            // colorLeft = colorAvg([colorTopLeft, colorBottomLeft]);
+            colorLeft = colorLerp(colorTopLeft, colorBottomLeft, 0.5);
         }
         if (!colorCenter) {
-            colorCenter = colorAvg([colorTop, colorLeft, colorBottom, colorRight]);
+            // colorCenter = colorAvg([colorTop, colorLeft, colorBottom, colorRight]);
+            colorCenter = colorBerp(colorTop, colorBottom, colorLeft, colorRight, 0.5, 0.5);
         }
 
         var colorsTopLeft = [colorTopLeft, colorLeft, colorCenter, colorTop];
