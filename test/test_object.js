@@ -52,31 +52,31 @@ describe('object', function() {
             test.assertEqual(r, { a:1, c:3, f:0, h:false });
         });
     });
-    describe('clone', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('decodeBase64', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('decodeJSON', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('encodeBase64', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
-    describe('encodeJSON', function() {
-        it('TODO', function() {
-            test.assertTrue(true);
-        });
-    });
+    // describe('clone', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('decodeBase64', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('decodeJSON', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('encodeBase64', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
+    // describe('encodeJSON', function() {
+    //     it('TODO', function() {
+    //         test.assertTrue(true);
+    //     });
+    // });
     describe('equals', function() {
         var f = obj.equals;
         var a = {
