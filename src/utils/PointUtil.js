@@ -65,6 +65,31 @@ var PointUtil = {
         }
     },
 
+    rect: function(points)
+    {
+        var point, pointsX = [], pointsY = [];
+
+        for (var i = 0, j = points.length; i < j; i++) {
+            point = points[i];
+            pointsX.push(point.x);
+            pointsY.push(point.y);
+        }
+
+        var minF = Math.min;
+        var minX = minF.apply(null, pointsX);
+        var minY = minF.apply(null, pointsY);
+        var maxF = Math.max;
+        var maxX  = maxF.apply(null, pointsX);
+        var maxY = maxF.apply(null, pointsY);
+
+        return {
+            topLeft: { x:minX, y:minY },
+            topRight: { x:maxX, y:minY },
+            bottomRight: { x:maxX, y:maxY },
+            bottomLeft: { x:minX, y:maxY }
+        };
+    },
+
     rotate: function(p, angle, pivot)
     {
         var pointPivot = (pivot || { x:0.0, y:0.0 });

@@ -160,6 +160,21 @@ describe('point', function() {
             test.assertEqual(r, { x:100, y:0 });
         });
     });
+    describe('rect', function() {
+        var f = point.rect;
+        it('test simple', function() {
+            r = f([
+                { x:40, y:-40 }, { x:100, y:0 }, { x:50, y:-20 }, { x:20, y:60 }, { x:10, y:30 },
+                { x:-30, y:0 }, { x:-50, y:10 }, { x:70, y:70 }, { x:10, y:-90 }, { x:-10, y:0 }
+            ]);
+            test.assertEqual(r, {
+                topLeft: { x:-50, y:-90 },
+                topRight: { x:100, y:-90 },
+                bottomRight: { x:100, y:70 },
+                bottomLeft: { x:-50, y:70 }
+            });
+        });
+    });
     describe('rotate', function() {
         var f = point.rotate;
         it('test rotate 0°', function() {
