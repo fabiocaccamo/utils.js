@@ -202,18 +202,6 @@ describe('color.rgb', function() {
             r = f({ r:127, g:127, b:127 });
             test.assertEqual(r, { c:0, m:0, y:0, k:50 });
         });
-        it('test back toRgb white', function() {
-            r = cmyk.toRgb({ c:0, m:0, y:0, k:0 });
-            test.assertEqual(r, { r:255, g:255, b:255, a:1.0 });
-        });
-        it('test back toRgb black', function() {
-            r = cmyk.toRgb({ c:0, m:0, y:0, k:100 });
-            test.assertEqual(r, { r:0, g:0, b:0, a:1.0 });
-        });
-        it('test back toRgb random color', function() {
-            r = cmyk.toRgb(f({ r:34, g:127, b:76, a:1.0 }));
-            test.assertEqual(r, { r:34, g:127, b:76, a:1.0 });
-        });
     });
     // describe('toGrayscale', function() {
     //     it('TODO', function() {

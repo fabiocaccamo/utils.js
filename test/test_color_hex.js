@@ -189,31 +189,6 @@ describe('color.hex', function() {
             r = f('#7F7F7F');
             test.assertEqual(r, { c:0, m:0, y:0, k:50 });
         });
-        it('test back toHex white', function() {
-            r = cmyk.toHex(f('#FFFFFF'));
-            test.assertEqual(r, '#FFFFFF');
-        });
-        it('test back toHex black', function() {
-            r = cmyk.toHex(f('#000000'));
-            test.assertEqual(r, '#000000');
-        });
-        it('test back toHex red', function() {
-            r = cmyk.toHex(f('#FF0000'));
-            test.assertEqual(r, '#FF0000');
-        });
-        it('test back toHex green', function() {
-            r = cmyk.toHex(f('#00FF00'));
-            test.assertEqual(r, '#00FF00');
-        });
-        it('test back toHex blue', function() {
-            r = cmyk.toHex(f('#0000FF'));
-            test.assertEqual(r, '#0000FF');
-        });
-        // it('test back toHex random color', function() {
-        //     // console.log(hex.distance('#47CC9B', '#47CB9A'));
-        //     r = cmyk.toHex(f('#47CB9A'));
-        //     test.assertEqual(r, '#47CB9A');
-        // });
     });
     // describe('toGrayscale', function() {
     //     it('TODO', function() {

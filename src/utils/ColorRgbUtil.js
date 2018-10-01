@@ -27,7 +27,7 @@ var ColorRgbUtil = {
         var rDiff = (colorA.r - colorB.r);
         var gDiff = (colorA.g - colorB.g);
         var bDiff = (colorA.b - colorB.b);
-        var aDiff = ((isNaN(colorA.a) ? 1.0 : colorA.a) - (isNaN(colorB.a) ? 1.0 : colorB.a));
+        var aDiff = Math.round(((isNaN(colorA.a) ? 1.0 : colorA.a) - (isNaN(colorB.a) ? 1.0 : colorB.a)) * 255);
         return Math.sqrt((rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff) + (aDiff * aDiff));
     },
 
@@ -35,14 +35,14 @@ var ColorRgbUtil = {
     {
         var colorsOutput = [];
         var color;
-        var berp = ColorRgbUtil.interpolateMultilinear;
+        var mlerp = ColorRgbUtil.interpolateMultilinear;
         var t = 0.0;
         var tInc = (1.0 / Math.max(1, (steps - 1)));
         var tConstrain = MathUtil.constrain;
         for (var i = 0; i < steps; i++) {
             t = (i * tInc);
             t = tConstrain(t, 0.0, 1.0);
-            color = berp(colors, t);
+            color = mlerp(colors, t);
             colorsOutput.push(color);
         }
         return colorsOutput;
@@ -205,11 +205,16 @@ var ColorRgbUtil = {
         var m = ((k < 1.0) ? ((ig - k) / ik) : 0);
         var y = ((k < 1.0) ? ((ib - k) / ik) : 0);
 
+        c *= 100;
+        m *= 100;
+        y *= 100;
+        k *= 100;
+
         var round = Math.round;
-        c = round(c * 100);
-        m = round(m * 100);
-        y = round(y * 100);
-        k = round(k * 100);
+        c = round(c);
+        m = round(m);
+        y = round(y);
+        k = round(k);
 
         return { c:c, m:m, y:y, k:k };
     },

@@ -19,15 +19,6 @@ var ColorHexUtil = {
 
     gradient: function(colors, steps)
     {
-        // var colorsRgb = colors.map(function(color){
-        //     return ColorHexUtil.toRgb(color);
-        // });
-        // var gradientRgb = ColorRgbUtil.gradient(colorsRgb, steps);
-        // var gradientHex = gradientRgb.map(function(color){
-        //     return ColorRgbUtil.toHex(color);
-        // });
-        // return gradientHex;
-
         return ColorRgbUtil.gradient(colors.map(function(color){
                 return ColorHexUtil.toRgb(color);
             }), steps).map(function(color){
@@ -37,19 +28,6 @@ var ColorHexUtil = {
 
     gradientMatrix: function(colors, stepsX, stepsY)
     {
-        // var colorsRgb = ObjectUtil.map(colors, function(color){
-        //     return ColorHexUtil.toRgb(color);
-        // });
-        // var matrixRgb = ColorRgbUtil.gradientMatrix(colorsRgb, stepsX, stepsY);
-        // var matrixHex = [];
-        // for (var i = 0; i < matrixRgb.length; i++) {
-        //     matrixHex[i] = [];
-        //     for (var k = 0; k < matrixRgb[i].length; k++) {
-        //         matrixHex[i][k] = ColorRgbUtil.toHex(matrixRgb[i][k]);
-        //     }
-        // }
-        // return matrixHex;
-
         return ColorRgbUtil.gradientMatrix(
             ObjectUtil.map(colors, function(color){
                 return ColorHexUtil.toRgb(color);
