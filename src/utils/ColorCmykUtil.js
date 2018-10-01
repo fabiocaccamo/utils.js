@@ -1,72 +1,80 @@
 var ColorCmykUtil = {
 
-    average: function(colors)
-    {
-        return ColorRgbUtil.average(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }));
-    },
+    // average: function(colors)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.average(
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             })
+    //         ));
+    // },
 
-    distance: function(colorA, colorB)
-    {
-        return ColorRgbUtil.distance(
-            ColorCmykUtil.toRgb(colorA),
-            ColorCmykUtil.toRgb(colorB));
-    },
+    // distance: function(colorA, colorB)
+    // {
+    //     return ColorRgbUtil.distance(
+    //         ColorCmykUtil.toRgb(colorA),
+    //         ColorCmykUtil.toRgb(colorB));
+    // },
 
-    gradient: function(colors, steps)
-    {
-        return ColorRgbUtil.gradient(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }), steps);
-    },
+    // gradient: function(colors, steps)
+    // {
+    //     return ColorRgbUtil.gradient(colors.map(function(color){
+    //             return ColorCmykUtil.toRgb(color);
+    //         }), steps).map(function(color){
+    //             return ColorRgbUtil.toCmyk(color);
+    //         });
+    // },
 
-    gradientMatrix: function(colors, stepsX, stepsY)
-    {
-        return ColorRgbUtil.gradientMatrix(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }), stepsX, stepsY);
-    },
+    // gradientMatrix: function(colors, stepsX, stepsY)
+    // {
+    //     return ColorRgbUtil.gradientMatrix(
+    //         ObjectUtil.map(colors, function(color){
+    //             return ColorCmykUtil.toRgb(color);
+    //         }), stepsX, stepsY).map(function(colors){
+    //             return colors.map(function(color){
+    //                 return ColorRgbUtil.toCmyk(color);
+    //             });
+    //         });
+    // },
 
-    interpolateBilinear: function(a, b, c, d, u, v)
-    {
-        return ColorRgbUtil.toCmyk(
-            ColorRgbUtil.interpolateBilinear(
-                ColorCmykUtil.toRgb(a),
-                ColorCmykUtil.toRgb(b),
-                ColorCmykUtil.toRgb(c),
-                ColorCmykUtil.toRgb(d), u, v));
-    },
+    // interpolateBilinear: function(a, b, c, d, u, v)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.interpolateBilinear(
+    //             ColorCmykUtil.toRgb(a),
+    //             ColorCmykUtil.toRgb(b),
+    //             ColorCmykUtil.toRgb(c),
+    //             ColorCmykUtil.toRgb(d), u, v));
+    // },
 
-    interpolateLinear: function(colorFrom, colorTo, t)
-    {
-        return ColorRgbUtil.toCmyk(
-            ColorRgbUtil.interpolateLinear(
-                ColorCmykUtil.toRgb(colorFrom),
-                ColorCmykUtil.toRgb(colorTo), t));
-    },
+    // interpolateLinear: function(colorFrom, colorTo, t)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.interpolateLinear(
+    //             ColorCmykUtil.toRgb(colorFrom),
+    //             ColorCmykUtil.toRgb(colorTo), t));
+    // },
 
-    interpolateMultilinear: function(colors, t)
-    {
-        return ColorRgbUtil.interpolateMultilinear(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }), t);
-    },
+    // interpolateMultilinear: function(colors, t)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.interpolateMultilinear(
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             }), t));
+    // },
 
-    nearest: function(colorSearch, colors)
-    {
-        return ColorRgbUtil.toCmyk(
-            ColorRgbUtil.nearest(
-                ColorCmykUtil.toRgb(colorSearch),
-                colors.map(function(color){
-                    return ColorCmykUtil.toRgb(color);
-                })
-            ));
-    },
+    // nearest: function(colorSearch, colors)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.nearest(
+    //             ColorCmykUtil.toRgb(colorSearch),
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             })
+    //         ));
+    // },
 
     // toGrayscale: function(color)
     // {
@@ -104,7 +112,7 @@ var ColorCmykUtil = {
         var g = (1.0 - Math.min(1.0, ((m * ik) + k)));
         var b = (1.0 - Math.min(1.0, ((y * ik) + k)));
 
-        var round = Math.floor;
+        var round = Math.round;
         r = round(r * 255);
         g = round(g * 255);
         b = round(b * 255);
