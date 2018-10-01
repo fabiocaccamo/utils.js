@@ -2,10 +2,7 @@
 
     if (typeof(define) === 'function' && define.amd) {
         // AMD
-        define('@fabiocaccamo/utils.js', factory);
-        define('@fabiocaccamo/utils', factory);
-        define('utils.js', factory);
-        define('utils', factory);
+        define(factory);
     }
     else if (typeof(module) === 'object') {
         // CommonJS
@@ -50,6 +47,29 @@
             });
         }
         return items;
+    },
+
+    clone: function(list)
+    {
+        var cln = list.slice();
+        var val;
+        for (var i = 0, j = cln.length; i < j; i++) {
+            val = cln[i];
+            switch (TypeUtil.of(val)) {
+                case TypeUtil.ARRAY:
+                    cln[i] = ArrayUtil.clone(val);
+                    break;
+                case TypeUtil.DATE:
+                    cln[i] = DateUtil.clone(val);
+                    break;
+                case TypeUtil.OBJECT:
+                    cln[i] = ObjectUtil.clone(val);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return cln;
     },
 
     equals: function(listA, listB)
@@ -833,12 +853,6 @@
         y *= 100;
         k *= 100;
 
-        // var round = MathUtil.roundDecimals;
-        // c = round(c, 1);
-        // m = round(m, 1);
-        // y = round(y, 1);
-        // k = round(k, 1);
-
         var round = Math.round;
         c = round(c);
         m = round(m);
@@ -888,8 +902,6 @@
 };
     var ColorUtil = {
 
-    // https://gist.github.com/felipesabino/5066336
-
     cmyk: ColorCmykUtil,
     // cmykToGrayscale: ColorCmykUtil.toGrayscale,
     cmykToHex: ColorCmykUtil.toHex,
@@ -934,6 +946,11 @@
 
 };
     var DateUtil = {
+
+    clone: function(date)
+    {
+        return new Date(date.getTime());
+    },
 
     timestamp: function()
     {
@@ -1923,11 +1940,29 @@
         return obj;
     },
 
-    // clone: function(obj)
-    // {
-    //     // TODO
-    //     return null;
-    // },
+    clone: function(obj)
+    {
+        var cln = {};
+        var key, val;
+        for (key in obj) {
+            val = obj[key];
+            switch (TypeUtil.of(val)) {
+                case TypeUtil.ARRAY:
+                    cln[key] = ArrayUtil.clone(val);
+                    break;
+                case TypeUtil.DATE:
+                    cln[key] = DateUtil.clone(val);
+                    break;
+                case TypeUtil.OBJECT:
+                    cln[key] = ObjectUtil.clone(val);
+                    break;
+                default:
+                    cln[key] = obj[key];
+                    break;
+            }
+        }
+        return cln;
+    },
 
     // decodeBase64: function(str)
     // {
@@ -1965,10 +2000,10 @@
         }
 
         switch (type1) {
-            case 'array':
-            case 'object':
+            case TypeUtil.ARRAY:
+            case TypeUtil.OBJECT:
                 break;
-            case 'number':
+            case TypeUtil.NUMBER:
                 return MathUtil.equals(obj1, obj2);
             default:
                 return String(obj1) == String(obj2);
@@ -1994,15 +2029,6 @@
         }
 
         return true;
-    },
-
-    keys: function(obj, sorted)
-    {
-        var k = Object.keys(obj);
-        if (sorted === true) {
-            k.sort();
-        }
-        return k;
     },
 
     keypath: {
@@ -2040,6 +2066,15 @@
                 }
             }
         }
+    },
+
+    keys: function(obj, sorted)
+    {
+        var k = Object.keys(obj);
+        if (sorted === true) {
+            k.sort();
+        }
+        return k;
     },
 
     length: function(obj)
