@@ -321,73 +321,81 @@
 };
     var ColorCmykUtil = {
 
-    average: function(colors)
-    {
-        return ColorRgbUtil.average(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }));
-    },
+    // average: function(colors)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.average(
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             })
+    //         ));
+    // },
 
-    distance: function(colorA, colorB)
-    {
-        return ColorRgbUtil.distance(
-            ColorCmykUtil.toRgb(colorA),
-            ColorCmykUtil.toRgb(colorB));
-    },
+    // distance: function(colorA, colorB)
+    // {
+    //     return ColorRgbUtil.distance(
+    //         ColorCmykUtil.toRgb(colorA),
+    //         ColorCmykUtil.toRgb(colorB));
+    // },
 
-    gradient: function(colors, steps)
-    {
-        return ColorRgbUtil.gradient(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }), steps);
-    },
+    // gradient: function(colors, steps)
+    // {
+    //     return ColorRgbUtil.gradient(colors.map(function(color){
+    //             return ColorCmykUtil.toRgb(color);
+    //         }), steps).map(function(color){
+    //             return ColorRgbUtil.toCmyk(color);
+    //         });
+    // },
 
-    gradientMatrix: function(colors, stepsX, stepsY)
-    {
-        return ColorRgbUtil.gradientMatrix(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }), stepsX, stepsY);
-    },
+    // gradientMatrix: function(colors, stepsX, stepsY)
+    // {
+    //     return ColorRgbUtil.gradientMatrix(
+    //         ObjectUtil.map(colors, function(color){
+    //             return ColorCmykUtil.toRgb(color);
+    //         }), stepsX, stepsY).map(function(colors){
+    //             return colors.map(function(color){
+    //                 return ColorRgbUtil.toCmyk(color);
+    //             });
+    //         });
+    // },
 
-    interpolateBilinear: function(a, b, c, d, u, v)
-    {
-        return ColorRgbUtil.toCmyk(
-            ColorRgbUtil.interpolateBilinear(
-                ColorCmykUtil.toRgb(a),
-                ColorCmykUtil.toRgb(b),
-                ColorCmykUtil.toRgb(c),
-                ColorCmykUtil.toRgb(d), u, v));
-    },
+    // interpolateBilinear: function(a, b, c, d, u, v)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.interpolateBilinear(
+    //             ColorCmykUtil.toRgb(a),
+    //             ColorCmykUtil.toRgb(b),
+    //             ColorCmykUtil.toRgb(c),
+    //             ColorCmykUtil.toRgb(d), u, v));
+    // },
 
-    interpolateLinear: function(colorFrom, colorTo, t)
-    {
-        return ColorRgbUtil.toCmyk(
-            ColorRgbUtil.interpolateLinear(
-                ColorCmykUtil.toRgb(colorFrom),
-                ColorCmykUtil.toRgb(colorTo), t));
-    },
+    // interpolateLinear: function(colorFrom, colorTo, t)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.interpolateLinear(
+    //             ColorCmykUtil.toRgb(colorFrom),
+    //             ColorCmykUtil.toRgb(colorTo), t));
+    // },
 
-    interpolateMultilinear: function(colors, t)
-    {
-        return ColorRgbUtil.interpolateMultilinear(
-            colors.map(function(color){
-                return ColorCmykUtil.toRgb(color);
-            }), t);
-    },
+    // interpolateMultilinear: function(colors, t)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.interpolateMultilinear(
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             }), t));
+    // },
 
-    nearest: function(colorSearch, colors)
-    {
-        return ColorRgbUtil.toCmyk(
-            ColorRgbUtil.nearest(
-                ColorCmykUtil.toRgb(colorSearch),
-                colors.map(function(color){
-                    return ColorCmykUtil.toRgb(color);
-                })
-            ));
-    },
+    // nearest: function(colorSearch, colors)
+    // {
+    //     return ColorRgbUtil.toCmyk(
+    //         ColorRgbUtil.nearest(
+    //             ColorCmykUtil.toRgb(colorSearch),
+    //             colors.map(function(color){
+    //                 return ColorCmykUtil.toRgb(color);
+    //             })
+    //         ));
+    // },
 
     // toGrayscale: function(color)
     // {
@@ -425,7 +433,7 @@
         var g = (1.0 - Math.min(1.0, ((m * ik) + k)));
         var b = (1.0 - Math.min(1.0, ((y * ik) + k)));
 
-        var round = Math.floor;
+        var round = Math.round;
         r = round(r * 255);
         g = round(g * 255);
         b = round(b * 255);
@@ -465,15 +473,6 @@
 
     gradient: function(colors, steps)
     {
-        // var colorsRgb = colors.map(function(color){
-        //     return ColorHexUtil.toRgb(color);
-        // });
-        // var gradientRgb = ColorRgbUtil.gradient(colorsRgb, steps);
-        // var gradientHex = gradientRgb.map(function(color){
-        //     return ColorRgbUtil.toHex(color);
-        // });
-        // return gradientHex;
-
         return ColorRgbUtil.gradient(colors.map(function(color){
                 return ColorHexUtil.toRgb(color);
             }), steps).map(function(color){
@@ -483,19 +482,6 @@
 
     gradientMatrix: function(colors, stepsX, stepsY)
     {
-        // var colorsRgb = ObjectUtil.map(colors, function(color){
-        //     return ColorHexUtil.toRgb(color);
-        // });
-        // var matrixRgb = ColorRgbUtil.gradientMatrix(colorsRgb, stepsX, stepsY);
-        // var matrixHex = [];
-        // for (var i = 0; i < matrixRgb.length; i++) {
-        //     matrixHex[i] = [];
-        //     for (var k = 0; k < matrixRgb[i].length; k++) {
-        //         matrixHex[i][k] = ColorRgbUtil.toHex(matrixRgb[i][k]);
-        //     }
-        // }
-        // return matrixHex;
-
         return ColorRgbUtil.gradientMatrix(
             ObjectUtil.map(colors, function(color){
                 return ColorHexUtil.toRgb(color);
@@ -664,7 +650,7 @@
         var rDiff = (colorA.r - colorB.r);
         var gDiff = (colorA.g - colorB.g);
         var bDiff = (colorA.b - colorB.b);
-        var aDiff = ((isNaN(colorA.a) ? 1.0 : colorA.a) - (isNaN(colorB.a) ? 1.0 : colorB.a));
+        var aDiff = Math.round(((isNaN(colorA.a) ? 1.0 : colorA.a) - (isNaN(colorB.a) ? 1.0 : colorB.a)) * 255);
         return Math.sqrt((rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff) + (aDiff * aDiff));
     },
 
@@ -672,14 +658,14 @@
     {
         var colorsOutput = [];
         var color;
-        var berp = ColorRgbUtil.interpolateMultilinear;
+        var mlerp = ColorRgbUtil.interpolateMultilinear;
         var t = 0.0;
         var tInc = (1.0 / Math.max(1, (steps - 1)));
         var tConstrain = MathUtil.constrain;
         for (var i = 0; i < steps; i++) {
             t = (i * tInc);
             t = tConstrain(t, 0.0, 1.0);
-            color = berp(colors, t);
+            color = mlerp(colors, t);
             colorsOutput.push(color);
         }
         return colorsOutput;
@@ -842,11 +828,22 @@
         var m = ((k < 1.0) ? ((ig - k) / ik) : 0);
         var y = ((k < 1.0) ? ((ib - k) / ik) : 0);
 
+        c *= 100;
+        m *= 100;
+        y *= 100;
+        k *= 100;
+
+        // var round = MathUtil.roundDecimals;
+        // c = round(c, 1);
+        // m = round(m, 1);
+        // y = round(y, 1);
+        // k = round(k, 1);
+
         var round = Math.round;
-        c = round(c * 100);
-        m = round(m * 100);
-        y = round(y * 100);
-        k = round(k * 100);
+        c = round(c);
+        m = round(m);
+        y = round(y);
+        k = round(k);
 
         return { c:c, m:m, y:y, k:k };
     },
@@ -2959,49 +2956,6 @@
 
     isLocalhost: function(url)
     {
-        // http://localhost
-        // http://localhost/
-        // http://localhost:8000
-        // http://localhost:8000/
-        // http://127.0.0.1
-        // http://127.0.0.1/
-        // http://127.0.0.1:8000
-        // http://127.0.0.1:8000/
-        // https://localhost
-        // https://localhost/
-        // https://localhost:8000
-        // https://localhost:8000/
-        // https://127.0.0.1
-        // https://127.0.0.1/
-        // https://127.0.0.1:8000
-        // https://127.0.0.1:8000/
-        // http://localhost
-        // http://localhost/
-        // http://localhost:8000
-        // http://localhost:8000/
-        // http://localhost:8000/
-        // http://127.0.0.1
-        // http://127.0.0.1/
-        // http://127.0.0.1:8000
-        // http://127.0.0.1:8000/
-        // https://localhost
-        // https://localhost/
-        // https://localhost:8000
-        // https://localhost:8000/
-        // https://localhosts
-        // https://localhosts/
-        // https://localhosts:8000
-        // https://localhosts:8000/
-        // https://localhosts:8000/index.html
-        // https://localhost/
-        // https://localhost:8000
-        // https://localhost:8000/
-        // https://localhost:8000/index.html
-        // https://127.0.0.1
-        // https://127.0.0.1/
-        // https://127.0.0.1:8000
-        // https://127.0.0.1:8000/index.html
-
         var re = /^(https?\:\/\/)(localhost|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
         return re.test((url || URLUtil.getURL()));
     }
