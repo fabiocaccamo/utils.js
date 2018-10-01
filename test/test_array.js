@@ -1,9 +1,10 @@
 var utils = require('../dist/utils.js');
 var test = utils.test;
+var arr = utils.array;
 
 describe('array', function() {
     describe('clean', function() {
-        var f = utils.array.clean;
+        var f = arr.clean;
 
         it('test none', function() {
             test.assertEqual(f([null, undefined, NaN], false), []);
@@ -94,8 +95,67 @@ describe('array', function() {
             test.assertEqual(f(input, true), output);
         });
     });
+    describe('clone', function() {
+        var f = arr.clone;
+        it('test array of array(s)', function() {
+            var a = [1, 2, 3];
+            var b = [4, 5, 6];
+            var c = [7, 8, 9];
+            var o = [a, b, c];
+            var r = f(o);
+
+            test.assertFalse(r === o);
+            test.assertEqual(r, o);
+
+            test.assertFalse(r[0] === a);
+            test.assertEqual(r[0], a);
+
+            test.assertFalse(r[1] === b);
+            test.assertEqual(r[1], b);
+
+            test.assertFalse(r[2] === c);
+            test.assertEqual(r[2], c);
+        });
+        it('test array of boolean(s)', function() {
+            var o = [true, false, true, false];
+            var r = f(o);
+            test.assertFalse(r === o);
+            test.assertEqual(r, o);
+        });
+        it('test array of date(s)', function() {
+            var o = [new Date(1800), new Date(1900), new Date(2000)];
+            var r = f(o);
+            test.assertFalse(r === o);
+            test.assertEqual(r, o);
+        });
+        it('test array of object(s)', function() {
+            var a = { a:1, b:2, c:3 };
+            var b = { d:4, e:5, f:6 };
+            var c = { g:7, h:8, i:9 };
+            var o = [a, b, c];
+            var r = f(o);
+            test.assertFalse(r[0] === a);
+            test.assertEqual(r[0], a);
+            test.assertFalse(r[1] === b);
+            test.assertEqual(r[1], b);
+            test.assertFalse(r[2] === c);
+            test.assertEqual(r[2], c);
+        });
+        it('test array of number(s)', function() {
+            var o = [0, 1, 2, 3];
+            var r = f(o);
+            test.assertFalse(r === o);
+            test.assertEqual(r, o);
+        });
+        it('test array of string(s)', function() {
+            var o = ['a', 'b', 'c', 'd'];
+            var r = f(o);
+            test.assertFalse(r === o);
+            test.assertEqual(r, o);
+        });
+    });
     describe('equals', function() {
-        var f = utils.array.equals;
+        var f = arr.equals;
         var a, b;
         it('test none', function() {
             test.assertTrue(f([null, undefined, NaN], [null, undefined, NaN]));
@@ -166,7 +226,7 @@ describe('array', function() {
         });
     });
     describe('flatten', function() {
-        var f = utils.array.flatten;
+        var f = arr.flatten;
         var a, b;
         it('test array 2D', function() {
             a = [[0, 1, 2, 3, 4], [5, 6, 7, 8, 9]];
@@ -190,7 +250,7 @@ describe('array', function() {
         });
     });
     describe('index', function() {
-        var f = utils.array.index;
+        var f = arr.index;
         var a, b;
         it('test single key / single value', function() {
             a = [
@@ -324,7 +384,7 @@ describe('array', function() {
         });
     });
     describe('paginate', function() {
-        var f = utils.array.paginate;
+        var f = arr.paginate;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         it('test array length 10 items per page -1', function() {
             test.assertEqual(f(a, 0), []);
@@ -367,7 +427,7 @@ describe('array', function() {
         });
     });
     describe('shuffle', function() {
-        var f = utils.array.shuffle;
+        var f = arr.shuffle;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         var b;
         var c = [];
@@ -396,7 +456,7 @@ describe('array', function() {
         });
     });
     describe('reduce', function() {
-        var f = utils.array.reduce;
+        var f = arr.reduce;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         it('test value', function() {
             var r = function(accumulator, value, index, list){
@@ -418,7 +478,7 @@ describe('array', function() {
         });
     });
     describe('rotate', function() {
-        var f = utils.array.rotate;
+        var f = arr.rotate;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         it('test rotate negative', function() {
             test.assertEqual(f(a, -0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -463,8 +523,8 @@ describe('array', function() {
         });
     });
     describe('sort', function() {
-        var f = utils.array.sort;
-        var s = utils.array.shuffle;
+        var f = arr.sort;
+        var s = arr.shuffle;
         var a, b;
         it('test array of numbers', function() {
             a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -483,7 +543,7 @@ describe('array', function() {
         });
     });
     describe('unique', function() {
-        var f = utils.array.unique;
+        var f = arr.unique;
         it('test array empty', function() {
             test.assertEqual(f([[], [], [], []]), [[]]);
         });
@@ -544,8 +604,8 @@ describe('array', function() {
         });
     });
     describe('zip / unzip', function() {
-        var z = utils.array.zip;
-        var u = utils.array.unzip;
+        var z = arr.zip;
+        var u = arr.unzip;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
         var b = ['a', 'b', 'c', 'd', 'e', 'f'];
         var c = [true, false, true, false, true, undefined];

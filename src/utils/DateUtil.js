@@ -1,5 +1,10 @@
 var DateUtil = {
 
+    clone: function(date)
+    {
+        return new Date(date.getTime());
+    },
+
     timestamp: function()
     {
         return new Date().getTime();

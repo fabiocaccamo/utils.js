@@ -29,6 +29,29 @@ var ArrayUtil = {
         return items;
     },
 
+    clone: function(list)
+    {
+        var cln = list.slice();
+        var val;
+        for (var i = 0, j = cln.length; i < j; i++) {
+            val = cln[i];
+            switch (TypeUtil.of(val)) {
+                case TypeUtil.ARRAY:
+                    cln[i] = ArrayUtil.clone(val);
+                    break;
+                case TypeUtil.DATE:
+                    cln[i] = DateUtil.clone(val);
+                    break;
+                case TypeUtil.OBJECT:
+                    cln[i] = ObjectUtil.clone(val);
+                    break;
+                default:
+                    break;
+            }
+        }
+        return cln;
+    },
+
     equals: function(listA, listB)
     {
         return ObjectUtil.equals(listA, listB);

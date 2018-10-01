@@ -47,11 +47,29 @@ var ObjectUtil = {
         return obj;
     },
 
-    // clone: function(obj)
-    // {
-    //     // TODO
-    //     return null;
-    // },
+    clone: function(obj)
+    {
+        var cln = {};
+        var key, val;
+        for (key in obj) {
+            val = obj[key];
+            switch (TypeUtil.of(val)) {
+                case TypeUtil.ARRAY:
+                    cln[key] = ArrayUtil.clone(val);
+                    break;
+                case TypeUtil.DATE:
+                    cln[key] = DateUtil.clone(val);
+                    break;
+                case TypeUtil.OBJECT:
+                    cln[key] = ObjectUtil.clone(val);
+                    break;
+                default:
+                    cln[key] = obj[key];
+                    break;
+            }
+        }
+        return cln;
+    },
 
     // decodeBase64: function(str)
     // {
@@ -89,10 +107,10 @@ var ObjectUtil = {
         }
 
         switch (type1) {
-            case 'array':
-            case 'object':
+            case TypeUtil.ARRAY:
+            case TypeUtil.OBJECT:
                 break;
-            case 'number':
+            case TypeUtil.NUMBER:
                 return MathUtil.equals(obj1, obj2);
             default:
                 return String(obj1) == String(obj2);
@@ -118,15 +136,6 @@ var ObjectUtil = {
         }
 
         return true;
-    },
-
-    keys: function(obj, sorted)
-    {
-        var k = Object.keys(obj);
-        if (sorted === true) {
-            k.sort();
-        }
-        return k;
     },
 
     keypath: {
@@ -164,6 +173,15 @@ var ObjectUtil = {
                 }
             }
         }
+    },
+
+    keys: function(obj, sorted)
+    {
+        var k = Object.keys(obj);
+        if (sorted === true) {
+            k.sort();
+        }
+        return k;
     },
 
     length: function(obj)

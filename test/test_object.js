@@ -52,11 +52,57 @@ describe('object', function() {
             test.assertEqual(r, { a:1, c:3, f:0, h:false });
         });
     });
-    // describe('clone', function() {
-    //     it('TODO', function() {
-    //         test.assertTrue(true);
-    //     });
-    // });
+    describe('clone', function() {
+        var f = obj.clone;
+        it('test new instance and key/values cloned', function() {
+            var o = { a:1, b:2, c:3 };
+            var r = f(o);
+            test.assertFalse(r === o);
+            test.assertEqual(r, o);
+        });
+        it('test array property cloned', function() {
+            var a = { a:[1, 2, 3] };
+            var o = { a:a };
+            var r = f(o);
+            test.assertFalse(r['a'] === a);
+            test.assertEqual(r['a'], a);
+        });
+        it('test boolean property cloned', function() {
+            var b = true;
+            var o = { b:b };
+            var r = f(o);
+            test.assertTrue(r['b'] === b);
+            test.assertEqual(r['b'], b);
+        });
+        it('test date property cloned', function() {
+            var d = new Date(1900);
+            var o = { d:d };
+            var r = f(o);
+            test.assertFalse(r['d'] === d);
+            test.assertEqual(r['d'], d);
+        });
+        it('test object property cloned', function() {
+            var a = { a:1, b:2, c:3 };
+            var o = { o:a };
+            var r = f(o);
+            test.assertFalse(r['o'] === a);
+            test.assertEqual(r['o'], a);
+        });
+        it('test number property cloned', function() {
+            var n = 123;
+            var o = { n:n };
+            var r = f(o);
+            test.assertTrue(r['n'] === n);
+            test.assertEqual(r['n'], n);
+        });
+        it('test string property cloned', function() {
+            var s = 'ok';
+            var o = { s:s };
+            var r = f(o);
+            test.assertTrue(r['s'] === s);
+            test.assertEqual(r['s'], s);
+        });
+    });
     // describe('decodeBase64', function() {
     //     it('TODO', function() {
     //         test.assertTrue(true);
@@ -139,6 +185,14 @@ describe('object', function() {
             var c = { x:0.0, y:0.0001 };
             test.assertTrue(f(a, b));
             test.assertFalse(f(a, c));
+        });
+        it('test objects containing different keys', function() {
+            var a = { x:0.0, y:0.0 };
+            var b = { x:0.0, y:0.0, z:0.0 };
+            var c = { x:0.0 };
+            test.assertFalse(f(a, b));
+            test.assertFalse(f(a, c));
+            test.assertFalse(f(b, c));
         });
     });
     describe('keys', function() {
