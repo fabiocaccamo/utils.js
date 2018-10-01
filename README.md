@@ -17,12 +17,7 @@ require(['utils'], function(utils) {
     console.log(utils);
 });
 ```
-or
-```javascript
-require(['@fabiocaccamo/utils.js'], function(utils) {
-    console.log(utils);
-});
-```
+
 ## APIs
 
 #### Packages
@@ -58,11 +53,11 @@ require(['@fabiocaccamo/utils.js'], function(utils) {
 - `git clone https://github.com/fabiocaccamo/utils.js.git`
 - `npm install`
 
-#### Test
-`npm run test`
-
 #### Watch
 `npm run watch`
+
+#### Test
+`npm run test` *(tests run against dist)*
 
 #### Build
 `npm run build`
