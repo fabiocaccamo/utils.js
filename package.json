@@ -40,7 +40,7 @@
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-env": "^1.7.0",
     "babel-register": "^6.7.2",
     "browser-sync": "^2.24.5",
     "codecov": "^3.0.4",
@@ -64,7 +64,7 @@
   },
   "babel": {
     "presets": [
-      "es2015"
+      "env"
     ]
   },
   "private": false
