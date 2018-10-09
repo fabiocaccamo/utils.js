@@ -34,17 +34,17 @@
   },
   "main": "gulpfile.js",
   "scripts": {
-    "watch": "gulp",
     "build": "gulp build --production",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test": "nyc mocha",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
+    "watch": "gulp"
   },
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.7.2",
-    "browser-sync": "^2.24.5",
+    "babel-register": "^6.26.0",
+    "browser-sync": "^2.26.0",
     "codecov": "^3.0.4",
-    "gulp": "gulpjs/gulp#4.0",
+    "gulp": "^4.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-cli": "^2.0.1",
     "gulp-concat": "^2.5.2",
