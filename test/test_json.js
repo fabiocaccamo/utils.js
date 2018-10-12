@@ -29,6 +29,9 @@ describe('json', function() {
             var s = '観カサチス話著ワヨ起旅リレム西災朝ウフソマ例権エムテス料購73楽チホ養座らち関産そ拡提権ばぜ視実トこ聞図ラホヨ検競ッそぐ携様ツサヤ険能みっッ北挙煙るつ。誘ナモシメ周初おトぱ年求ラぼ手験名ふ希栄ワセムヒ恵真おやふ表要91保ぞあぶ教建リ記就イらろめ見徳弁ん財84海ルヘ正権カシ法彼けるよ。';
             test.assertEqual(d(e([s])), [s]);
         });
+        it('test decode unquoted object', function() {
+            test.assertEqual(d("{&quot;a&quot;:1,&quot;b&quot;:2,&quot;c&quot;:3}"), { a:1, b:2, c:3 });
+        });
     });
     describe('encode', function() {
         it('test encode empty', function() {
