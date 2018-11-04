@@ -2100,6 +2100,25 @@
         return obj;
     },
 
+    search: function(objs, filter)
+    {
+        var results = [], obj, res, key, val;
+        for (var i = 0, j = objs.length; i < j; i++) {
+            obj = objs[i];
+            res = obj;
+            for (key in filter) {
+                val = filter[key];
+                if (!ObjectUtil.equals(obj[key], val)) {
+                    res = null;
+                }
+            }
+            if (res) {
+                results.push(res);
+            }
+        }
+        return results;
+    },
+
     values: function(obj, sorted)
     {
         var keys = ObjectUtil.keys(obj, sorted);

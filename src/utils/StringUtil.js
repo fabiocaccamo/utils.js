@@ -152,7 +152,7 @@ var StringUtil = {
         str = str.replace(/[^a-z0-9]/gm, sep);
         // replace multiple sep with single sep
         str = str.replace(/[\-]+/gm, sep);
-        // strip sep from the beginning and fron the end
+        // strip sep from the beginning and from the end
         str = str.replace(/^[\-]|[\-]$/gm, '');
         return str;
     },

@@ -370,6 +370,51 @@ describe('object', function() {
             test.assertEqual(r, { a:4, b:5, c:6 });
         });
     });
+    describe('search', function() {
+        var f = obj.search;
+        it('test empty filter', function() {
+            var objs = [
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:1, b:2, c:null, d:'ok', e:false, f:true }
+            ];
+            var r = f(objs, {});
+            test.assertEqual(r, objs);
+        });
+        it('test simple filter result found', function() {
+            var objs = [
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:2, b:2, c:null, d:'ok', e:false, f:true },
+                { a:3, b:2, c:null, d:'ok', e:false, f:true },
+                { a:4, b:2, c:null, d:'ok', e:false, f:true }
+            ];
+            var r = f(objs, { a:3 });
+            test.assertEqual(r, [objs[2]]);
+        });
+        it('test simple filter result not found', function() {
+            var objs = [
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:2, b:2, c:null, d:'ok', e:false, f:true },
+                { a:3, b:2, c:null, d:'ok', e:false, f:true },
+                { a:4, b:2, c:null, d:'ok', e:false, f:true }
+            ];
+            var r = f(objs, { a:5 });
+            test.assertEqual(r, []);
+        });
+        it('test simple filter multiple result found', function() {
+            var objs = [
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:2, b:2, c:null, d:'ok', e:false, f:true },
+                { a:1, b:2, c:null, d:'ok', e:false, f:false },
+                { a:2, b:2, c:null, d:'ok', e:false, f:true },
+                { a:1, b:2, c:null, d:'ok', e:false, f:true },
+                { a:2, b:2, c:null, d:'ok', e:false, f:true }
+            ];
+            var r = f(objs, { a:1, f:true });
+            test.assertEqual(r, [objs[0], objs[4]]);
+        });
+    });
     describe('values', function() {
         var f = obj.values;
         it('test no values', function() {
