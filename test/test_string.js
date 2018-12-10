@@ -84,6 +84,20 @@ describe('string', function() {
             test.assertEqual(f('000000', 5, 'x'), '000000');
         });
     });
+    describe('replace', function() {
+        var f = string.replace;
+        var s = 'Hello world, hello world, hElLo wOrLd, hello|world?, hello mountains, hello world';
+        it('test single occurrence case-sensitive', function() {
+            test.assertEqual(f(s, 'Hello world', 'X'), 'X, hello world, hElLo wOrLd, hello|world?, hello mountains, hello world');
+        });
+        it('test multiple occurrences case-sensitive', function() {
+            test.assertEqual(f(s, 'hello world', 'X'), 'Hello world, X, hElLo wOrLd, hello|world?, hello mountains, X');
+        });
+        it('test multiple occurrences not case-sensitive', function() {
+            test.assertEqual(f(s, 'hello world', 'X', false), 'X, X, X, hello|world?, hello mountains, X');
+            test.assertEqual(f(s, 'hello', 'X', false), 'X world, X world, X wOrLd, X|world?, X mountains, X world');
+        });
+    });
     describe('reverse', function() {
         var f = string.reverse;
         it('test simple', function() {

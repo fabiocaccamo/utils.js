@@ -71,6 +71,14 @@ var StringUtil = {
         return str;
     },
 
+    replace: function(str, occurrence, replacement, caseSensitive)
+    {
+        var pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        var flags = (caseSensitive === false ? 'gi' : 'g');
+        var regex = new RegExp(pattern, flags);
+        return str.replace(regex, replacement);
+    },
+
     reverse: function(str)
     {
         var chars = str.split('');
