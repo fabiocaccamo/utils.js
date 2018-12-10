@@ -1,5 +1,13 @@
 var ArrayUtil = {
 
+    /**
+     * Clean a list by removing values evaluated as 'none'.
+     *
+     * @memberof array
+     * @param {Array} list - The list to clean.
+     * @param {Boolean} [hard=false] - If true, also objects, arrays and strings evaluated as 'empty' will be removed.
+     * @return {Array} - A new and clean list.
+     */
     clean: function(list, hard)
     {
         var items = list.slice();

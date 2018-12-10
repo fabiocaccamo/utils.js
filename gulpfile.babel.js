@@ -1,15 +1,16 @@
 'use strict';
 
-import plugins  from 'gulp-load-plugins';
-import yargs    from 'yargs';
-import browser  from 'browser-sync';
-import gulp     from 'gulp';
-import rimraf   from 'rimraf';
-import sherpa   from 'style-sherpa';
-import yaml     from 'js-yaml';
-import fs       from 'fs';
-import jsImport from 'gulp-js-import';
-import minify   from 'gulp-minify';
+import plugins          from 'gulp-load-plugins';
+import yargs            from 'yargs';
+import browser          from 'browser-sync';
+import gulp             from 'gulp';
+import rimraf           from 'rimraf';
+import sherpa           from 'style-sherpa';
+import yaml             from 'js-yaml';
+import fs               from 'fs';
+import jsImport         from 'gulp-js-import';
+import minify           from 'gulp-minify';
+import documentation    from 'gulp-documentation';
 
 // Load all Gulp plugins into one variable
 const $ = plugins();
@@ -31,6 +32,8 @@ gulp.task('build',
 gulp.task('default',
     gulp.series('build', server, watch));
 
+gulp.task('docs', docs);
+
 function clean(done) {
     rimraf(PATHS.dist, done);
 }
@@ -40,9 +43,21 @@ function copy() {
         .pipe(gulp.dest(PATHS.dist));
 }
 
+function docs() {
+    return gulp.src(PATHS.javascript)
+        .pipe($.concat('utils.js'))
+        .pipe(jsImport({
+            hideConsole: true
+        }))
+        .pipe(gulp.dest('temp/'))
+        .pipe(gulp.src('temp/utils.js'))
+        .pipe(documentation('html', {}, {
+        })).pipe(gulp.dest('docs'));
+}
+
 function javascript() {
     return gulp.src(PATHS.javascript)
-        .pipe($.sourcemaps.init())
+        .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
         .pipe($.concat('utils.js'))
         .pipe(jsImport({
             hideConsole: true

@@ -1,5 +1,18 @@
 var InterpolationUtil = {
 
+    /**
+     * Calculate bilinear interpolation for the given values.
+     *
+     * @memberof math.interpolation
+     * @inner
+     * @param {Number} a xxx
+     * @param {Number} b xxx
+     * @param {Number} c xxx
+     * @param {Number} d xxx
+     * @param {Number} u xxx
+     * @param {Number} v xxx
+     * @return {Number} result
+     */
     bilinear: function(a, b, c, d, u, v)
     {
         var f = InterpolationUtil.linear;

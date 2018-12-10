@@ -1,0 +1,13 @@
+- DrawUtil
+    - circle
+    - ring
+    - rectangle
+    - square
+    - triangle
+
+- ColorUtil
+    - add more color formats and relative conversions: https://gist.github.com/felipesabino/5066336
+
+- PointUtil
+    - convex
+    - nearest

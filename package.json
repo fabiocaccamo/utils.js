@@ -35,6 +35,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "build": "gulp build --production",
+    "docs": "gulp docs",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test": "nyc mocha",
     "watch": "gulp"
@@ -44,10 +45,12 @@
     "babel-register": "^6.26.0",
     "browser-sync": "^2.26.0",
     "codecov": "^3.0.4",
+    "documentation": "^8.1.2",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.0.1",
     "gulp-concat": "^2.5.2",
+    "gulp-documentation": "^3.2.1",
     "gulp-extname": "^0.2.0",
     "gulp-if": "^2.0.0",
     "gulp-js-import": "^1.0.6",

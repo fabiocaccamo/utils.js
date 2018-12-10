@@ -16,6 +16,13 @@ var Base64Util = {
         '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
     },
 
+    /**
+     * Decode a string encoded in base64.
+     *
+     * @memberof base64
+     * @param {String} str - Any string previously encoded in base64.
+     * @return {String} The string obtained from base64 decoding.
+     */
     decode: function(str)
     {
         var input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
@@ -57,6 +64,13 @@ var Base64Util = {
         return output;
     },
 
+    /**
+     * Encode a string in base64.
+     *
+     * @memberof base64
+     * @param {String} str - Any string.
+     * @return {String} The string obtained from base64 encoding.
+     */
     encode: function(str)
     {
         var input = UTF8Util.encode(str);

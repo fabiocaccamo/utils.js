@@ -47,6 +47,10 @@ var MathUtil = {
         return MathUtil.gcd((a - b), b);
     },
 
+    /**
+     * Interpolation utility object
+     * @memberof math
+     */
     interpolation: InterpolationUtil,
 
     lcm: function(a, b)
