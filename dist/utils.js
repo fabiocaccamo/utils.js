@@ -1493,12 +1493,6 @@
         return TrigoUtil.cycleDeg(angle);
     },
 
-    // convex: function(points)
-    // {
-    //     // TODO
-    //     // https://en.wikipedia.org/wiki/Convex_hull
-    // },
-
     cross: function(a, b)
     {
         // z coordinate of the cross product; x and y coordinates are zero
@@ -1541,11 +1535,6 @@
     {
         return PointUtil.length(p);
     },
-
-    // nearest: function(p, points)
-    // {
-    //     // TODO
-    // },
 
     project: function(p, distance, angle)
     {
@@ -2264,6 +2253,14 @@
         return str;
     },
 
+    replace: function(str, occurrence, replacement, caseSensitive)
+    {
+        var pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        var flags = (caseSensitive === false ? 'gi' : 'g');
+        var regex = new RegExp(pattern, flags);
+        return str.replace(regex, replacement);
+    },
+
     reverse: function(str)
     {
         var chars = str.split('');
@@ -2345,7 +2342,7 @@
         str = str.replace(/[^a-z0-9]/gm, sep);
         // replace multiple sep with single sep
         str = str.replace(/[\-]+/gm, sep);
-        // strip sep from the beginning and fron the end
+        // strip sep from the beginning and from the end
         str = str.replace(/^[\-]|[\-]$/gm, '');
         return str;
     },
