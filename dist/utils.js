@@ -2976,7 +2976,7 @@
         var paramsDict = {};
         var paramKV;
         for (var i = 0, j = paramsList.length; i < j; i++) {
-            paramKV = paramsList[i].split('=');
+            paramKV = paramsList[i].split(/\=(.+)/);
             paramsDict[paramKV[0]] = decodeURIComponent(paramKV[1]);
         }
         return paramsDict;

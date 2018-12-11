@@ -5,29 +5,45 @@ var url = utils.url;
 describe('url', function() {
     describe('getParameterByName', function() {
         var f = url.getParameterByName;
-        var s = 'http://localhost:8000/?page=16&code=0123456789&';
+        var s;
         it('test valid param against params', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789&';
             test.assertEqual(f(s, 'page'), '16');
             test.assertEqual(f(s, 'code'), '0123456789');
         });
         it('test invalid param against params', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789&';
             test.assertEqual(f(s, 'status'), undefined);
         });
         it('test invalid param against params with default value', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789&';
             test.assertEqual(f(s, 'status', 'none'), 'none');
         });
         it('test invalid param against no params ', function() {
-            test.assertEqual(f('http://localhost:8000/', 'page'), undefined);
+            s = 'http://localhost:8000/';
+            test.assertEqual(f(s, 'page'), undefined);
         });
         it('test invalid param against no params with default value', function() {
-            test.assertEqual(f('http://localhost:8000/', 'page', '1'), '1');
+            s = 'http://localhost:8000/';
+            test.assertEqual(f(s, 'page', '1'), '1');
+        });
+        it('test invalid param against no params with default value', function() {
+            var data = 'QGZhYmlvY2FjY2Ftby91dGlscy5qcw==';
+            s = 'http://localhost:8000/index.html?data=' + data;
+            test.assertEqual(f(s, 'data', null), data);
         });
     });
     describe('getParameters', function() {
         var f = url.getParameters;
-        var s = 'http://localhost:8000/?page=16&code=0123456789&';
+        var s;
         it('test simple', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789&';
             test.assertEqual(f(s), { page:'16', code:'0123456789' });
+        });
+        it('test variable with base64 value ending with "="', function() {
+            var b64 = 'QGZhYmlvY2FjY2Ftby91dGlscy5qcw==';
+            s = 'http://localhost:8000/?data=' + b64 + '&code=0123456789&';
+            test.assertEqual(f(s), { data:b64, code:'0123456789' });
         });
     });
     describe('getURL', function() {
