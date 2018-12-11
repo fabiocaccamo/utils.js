@@ -9,7 +9,7 @@ var URLUtil = {
     getParameters: function(url)
     {
         var paramsRE = /(([\w]+){1}\=([^\&\n\r\t]*){1})/g;
-        var paramsList = (url.match(paramsRE) || []);
+        var paramsList = ((url || URLUtil.getURL()).match(paramsRE) || []);
         var paramsDict = {};
         var paramKV;
         for (var i = 0, j = paramsList.length; i < j; i++) {
