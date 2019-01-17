@@ -10,7 +10,6 @@ import yaml             from 'js-yaml';
 import fs               from 'fs';
 import jsImport         from 'gulp-js-import';
 import minify           from 'gulp-minify';
-import documentation    from 'gulp-documentation';
 
 // Load all Gulp plugins into one variable
 const $ = plugins();
@@ -32,8 +31,6 @@ gulp.task('build',
 gulp.task('default',
     gulp.series('build', server, watch));
 
-gulp.task('docs', docs);
-
 function clean(done) {
     rimraf(PATHS.dist, done);
 }
@@ -41,18 +38,6 @@ function clean(done) {
 function copy() {
     return gulp.src(PATHS.assets)
         .pipe(gulp.dest(PATHS.dist));
-}
-
-function docs() {
-    return gulp.src(PATHS.javascript)
-        .pipe($.concat('utils.js'))
-        .pipe(jsImport({
-            hideConsole: true
-        }))
-        .pipe(gulp.dest('temp/'))
-        .pipe(gulp.src('temp/utils.js'))
-        .pipe(documentation('html', {}, {
-        })).pipe(gulp.dest('docs'));
 }
 
 function javascript() {

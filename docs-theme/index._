@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title><%- config['project-name'] %> <%- config['project-version'] %> | Documentation</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+        <link rel="stylesheet" href="assets/layers.min.css" />
+        <style>
+            html, body {
+                font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+                font-size: 16px;
+            }
+            .layer-docs-nav {
+                z-index: 20;
+                height: 100px;
+                overflow: hidden;
+                background-color: #EEEEEE;
+            }
+            .layer-docs-nav .layer-body {
+                display: none;
+            }
+            .layer-docs-nav .layer-footer {
+                display: none;
+            }
+            .layer-docs-nav--expanded {
+                height: 100%;
+            }
+            .layer-docs-nav--expanded .layer-body {
+                display: block;
+            }
+            .layer-docs-nav--expanded .layer-footer {
+                display: block;
+            }
+            .layer-docs-nav .layer-body .layer-content {
+                padding: 180px 0 120px 0
+            }
+            .layer-docs-nav .layer-header {
+                background: rgba(238, 238, 238, 0.9);
+                padding: 20px 30px 30px 30px;
+            }
+            .layer-docs-nav .layer-header .project-name {
+                margin: 0;
+                padding: 0;
+                font-size: 24px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .layer-docs-nav .layer-header .project-version {
+                margin: 5px 0 0 0;
+                background-color: #000000;/*rgba(0, 0, 0, 0.1);*/
+                color: #EEEEEE;
+                padding: 4px 8px;
+                border-radius: 5px;
+                display: inline-block;
+                font-family: monospace,monospace;
+                font-size: 12px;
+            }
+            .layer-docs-nav .layer-footer {
+                background: rgba(238, 238, 238, 0.9);
+                font-size: 12px;
+                padding: 20px 30px;
+            }
+            .layer-docs-nav .layer-footer p {
+                margin: 0;
+                padding: 0;
+            }
+            .layer-docs-content {
+                top: 100px;
+                height: calc(100% - 100px);
+                z-index: 10;
+            }
+            .layer-docs-content .layer-content {
+                padding: 30px;
+            }
+            @media screen and (min-width: 960px) {
+                .layer-docs-nav {
+                    width: 30%;
+                    height: 100%;
+                }
+                .layer-docs-nav .layer-header {
+                    padding-top: 25px;
+                }
+                .layer-docs-nav .layer-body {
+                    display: block;
+                }
+                .layer-docs-nav .layer-footer {
+                    display: block;
+                }
+                .layer-docs-content {
+                    top: 0;
+                    left: 30%;
+                    width: 70%;
+                    height: 100%;
+                }
+            }
+            .member-filter {
+                display: block;
+                width: 100%;
+                font-size: 16px;
+                padding: 10px 15px;
+                box-sizing: border-box;
+                margin-top: 30px;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+            .member-filter::placeholder {
+                color: #999999;
+            }
+            .member-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .member-list {
+                padding: 0 30px;
+            }
+            .member-list .member-list {
+                padding: 0;
+                margin-top: 5px;
+                margin-left: 15px;
+                margin-bottom: 15px;
+            }
+            .member-list__link {
+                color: #000000;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+            .member-list__link--active,
+            .member-list__link:hover,
+            .member-list__link:focus,
+            .member-list__link:active {
+                color: #000000;
+                line-height: 1.5;
+                text-decoration: underline;
+            }
+            .member-list__link--primary {
+                font-weight: bold;
+                font-size: 18px;
+            }
+            .member-list__link--secondary {
+                font-weight: normal;
+                font-size: 16px;
+            }
+            .member-list > .member-list__item > .member-list {
+                display: none;
+            }
+            .member-list > .member-list__item > .member-list.member-list--expanded {
+                display: block;
+            }
+            .member-group span {
+                background: rgba(0,0,0,0.2);
+                color: white;
+                font-size: 10px;
+                text-transform: uppercase;
+                padding: 4px 6px;
+                border-radius: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layers-container">
+            <div class="layers-wrapper">
+                <div class="layer layer-docs-nav">
+                    <div class="layer-header">
+                        <header>
+                            <!-- <a id="menu-toggle" href="#prime-nav" title="Show/hide menu" class="menu-toggle"><span>Browse</span></a> -->
+                            <div class="heading">
+                                <h1 class="project-name"><%- config['project-name'] %></h1>
+                                <p class="project-version"><%- config['project-version'] %></p>
+                            </div>
+                            <div id="nav-filter">
+                                <input class="member-filter" type='text' placeholder='filter' />
+                            </div>
+                        </header>
+                    </div>
+                    <div class="layer-body">
+                        <div class="layer-content">
+                            <nav>
+                                <ul class="member-list">
+                                    <% docs.forEach(function(doc) { %>
+                                    <% var hasMembers = doc.members.static.length || doc.members.instance.length %>
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary <% if (doc.kind === 'note') { %>  <% } %><% if (hasMembers) { %>  <% } %>" href="#<%= doc.name %>"><%- doc.name %></a>
+                                        <% if (hasMembers) { %>
+                                        <% if (doc.members.static && doc.members.static.length) { %>
+                                        <ul class="member-list member-list--static">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-static"><span>Static members</span></li> -->
+                                            <% doc.members.static.forEach(function(member) { %>
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#<%= slug(member.namespace) %>"><%- member.name %></a>
+                                            </li>
+                                            <% }) %>
+                                        </ul>
+                                        <% } %>
+                                        <% if (doc.members.instance && doc.members.instance.length) { %>
+                                        <ul class="member-list member-list--instance">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-instance"><span>Instance members</span></li> -->
+                                            <% doc.members.instance.forEach(function(member) { %>
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#<%= slug(member.namespace) %>">#<%- member.name %></a>
+                                            </li>
+                                            <% }) %>
+                                        </ul>
+                                        <% } %>
+                                        <% if (doc.members.inner && doc.members.inner.length) { %>
+                                        <ul class="member-list member-list--inner">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-inner"><span>Inner members</span></li> -->
+                                            <% doc.members.inner.forEach(function(member) { %>
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#<%= slug(member.namespace) %>">#<%- member.name %></a>
+                                            </li>
+                                            <% }) %>
+                                        </ul>
+                                        <% } %>
+                                        <% if (doc.members.events && doc.members.events.length) { %>
+                                        <ul class="member-list member-list--events">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-events"><span>Events</span></li> -->
+                                            <% doc.members.events.forEach(function(member) { %>
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#<%= slug(member.namespace) %>">ⓔ <%- member.name %></a>
+                                            </li>
+                                            <% }) %>
+                                        </ul>
+                                        <% } %>
+                                        <% } %>
+                                    </li>
+                                    <% }) %>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="layer-footer">
+                        <p>&copy; 2018-2019 <%- config['project-name'] %> <%- config['project-version'] %></p>
+                    </div>
+                </div>
+                <div class="layer layer-docs-content">
+                    <div class="layer-body">
+                        <div class="layer-content">
+                            <main>
+                                <% docs.forEach(function(s) { %>
+                                    <% if (s.kind !== 'note') { %>
+                                        <%= renderSection({ section: s, renderSection: renderSection, renderSectionList: renderSectionList }) %>
+                                    <% } else { %>
+                                        <div><%= renderNote({ note: s }) %></div>
+                                    <% } %>
+                                <% }) %>
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script>
+
+
+            (function() {
+                'use strict';
+
+                $(document).ready(function(){
+                    $('.member-list__link--primary').click(function(e){
+
+                        $('.member-list--expanded').removeClass('member-list--expanded');
+                        $(this).siblings('.member-list').addClass('member-list--expanded');
+
+                        $('.member-list__link--primary.member-list__link--active').removeClass('member-list__link--active');
+                        $(this).addClass('member-list__link--active');
+                    });
+                });
+
+                // var sectionsEl = $('section');
+                // var sectionsOffsetsById = {};
+                // var i = 0;
+
+                // Array.prototype.forEach.call(sectionsEl.get(), function(e) {
+                //     sectionsOffsetsById[e.id] = e.offsetTop;
+                // });
+                // setInterval(function() {
+                //     var scrollPosition = $('.layer-docs-content').scrollTop();
+                //     for (id in sectionsOffsetsById) {
+                //         if (sectionsOffsetsById[id] <= scrollPosition) {
+                //             document.querySelector('.active').setAttribute('class', ' ');
+                //             document.querySelector('a[href*=' + id + ']').setAttribute('class', 'active');
+                //         }
+                //     }
+                // }, 200);
+            })();
+
+        </script>
+    </body>
+</html>

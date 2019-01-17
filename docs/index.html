@@ -1,0 +1,3241 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@fabiocaccamo/utils.js 0.9.0 | Documentation</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+        <link rel="stylesheet" href="assets/layers.min.css" />
+        <style>
+            html, body {
+                font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+                font-size: 16px;
+            }
+            .layer-docs-nav {
+                z-index: 20;
+                height: 100px;
+                overflow: hidden;
+                background-color: #EEEEEE;
+            }
+            .layer-docs-nav .layer-body {
+                display: none;
+            }
+            .layer-docs-nav .layer-footer {
+                display: none;
+            }
+            .layer-docs-nav--expanded {
+                height: 100%;
+            }
+            .layer-docs-nav--expanded .layer-body {
+                display: block;
+            }
+            .layer-docs-nav--expanded .layer-footer {
+                display: block;
+            }
+            .layer-docs-nav .layer-body .layer-content {
+                padding: 180px 0 120px 0
+            }
+            .layer-docs-nav .layer-header {
+                background: rgba(238, 238, 238, 0.9);
+                padding: 20px 30px 30px 30px;
+            }
+            .layer-docs-nav .layer-header .project-name {
+                margin: 0;
+                padding: 0;
+                font-size: 24px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            .layer-docs-nav .layer-header .project-version {
+                margin: 5px 0 0 0;
+                background-color: #000000;/*rgba(0, 0, 0, 0.1);*/
+                color: #EEEEEE;
+                padding: 4px 8px;
+                border-radius: 5px;
+                display: inline-block;
+                font-family: monospace,monospace;
+                font-size: 12px;
+            }
+            .layer-docs-nav .layer-footer {
+                background: rgba(238, 238, 238, 0.9);
+                font-size: 12px;
+                padding: 20px 30px;
+            }
+            .layer-docs-nav .layer-footer p {
+                margin: 0;
+                padding: 0;
+            }
+            .layer-docs-content {
+                top: 100px;
+                height: calc(100% - 100px);
+                z-index: 10;
+            }
+            .layer-docs-content .layer-content {
+                padding: 30px;
+            }
+            @media screen and (min-width: 960px) {
+                .layer-docs-nav {
+                    width: 30%;
+                    height: 100%;
+                }
+                .layer-docs-nav .layer-header {
+                    padding-top: 25px;
+                }
+                .layer-docs-nav .layer-body {
+                    display: block;
+                }
+                .layer-docs-nav .layer-footer {
+                    display: block;
+                }
+                .layer-docs-content {
+                    top: 0;
+                    left: 30%;
+                    width: 70%;
+                    height: 100%;
+                }
+            }
+            .member-filter {
+                display: block;
+                width: 100%;
+                font-size: 16px;
+                padding: 10px 15px;
+                box-sizing: border-box;
+                margin-top: 30px;
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+            .member-filter::placeholder {
+                color: #999999;
+            }
+            .member-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            .member-list {
+                padding: 0 30px;
+            }
+            .member-list .member-list {
+                padding: 0;
+                margin-top: 5px;
+                margin-left: 15px;
+                margin-bottom: 15px;
+            }
+            .member-list__link {
+                color: #000000;
+                line-height: 1.5;
+                text-decoration: none;
+            }
+            .member-list__link--active,
+            .member-list__link:hover,
+            .member-list__link:focus,
+            .member-list__link:active {
+                color: #000000;
+                line-height: 1.5;
+                text-decoration: underline;
+            }
+            .member-list__link--primary {
+                font-weight: bold;
+                font-size: 18px;
+            }
+            .member-list__link--secondary {
+                font-weight: normal;
+                font-size: 16px;
+            }
+            .member-list > .member-list__item > .member-list {
+                display: none;
+            }
+            .member-list > .member-list__item > .member-list.member-list--expanded {
+                display: block;
+            }
+            .member-group span {
+                background: rgba(0,0,0,0.2);
+                color: white;
+                font-size: 10px;
+                text-transform: uppercase;
+                padding: 4px 6px;
+                border-radius: 4px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="layers-container">
+            <div class="layers-wrapper">
+                <div class="layer layer-docs-nav">
+                    <div class="layer-header">
+                        <header>
+                            <!-- <a id="menu-toggle" href="#prime-nav" title="Show/hide menu" class="menu-toggle"><span>Browse</span></a> -->
+                            <div class="heading">
+                                <h1 class="project-name">@fabiocaccamo/utils.js</h1>
+                                <p class="project-version">0.9.0</p>
+                            </div>
+                            <div id="nav-filter">
+                                <input class="member-filter" type='text' placeholder='filter' />
+                            </div>
+                        </header>
+                    </div>
+                    <div class="layer-body">
+                        <div class="layer-content">
+                            <nav>
+                                <ul class="member-list">
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary   " href="#array">array</a>
+                                        
+                                        
+                                        <ul class="member-list member-list--static">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-static"><span>Static members</span></li> -->
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#arrayclean">clean</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#arrayclone">clone</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#arrayequals">equals</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#arrayflatten">flatten</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#arrayindex">index</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#arraypaginate">paginate</a>
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary   " href="#base64">base64</a>
+                                        
+                                        
+                                        <ul class="member-list member-list--static">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-static"><span>Static members</span></li> -->
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#base64decode">decode</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#base64encode">encode</a>
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary   " href="#math">math</a>
+                                        
+                                        
+                                        <ul class="member-list member-list--static">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-static"><span>Static members</span></li> -->
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#mathinterpolation">interpolation</a>
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary   " href="#object">object</a>
+                                        
+                                        
+                                        <ul class="member-list member-list--static">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-static"><span>Static members</span></li> -->
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#objectclone">clone</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#objectkeypathget">keypath.get</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#objectkeypathset">keypath.set</a>
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary   " href="#random">random</a>
+                                        
+                                        
+                                        <ul class="member-list member-list--static">
+                                            <!-- <li class="member-list__item member-list__item--group member-list__item--group-static"><span>Static members</span></li> -->
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomargument">argument</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randombit">bit</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomboolean">boolean</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomcolor">color</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomelement">element</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomfloat">float</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomindex">index</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randominteger">integer</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomsign">sign</a>
+                                            </li>
+                                            
+                                            <li class="member-list__item">
+                                                <a class="member-list__link member-list__link--secondary" href="#randomstring">string</a>
+                                            </li>
+                                            
+                                        </ul>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#color">color</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#date">date</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#ease">ease</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#func">func</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#geom">geom</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#hex">hex</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#json">json</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#number">number</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#string">string</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#test">test</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#trigo">trigo</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#type">type</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#xml">xml</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#url">url</a>
+                                        
+                                    </li>
+                                    
+                                    
+                                    <li class="member-list__item">
+                                        <a class="member-list__link member-list__link--primary " href="#utf8">utf8</a>
+                                        
+                                    </li>
+                                    
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="layer-footer">
+                        <p>&copy; 2018-2019 @fabiocaccamo/utils.js 0.9.0</p>
+                    </div>
+                </div>
+                <div class="layer layer-docs-content">
+                    <div class="layer-body">
+                        <div class="layer-content">
+                            <main>
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='array'>
+      array
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>array</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <!-- start section_list._ -->
+<div class="">
+    
+    <div class="" id="arrayclean">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">clean(list, hard)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Clean a list by removing values evaluated as 'none'.</p>
+
+  </div>
+
+  <div>clean(list: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, hard: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>list</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The list to clean.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>hard</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>
+            = false)</code>
+	    If true, also objects, arrays and strings evaluated as 'empty' will be removed.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        A new cleaned list.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="arrayclone">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">clone(list)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Creates a new list with same properties than original (deep clone).</p>
+
+  </div>
+
+  <div>clone(list: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>list</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The list
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        A new cloned list.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="arrayequals">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">equals(listA, listB)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Compares two lists and check if they are (deeply) equal.</p>
+
+  </div>
+
+  <div>equals(listA: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, listB: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>listA</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The list a
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>listB</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The list b
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>:
+        true if the two lists are equal, false otherwise.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="arrayflatten">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">flatten(list)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Flat a N-d list to be a 1-d list.</p>
+
+  </div>
+
+  <div>flatten(list: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>list</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The list
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        A new flatten list.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="arrayindex">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">index(list, keys, flat)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Creates a dictionary by indexing list value for the given keys.
+List values must be key-value objects.
+If flat is true, each dictionary key will be associated with one object and not a list of objects.</p>
+
+  </div>
+
+  <div>index(list: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>, keys: (<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>>), flat: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>list</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>)</code>
+	    The list
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>keys</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>>))</code>
+	    A key or an array of keys
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>flat</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>
+            = false)</code>
+	    If true, each dictionary key will be associated with one object and not a list of objects.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        An indexed dictionary.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="arraypaginate">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">paginate(list, itemsPerPage)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Creates a 2d list grouping list items every n-items.</p>
+
+  </div>
+
+  <div>paginate(list: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>, itemsPerPage: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>list</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The list
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>itemsPerPage</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The items per page
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></code>:
+        A 2d list
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+</div>
+<!-- end section_list._ -->
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='base64'>
+      base64
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>base64</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <!-- start section_list._ -->
+<div class="">
+    
+    <div class="" id="base64decode">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">decode(str)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Decode a string encoded in base64.</p>
+
+  </div>
+
+  <div>decode(str: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>str</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Any string previously encoded in base64.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+        The string obtained from base64 decoding.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="base64encode">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">encode(str)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Encode a string in base64.</p>
+
+  </div>
+
+  <div>encode(str: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>str</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    Any string.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+        The string obtained from base64 encoding.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+</div>
+<!-- end section_list._ -->
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='math'>
+      math
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>math</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <!-- start section_list._ -->
+<div class="">
+    
+    <div class="" id="mathinterpolation">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">interpolation</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Interpolation utility object</p>
+
+  </div>
+
+  <div>interpolation</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+</div>
+<!-- end section_list._ -->
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='object'>
+      object
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>object</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <!-- start section_list._ -->
+<div class="">
+    
+    <div class="" id="objectclone">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">clone(obj)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Creates a new instance of the object with same properties than original (deep clone).</p>
+
+  </div>
+
+  <div>clone(obj: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        Copy of this object
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="objectkeypathget">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">keypath.get</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Get an object value at the given keypath
+A keypath is a String containing the keys separated by "."
+If keypath is undefined default value will be returned</p>
+
+  </div>
+
+  <div>keypath.get</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The dot-based keypath, eg. 'a.b.c'
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>defaultValue</span> <code class='quiet'>(any)</code>
+	    The default value
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        The value stored at the given keypath, if keypath is undefined default value will be returned
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="objectkeypathset">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">keypath.set</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Set an object value at the given keypath</p>
+
+  </div>
+
+  <div>keypath.set</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>obj</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    The object
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The dot-based keypath, eg. 'a.b.c'
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    The value to store at the given keypath
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+</div>
+<!-- end section_list._ -->
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='random'>
+      random
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>random</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <!-- start section_list._ -->
+<div class="">
+    
+    <div class="" id="randomargument">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">argument()</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random argument</p>
+
+  </div>
+
+  <div>argument(): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        Random argument
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randombit">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">bit(chance)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random bit (0 or 1)</p>
+
+  </div>
+
+  <div>bit(chance: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>chance</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+            = 0.5)</code>
+	    The chance
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        The chance to generate a 1, 1.0 means 100%, 0.0 means 0%.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomboolean">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">boolean(chance)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random boolean (true or false)</p>
+
+  </div>
+
+  <div>boolean(chance: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>chance</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+            = 0.5)</code>
+	    The chance
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>:
+        The chance to generate a true value, 1.0 means 100%, 0.0 means 0%.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomcolor">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">color()</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random color (uint)</p>
+
+  </div>
+
+  <div>color(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        Random color
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomelement">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">element(array)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random element from the given array</p>
+
+  </div>
+
+  <div>element(array: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The array
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        Random array element
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomfloat">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">float(min, max)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random float where n >= min &#x26;&#x26; n &#x3C;= max</p>
+
+  </div>
+
+  <div>float(min: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, max: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>min</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The minimum
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>max</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The maximum
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        Random float
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomindex">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">index(array)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random valid index for the given array</p>
+
+  </div>
+
+  <div>index(array: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    The array
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        Random array index
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randominteger">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">integer(min, max)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random integer where n >= min &#x26;&#x26; n &#x3C;= max</p>
+
+  </div>
+
+  <div>integer(min: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, max: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>min</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The minimum
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>max</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The maximum
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        Random integer
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomsign">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">sign(chance)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random sign (1 or -1), useful to randomize positive/negative multiplications.</p>
+
+  </div>
+
+  <div>sign(chance: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>chance</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>
+            = 0.5)</code>
+	    The chance to generate a positive sign, 1.0 means 100%, 0.0 means 0%.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></code>:
+        Random sign (1 or -1)
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+    <div class="" id="randomstring">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class="">string(length, charset)</span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <section>
+
+  
+
+  <div class="markdown-body">
+    <p>Return a random string of the desired length with the possibility to use a restricted charset.</p>
+
+  </div>
+
+  <div>string(length: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>, charset: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>length</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</code>
+	    The length of the returned string
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>charset</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The charset used to generate the random string, optional.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>:
+        Random string
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+        </div>
+        -->
+    </div>
+    
+</div>
+<!-- end section_list._ -->
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='color'>
+      color
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>color</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='date'>
+      date
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>date</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='ease'>
+      ease
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>ease</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='func'>
+      func
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>func</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='geom'>
+      geom
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>geom</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='hex'>
+      hex
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>hex</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='json'>
+      json
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>json</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='number'>
+      number
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>number</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='string'>
+      string
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>string</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='test'>
+      test
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>test</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='trigo'>
+      trigo
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>trigo</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='type'>
+      type
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>type</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='xml'>
+      xml
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>xml</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='url'>
+      url
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>url</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                                    
+                                        <section>
+
+  
+  <div>
+    
+    <h3 id='utf8'>
+      utf8
+    </h3>
+    
+    
+  </div>
+  
+
+  <div class="markdown-body">
+    
+  </div>
+
+  <div>utf8</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+                                    
+                                
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script>
+
+
+            (function() {
+                'use strict';
+
+                $(document).ready(function(){
+                    $('.member-list__link--primary').click(function(e){
+
+                        $('.member-list--expanded').removeClass('member-list--expanded');
+                        $(this).siblings('.member-list').addClass('member-list--expanded');
+
+                        $('.member-list__link--primary.member-list__link--active').removeClass('member-list__link--active');
+                        $(this).addClass('member-list__link--active');
+                    });
+                });
+
+                // var sectionsEl = $('section');
+                // var sectionsOffsetsById = {};
+                // var i = 0;
+
+                // Array.prototype.forEach.call(sectionsEl.get(), function(e) {
+                //     sectionsOffsetsById[e.id] = e.offsetTop;
+                // });
+                // setInterval(function() {
+                //     var scrollPosition = $('.layer-docs-content').scrollTop();
+                //     for (id in sectionsOffsetsById) {
+                //         if (sectionsOffsetsById[id] <= scrollPosition) {
+                //             document.querySelector('.active').setAttribute('class', ' ');
+                //             document.querySelector('a[href*=' + id + ']').setAttribute('class', 'active');
+                //         }
+                //     }
+                // }, 200);
+            })();
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <title><%- config['project-name'] %> <%- config['project-version'] %> | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <link href='assets/split.css' type='text/css' rel='stylesheet' />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i" />
+</head>
+<body class='documentation m0'>
+  <div class='page flex'>
+
+    <header id='split-left' class='page__header fs0'>
+      <div class='inner'>
+        <div class="page__headline">
+          <h1 class='mb0 no-anchor page__title'><%- config['project-name'] %></h1>
+          <p class='mb1 page__subtitle'><code><%- config['project-version'] %></code></p>
+        </div>
+
+        <a id="menu-toggle" href="#prime-nav" title="Show/hide menu" class="menu-toggle"><span>Browse</span></a>
+
+        <nav class="page__prime-nav" id="prime-nav">
+          <input placeholder='Filter' id='filter-input' class='col12 block input' type='text' />
+
+          <h2 class='mb1 page__subtitle'>Contents</h2>
+          <div id='toc'>
+            <ul class='ppn__menu'>
+              <% docs.forEach(function(doc) { %>
+                <% var hasMembers = doc.members.static.length || doc.members.instance.length %>
+                <li><a
+                  href='#<%=slug(doc.namespace)%>'
+                  class="<% if (doc.kind === 'note') { %>h5 bold black caps<% } %><% if (hasMembers) { %> toggle-sibling<% } %> ppn__menu-item">
+                  <%- doc.name %>
+                  <% if (hasMembers) { %><span class='icon'>▸</span><% } %>
+                </a>
+                <% if (hasMembers) { %>
+                <div class='toggle-target display-none'>
+                  <% if (doc.members.static && doc.members.static.length) { %>
+                  <ul class='list-reset py1-ul pl1 ppn__menu-item'>
+                    <!-- <li class='h5'><span>Static members</span></li> -->
+                    <% doc.members.static.forEach(function(member) { %>
+                      <li><a
+                        href='#<%=slug(member.namespace)%>'
+                        class='regular pre-open ppn__menu-item'>
+                        <%- member.name %>
+                      </a></li>
+                    <% }) %>
+                    </ul>
+                  <% } %>
+                  <% if (doc.members.instance && doc.members.instance.length) { %>
+                    <ul class='list-reset py1-ul pl1 ppn__menu-item'>
+                      <li class='h5 ppn__section-title'><span>Instance members</span></li>
+                      <% doc.members.instance.forEach(function(member) { %>
+                      <li><a
+                        href='#<%=slug(member.namespace)%>'
+                        class='regular pre-open ppn__menu-item'>
+                        #<%- member.name %>
+                      </a></li>
+                      <% }) %>
+                    </ul>
+                  <% } %>
+                  <% if (doc.members.inner && doc.members.inner.length) { %>
+                    <ul class='list-reset py1-ul pl1 ppn__menu-item'>
+                      <li class='h5'><span>Inner members</span></li>
+                      <% doc.members.inner.forEach(function(member) { %>
+                      <li><a
+                        href='#<%=slug(member.namespace)%>'
+                        class='regular pre-open ppn__menu-item'>
+                        #<%- member.name %>
+                      </a></li>
+                      <% }) %>
+                    </ul>
+                  <% } %>
+                  <% if (doc.members.events && doc.members.events.length) { %>
+                    <ul class='list-reset py1-ul pl1 ppn__menu-item'>
+                      <li class='h5'>Events</li>
+                      <% doc.members.events.forEach(function(member) { %>
+                        <li><a
+                          href='#<%=slug(member.namespace)%>'
+                          class='regular pre-open ppn__menu-item'>
+                          ⓔ <%- member.name %>
+                        </a></li>
+                      <% }) %>
+                    </ul>
+                  <% } %>
+                </div>
+                <% } %>
+                </li>
+              <% }) %>
+            </ul>
+
+            <div class='mt1 h6 quiet'>
+              <a class='page__subtitle' href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id='split-right' class='page__body relative overflow-auto'>
+      <% docs.forEach(function(s) { %>
+        <% if (s.kind !== 'note') { %>
+          <%= renderSection({
+            section: s,
+            renderSection: renderSection,
+            renderSectionList: renderSectionList
+          }) %>
+        <% } else { %>
+          <div class='keyline-top-not py2'><%=renderNote({ note: s })%></div>
+        <% } %>
+      <% }) %>
+    </main>
+
+    <!--
+    <footer class="page__footer" role="contentinfo">
+      <div class="inner">
+        <p>
+          <a href="#" title=""><span>@fabiocaccamo/utils.js</span></a>
+          <small>2018</small>
+        </p>
+      </div>
+    </footer>
+    -->
+
+  </div>
+
+  <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
+  <script src='assets/site.js'></script>
+  <script src='assets/nav.js'></script>
+
+</body>
+</html>

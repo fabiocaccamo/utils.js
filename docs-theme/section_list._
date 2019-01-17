@@ -1,0 +1,19 @@
+<!-- start section_list._ -->
+<div class="">
+    <% members.forEach(function(member) { %>
+    <div class="" id="<%- slug(member.namespace) %>">
+        <div class="">
+            <div class="">
+                <a class="">▸</a>
+                <span class=""><%= shortSignature(member) %></span>
+            </div>
+        </div>
+        <!--
+        <div class="">
+            <%= renderSection({ section: member, renderSection: renderSection, nested: true }) %>
+        </div>
+        -->
+    </div>
+    <% }) %>
+</div>
+<!-- end section_list._ -->
