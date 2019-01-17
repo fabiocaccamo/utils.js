@@ -8,8 +8,11 @@ var URLUtil = {
 
     getParameters: function(url)
     {
+        var paramsURL = (url || URLUtil.getURL());
+        var paramsMarkIndex = paramsURL.indexOf('?');
+        var paramsQueryString = (paramsMarkIndex > -1 ? paramsURL.substr(paramsMarkIndex + 1) : '');
         var paramsRE = /(([\w]+){1}\=([^\&\n\r\t]*){1})/g;
-        var paramsList = ((url || URLUtil.getURL()).match(paramsRE) || []);
+        var paramsList = (paramsQueryString.match(paramsRE) || []);
         var paramsDict = {};
         var paramKV;
         for (var i = 0, j = paramsList.length; i < j; i++) {
