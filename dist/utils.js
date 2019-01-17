@@ -20,6 +20,14 @@
 
     var ArrayUtil = {
 
+    /**
+     * Clean a list by removing values evaluated as 'none'.
+     *
+     * @memberof array
+     * @param {Array} list - The list to clean.
+     * @param {Boolean} [hard=false] - If true, also objects, arrays and strings evaluated as 'empty' will be removed.
+     * @return {Array} - A new cleaned list.
+     */
     clean: function(list, hard)
     {
         var items = list.slice();
@@ -49,6 +57,13 @@
         return items;
     },
 
+    /**
+     * Creates a new list with same properties than original (deep clone).
+     *
+     * @memberof array
+     * @param {Array} list - The list
+     * @return {Array} - A new cloned list.
+     */
     clone: function(list)
     {
         var cln = list.slice();
@@ -72,11 +87,26 @@
         return cln;
     },
 
+    /**
+     * Compares two lists and check if they are (deeply) equal.
+     *
+     * @memberof array
+     * @param {Array} listA - The list a
+     * @param {Array} listB - The list b
+     * @return {Boolean} - true if the two lists are equal, false otherwise.
+     */
     equals: function(listA, listB)
     {
         return ObjectUtil.equals(listA, listB);
     },
 
+    /**
+     * Flat a N-d list to be a 1-d list.
+     *
+     * @memberof array
+     * @param {Array} list - The list
+     * @return {Array} - A new flatten list.
+     */
     flatten: function(list)
     {
         var items = [];
@@ -90,6 +120,17 @@
         return items;
     },
 
+    /**
+     * Creates a dictionary by indexing list value for the given keys.
+     * List values must be key-value objects.
+     * If flat is true, each dictionary key will be associated with one object and not a list of objects.
+     *
+     * @memberof array
+     * @param {Object[]} list - The list
+     * @param {String|String[]} keys - A key or an array of keys
+     * @param {Boolean} [flat=false] - If true, each dictionary key will be associated with one object and not a list of objects.
+     * @return {Object} - An indexed dictionary.
+     */
     index: function(list, keys, flat)
     {
         var dict = {}, item, key, val;
@@ -122,6 +163,14 @@
         return dict;
     },
 
+    /**
+     * Creates a 2d list grouping list items every n-items.
+     *
+     * @memberof array
+     * @param {Array} list - The list
+     * @param {Number} itemsPerPage - The items per page
+     * @return {Array} - A 2d list
+     */
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;
@@ -258,6 +307,13 @@
         '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
     },
 
+    /**
+     * Decode a string encoded in base64.
+     *
+     * @memberof base64
+     * @param {String} str - Any string previously encoded in base64.
+     * @return {String} - The string obtained from base64 decoding.
+     */
     decode: function(str)
     {
         var input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
@@ -299,6 +355,13 @@
         return output;
     },
 
+    /**
+     * Encode a string in base64.
+     *
+     * @memberof base64
+     * @param {String} str - Any string.
+     * @return {String} - The string obtained from base64 encoding.
+     */
     encode: function(str)
     {
         var input = UTF8Util.encode(str);
@@ -1628,6 +1691,19 @@
 };
     var InterpolationUtil = {
 
+    /**
+     * Calculate bilinear interpolation for the given values.
+     *
+     * @memberof math.interpolation
+     * @inner
+     * @param {Number} a xxx
+     * @param {Number} b xxx
+     * @param {Number} c xxx
+     * @param {Number} d xxx
+     * @param {Number} u xxx
+     * @param {Number} v xxx
+     * @return {Number} result
+     */
     bilinear: function(a, b, c, d, u, v)
     {
         var f = InterpolationUtil.linear;
@@ -1724,6 +1800,10 @@
         return MathUtil.gcd((a - b), b);
     },
 
+    /**
+     * Interpolation utility object
+     * @memberof math
+     */
     interpolation: InterpolationUtil,
 
     lcm: function(a, b)
@@ -1931,6 +2011,13 @@
         return obj;
     },
 
+    /**
+     * Creates a new instance of the object with same properties than original (deep clone).
+     *
+     * @memberof object
+     * @param {Object} obj - The object
+     * @return {Object} - Copy of this object
+     */
     clone: function(obj)
     {
         var cln = {};
@@ -2024,6 +2111,18 @@
 
     keypath: {
 
+        /**
+         * Get an object value at the given keypath
+         * A keypath is a String containing the keys separated by "."
+         * If keypath is undefined default value will be returned
+         *
+         * @memberof object
+         * @namespace keypath.get
+         * @param {Object} obj The object
+         * @param {String} path The dot-based keypath, eg. 'a.b.c'
+         * @param {*} defaultValue The default value
+         * @return {*} The value stored at the given keypath, if keypath is undefined default value will be returned
+         */
         get: function(obj, path, defaultValue)
         {
             var keys = path.split('.');
@@ -2040,6 +2139,15 @@
             return ((cursor !== undefined) ? cursor : defaultValue);
         },
 
+        /**
+         * Set an object value at the given keypath
+         *
+         * @memberof object
+         * @namespace keypath.set
+         * @param {Object} obj The object
+         * @param {String} path The dot-based keypath, eg. 'a.b.c'
+         * @param {*} value The value to store at the given keypath
+         */
         set: function(obj, path, value)
         {
             var keys = path.split('.');
@@ -2121,52 +2229,123 @@
 };
     var RandomUtil = {
 
+    /**
+     * Return a random argument
+     *
+     * @memberof random
+     * @return {*} - Random argument
+     */
     argument: function()
     {
         var args = FunctionUtil.args(arguments);
         return RandomUtil.element(args);
     },
 
+    /**
+     * Return a random bit (0 or 1)
+     *
+     * @memberof random
+     * @param {Number} [chance=0.5] - The chance
+     * @return {Number} - The chance to generate a 1, 1.0 means 100%, 0.0 means 0%.
+     */
     bit: function(chance)
     {
         return (RandomUtil.boolean(chance) ? 1 : 0);
     },
 
+    /**
+     * Return a random boolean (true or false)
+     *
+     * @memberof random
+     * @param {Number} [chance=0.5] - The chance
+     * @return {Boolean} - The chance to generate a true value, 1.0 means 100%, 0.0 means 0%.
+     */
     boolean: function(chance)
     {
         return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
     },
 
+    /**
+     * Return a random color (uint)
+     *
+     * @memberof random
+     * @return {Number} - Random color
+     */
     color: function()
     {
         return RandomUtil.integer(0, 0xFFFFFF);
     },
 
+    /**
+     * Return a random element from the given array
+     *
+     * @memberof random
+     * @param {Array} array - The array
+     * @return {*} - Random array element
+     */
     element: function(array)
     {
         return array[RandomUtil.index(array)];
     },
 
+    /**
+     * Return a random float where n >= min && n <= max
+     *
+     * @memberof random
+     * @param {Number} min - The minimum
+     * @param {Number} max - The maximum
+     * @return {Number} - Random float
+     */
     float: function(min, max)
     {
         return min + (Math.random() * (max - min));
     },
 
+    /**
+     * Return a random valid index for the given array
+     *
+     * @memberof random
+     * @param {Array} array - The array
+     * @return {Number} - Random array index
+     */
     index: function(array)
     {
         return RandomUtil.integer(0, array.length - 1);
     },
 
+    /**
+     * Return a random integer where n >= min && n <= max
+     *
+     * @memberof random
+     * @param {Number} min - The minimum
+     * @param {Number} max - The maximum
+     * @return {Number} - Random integer
+     */
     integer: function(min, max)
     {
         return Math.floor(Math.round(RandomUtil.float(min - 0.5, max + 0.5)));
     },
 
+    /**
+     * Return a random sign (1 or -1), useful to randomize positive/negative multiplications.
+     *
+     * @memberof random
+     * @param {Number} [chance=0.5] - The chance to generate a positive sign, 1.0 means 100%, 0.0 means 0%.
+     * @return {Number} - Random sign (1 or -1)
+     */
     sign: function(chance)
     {
         return (RandomUtil.boolean(chance) ? 1 : -1);
     },
 
+    /**
+     * Return a random string of the desired length with the possibility to use a restricted charset.
+     *
+     * @memberof random
+     * @param {Number} length - The length of the returned string
+     * @param {String} charset - The charset used to generate the random string, optional.
+     * @return {String} - Random string
+     */
     string: function(length, charset)
     {
         charset = (charset || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;');
@@ -3116,28 +3295,130 @@
     }
 };
 
+    /**
+     * @global
+     * @type {Object}
+     */
     var utils = {
+
+        /**
+         * @namespace array
+         * @type {Object}
+         */
         array: ArrayUtil,
+
+        /**
+         * @namespace base64
+         * @type {Object}
+         */
         base64: Base64Util,
+
+        /**
+         * @namespace color
+         * @type {Object}
+         */
         color: ColorUtil,
+
+        /**
+         * @namespace date
+         * @type {Object}
+         */
         date: DateUtil,
+
+        /**
+         * @namespace ease
+         * @type {Object}
+         */
         ease: EaseUtil,
+
+        /**
+         * @namespace func
+         * @type {Object}
+         */
         func: FunctionUtil,
+
+        /**
+         * @namespace geom
+         * @type {Object}
+         */
         geom: GeomUtil,
-            // point: PointUtil,
+
+        /**
+         * @namespace hex
+         * @type {Object}
+         */
         hex: HexUtil,
+
+        /**
+         * @namespace json
+         * @type {Object}
+         */
         json: JSONUtil,
+
+        /**
+         * @namespace math
+         * @type {Object}
+         */
         math: MathUtil,
-            // interpolation: InterpolationUtil,
+
+        /**
+         * @namespace number
+         * @type {Object}
+         */
         number: NumberUtil,
+
+        /**
+         * @namespace object
+         * @type {Object}
+         */
         object: ObjectUtil,
+
+        /**
+         * @namespace random
+         * @type {Object}
+         */
         random: RandomUtil,
+
+        /**
+         * @namespace string
+         * @type {Object}
+         */
         string: StringUtil,
+
+        /**
+         * @namespace test
+         * @type {Object}
+         */
         test: TestUtil,
+
+        /**
+         * @namespace trigo
+         * @type {Object}
+         */
         trigo: TrigoUtil,
+
+        /**
+         * @namespace type
+         * @type {Object}
+         */
         type: TypeUtil,
+
+        /**
+         * @namespace xml
+         * @type {Object}
+         */
         xml: XMLUtil,
+
+        /**
+         * @namespace url
+         * @type {Object}
+         */
         url: URLUtil,
+
+        /**
+         * @namespace utf8
+         * @type {Object}
+         */
         utf8: UTF8Util
     };
 

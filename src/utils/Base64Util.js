@@ -21,7 +21,7 @@ var Base64Util = {
      *
      * @memberof base64
      * @param {String} str - Any string previously encoded in base64.
-     * @return {String} The string obtained from base64 decoding.
+     * @return {String} - The string obtained from base64 decoding.
      */
     decode: function(str)
     {
@@ -69,7 +69,7 @@ var Base64Util = {
      *
      * @memberof base64
      * @param {String} str - Any string.
-     * @return {String} The string obtained from base64 encoding.
+     * @return {String} - The string obtained from base64 encoding.
      */
     encode: function(str)
     {

@@ -6,7 +6,7 @@ var ArrayUtil = {
      * @memberof array
      * @param {Array} list - The list to clean.
      * @param {Boolean} [hard=false] - If true, also objects, arrays and strings evaluated as 'empty' will be removed.
-     * @return {Array} - A new and clean list.
+     * @return {Array} - A new cleaned list.
      */
     clean: function(list, hard)
     {
@@ -37,6 +37,13 @@ var ArrayUtil = {
         return items;
     },
 
+    /**
+     * Creates a new list with same properties than original (deep clone).
+     *
+     * @memberof array
+     * @param {Array} list - The list
+     * @return {Array} - A new cloned list.
+     */
     clone: function(list)
     {
         var cln = list.slice();
@@ -60,11 +67,26 @@ var ArrayUtil = {
         return cln;
     },
 
+    /**
+     * Compares two lists and check if they are (deeply) equal.
+     *
+     * @memberof array
+     * @param {Array} listA - The list a
+     * @param {Array} listB - The list b
+     * @return {Boolean} - true if the two lists are equal, false otherwise.
+     */
     equals: function(listA, listB)
     {
         return ObjectUtil.equals(listA, listB);
     },
 
+    /**
+     * Flat a N-d list to be a 1-d list.
+     *
+     * @memberof array
+     * @param {Array} list - The list
+     * @return {Array} - A new flatten list.
+     */
     flatten: function(list)
     {
         var items = [];
@@ -78,6 +100,17 @@ var ArrayUtil = {
         return items;
     },
 
+    /**
+     * Creates a dictionary by indexing list value for the given keys.
+     * List values must be key-value objects.
+     * If flat is true, each dictionary key will be associated with one object and not a list of objects.
+     *
+     * @memberof array
+     * @param {Object[]} list - The list
+     * @param {String|String[]} keys - A key or an array of keys
+     * @param {Boolean} [flat=false] - If true, each dictionary key will be associated with one object and not a list of objects.
+     * @return {Object} - An indexed dictionary.
+     */
     index: function(list, keys, flat)
     {
         var dict = {}, item, key, val;
@@ -110,6 +143,14 @@ var ArrayUtil = {
         return dict;
     },
 
+    /**
+     * Creates a 2d list grouping list items every n-items.
+     *
+     * @memberof array
+     * @param {Array} list - The list
+     * @param {Number} itemsPerPage - The items per page
+     * @return {Array} - A 2d list
+     */
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;

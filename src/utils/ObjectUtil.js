@@ -47,6 +47,13 @@ var ObjectUtil = {
         return obj;
     },
 
+    /**
+     * Creates a new instance of the object with same properties than original (deep clone).
+     *
+     * @memberof object
+     * @param {Object} obj - The object
+     * @return {Object} - Copy of this object
+     */
     clone: function(obj)
     {
         var cln = {};
@@ -140,6 +147,18 @@ var ObjectUtil = {
 
     keypath: {
 
+        /**
+         * Get an object value at the given keypath
+         * A keypath is a String containing the keys separated by "."
+         * If keypath is undefined default value will be returned
+         *
+         * @memberof object
+         * @namespace keypath.get
+         * @param {Object} obj The object
+         * @param {String} path The dot-based keypath, eg. 'a.b.c'
+         * @param {*} defaultValue The default value
+         * @return {*} The value stored at the given keypath, if keypath is undefined default value will be returned
+         */
         get: function(obj, path, defaultValue)
         {
             var keys = path.split('.');
@@ -156,6 +175,15 @@ var ObjectUtil = {
             return ((cursor !== undefined) ? cursor : defaultValue);
         },
 
+        /**
+         * Set an object value at the given keypath
+         *
+         * @memberof object
+         * @namespace keypath.set
+         * @param {Object} obj The object
+         * @param {String} path The dot-based keypath, eg. 'a.b.c'
+         * @param {*} value The value to store at the given keypath
+         */
         set: function(obj, path, value)
         {
             var keys = path.split('.');
