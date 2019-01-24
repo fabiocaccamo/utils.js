@@ -2,9 +2,17 @@ var JSONUtil = {
 
     decode: function(str)
     {
-        // unquote str to avoid syntax error
-        str = str.replace(/&quot;/g, '\"');
-        return JSON.parse(str);
+        // return JSON.parse(str);
+        var output = '';
+        try {
+            output = JSON.parse(str);
+        }
+        catch(error) {
+            // unquote str to avoid syntax error
+            str = str.replace(/&quot;/g, '\"');
+            output = JSON.parse(str);
+        }
+        return output;
     },
 
     encode: function(obj)
