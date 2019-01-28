@@ -72,6 +72,16 @@
         return cln;
     },
 
+    contains: function(list, value)
+    {
+        for (var i = 0, j = list.length; i < j; i++) {
+            if (ObjectUtil.equals(list[i], value)) {
+                return true;
+            }
+        }
+        return false;
+    },
+
     equals: function(listA, listB)
     {
         return ObjectUtil.equals(listA, listB);
@@ -1665,7 +1675,6 @@
 
     decode: function(str)
     {
-        // return JSON.parse(str);
         var output = '';
         try {
             output = JSON.parse(str);

@@ -154,6 +154,59 @@ describe('array', function() {
             test.assertEqual(r, o);
         });
     });
+    describe('contains', function() {
+        var f = arr.contains;
+        var a, b;
+        it('test none', function() {
+            test.assertTrue(f([null, undefined, NaN], null));
+            test.assertTrue(f([null, undefined, NaN], undefined));
+            test.assertTrue(f([null, undefined, NaN], NaN));
+            test.assertFalse(f([null, undefined, NaN], 0));
+        });
+        it('test booleans', function() {
+            test.assertTrue(f([true, true, true], true));
+            test.assertFalse(f([true, true, true], false));
+            test.assertTrue(f([false, false, false], false));
+            test.assertFalse(f([false, false, false], true));
+        });
+        it('test date', function() {
+            test.assertTrue(f([new Date('1999/12/31')], new Date('1999/12/31')));
+            test.assertFalse(f([new Date('1999/12/31')], new Date('1999/12/30')));
+        });
+        it('test error', function() {
+            a = new Error('message 1');
+            b = new Error('message 1');
+            c = new Error('message 2');
+            test.assertTrue(f([a], b));
+            test.assertFalse(f([a], c));
+        });
+        it('test function', function() {
+            test.assertTrue(f([f, f, f], f));
+            test.assertFalse(f([f, f, f], function(){}));
+        });
+        it('test numbers', function() {
+            test.assertTrue(f([0, 1, 2, 3, 4, 5, NaN], 0));
+            test.assertFalse(f([0, 1, 2, 3, 4, 5, NaN], 6));
+        });
+        it('test regexp', function() {
+            test.assertTrue(f([/^[a-z]$/], /^[a-z]$/));
+            test.assertFalse(f([/^[a-z]$/], /^[a-zA-Z]$/));
+        });
+        it('test strings', function() {
+            test.assertTrue(f(['a', 'b', 'c'], 'a'));
+            test.assertFalse(f(['a', 'b', 'c'], 'd'));
+            test.assertFalse(f(['a', 'b', 'c'], 'A'));
+        });
+        it('test arrays', function() {
+            test.assertTrue(f([[1, 2], [3, 4], [5, 6]], [5, 6]));
+            test.assertFalse(f([[1, 2], [3, 4], [5, 6]], [5, 7]));
+        });
+        it('test objects', function() {
+            test.assertTrue(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, d:4 }));
+            test.assertFalse(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, d:5 }));
+            test.assertFalse(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, e:4 }));
+        });
+    });
     describe('equals', function() {
         var f = arr.equals;
         var a, b;
