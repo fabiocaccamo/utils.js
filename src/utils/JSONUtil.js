@@ -2,7 +2,6 @@ var JSONUtil = {
 
     decode: function(str)
     {
-        // return JSON.parse(str);
         var output = '';
         try {
             output = JSON.parse(str);
