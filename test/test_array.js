@@ -206,6 +206,55 @@ describe('array', function() {
             test.assertFalse(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, d:5 }));
             test.assertFalse(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, e:4 }));
         });
+        it('test none multivalue', function() {
+            test.assertTrue(f([null, undefined, NaN], null, undefined));
+            test.assertTrue(f([null, undefined, NaN], undefined, NaN));
+            test.assertTrue(f([null, undefined, NaN], NaN, null));
+            test.assertFalse(f([null, undefined, NaN], NaN, 0));
+        });
+        it('test booleans multivalue', function() {
+            test.assertTrue(f([true, true, true], true, true));
+            test.assertFalse(f([true, true, true], false, true));
+            test.assertTrue(f([false, false, false], false, false));
+            test.assertFalse(f([false, false, false], true, true));
+        });
+        it('test date multivalue', function() {
+            test.assertTrue(f([new Date('1999/12/31'), new Date('2000/12/31'), new Date('2001/12/31')], new Date('1999/12/31'), new Date('2001/12/31')));
+            test.assertFalse(f([new Date('1999/12/31'), new Date('2000/12/31'), new Date('2001/12/31')], new Date('1999/12/31'), new Date('2002/12/31')));
+        });
+        it('test error multivalue', function() {
+            a = new Error('message 1');
+            b = new Error('message 1');
+            c = new Error('message 2');
+            test.assertTrue(f([a, b], a, b));
+            test.assertFalse(f([a, b], a, c));
+        });
+        it('test function multivalue', function() {
+            test.assertTrue(f([f, f, f], f, f));
+            test.assertFalse(f([f, f, f], f, function(){}));
+        });
+        it('test numbers multivalue', function() {
+            test.assertTrue(f([0, 1, 2, 3, 4, 5, NaN], 0, 3, NaN));
+            test.assertFalse(f([0, 1, 2, 3, 4, 5, NaN], 0, 3, 6));
+        });
+        it('test regexp multivalue', function() {
+            test.assertTrue(f([/^[a-z]$/], /^[a-z]$/, /^[a-z]$/));
+            test.assertFalse(f([/^[a-z]$/], /^[a-z]$/, /^[a-zA-Z]$/));
+        });
+        it('test strings multivalue', function() {
+            test.assertTrue(f(['a', 'b', 'c'], 'a', 'c'));
+            test.assertFalse(f(['a', 'b', 'c'], 'a', 'd'));
+            test.assertFalse(f(['a', 'b', 'c'], 'A', 'b'));
+        });
+        it('test arrays multivalue', function() {
+            test.assertTrue(f([[1, 2], [3, 4], [5, 6]], [3, 4], [5, 6]));
+            test.assertFalse(f([[1, 2], [3, 4], [5, 6]], [3, 4], [5, 7]));
+        });
+        it('test objects multivalue', function() {
+            test.assertTrue(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { a:1, b:2 }, { c:3, d:4 }));
+            test.assertFalse(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { a:1, b:2 }, { c:3, d:5 }));
+            test.assertFalse(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { a:1, b:2 }, { c:3, e:4 }));
+        });
     });
     describe('equals', function() {
         var f = arr.equals;

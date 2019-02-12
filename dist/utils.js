@@ -72,14 +72,25 @@
         return cln;
     },
 
-    contains: function(list, value)
+    contains: function(list, value1, value2, value3)
     {
-        for (var i = 0, j = list.length; i < j; i++) {
-            if (ObjectUtil.equals(list[i], value)) {
-                return true;
+        var values = FunctionUtil.args(arguments, 1);
+        var value, valueFound;
+
+        for (var i = 0, j = values.length; i < j; i++) {
+            value = values[i];
+            valueFound = false;
+            for (var k = 0, m = list.length; k < m; k++) {
+                if (ObjectUtil.equals(list[k], value)) {
+                    valueFound = true;
+                }
+            }
+            if (!valueFound) {
+                return false;
             }
         }
-        return false;
+
+        return true;
     },
 
     equals: function(listA, listB)
