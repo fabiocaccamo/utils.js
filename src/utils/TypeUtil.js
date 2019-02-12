@@ -73,12 +73,12 @@ var TypeUtil = {
 
     isNaN: function(val)
     {
-        return Object.is(val, NaN);
+        return ObjectUtil.is(val, NaN);
     },
 
     isNone: function(val)
     {
-        return (Object.is(val, undefined) || Object.is(val, null) || Object.is(val, NaN));
+        return (ObjectUtil.is(val, undefined) || ObjectUtil.is(val, null) || ObjectUtil.is(val, NaN));
     },
 
     isNumber: function(val)

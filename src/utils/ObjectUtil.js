@@ -93,7 +93,7 @@ var ObjectUtil = {
 
     equals: function(obj1, obj2)
     {
-        if (obj1 === obj2 || Object.is(obj1, obj2)) {
+        if (obj1 === obj2 || ObjectUtil.is(obj1, obj2)) {
             return true;
         }
 
@@ -126,7 +126,7 @@ var ObjectUtil = {
             val1 = obj1[key];
             val2 = obj2[key];
 
-            if (Object.is(obj1, val1) || Object.is(obj2, val2) || Object.is(val1, val2) || val1 === val2) {
+            if (ObjectUtil.is(obj1, val1) || ObjectUtil.is(obj2, val2) || ObjectUtil.is(val1, val2) || val1 === val2) {
                 continue;
             }
 
@@ -136,6 +136,24 @@ var ObjectUtil = {
         }
 
         return true;
+    },
+
+    is: function(obj1, obj2)
+    {
+        // https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+        if (!Object.is) {
+            Object.is = function(x, y) {
+                // Algoritmo SameValue
+                if (x === y) { // Steps 1-5, 7-10
+                    // Steps 6.b-6.e: +0 != -0
+                    return x !== 0 || 1 / x === 1 / y;
+                } else {
+                    // Step 6.a: NaN == NaN
+                    return x !== x && y !== y;
+                }
+            };
+        }
+        return Object.is(obj1, obj2);
     },
 
     keypath: {
