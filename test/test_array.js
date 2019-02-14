@@ -579,6 +579,68 @@ describe('array', function() {
             test.assertEqual(f(a, r), 45);
         });
     });
+    describe('remove', function() {
+        var f = arr.remove;
+        var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        it('test single value first', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 0), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        });
+        it('test single value last', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 9), [0, 1, 2, 3, 4, 5, 6, 7, 8]);
+        });
+        it('test single value middle', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 5), [0, 1, 2, 3, 4, 6, 7, 8, 9]);
+        });
+        it('test multiple values', function() {
+            var b = [0, 1, 0, 1, 0, 1, 0, 1, 0];
+            test.assertEqual(f(b, 0), [1, 1, 1, 1]);
+        });
+        it('test all values', function() {
+            var b = [0, 0, 0, 0 ,0];
+            test.assertEqual(f(b, 0), []);
+        });
+        it('test none values', function() {
+            var b = [null, undefined, NaN, NaN, null, undefined, undefined];
+            test.assertEqual(f(b, undefined), [null, NaN, NaN, null]);
+        });
+        it('test arrays', function() {
+            test.assertEqual(f([[1, 2], [3, 4], [5, 6]], [5, 6]), [[1, 2], [3, 4]]);
+            test.assertEqual(f([[1, 2], [3, 4], [5, 6]], [5, 7]), [[1, 2], [3, 4], [5, 6]]);
+        });
+        it('test objects', function() {
+            test.assertEqual(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, d:4 }), [{ a:1, b:2 }, { e:5, f:6 }]);
+            test.assertEqual(f([{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }], { c:3, d:5 }), [{ a:1, b:2 }, { c:3, d:4 }, { e:5, f:6 }]);
+        });
+    });
+    describe('replace', function() {
+        var f = arr.replace;
+        var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        it('test single value first', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 0, 9), [9, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        });
+        it('test single value last', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 9, 0), [0, 1, 2, 3, 4, 5, 6, 7, 8, 0]);
+        });
+        it('test single value middle', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 5, 0), [0, 1, 2, 3, 4, 0, 6, 7, 8, 9]);
+        });
+        it('test multiple values', function() {
+            var b = [0, 1, 0, 1, 0, 1, 0, 1, 0];
+            test.assertEqual(f(b, 1, -1), [0, -1, 0, -1, 0, -1, 0, -1, 0]);
+        });
+        it('test all values', function() {
+            var b = [0, 0, 0, 0 ,0];
+            test.assertEqual(f(b, 0, 1), [1, 1, 1, 1, 1]);
+        });
+    });
     describe('rotate', function() {
         var f = arr.rotate;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];

@@ -165,6 +165,28 @@
         return value;
     },
 
+    replace: function(list, searchValue, replacementValue)
+    {
+        for (var i = 0, j = list.length; i < j; i++) {
+            if (ObjectUtil.equals(list[i], searchValue)) {
+                list[i] = replacementValue;
+            }
+        }
+        return list;
+    },
+
+    remove: function(list, value)
+    {
+        for (var i = 0, j = list.length; i < j; i++) {
+            if (ObjectUtil.equals(list[i], value)) {
+                list.splice(i, 1);
+                i--;
+                j--;
+            }
+        }
+        return list;
+    },
+
     rotate: function(list, count)
     {
         var cursor = MathUtil.cycle(count, list.length);
