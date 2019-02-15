@@ -143,6 +143,12 @@
         return dict;
     },
 
+    insert: function(list, index, item)
+    {
+        list.splice(index, 0, item);
+        return list;
+    },
+
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;

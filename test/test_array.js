@@ -485,6 +485,19 @@ describe('array', function() {
             test.assertEqual(f(a, ['id', 'even'], true), b);
         });
     });
+    describe('insert', function() {
+        var f = arr.insert;
+        var a = ['a', 'b', 'c', 'd', 'e'];
+        it('test first', function() {
+            test.assertEqual(f(a.slice(), 0, 'x'), ['x', 'a', 'b', 'c', 'd', 'e']);
+        });
+        it('test last', function() {
+            test.assertEqual(f(a.slice(), 5, 'x'), ['a', 'b', 'c', 'd', 'e', 'x']);
+        });
+        it('test middle', function() {
+            test.assertEqual(f(a.slice(), 3, 'x'), ['a', 'b', 'c', 'x', 'd', 'e']);
+        });
+    });
     describe('paginate', function() {
         var f = arr.paginate;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
