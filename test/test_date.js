@@ -36,5 +36,9 @@ describe('date', function() {
             var s = d.yyyymmdd(new Date('85/4/3'));
             test.assertTrue(/^[0-9]{8}$/.test(s));
         });
+        it('test format (custom separator)', function() {
+            var s = d.yyyymmdd(new Date('85/4/3'), '-');
+            test.assertEqual(s, '1985-04-03');
+        });
     });
 });
