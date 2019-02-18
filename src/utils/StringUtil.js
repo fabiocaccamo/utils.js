@@ -71,6 +71,11 @@ var StringUtil = {
         return str;
     },
 
+    padZeros: function(str, len)
+    {
+        return StringUtil.padLeft(String(str), len, '0');
+    },
+
     replace: function(str, occurrence, replacement, caseSensitive)
     {
         var pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');

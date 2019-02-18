@@ -84,6 +84,36 @@ describe('string', function() {
             test.assertEqual(f('000000', 5, 'x'), '000000');
         });
     });
+    describe('padZeros', function() {
+        var f = string.padZeros;
+        it('test padZeros str length < length', function() {
+            test.assertEqual(f('8', 2), '08');
+        });
+        it('test padZeros str length == length', function() {
+            test.assertEqual(f('12', 2), '12');
+        });
+        it('test padZeros str length > length', function() {
+            test.assertEqual(f('120', 2), '120');
+        });
+        it('test padZeros num length < length', function() {
+            test.assertEqual(f(8, 2), '08');
+        });
+        it('test padZeros num length == length', function() {
+            test.assertEqual(f(12, 2), '12');
+        });
+        it('test padZeros num length > length', function() {
+            test.assertEqual(f(120, 2), '120');
+        });
+        // it('test padZeros num negative length < length', function() {
+        //     test.assertEqual(f(-8, 5), '-0008');
+        // });
+        // it('test padZeros num negative length == length', function() {
+        //     test.assertEqual(f(-12, 5), '-0012');
+        // });
+        // it('test padZeros num negative length > length', function() {
+        //     test.assertEqual(f(-12345, 5), '-12345');
+        // });
+    });
     describe('replace', function() {
         var f = string.replace;
         var s = 'Hello world, hello world, hElLo wOrLd, hello|world?, hello mountains, hello world';
