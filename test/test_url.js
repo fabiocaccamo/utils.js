@@ -32,6 +32,34 @@ describe('url', function() {
             s = 'http://localhost:8000/index.html?data=' + data;
             test.assertEqual(f(s, 'data', null), data);
         });
+        it('test empty param', function() {
+            s = 'http://localhost:8000/?page=&code=&status=&ok=';
+            test.assertEqual(f(s, 'page'), '');
+            test.assertEqual(f(s, 'code'), '');
+            test.assertEqual(f(s, 'status'), '');
+            test.assertEqual(f(s, 'ok'), '');
+        });
+        it('test empty param with default value', function() {
+            s = 'http://localhost:8000/?page=&code=&status=&ok=';
+            test.assertEqual(f(s, 'page', 'ok'), 'ok');
+            test.assertEqual(f(s, 'code', 'ok'), 'ok');
+            test.assertEqual(f(s, 'status', 'ok'), 'ok');
+            test.assertEqual(f(s, 'ok', 'ok'), 'ok');
+        });
+        it('test empty param (only name)', function() {
+            s = 'http://localhost:8000/?page&code&status&ok';
+            test.assertEqual(f(s, 'page'), '');
+            test.assertEqual(f(s, 'code'), '');
+            test.assertEqual(f(s, 'status'), '');
+            test.assertEqual(f(s, 'ok'), '');
+        });
+        it('test empty param (only name) with default value', function() {
+            s = 'http://localhost:8000/?page&code&status&ok';
+            test.assertEqual(f(s, 'page', 'ok'), 'ok');
+            test.assertEqual(f(s, 'code', 'ok'), 'ok');
+            test.assertEqual(f(s, 'status', 'ok'), 'ok');
+            test.assertEqual(f(s, 'ok', 'ok'), 'ok');
+        });
     });
     describe('getParameters', function() {
         var f = url.getParameters;

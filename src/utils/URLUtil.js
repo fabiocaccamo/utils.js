@@ -3,23 +3,47 @@ var URLUtil = {
     getParameterByName: function(url, name, defaultValue)
     {
         var paramsDict = URLUtil.getParameters(url);
-        return ((name in paramsDict) ? paramsDict[name] : defaultValue);
+        return ((name in paramsDict) ? (paramsDict[name] || defaultValue || '') : defaultValue);
     },
 
     getParameters: function(url)
     {
-        var paramsURL = (url || URLUtil.getURL());
-        var paramsMarkIndex = paramsURL.indexOf('?');
-        var paramsQueryString = (paramsMarkIndex > -1 ? paramsURL.substr(paramsMarkIndex + 1) : '');
-        var paramsRE = /(([\w]+){1}\=([^\&\n\r\t]*){1})/g;
-        var paramsList = (paramsQueryString.match(paramsRE) || []);
+        return URLUtil.getParametersDict(url);
+    },
+
+    getParametersDict: function(url)
+    {
+        var paramsList = URLUtil.getParametersList(url);
+        var param;
         var paramsDict = {};
-        var paramKV;
         for (var i = 0, j = paramsList.length; i < j; i++) {
-            paramKV = paramsList[i].split(/\=(.+)/);
-            paramsDict[paramKV[0]] = decodeURIComponent(paramKV[1]);
+            param = paramsList[i];
+            paramsDict[param['key']] = param['value'];
         }
         return paramsDict;
+    },
+
+    getParametersList: function(url)
+    {
+        var queryString = URLUtil.getQueryString(url);
+        var paramsList = [];
+        var paramsRE = /(([\w]+){1}(\=([^\&\n\r\t]*){1})?)/g;
+        var paramMatch;
+        while (paramMatch = paramsRE.exec(queryString)) {
+            paramsList.push({
+                key: paramMatch[2],
+                value: (paramMatch[4] ? decodeURIComponent(paramMatch[4]) : undefined)
+            });
+        }
+        return paramsList;
+    },
+
+    getQueryString: function(url)
+    {
+        url = (url || URLUtil.getURL());
+        var queryStringPosition = url.indexOf('?');
+        var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
+        return queryString
     },
 
     getURL: function()

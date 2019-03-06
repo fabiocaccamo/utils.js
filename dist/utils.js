@@ -1000,7 +1000,34 @@
     {
         return new Date(date.getTime());
     },
-
+    /*
+    delta: function(info, now)
+    {
+        // info = { days:-1, hours:0, minutes:0, milliseconds:0 }
+    },
+    */
+    /*
+    hhmm: function(hours, minutes, separator)
+    {
+        var hh = StringUtil.padZeros(hours, 2);
+        var mm = StringUtil.padZeros(minutes, 2);
+        var sep = (separator || ':');
+        return (hh + sep + mm);
+    },
+    */
+    /*
+    normalize: function(ms)
+    {
+        var time = {
+            milliseconds:   (ms % 1000),
+            seconds:        (Math.floor(ms / 1000) % 60),
+            minutes:        (Math.floor(ms / 1000 / 60) % 60),
+            hours:          (Math.floor(ms / 1000 / 60 / 60) % 24),
+            days:           (Math.floor(ms / 1000 / 60 / 60 / 24))
+        };
+        return time;
+    },
+    */
     timestamp: function()
     {
         return new Date().getTime();
@@ -2522,6 +2549,8 @@
         if (!ObjectUtil.equals(val1, val2)) {
             var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
             var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
+            out1 = (TypeUtil.isString(val1) ? String('"' + out1 + '"') : out1);
+            out2 = (TypeUtil.isString(val2) ? String('"' + out2 + '"') : out2);
             throw new Error('values are not equal: ' + out1 + ' != ' + out2);
         }
     },
@@ -3041,23 +3070,47 @@
     getParameterByName: function(url, name, defaultValue)
     {
         var paramsDict = URLUtil.getParameters(url);
-        return ((name in paramsDict) ? paramsDict[name] : defaultValue);
+        return ((name in paramsDict) ? (paramsDict[name] || defaultValue || '') : defaultValue);
     },
 
     getParameters: function(url)
     {
-        var paramsURL = (url || URLUtil.getURL());
-        var paramsMarkIndex = paramsURL.indexOf('?');
-        var paramsQueryString = (paramsMarkIndex > -1 ? paramsURL.substr(paramsMarkIndex + 1) : '');
-        var paramsRE = /(([\w]+){1}\=([^\&\n\r\t]*){1})/g;
-        var paramsList = (paramsQueryString.match(paramsRE) || []);
+        return URLUtil.getParametersDict(url);
+    },
+
+    getParametersDict: function(url)
+    {
+        var paramsList = URLUtil.getParametersList(url);
+        var param;
         var paramsDict = {};
-        var paramKV;
         for (var i = 0, j = paramsList.length; i < j; i++) {
-            paramKV = paramsList[i].split(/\=(.+)/);
-            paramsDict[paramKV[0]] = decodeURIComponent(paramKV[1]);
+            param = paramsList[i];
+            paramsDict[param['key']] = param['value'];
         }
         return paramsDict;
+    },
+
+    getParametersList: function(url)
+    {
+        var queryString = URLUtil.getQueryString(url);
+        var paramsList = [];
+        var paramsRE = /(([\w]+){1}(\=([^\&\n\r\t]*){1})?)/g;
+        var paramMatch;
+        while (paramMatch = paramsRE.exec(queryString)) {
+            paramsList.push({
+                key: paramMatch[2],
+                value: (paramMatch[4] ? decodeURIComponent(paramMatch[4]) : undefined)
+            });
+        }
+        return paramsList;
+    },
+
+    getQueryString: function(url)
+    {
+        url = (url || URLUtil.getURL());
+        var queryStringPosition = url.indexOf('?');
+        var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
+        return queryString
     },
 
     getURL: function()
