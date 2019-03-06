@@ -36,6 +36,8 @@ var TestUtil = {
         if (!ObjectUtil.equals(val1, val2)) {
             var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
             var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
+            out1 = (TypeUtil.isString(val1) ? String('"' + out1 + '"') : out1);
+            out2 = (TypeUtil.isString(val2) ? String('"' + out2 + '"') : out2);
             throw new Error('values are not equal: ' + out1 + ' != ' + out2);
         }
     },
