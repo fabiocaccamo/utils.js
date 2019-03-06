@@ -32,7 +32,7 @@ var URLUtil = {
         while (paramMatch = paramsRE.exec(queryString)) {
             paramsList.push({
                 key: paramMatch[2],
-                value: (paramMatch[4] ? decodeURIComponent(paramMatch[4]) : undefined)
+                value: decodeURIComponent(paramMatch[4] || '')
             });
         }
         return paramsList;
@@ -54,6 +54,11 @@ var URLUtil = {
         } catch(e) {
         }
         return url;
+    },
+
+    hasParameter: function(url, name)
+    {
+        return (name in URLUtil.getParametersDict(url));
     },
 
     isFile: function(url)

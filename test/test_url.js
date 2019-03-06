@@ -97,6 +97,36 @@ describe('url', function() {
             test.assertEqual(f(), '');
         });
     });
+    describe('hasParameter', function() {
+        var f = url.hasParameter;
+        var s;
+        it('test invalid parameter', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789';
+            test.assertEqual(f(s, 'status'), false);
+        });
+        it('test invalid parameter (empty query string)', function() {
+            s = 'http://localhost:8000/';
+            test.assertEqual(f(s, 'status'), false);
+        });
+        it('test valid parameter', function() {
+            s = 'http://localhost:8000/?page=1&code=10&status=ok';
+            test.assertEqual(f(s, 'page'), true);
+            test.assertEqual(f(s, 'code'), true);
+            test.assertEqual(f(s, 'status'), true);
+        });
+        it('test valid empty param (only =)', function() {
+            s = 'http://localhost:8000/?page=&code=&status=&ok=';
+            test.assertEqual(f(s, 'page'), true);
+            test.assertEqual(f(s, 'code'), true);
+            test.assertEqual(f(s, 'status'), true);
+        });
+        it('test valid empty param (only name)', function() {
+            s = 'http://localhost:8000/?page&code&status&ok';
+            test.assertEqual(f(s, 'page'), true);
+            test.assertEqual(f(s, 'code'), true);
+            test.assertEqual(f(s, 'status'), true);
+        });
+    });
     describe('isFile', function() {
         var f = url.isFile;
         it('test valid urls', function() {
