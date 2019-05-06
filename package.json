@@ -37,7 +37,9 @@
     "build": "gulp build --production",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test": "nyc mocha",
-    "watch": "gulp"
+    "watch": "gulp",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "devDependencies": {
     "babel-preset-env": "^1.7.0",
@@ -67,5 +69,9 @@
       "env"
     ]
   },
-  "private": false
+  "private": false,
+  "snyk": true,
+  "dependencies": {
+    "snyk": "^1.161.1"
+  }
 }
