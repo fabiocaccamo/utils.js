@@ -93,7 +93,7 @@ describe('color.rgb', function() {
     describe('interpolateBilinear', function() {
         var f = rgb.interpolateBilinear;
         var r;
-        var a = { r:255, g:255, b:255 }
+        var a = { r:255, g:255, b:255 };
         var b = { r:255, g:0, b:0 };
         var c = { r:0, g:255, b:0 };
         var d = { r:0, g:0, b:255 };

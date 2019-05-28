@@ -11,25 +11,10 @@ import fs       from 'fs';
 import jsImport from 'gulp-js-import';
 import minify   from 'gulp-minify';
 
-// Load all Gulp plugins into one variable
-const $ = plugins();
-
-// Check for --production flag
-const PRODUCTION = !!(yargs.argv.production);
-
-// Load settings from settings.yml
-const { PORT, PATHS } = loadConfig();
-
 function loadConfig() {
     let ymlFile = fs.readFileSync('config.yml', 'utf8');
     return yaml.load(ymlFile);
 }
-
-gulp.task('build',
-    gulp.series(clean, gulp.parallel(javascript, copy)));
-
-gulp.task('default',
-    gulp.series('build', server, watch));
 
 function clean(done) {
     rimraf(PATHS.dist, done);
@@ -77,3 +62,18 @@ function watch() {
     gulp.watch('src/**/*.js').on('all',
         gulp.series(javascript, browser.reload));
 }
+
+// Load all Gulp plugins into one variable
+const $ = plugins();
+
+// Check for --production flag
+const PRODUCTION = !!(yargs.argv.production);
+
+// Load settings from settings.yml
+const { PORT, PATHS } = loadConfig();
+
+gulp.task('build',
+    gulp.series(clean, gulp.parallel(javascript, copy)));
+
+gulp.task('default',
+    gulp.series('build', server, watch));

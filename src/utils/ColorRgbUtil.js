@@ -164,7 +164,7 @@ var ColorRgbUtil = {
             g: round(lerp(colorFrom.g, colorTo.g, t)),
             b: round(lerp(colorFrom.b, colorTo.b, t)),
             a: round(lerp((isNaN(colorFrom.a) ? 1.0 : colorFrom.a), (isNaN(colorTo.a) ? 1.0 : colorTo.a), t))
-        }
+        };
     },
 
     interpolateMultilinear: function(colors, t)

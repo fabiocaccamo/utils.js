@@ -62,7 +62,7 @@ var PointUtil = {
         return {
             x: (p.x + (distance * TrigoUtil.cosDeg(angle))),
             y: (p.y + (distance * TrigoUtil.sinDeg(angle)))
-        }
+        };
     },
 
     rect: function(points)

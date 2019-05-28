@@ -125,7 +125,7 @@ describe('func', function() {
         });
         it('test call invalid func', function() {
             test.assertThrows(function(){ f(null, obj); });
-        })
+        });
         it('test call func by name with scope', function() {
             test.assertTrue(f('dosomething', obj));
         });

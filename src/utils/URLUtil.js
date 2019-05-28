@@ -43,7 +43,7 @@ var URLUtil = {
         url = (url || URLUtil.getURL());
         var queryStringPosition = url.indexOf('?');
         var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
-        return queryString
+        return queryString;
     },
 
     getURL: function()

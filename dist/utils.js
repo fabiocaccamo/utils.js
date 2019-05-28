@@ -648,7 +648,7 @@
                     r: fromHex(comps[1] + comps[1]),
                     g: fromHex(comps[2] + comps[2]),
                     b: fromHex(comps[3] + comps[3])
-                }
+                };
                 break;
 
             case 6:
@@ -659,7 +659,7 @@
                     r: fromHex(comps[1]),
                     g: fromHex(comps[2]),
                     b: fromHex(comps[3])
-                }
+                };
                 break;
 
             case 8:
@@ -670,7 +670,7 @@
                     r: fromHex(comps[2]),
                     g: fromHex(comps[3]),
                     b: fromHex(comps[4])
-                }
+                };
                 break;
         }
 
@@ -856,7 +856,7 @@
             g: round(lerp(colorFrom.g, colorTo.g, t)),
             b: round(lerp(colorFrom.b, colorTo.b, t)),
             a: round(lerp((isNaN(colorFrom.a) ? 1.0 : colorFrom.a), (isNaN(colorTo.a) ? 1.0 : colorTo.a), t))
-        }
+        };
     },
 
     interpolateMultilinear: function(colors, t)
@@ -1614,7 +1614,7 @@
         return {
             x: (p.x + (distance * TrigoUtil.cosDeg(angle))),
             y: (p.y + (distance * TrigoUtil.sinDeg(angle)))
-        }
+        };
     },
 
     rect: function(points)
@@ -2366,7 +2366,7 @@
 
     padRight: function(str, len, char)
     {
-        var i = str.length
+        var i = str.length;
         while (i < len) {
             str = (str + char);
             i++;
@@ -3134,7 +3134,7 @@
         url = (url || URLUtil.getURL());
         var queryStringPosition = url.indexOf('?');
         var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
-        return queryString
+        return queryString;
     },
 
     getURL: function()

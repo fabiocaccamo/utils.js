@@ -12,46 +12,46 @@ JavaScript utils for lazy devs.
 
 ## APIs
 
-#### Packages
-- `utils.array`
-- `utils.base64`
-- `utils.color`
-- `utils.color.cmyk`
-- `utils.color.hex`
-- `utils.color.rgb`
-- `utils.date`
-- `utils.ease`
-- `utils.func`
-- `utils.geom`
-- `utils.geom.point`
-- `utils.hex`
-- `utils.json`
-- `utils.math`
-- `utils.math.interpolation`
-- `utils.number`
-- `utils.object`
-- `utils.random`
-- `utils.string`
-- `utils.test`
-- `utils.trigo`
-- `utils.type`
-- `utils.url`
-- `utils.utf8`
-- `utils.xml`
+### Packages
+-  `utils.array`
+-  `utils.base64`
+-  `utils.color`
+-  `utils.color.cmyk`
+-  `utils.color.hex`
+-  `utils.color.rgb`
+-  `utils.date`
+-  `utils.ease`
+-  `utils.func`
+-  `utils.geom`
+-  `utils.geom.point`
+-  `utils.hex`
+-  `utils.json`
+-  `utils.math`
+-  `utils.math.interpolation`
+-  `utils.number`
+-  `utils.object`
+-  `utils.random`
+-  `utils.string`
+-  `utils.test`
+-  `utils.trigo`
+-  `utils.type`
+-  `utils.url`
+-  `utils.utf8`
+-  `utils.xml`
 
 ## Development
 
-#### Setup
-- `git clone https://github.com/fabiocaccamo/utils.js.git`
-- `npm install`
+### Setup
+-  `git clone https://github.com/fabiocaccamo/utils.js.git`
+-  `npm install`
 
-#### Watch
+### Watch
 `npm run watch`
 
-#### Test
+### Test
 `npm run test` *(tests run against dist)*
 
-#### Build
+### Build
 `npm run build`
 
 ## License

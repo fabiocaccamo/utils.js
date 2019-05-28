@@ -125,7 +125,7 @@ var ColorHexUtil = {
                     r: fromHex(comps[1] + comps[1]),
                     g: fromHex(comps[2] + comps[2]),
                     b: fromHex(comps[3] + comps[3])
-                }
+                };
                 break;
 
             case 6:
@@ -136,7 +136,7 @@ var ColorHexUtil = {
                     r: fromHex(comps[1]),
                     g: fromHex(comps[2]),
                     b: fromHex(comps[3])
-                }
+                };
                 break;
 
             case 8:
@@ -147,7 +147,7 @@ var ColorHexUtil = {
                     r: fromHex(comps[2]),
                     g: fromHex(comps[3]),
                     b: fromHex(comps[4])
-                }
+                };
                 break;
         }
 

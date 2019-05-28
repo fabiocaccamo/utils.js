@@ -63,7 +63,7 @@ var StringUtil = {
 
     padRight: function(str, len, char)
     {
-        var i = str.length
+        var i = str.length;
         while (i < len) {
             str = (str + char);
             i++;
