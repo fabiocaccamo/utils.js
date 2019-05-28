@@ -112,7 +112,7 @@ var ArrayUtil = {
                     dict[val] = item;
                 }
                 else {
-                    if (dict[val] == undefined) {
+                    if (dict[val] === undefined) {
                         dict[val] = [];
                     }
                     dict[val].push(item);
@@ -256,7 +256,7 @@ var ArrayUtil = {
         var lists = FunctionUtil.args(arguments);
         var listLength = 0;
         lists.forEach(function(item) {
-            listLength = (listLength == 0 ? item.length : Math.min(listLength, item.length));
+            listLength = (listLength === 0 ? item.length : Math.min(listLength, item.length));
         });
         var list = [];
         for (var i = 0; i < listLength; i++) {

@@ -78,7 +78,7 @@ var MathUtil = {
     {
         var args = FunctionUtil.args(arguments);
         var argsOk = ArrayUtil.clean(args);
-        if (argsOk.length != 3) {
+        if (argsOk.length !== 3) {
             return NaN;
         }
 
@@ -111,7 +111,7 @@ var MathUtil = {
     {
         var a = ArrayUtil.sort(values.concat());
         var i = 0, j = 0, k = a.length;
-        if (k == 0) {
+        if (k === 0) {
             return NaN;
         }
         else if (k > 2) {

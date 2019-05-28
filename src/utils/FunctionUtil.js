@@ -123,7 +123,7 @@ var FunctionUtil = {
             arg = args[i];
             argType = TypeUtil.of(args[i]);
             argTypes = types[Math.min(i, (types.length - 1))];
-            if (argTypes.indexOf(argType) == -1) {
+            if (argTypes.indexOf(argType) === -1) {
                 throw new TypeError('invalid argument: type of argument[' + i + '] is "' + argType + '", expected "' + argTypes.join('" or "') + '".');
             }
         }

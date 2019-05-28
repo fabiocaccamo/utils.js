@@ -134,10 +134,10 @@ var EaseUtil = {
     {
         // a = amplitude = 0.0, p = period = 0.3
 
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if (t == 1.0) {
+        if (t === 1.0) {
             return 1.0;
         }
 
@@ -159,10 +159,10 @@ var EaseUtil = {
     {
         // a = amplitude = 0.0, p = period = 0.3
 
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if ((t /= 0.5) == 2.0) {
+        if ((t /= 0.5) === 2.0) {
             return 1.0;
         }
 
@@ -171,7 +171,7 @@ var EaseUtil = {
 
         var s;
 
-        if (p == 0.3) {
+        if (p === 0.3) {
             p *= 1.5;
         }
         if (a < 1.0) {
@@ -190,10 +190,10 @@ var EaseUtil = {
     {
         // a = amplitude = 0.0, p = period = 0.3
 
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if (t == 1.0) {
+        if (t === 1.0) {
             return 1.0;
         }
 
@@ -213,7 +213,7 @@ var EaseUtil = {
 
     exponentialIn: function(t)
     {
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
         return Math.pow(2.0, (10.0 * (t - 1.0)));
@@ -221,10 +221,10 @@ var EaseUtil = {
 
     exponentialInOut: function(t)
     {
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if (t == 1.0) {
+        if (t === 1.0) {
             return 1.0;
         }
         if ((t /= 0.5) < 1.0) {
@@ -235,7 +235,7 @@ var EaseUtil = {
 
     exponentialOut: function(t)
     {
-        if (t == 1.0) {
+        if (t === 1.0) {
             return t;
         }
         return -Math.pow(2.0, (-10.0 * t)) + 1.0;

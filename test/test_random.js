@@ -81,7 +81,7 @@ describe('random', function() {
             var s = '';
             for (i = 0; i < j; i++) {
                 r = random.string(32);
-                test.assertTrue(r.length == 32 && (r !== s));
+                test.assertTrue(r.length === 32 && (r !== s));
                 s = r;
             }
         });

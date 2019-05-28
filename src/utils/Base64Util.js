@@ -44,10 +44,10 @@ var Base64Util = {
 
                 output += String.fromCharCode(chr1);
 
-                if (enc3 != 64) {
+                if (enc3 !== 64) {
                     output += String.fromCharCode(chr2);
                 }
-                if (enc4 != 64) {
+                if (enc4 !== 64) {
                     output += String.fromCharCode(chr3);
                 }
             }

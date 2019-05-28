@@ -7,7 +7,8 @@ var ColorRgbUtil = {
         var g = 0;
         var b = 0;
         var a = 0;
-        for (var i = 0, j = colors.length; i < j; i++) {
+        var i = 0, j = colors.length;
+        for (i, j; i < j; i++) {
             c = colors[i];
             r += c.r;
             g += c.g;

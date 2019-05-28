@@ -53,8 +53,9 @@ var RandomUtil = {
         var r = RandomUtil.element;
         var i = 0;
         var s = '';
-        while (i++ < length) {
+        while (i < length) {
             s += r(c);
+            i++;
         }
         return s;
     }

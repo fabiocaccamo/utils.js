@@ -7,7 +7,7 @@ var NumberUtil = {
 
     isEven: function(n)
     {
-        return ((n % 2.0) == 0.0 && !NumberUtil.isFloat(n));
+        return ((n % 2.0) === 0.0 && !NumberUtil.isFloat(n));
     },
 
     isFloat: function(n)
@@ -22,7 +22,7 @@ var NumberUtil = {
 
     isOdd: function(n)
     {
-        return ((n % 2.0) != 0.0 && !NumberUtil.isFloat(n));
+        return ((n % 2.0) !== 0.0 && !NumberUtil.isFloat(n));
     },
 
     isPositive: function(n)
@@ -35,17 +35,17 @@ var NumberUtil = {
         if (n <= 0 || NumberUtil.isFloat(n)) {
             return false;
         }
-        if (n == 1) {
+        if (n === 1) {
             return false;
         }
-        else if (n == 2) {
+        else if (n === 2) {
             return true;
         }
-        else if ((n % 2) == 0) {
+        else if ((n % 2) === 0) {
             return false;
         }
         for (var i = 3; (i * i) <= n; i += 2) {
-            if((n % i) == 0){
+            if((n % i) === 0){
                 return false;
             }
         }

@@ -135,7 +135,7 @@ var ObjectUtil = {
             case TypeUtil.NUMBER:
                 return MathUtil.equals(obj1, obj2);
             default:
-                return String(obj1) == String(obj2);
+                return String(obj1) === String(obj2);
         }
 
         for (key in obj2) {
@@ -170,7 +170,7 @@ var ObjectUtil = {
                     // Steps 6.b-6.e: +0 != -0
                     return x !== 0 || 1 / x === 1 / y;
                 } else {
-                    // Step 6.a: NaN == NaN
+                    // Step 6.a: NaN === NaN
                     return x !== x && y !== y;
                 }
             };

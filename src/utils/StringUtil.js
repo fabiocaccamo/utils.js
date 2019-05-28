@@ -33,7 +33,7 @@ var StringUtil = {
                 if (j === 0) {
                     continue;
                 }
-                m[i][j] = b.charAt(i - 1) == a.charAt(j - 1) ? m[i - 1][j - 1] : Math.min(
+                m[i][j] = b.charAt(i - 1) === a.charAt(j - 1) ? m[i - 1][j - 1] : Math.min(
                     m[i-1][j-1] + 1,
                     m[i][j-1] + 1,
                     m[i-1][j] + 1
@@ -48,7 +48,7 @@ var StringUtil = {
         var d = StringUtil.levenshteinDistance(a, b);
         var l = Math.max(a.length, b.length);
 
-        return ((l == 0) ? 1.0 : (1.0 - (d / l)));
+        return ((l === 0) ? 1.0 : (1.0 - (d / l)));
     },
 
     padLeft: function(str, len, char)
