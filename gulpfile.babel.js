@@ -16,6 +16,15 @@ function loadConfig() {
     return yaml.load(ymlFile);
 }
 
+// Load all Gulp plugins into one variable
+const $ = plugins();
+
+// Check for --production flag
+const PRODUCTION = !!(yargs.argv.production);
+
+// Load settings from settings.yml
+const { PORT, PATHS } = loadConfig();
+
 function clean(done) {
     rimraf(PATHS.dist, done);
 }
@@ -62,15 +71,6 @@ function watch() {
     gulp.watch('src/**/*.js').on('all',
         gulp.series(javascript, browser.reload));
 }
-
-// Load all Gulp plugins into one variable
-const $ = plugins();
-
-// Check for --production flag
-const PRODUCTION = !!(yargs.argv.production);
-
-// Load settings from settings.yml
-const { PORT, PATHS } = loadConfig();
 
 gulp.task('build',
     gulp.series(clean, gulp.parallel(javascript, copy)));
