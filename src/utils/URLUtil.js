@@ -25,11 +25,11 @@ var URLUtil = {
 
     getParametersList: function(url)
     {
-        var queryString = URLUtil.getQueryString(url);
+        var paramsString = URLUtil.getParametersString(url);
         var paramsList = [];
         var paramsRE = /(([\w]+){1}(\=([^\&\n\r\t]*){1})?)/g;
         var paramMatch;
-        while (paramMatch = paramsRE.exec(queryString)) {
+        while (paramMatch = paramsRE.exec(paramsString)) {
             paramsList.push({
                 key: paramMatch[2],
                 value: decodeURIComponent(paramMatch[4] || '')
@@ -38,7 +38,7 @@ var URLUtil = {
         return paramsList;
     },
 
-    getQueryString: function(url)
+    getParametersString: function(url)
     {
         url = (url || URLUtil.getURL());
         var queryStringPosition = url.indexOf('?');

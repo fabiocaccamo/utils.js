@@ -81,6 +81,11 @@ var ObjectUtil = {
         return JSONUtil.decode(str);
     },
 
+    decodeParameters: function(str)
+    {
+        return URLUtil.getParametersDict('?' + str);
+    },
+
     encodeBase64: function(obj)
     {
         return Base64Util.encode(JSONUtil.encode(obj));
@@ -89,6 +94,23 @@ var ObjectUtil = {
     encodeJSON: function(obj)
     {
         return JSONUtil.encode(obj);
+    },
+
+    encodeParameters: function(obj, keysFilter)
+    {
+        var objClean = utils.object.clean(utils.object.clone(obj), true);
+        var keys = (utils.type.isArray(keysFilter) ? keysFilter : utils.object.keys(obj, true));
+        var key, val, keyval = [];
+
+        for (var i = 0, j = keys.length; i < j; i++) {
+            key = keys[i];
+            if (key in objClean) {
+                val = objClean[key];
+                keyval.push(key + '=' + encodeURIComponent(val));
+            }
+        }
+
+        return keyval.join('&');
     },
 
     equals: function(obj1, obj2)
