@@ -132,7 +132,7 @@
                     dict[val] = item;
                 }
                 else {
-                    if (dict[val] == undefined) {
+                    if (dict[val] === undefined) {
                         dict[val] = [];
                     }
                     dict[val].push(item);
@@ -276,7 +276,7 @@
         var lists = FunctionUtil.args(arguments);
         var listLength = 0;
         lists.forEach(function(item) {
-            listLength = (listLength == 0 ? item.length : Math.min(listLength, item.length));
+            listLength = (listLength === 0 ? item.length : Math.min(listLength, item.length));
         });
         var list = [];
         for (var i = 0; i < listLength; i++) {
@@ -335,10 +335,10 @@
 
                 output += String.fromCharCode(chr1);
 
-                if (enc3 != 64) {
+                if (enc3 !== 64) {
                     output += String.fromCharCode(chr2);
                 }
-                if (enc4 != 64) {
+                if (enc4 !== 64) {
                     output += String.fromCharCode(chr3);
                 }
             }
@@ -699,7 +699,8 @@
         var g = 0;
         var b = 0;
         var a = 0;
-        for (var i = 0, j = colors.length; i < j; i++) {
+        var i = 0, j = colors.length;
+        for (i, j; i < j; i++) {
             c = colors[i];
             r += c.r;
             g += c.g;
@@ -1179,10 +1180,10 @@
     {
         // a = amplitude = 0.0, p = period = 0.3
 
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if (t == 1.0) {
+        if (t === 1.0) {
             return 1.0;
         }
 
@@ -1204,10 +1205,10 @@
     {
         // a = amplitude = 0.0, p = period = 0.3
 
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if ((t /= 0.5) == 2.0) {
+        if ((t /= 0.5) === 2.0) {
             return 1.0;
         }
 
@@ -1216,7 +1217,7 @@
 
         var s;
 
-        if (p == 0.3) {
+        if (p === 0.3) {
             p *= 1.5;
         }
         if (a < 1.0) {
@@ -1235,10 +1236,10 @@
     {
         // a = amplitude = 0.0, p = period = 0.3
 
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if (t == 1.0) {
+        if (t === 1.0) {
             return 1.0;
         }
 
@@ -1258,7 +1259,7 @@
 
     exponentialIn: function(t)
     {
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
         return Math.pow(2.0, (10.0 * (t - 1.0)));
@@ -1266,10 +1267,10 @@
 
     exponentialInOut: function(t)
     {
-        if (t == 0.0) {
+        if (t === 0.0) {
             return 0.0;
         }
-        if (t == 1.0) {
+        if (t === 1.0) {
             return 1.0;
         }
         if ((t /= 0.5) < 1.0) {
@@ -1280,7 +1281,7 @@
 
     exponentialOut: function(t)
     {
-        if (t == 1.0) {
+        if (t === 1.0) {
             return t;
         }
         return -Math.pow(2.0, (-10.0 * t)) + 1.0;
@@ -1543,7 +1544,7 @@
             arg = args[i];
             argType = TypeUtil.of(args[i]);
             argTypes = types[Math.min(i, (types.length - 1))];
-            if (argTypes.indexOf(argType) == -1) {
+            if (argTypes.indexOf(argType) === -1) {
                 throw new TypeError('invalid argument: type of argument[' + i + '] is "' + argType + '", expected "' + argTypes.join('" or "') + '".');
             }
         }
@@ -1695,7 +1696,7 @@
     encodeInt: function(n)
     {
         var hex = Math.round(n).toString(16).toUpperCase();
-        return (hex.length == 1 ? '0' + hex : hex);
+        return (hex.length === 1 ? '0' + hex : hex);
     }
 };
     var InterpolationUtil = {
@@ -1834,7 +1835,7 @@
     {
         var args = FunctionUtil.args(arguments);
         var argsOk = ArrayUtil.clean(args);
-        if (argsOk.length != 3) {
+        if (argsOk.length !== 3) {
             return NaN;
         }
 
@@ -1867,7 +1868,7 @@
     {
         var a = ArrayUtil.sort(values.concat());
         var i = 0, j = 0, k = a.length;
-        if (k == 0) {
+        if (k === 0) {
             return NaN;
         }
         else if (k > 2) {
@@ -1915,7 +1916,7 @@
 
     isEven: function(n)
     {
-        return ((n % 2.0) == 0.0 && !NumberUtil.isFloat(n));
+        return ((n % 2.0) === 0.0 && !NumberUtil.isFloat(n));
     },
 
     isFloat: function(n)
@@ -1930,7 +1931,7 @@
 
     isOdd: function(n)
     {
-        return ((n % 2.0) != 0.0 && !NumberUtil.isFloat(n));
+        return ((n % 2.0) !== 0.0 && !NumberUtil.isFloat(n));
     },
 
     isPositive: function(n)
@@ -1943,17 +1944,17 @@
         if (n <= 0 || NumberUtil.isFloat(n)) {
             return false;
         }
-        if (n == 1) {
+        if (n === 1) {
             return false;
         }
-        else if (n == 2) {
+        else if (n === 2) {
             return true;
         }
-        else if ((n % 2) == 0) {
+        else if ((n % 2) === 0) {
             return false;
         }
         for (var i = 3; (i * i) <= n; i += 2) {
-            if((n % i) == 0){
+            if((n % i) === 0){
                 return false;
             }
         }
@@ -2044,6 +2045,11 @@
         return JSONUtil.decode(str);
     },
 
+    decodeParameters: function(str)
+    {
+        return URLUtil.getParametersDict('?' + str);
+    },
+
     encodeBase64: function(obj)
     {
         return Base64Util.encode(JSONUtil.encode(obj));
@@ -2052,6 +2058,23 @@
     encodeJSON: function(obj)
     {
         return JSONUtil.encode(obj);
+    },
+
+    encodeParameters: function(obj, keysFilter)
+    {
+        var objClean = utils.object.clean(utils.object.clone(obj), true);
+        var keys = (utils.type.isArray(keysFilter) ? keysFilter : utils.object.keys(obj, true));
+        var key, val, keyval = [];
+
+        for (var i = 0, j = keys.length; i < j; i++) {
+            key = keys[i];
+            if (key in objClean) {
+                val = objClean[key];
+                keyval.push(key + '=' + encodeURIComponent(val));
+            }
+        }
+
+        return keyval.join('&');
     },
 
     equals: function(obj1, obj2)
@@ -2076,7 +2099,7 @@
             case TypeUtil.NUMBER:
                 return MathUtil.equals(obj1, obj2);
             default:
-                return String(obj1) == String(obj2);
+                return String(obj1) === String(obj2);
         }
 
         for (key in obj2) {
@@ -2111,7 +2134,7 @@
                     // Steps 6.b-6.e: +0 != -0
                     return x !== 0 || 1 / x === 1 / y;
                 } else {
-                    // Step 6.a: NaN == NaN
+                    // Step 6.a: NaN === NaN
                     return x !== x && y !== y;
                 }
             };
@@ -2271,8 +2294,9 @@
         var r = RandomUtil.element;
         var i = 0;
         var s = '';
-        while (i++ < length) {
+        while (i < length) {
             s += r(c);
+            i++;
         }
         return s;
     }
@@ -2312,7 +2336,7 @@
                 if (j === 0) {
                     continue;
                 }
-                m[i][j] = b.charAt(i - 1) == a.charAt(j - 1) ? m[i - 1][j - 1] : Math.min(
+                m[i][j] = b.charAt(i - 1) === a.charAt(j - 1) ? m[i - 1][j - 1] : Math.min(
                     m[i-1][j-1] + 1,
                     m[i][j-1] + 1,
                     m[i-1][j] + 1
@@ -2327,7 +2351,7 @@
         var d = StringUtil.levenshteinDistance(a, b);
         var l = Math.max(a.length, b.length);
 
-        return ((l == 0) ? 1.0 : (1.0 - (d / l)));
+        return ((l === 0) ? 1.0 : (1.0 - (d / l)));
     },
 
     padLeft: function(str, len, char)
@@ -3092,11 +3116,11 @@
 
     getParametersList: function(url)
     {
-        var queryString = URLUtil.getQueryString(url);
+        var paramsString = URLUtil.getParametersString(url);
         var paramsList = [];
         var paramsRE = /(([\w]+){1}(\=([^\&\n\r\t]*){1})?)/g;
         var paramMatch;
-        while (paramMatch = paramsRE.exec(queryString)) {
+        while (paramMatch = paramsRE.exec(paramsString)) {
             paramsList.push({
                 key: paramMatch[2],
                 value: decodeURIComponent(paramMatch[4] || '')
@@ -3105,7 +3129,7 @@
         return paramsList;
     },
 
-    getQueryString: function(url)
+    getParametersString: function(url)
     {
         url = (url || URLUtil.getURL());
         var queryStringPosition = url.indexOf('?');
