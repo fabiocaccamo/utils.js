@@ -276,13 +276,14 @@ describe('func', function() {
             }, null, 0, 1, true, false, 'a', 'b', 'c');
         });
         it('test repeat func by name with scope', function(done) {
+            var repeatObj;
             var obj = {
                 dosomething: function(done) {
                     repeatObj.cancel();
                     done();
                 }
             };
-            var repeatObj = f(100, 'dosomething', obj, done);
+            repeatObj = f(100, 'dosomething', obj, done);
         });
         it('test repeat func cancelled', function(done) {
             var dosomething = function(){

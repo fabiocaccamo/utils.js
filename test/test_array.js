@@ -552,13 +552,13 @@ describe('array', function() {
         });
         it('test array contains all items', function() {
             b = f(a);
-            for (i = 0; i < a.length; i++) {
+            for (var i = 0; i < a.length; i++) {
                 test.assertTrue(b.indexOf(a[i]) > -1);
             }
         });
         it('test array contains all items once', function() {
             b = f(a);
-            for (i = 0; i < a.length; i++) {
+            for (var i = 0; i < a.length; i++) {
                 test.assertEqual(b.indexOf(a[i]), b.lastIndexOf(a[i]));
             }
         });

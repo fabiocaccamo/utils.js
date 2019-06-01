@@ -215,7 +215,7 @@ describe('string', function() {
             var s = 'lorem ipsum dolor sit amet';
             for (var i = 0; i < 10; i++) {
                 r = f(s);
-                test.assertTrue(r.length == s.length && (r !== s));
+                test.assertTrue(r.length === s.length && (r !== s));
                 s = r;
                 // console.log(s);
             }
