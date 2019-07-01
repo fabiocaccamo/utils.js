@@ -90,6 +90,10 @@ describe('url', function() {
             s = 'http://localhost:8000/?code=0123456789?';
             test.assertEqual(f(s), { code:'0123456789?' });
         });
+        it('test url with keys containing - and _', function() {
+            s = 'http://localhost:8000/?status-code=1&status_code=2&statuscode=3';
+            test.assertEqual(f(s), { 'status-code':'1', 'status_code':'2', 'statuscode':'3' });
+        });
     });
     describe('getURL', function() {
         var f = url.getURL;

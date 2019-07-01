@@ -3118,7 +3118,8 @@
     {
         var paramsString = URLUtil.getParametersString(url);
         var paramsList = [];
-        var paramsRE = /(([\w]+){1}(\=([^\&\n\r\t]*){1})?)/g;
+        var paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
+        // var paramsRE = /(([^\?\=\&]*){1}(\=([^\&\n\r\t]*){1})?)/g;
         var paramMatch;
         while (paramMatch = paramsRE.exec(paramsString)) {
             paramsList.push({
