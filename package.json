@@ -1,6 +1,6 @@
 {
   "name": "@fabiocaccamo/utils.js",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "description": "JavaScript utils for lazy devs.",
   "keywords": [
     "utils",
@@ -32,7 +32,7 @@
     "type": "git",
     "url": "https://github.com/fabiocaccamo/utils.js"
   },
-  "main": "utils.js",
+  "main": "dist/utils.js",
   "scripts": {
     "build": "gulp build --production",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
