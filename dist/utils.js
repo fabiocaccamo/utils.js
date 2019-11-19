@@ -262,11 +262,11 @@
 
     unique: function(list)
     {
+        var item;
         var items = [];
         var itemsNotEquals = function(itemUnique){
             return !ObjectUtil.equals(item, itemUnique);
         };
-        var item;
         for (var i = 0, j = list.length; i < j; i++) {
             item = list[i];
             if (items.every(itemsNotEquals)) {
