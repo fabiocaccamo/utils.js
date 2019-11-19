@@ -10,6 +10,13 @@ JavaScript utils for lazy devs.
 ## Installation
 `npm install @fabiocaccamo/utils.js`
 
+## Usage
+
+### Require JS
+```JavaScript
+var utils = require("@fabiocaccamo/utils.js");
+```
+
 ## APIs
 
 ### Packages
