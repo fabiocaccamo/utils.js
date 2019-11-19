@@ -112,7 +112,7 @@ var ArrayUtil = {
                     dict[val] = item;
                 }
                 else {
-                    if (dict[val] === undefined) {
+                    if (TypeUtil.isUndefined(dict[val])) {
                         dict[val] = [];
                     }
                     dict[val].push(item);
@@ -144,7 +144,7 @@ var ArrayUtil = {
 
     reduce: function(list, reducer, initialValue)
     {
-        var value = (initialValue === undefined ? 0 : initialValue);
+        var value = (TypeUtil.isUndefined(initialValue) ? 0 : initialValue);
         for (var i = 0, j = list.length; i < j; i++) {
             value = reducer(value, list[i], i, list);
         }
