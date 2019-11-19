@@ -1324,7 +1324,8 @@
 
     quadraticInOut: function(t)
     {
-        if ((t /= 0.5) < 1.0) {
+        t /= 0.5;
+        if (t < 1.0) {
             return 0.5 * t * t;
         }
         t -= 1.0;
@@ -1343,7 +1344,8 @@
 
     quarticInOut: function(t)
     {
-        if ((t /= 0.5) < 1.0) {
+        t /= 0.5;
+        if (t < 1.0) {
             return 0.5 * t * t * t * t;
         }
         t -= 2.0;
