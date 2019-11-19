@@ -1,4 +1,4 @@
-var TestUtil = {
+TestUtil = {
 
     assertArray: function(val, len)
     {

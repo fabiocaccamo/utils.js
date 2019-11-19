@@ -1,4 +1,4 @@
-var TypeUtil = {
+TypeUtil = {
 
     ARRAY: 'array',
     BOOLEAN: 'boolean',

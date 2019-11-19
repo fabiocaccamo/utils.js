@@ -1,4 +1,4 @@
-var EaseUtil = {
+EaseUtil = {
 
     backIn: function(t, s)
     {

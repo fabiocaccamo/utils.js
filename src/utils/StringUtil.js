@@ -1,4 +1,4 @@
-var StringUtil = {
+StringUtil = {
 
     contains: function(str, occurrence)
     {

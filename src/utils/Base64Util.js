@@ -1,4 +1,4 @@
-var Base64Util = {
+Base64Util = {
 
     CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
     CHARS_LIST: [

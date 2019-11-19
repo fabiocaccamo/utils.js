@@ -1,4 +1,4 @@
-var FunctionUtil = {
+FunctionUtil = {
 
     args: function(argumentsObj, skipCount)
     {

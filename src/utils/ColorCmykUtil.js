@@ -1,4 +1,4 @@
-var ColorCmykUtil = {
+ColorCmykUtil = {
 
     // average: function(colors)
     // {

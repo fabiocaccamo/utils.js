@@ -1,4 +1,4 @@
-var DateUtil = {
+DateUtil = {
 
     clone: function(date)
     {

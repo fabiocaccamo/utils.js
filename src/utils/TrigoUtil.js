@@ -1,4 +1,4 @@
-var TrigoUtil = {
+TrigoUtil = {
 
     DEG_0: 0.0,
     DEG_90: 90.0,

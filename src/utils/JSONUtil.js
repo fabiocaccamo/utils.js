@@ -1,4 +1,4 @@
-var JSONUtil = {
+JSONUtil = {
 
     decode: function(str)
     {

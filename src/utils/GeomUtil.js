@@ -1,4 +1,4 @@
-var GeomUtil = {
+GeomUtil = {
 
     point: PointUtil
 

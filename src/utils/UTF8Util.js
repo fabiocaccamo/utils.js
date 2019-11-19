@@ -1,4 +1,4 @@
-var UTF8Util = {
+UTF8Util = {
 
     decode: function(input)
     {

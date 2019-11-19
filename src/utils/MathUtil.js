@@ -1,4 +1,4 @@
-var MathUtil = {
+MathUtil = {
 
     average: function(values)
     {

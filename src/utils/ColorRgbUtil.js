@@ -1,4 +1,4 @@
-var ColorRgbUtil = {
+ColorRgbUtil = {
 
     average: function(colors)
     {

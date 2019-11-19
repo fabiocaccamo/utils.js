@@ -1,4 +1,4 @@
-var InterpolationUtil = {
+InterpolationUtil = {
 
     bilinear: function(a, b, c, d, u, v)
     {

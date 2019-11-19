@@ -1,4 +1,4 @@
-var NumberUtil = {
+NumberUtil = {
 
     isBetween: function(n, min, max)
     {

@@ -1,4 +1,4 @@
-var ObjectUtil = {
+ObjectUtil = {
 
     assign: function(obj, obj1, obj2, obj3)
     {

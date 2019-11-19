@@ -1,4 +1,4 @@
-var ColorUtil = {
+ColorUtil = {
 
     cmyk: ColorCmykUtil,
     // cmykToGrayscale: ColorCmykUtil.toGrayscale,

@@ -1,4 +1,4 @@
-var ColorHexUtil = {
+ColorHexUtil = {
 
     average: function(colors)
     {

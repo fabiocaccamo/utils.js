@@ -18,6 +18,13 @@
 
     'use strict';
 
+    var ArrayUtil, Base64Util,
+        ColorCmykUtil, ColorHexUtil, ColorRgbUtil, ColorUtil,
+        DateUtil, EaseUtil, FunctionUtil, PointUtil, GeomUtil,
+        HexUtil, InterpolationUtil, JSONUtil, MathUtil, NumberUtil,
+        ObjectUtil, RandomUtil, StringUtil, TestUtil, TrigoUtil,
+        TypeUtil, URLUtil, UTF8Util, XMLUtil;
+
     @import './utils/ArrayUtil.js'
     @import './utils/Base64Util.js'
     @import './utils/ColorCmykUtil.js'
@@ -52,11 +59,11 @@
         ease: EaseUtil,
         func: FunctionUtil,
         geom: GeomUtil,
-            // point: PointUtil,
+        // point: PointUtil,
         hex: HexUtil,
         json: JSONUtil,
         math: MathUtil,
-            // interpolation: InterpolationUtil,
+        // interpolation: InterpolationUtil,
         number: NumberUtil,
         object: ObjectUtil,
         random: RandomUtil,

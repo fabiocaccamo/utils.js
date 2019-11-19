@@ -1,4 +1,4 @@
-var RandomUtil = {
+RandomUtil = {
 
     argument: function()
     {

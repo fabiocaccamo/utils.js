@@ -1,4 +1,4 @@
-var PointUtil = {
+PointUtil = {
 
     add: function(a, b)
     {

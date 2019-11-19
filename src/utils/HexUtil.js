@@ -1,4 +1,4 @@
-var HexUtil = {
+HexUtil = {
 
     decodeInt: function(s)
     {

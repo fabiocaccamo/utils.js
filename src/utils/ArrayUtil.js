@@ -1,4 +1,4 @@
-var ArrayUtil = {
+ArrayUtil = {
 
     clean: function(list, hard)
     {
