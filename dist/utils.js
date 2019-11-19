@@ -183,11 +183,14 @@
 
     remove: function(list, value)
     {
-        for (var i = 0, j = list.length; i < j; i++) {
-            if (ObjectUtil.equals(list[i], value)) {
-                list.splice(i, 1);
-                i--;
-                j--;
+        var values = FunctionUtil.args(arguments, 1);
+        for (var k = 0, m = values.length; k < m; k++) {
+            for (var i = 0, j = list.length; i < j; i++) {
+                if (ObjectUtil.equals(list[i], values[k])) {
+                    list.splice(i, 1);
+                    i--;
+                    j--;
+                }
             }
         }
         return list;
@@ -1057,10 +1060,14 @@
     {
         // s = overshoot = 1.70158
         s = (isNaN(s) ? 1.70158 : s);
-        if ((t /= 0.5) < 1.0) {
-            return 0.5 * (t * t * (((s *= (1.525)) + 1.0) * t - s));
+        t /= 0.5;
+        if (t < 1.0) {
+            s *= 1.525;
+            return 0.5 * (t * t * ((s + 1.0) * t - s));
         } else {
-            return 0.5 * ((t -= 2.0) * t * (((s *= (1.525)) + 1.0) * t + s) + 2.0);
+            t -= 2.0;
+            s *= 1.525;
+            return 0.5 * (t * t * ((s + 1.0) * t + s) + 2.0);
         }
     },
 
@@ -1068,7 +1075,8 @@
     {
         // s = overshoot = 1.70158
         s = (isNaN(s) ? 1.70158 : s);
-        return (t -= 1.0) * t * (((s + 1.0) * t) + s) + 1.0;
+        t -= 1.0;
+        return t * t * (((s + 1.0) * t) + s) + 1.0;
     },
 
     bounceIn: function(t)
@@ -1079,13 +1087,16 @@
             return 1.0 - (7.5625 * t * t);
         }
         else if (t < (2.0 / 2.75)) {
-            return 1.0 - (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+            t -= (1.5 / 2.75);
+            return 1.0 - (7.5625 * t * t + 0.75);
         }
         else if (t < (2.5 / 2.75)) {
-            return 1.0 - (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+            t -= (2.25 / 2.75);
+            return 1.0 - (7.5625 * t * t + 0.9375);
         }
         else {
-            return 1.0 - (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+            t -= (2.625 / 2.75);
+            return 1.0 - (7.5625 * t * t + 0.984375);
         }
     },
 
@@ -1098,26 +1109,32 @@
                 return 1.0 - (7.5625 * t * t);
             }
             else if (t < (2.0 / 2.75)) {
-                return 1.0 - (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+                t -= (1.5 / 2.75);
+                return 1.0 - (7.5625 * t * t + 0.75);
             }
             else if (t < (2.5 / 2.75)) {
-                return 1.0 - (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+                t -= (2.25 / 2.75);
+                return 1.0 - (7.5625 * t * t + 0.9375);
             }
             else {
-                return 1.0 - (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+                t -= (2.625 / 2.75);
+                return 1.0 - (7.5625 * t * t + 0.984375);
             }
         } else {
             if (t < (1.0 / 2.75)) {
                 return (7.5625 * t * t);
             }
             else if (t < (2.0 / 2.75)) {
-                return (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+                t -= (1.5 / 2.75);
+                return (7.5625 * t * t + 0.75);
             }
             else if (t < (2.5 / 2.75)) {
-                return (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+                t -= (2.25 / 2.75);
+                return (7.5625 * t * t + 0.9375);
             }
             else {
-                return (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+                t -= (2.625 / 2.75);
+                return (7.5625 * t * t + 0.984375);
             }
         }
     },
@@ -1128,13 +1145,16 @@
             return (7.5625 * t * t);
         }
         else if (t < (2.0 / 2.75)) {
-            return (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+            t -= (1.5 / 2.75);
+            return (7.5625 * t * t + 0.75);
         }
         else if (t < (2.5 / 2.75)) {
-            return (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+            t -= (2.25 / 2.75);
+            return (7.5625 * t * t + 0.9375);
         }
         else {
-            return (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+            t -= (2.625 / 2.75);
+            return (7.5625 * t * t + 0.984375);
         }
     },
 
@@ -1145,16 +1165,18 @@
 
     circularInOut: function(t)
     {
-        if((t /= 0.5) < 1.0){
+        t /= 0.5;
+        if (t < 1.0) {
             return -0.5 * (Math.sqrt(1.0 - t * t) - 1.0);
         }
-
-        return 0.5 * (Math.sqrt(1.0 - (t -= 2.0) * t) + 1.0);
+        t -= 2.0;
+        return 0.5 * (Math.sqrt(1.0 - t * t) + 1.0);
     },
 
     circularOut: function(t)
     {
-        return Math.sqrt(1.0 - ((t -= 1.0) * t));
+        t -= 1.0;
+        return Math.sqrt(1.0 - (t * t));
     },
 
     cubicIn: function(t)
@@ -1164,59 +1186,55 @@
 
     cubicInOut: function(t)
     {
-        if ((t /= 0.5) < 1.0){
+        t /= 0.5;
+        if (t < 1.0) {
             return 0.5 * t * t * t;
         }
-
-        return 0.5 * ((t -= 2.0) * t * t + 2.0);
+        t -= 2.0;
+        return 0.5 * (t * t * t + 2.0);
     },
 
     cubicOut: function(t)
     {
-        return (t -= 1.0) * t * t + 1.0;
+        t -= 1.0;
+        return t * t * t + 1.0;
     },
 
     elasticIn: function(t, a, p)
     {
         // a = amplitude = 0.0, p = period = 0.3
-
         if (t === 0.0) {
             return 0.0;
         }
         if (t === 1.0) {
             return 1.0;
         }
-
         a = (isNaN(a) ? 0.0 : a);
         p = (isNaN(p) ? 0.3 : p);
-
         var s;
-
         if (a < 1.0) {
             a = 1.0;
             s = (p / 4.0);
         } else {
             s = (p / (2.0 * Math.PI) * Math.asin(1.0 / a));
         }
-        return -(a * Math.pow(2.0, 10.0 * (t -= 1.0)) * Math.sin((t - s) * (2.0 * Math.PI) / p));
+        t -= 1.0;
+        return -(a * Math.pow(2.0, 10.0 * t) * Math.sin((t - s) * (2.0 * Math.PI) / p));
     },
 
     elasticInOut: function(t, a, p)
     {
         // a = amplitude = 0.0, p = period = 0.3
-
         if (t === 0.0) {
             return 0.0;
         }
-        if ((t /= 0.5) === 2.0) {
+        t /= 0.5;
+        if (t === 2.0) {
             return 1.0;
         }
-
         a = (isNaN(a) ? 0.0 : a);
         p = (isNaN(p) ? 0.3 : p);
-
         var s;
-
         if (p === 0.3) {
             p *= 1.5;
         }
@@ -1227,27 +1245,25 @@
             s = (p / (2.0 * Math.PI) * Math.asin(1.0 / a));
         }
         if (t < 1.0) {
-            return -0.5 * (a * Math.pow(2.0, 10.0 * (t -= 1.0)) * Math.sin((t - s) * (2.0 * Math.PI) / p));
+            t -= 1.0;
+            return -0.5 * (a * Math.pow(2.0, 10.0 * t) * Math.sin((t - s) * (2.0 * Math.PI) / p));
         }
-        return a * Math.pow(2.0, -10.0 * (t -= 1.0)) * Math.sin((t - s) * (2.0 * Math.PI) / p) * 0.5 + 1.0;
+        t -= 1.0;
+        return a * Math.pow(2.0, -10.0 * t) * Math.sin((t - s) * (2.0 * Math.PI) / p) * 0.5 + 1.0;
     },
 
     elasticOut: function(t, a, p)
     {
         // a = amplitude = 0.0, p = period = 0.3
-
         if (t === 0.0) {
             return 0.0;
         }
         if (t === 1.0) {
             return 1.0;
         }
-
         a = (isNaN(a) ? 0.0 : a);
         p = (isNaN(p) ? 0.3 : p);
-
         var s;
-
         if (a < 1.0) {
             a = 1.0;
             s = (p / 4.0);
@@ -1276,7 +1292,8 @@
         if ((t /= 0.5) < 1.0) {
             return 0.5 * Math.pow(2.0, 10.0 * (t - 1.0));
         }
-        return 0.5 * (-Math.pow(2.0, -10.0 * (t -= 1.0)) + 2.0);
+        t -= 1.0;
+        return 0.5 * (-Math.pow(2.0, -10.0 * t) + 2.0);
     },
 
     exponentialOut: function(t)
@@ -1302,7 +1319,8 @@
         if ((t /= 0.5) < 1.0) {
             return 0.5 * t * t;
         }
-        return -0.5 * ((t -= 1.0) * (t - 2.0) - 1.0);
+        t -= 1.0;
+        return -0.5 * (t * (t - 2.0) - 1.0);
     },
 
     quadraticOut: function(t)
@@ -1320,12 +1338,14 @@
         if ((t /= 0.5) < 1.0) {
             return 0.5 * t * t * t * t;
         }
-        return -0.5 * ((t -= 2.0) * t * t * t - 2.0);
+        t -= 2.0;
+        return -0.5 * (t * t * t * t - 2.0);
     },
 
     quarticOut: function(t)
     {
-        return -((t -= 1.0) * t * t * t - 1.0);
+        t -= 1.0;
+        return -(t * t * t * t - 1.0);
     },
 
     quinticIn: function(t)
@@ -1335,15 +1355,18 @@
 
     quinticInOut: function(t)
     {
-        if ((t /= 0.5) < 1.0) {
+        t /= 0.5;
+        if (t < 1.0) {
             return 0.5 * t * t * t * t * t;
         }
-        return 0.5 * ((t -= 2.0) * t * t * t * t + 2.0);
+        t -= 2.0;
+        return 0.5 * (t * t * t * t * t + 2.0);
     },
 
     quinticOut: function(t)
     {
-        return (t -= 1.0) * t * t * t * t + 1.0;
+        t -= 1.0;
+        return t * t * t * t * t + 1.0;
     },
 
     sexticIn: function(t)
@@ -1353,15 +1376,18 @@
 
     sexticInOut: function(t)
     {
-        if ((t /= 0.5) < 1.0) {
+        t /= 0.5;
+        if (t < 1.0) {
             return 0.5 * t * t * t * t * t * t;
         }
-        return -0.5 * ((t -= 2.0) * t * t * t * t * t - 2.0);
+        t -= 2.0;
+        return -0.5 * (t * t * t * t * t * t - 2.0);
     },
 
     sexticOut: function(t)
     {
-        return -((t -= 1.0) * t * t * t * t * t - 1.0);
+        t -= 1.0;
+        return -(t * t * t * t * t * t - 1.0);
     },
 
     sineIn: function(t)
@@ -3303,3 +3329,4 @@
 
     return utils;
 }));
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwiZmlsZSI6InV0aWxzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uIChyb290LCBmYWN0b3J5KSB7XG5cbiAgICBpZiAodHlwZW9mKGRlZmluZSkgPT09ICdmdW5jdGlvbicgJiYgZGVmaW5lLmFtZCkge1xuICAgICAgICAvLyBBTURcbiAgICAgICAgZGVmaW5lKGZhY3RvcnkpO1xuICAgIH1cbiAgICBlbHNlIGlmICh0eXBlb2YobW9kdWxlKSA9PT0gJ29iamVjdCcpIHtcbiAgICAgICAgLy8gQ29tbW9uSlNcbiAgICAgICAgbW9kdWxlLmV4cG9ydHMgPSBmYWN0b3J5KCk7XG4gICAgfVxuICAgIGVsc2Uge1xuICAgICAgICAvLyBTY3JpcHQgdGFnIGltcG9ydCBpLmUuLCBJSUZFXG4gICAgICAgIHJvb3QudXRpbHMgPSBmYWN0b3J5KCk7XG4gICAgICAgIHJvb3QudSA9IGZhY3RvcnkoKTtcbiAgICB9XG5cbn0odGhpcywgZnVuY3Rpb24oKSB7XG5cbiAgICAndXNlIHN0cmljdCc7XG5cbiAgICBAaW1wb3J0ICcuL3V0aWxzL0FycmF5VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Jhc2U2NFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvckNteWtVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JIZXhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JSZ2JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvRGF0ZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9FYXNlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Z1bmN0aW9uVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1BvaW50VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0dlb21VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSGV4VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0ludGVycG9sYXRpb25VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSlNPTlV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9NYXRoVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL051bWJlclV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9PYmplY3RVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvUmFuZG9tVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1N0cmluZ1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9UZXN0VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1RyaWdvVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1R5cGVVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvVVJMVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1VURjhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvWE1MVXRpbC5qcydcblxuICAgIHZhciB1dGlscyA9IHtcbiAgICAgICAgYXJyYXk6IEFycmF5VXRpbCxcbiAgICAgICAgYmFzZTY0OiBCYXNlNjRVdGlsLFxuICAgICAgICBjb2xvcjogQ29sb3JVdGlsLFxuICAgICAgICBkYXRlOiBEYXRlVXRpbCxcbiAgICAgICAgZWFzZTogRWFzZVV0aWwsXG4gICAgICAgIGZ1bmM6IEZ1bmN0aW9uVXRpbCxcbiAgICAgICAgZ2VvbTogR2VvbVV0aWwsXG4gICAgICAgICAgICAvLyBwb2ludDogUG9pbnRVdGlsLFxuICAgICAgICBoZXg6IEhleFV0aWwsXG4gICAgICAgIGpzb246IEpTT05VdGlsLFxuICAgICAgICBtYXRoOiBNYXRoVXRpbCxcbiAgICAgICAgICAgIC8vIGludGVycG9sYXRpb246IEludGVycG9sYXRpb25VdGlsLFxuICAgICAgICBudW1iZXI6IE51bWJlclV0aWwsXG4gICAgICAgIG9iamVjdDogT2JqZWN0VXRpbCxcbiAgICAgICAgcmFuZG9tOiBSYW5kb21VdGlsLFxuICAgICAgICBzdHJpbmc6IFN0cmluZ1V0aWwsXG4gICAgICAgIHRlc3Q6IFRlc3RVdGlsLFxuICAgICAgICB0cmlnbzogVHJpZ29VdGlsLFxuICAgICAgICB0eXBlOiBUeXBlVXRpbCxcbiAgICAgICAgeG1sOiBYTUxVdGlsLFxuICAgICAgICB1cmw6IFVSTFV0aWwsXG4gICAgICAgIHV0Zjg6IFVURjhVdGlsXG4gICAgfTtcblxuICAgIHJldHVybiB1dGlscztcbn0pKTsiXX0=

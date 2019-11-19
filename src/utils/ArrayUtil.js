@@ -163,11 +163,14 @@ var ArrayUtil = {
 
     remove: function(list, value)
     {
-        for (var i = 0, j = list.length; i < j; i++) {
-            if (ObjectUtil.equals(list[i], value)) {
-                list.splice(i, 1);
-                i--;
-                j--;
+        var values = FunctionUtil.args(arguments, 1);
+        for (var k = 0, m = values.length; k < m; k++) {
+            for (var i = 0, j = list.length; i < j; i++) {
+                if (ObjectUtil.equals(list[i], values[k])) {
+                    list.splice(i, 1);
+                    i--;
+                    j--;
+                }
             }
         }
         return list;

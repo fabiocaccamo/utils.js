@@ -541,35 +541,6 @@ describe('array', function() {
             test.assertEqual(f(a, 11), [[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]);
         });
     });
-    describe('shuffle', function() {
-        var f = arr.shuffle;
-        var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-        var b;
-        var c = [];
-        it('test array has same length', function() {
-            b = f(a);
-            test.assertEqual(b.length, a.length);
-        });
-        it('test array contains all items', function() {
-            b = f(a);
-            for (var i = 0; i < a.length; i++) {
-                test.assertTrue(b.indexOf(a[i]) > -1);
-            }
-        });
-        it('test array contains all items once', function() {
-            b = f(a);
-            for (var i = 0; i < a.length; i++) {
-                test.assertEqual(b.indexOf(a[i]), b.lastIndexOf(a[i]));
-            }
-        });
-        it('test array items order changed', function() {
-            b = f(a);
-            c = b.some(function(item){
-                return (a.indexOf(item) != b.indexOf(item));
-            });
-            test.assertTrue(c);
-        });
-    });
     describe('reduce', function() {
         var f = arr.reduce;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -608,13 +579,17 @@ describe('array', function() {
             var b = a.slice();
             test.assertEqual(f(b, 5), [0, 1, 2, 3, 4, 6, 7, 8, 9]);
         });
-        it('test multiple values', function() {
+        it('test single value multiple items', function() {
             var b = [0, 1, 0, 1, 0, 1, 0, 1, 0];
             test.assertEqual(f(b, 0), [1, 1, 1, 1]);
         });
-        it('test all values', function() {
+        it('test single value all items', function() {
             var b = [0, 0, 0, 0 ,0];
             test.assertEqual(f(b, 0), []);
+        });
+        it('test multiple values', function() {
+            var b = a.slice();
+            test.assertEqual(f(b, 1, 3, 5, 7, 9), [0, 2, 4, 6, 8]);
         });
         it('test none values', function() {
             var b = [null, undefined, NaN, NaN, null, undefined, undefined];
@@ -697,6 +672,35 @@ describe('array', function() {
                 test.assertEqual(f([], i), []);
                 test.assertEqual(f([1], i), [1]);
             }
+        });
+    });
+    describe('shuffle', function() {
+        var f = arr.shuffle;
+        var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var b;
+        var c = [];
+        it('test array has same length', function() {
+            b = f(a);
+            test.assertEqual(b.length, a.length);
+        });
+        it('test array contains all items', function() {
+            b = f(a);
+            for (var i = 0; i < a.length; i++) {
+                test.assertTrue(b.indexOf(a[i]) > -1);
+            }
+        });
+        it('test array contains all items once', function() {
+            b = f(a);
+            for (var i = 0; i < a.length; i++) {
+                test.assertEqual(b.indexOf(a[i]), b.lastIndexOf(a[i]));
+            }
+        });
+        it('test array items order changed', function() {
+            b = f(a);
+            c = b.some(function(item){
+                return (a.indexOf(item) != b.indexOf(item));
+            });
+            test.assertTrue(c);
         });
     });
     describe('sort', function() {
