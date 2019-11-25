@@ -2082,9 +2082,9 @@ NumberUtil = {
 
 ObjectUtil = {
 
-    assign: function(obj, obj1, obj2, obj3)
+    assign: function(obj, other)
     {
-        var objs = FunctionUtil.args(arguments, 1);
+        var objs = [other].concat(FunctionUtil.args(arguments, 2));
         var i, j, k;
         for (i = 0, j = objs.length; i < j; i++) {
             for (k in objs[i]) {
@@ -2123,7 +2123,6 @@ ObjectUtil = {
             }
             if (TypeUtil.isNone(val)) {
                 delete obj[key];
-                // continue;
             }
         }
         return obj;
