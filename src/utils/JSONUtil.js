@@ -1,3 +1,5 @@
+/** global: JSONUtil */
+
 JSONUtil = {
 
     decode: function(str)

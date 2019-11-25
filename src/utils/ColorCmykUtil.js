@@ -1,3 +1,6 @@
+/** global: ColorCmykUtil */
+/** global: ColorRgbUtil */
+
 ColorCmykUtil = {
 
     // average: function(colors)

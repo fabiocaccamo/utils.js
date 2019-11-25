@@ -1,3 +1,6 @@
+/** global: FunctionUtil */
+/** global: RandomUtil */
+
 RandomUtil = {
 
     argument: function()

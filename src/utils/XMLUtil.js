@@ -1,3 +1,5 @@
+/** global: XMLUtil */
+
 XMLUtil = {
 
     // decode: function(str)

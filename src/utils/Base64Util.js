@@ -1,3 +1,6 @@
+/** global: Base64Util */
+/** global: UTF8Util */
+
 Base64Util = {
 
     CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',

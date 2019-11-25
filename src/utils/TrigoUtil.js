@@ -1,3 +1,6 @@
+/** global: MathUtil */
+/** global: TrigoUtil */
+
 TrigoUtil = {
 
     DEG_0: 0.0,

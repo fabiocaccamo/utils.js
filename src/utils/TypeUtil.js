@@ -1,3 +1,9 @@
+/** global: Base64Util */
+/** global: JSONUtil */
+/** global: ObjectUtil */
+/** global: TypeUtil */
+/** global: URLUtil */
+
 TypeUtil = {
 
     ARRAY: 'array',

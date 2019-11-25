@@ -1,3 +1,5 @@
+/** global: URLUtil */
+
 URLUtil = {
 
     getParameterByName: function(url, name, defaultValue)

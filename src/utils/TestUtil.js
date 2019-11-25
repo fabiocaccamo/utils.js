@@ -1,3 +1,10 @@
+/** global: FunctionUtil */
+/** global: JSONUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: TestUtil */
+/** global: TypeUtil */
+
 TestUtil = {
 
     assertArray: function(val, len)

@@ -1,3 +1,14 @@
+/** global: ArrayUtil */
+/** global: Base64Util */
+/** global: DateUtil */
+/** global: FunctionUtil */
+/** global: JSONUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: StringUtil */
+/** global: TypeUtil */
+/** global: URLUtil */
+
 ObjectUtil = {
 
     assign: function(obj, obj1, obj2, obj3)

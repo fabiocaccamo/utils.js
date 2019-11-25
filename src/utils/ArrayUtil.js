@@ -1,3 +1,12 @@
+/** global: ArrayUtil */
+/** global: DateUtil */
+/** global: FunctionUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: RandomUtil */
+/** global: StringUtil */
+/** global: TypeUtil */
+
 ArrayUtil = {
 
     clean: function(list, hard)

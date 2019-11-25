@@ -1,3 +1,8 @@
+/** global: ColorRgbUtil */
+/** global: HexUtil */
+/** global: InterpolationUtil */
+/** global: MathUtil */
+
 ColorRgbUtil = {
 
     average: function(colors)

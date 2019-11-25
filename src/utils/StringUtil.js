@@ -1,3 +1,7 @@
+/** global: ArrayUtil */
+/** global: RandomUtil */
+/** global: StringUtil */
+
 StringUtil = {
 
     contains: function(str, occurrence)

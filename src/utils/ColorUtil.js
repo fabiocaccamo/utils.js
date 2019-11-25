@@ -1,3 +1,8 @@
+/** global: ColorUtil */
+/** global: ColorCmykUtil */
+/** global: ColorHexUtil */
+/** global: ColorRgbUtil */
+
 ColorUtil = {
 
     cmyk: ColorCmykUtil,

@@ -1,3 +1,6 @@
+/** global: DateUtil */
+/** global: StringUtil */
+
 DateUtil = {
 
     clone: function(date)

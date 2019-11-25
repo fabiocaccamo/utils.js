@@ -1,3 +1,5 @@
+/** global: HexUtil */
+
 HexUtil = {
 
     decodeInt: function(s)

@@ -1,3 +1,9 @@
+/** global: ArrayUtil */
+/** global: FunctionUtil */
+/** global: InterpolationUtil */
+/** global: MathUtil */
+/** global: TypeUtil */
+
 MathUtil = {
 
     average: function(values)

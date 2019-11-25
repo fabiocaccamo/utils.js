@@ -1,3 +1,6 @@
+/** global: FunctionUtil */
+/** global: TypeUtil */
+
 FunctionUtil = {
 
     args: function(argumentsObj, skipCount)

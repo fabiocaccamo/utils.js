@@ -1,3 +1,5 @@
+/** global: EaseUtil */
+
 EaseUtil = {
 
     backIn: function(t, s)

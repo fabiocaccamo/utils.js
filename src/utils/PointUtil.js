@@ -1,3 +1,8 @@
+/** global: MathUtil */
+/** global: InterpolationUtil */
+/** global: PointUtil */
+/** global: TrigoUtil */
+
 PointUtil = {
 
     add: function(a, b)
