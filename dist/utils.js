@@ -39,11 +39,11 @@ ArrayUtil = {
     clean: function(list, hard)
     {
         var items = list.slice();
-        items = items.filter(function(item, index, arr) {
+        items = items.filter(function(item) {
             return (!TypeUtil.isNone(item));
         });
         if (hard === true) {
-            items = items.map(function(item, index, arr) {
+            items = items.map(function(item) {
                 var itemClean;
                 switch (TypeUtil.of(item)) {
                     case TypeUtil.ARRAY:
@@ -58,7 +58,7 @@ ArrayUtil = {
                     default:
                         return item;
                 }
-            }).filter(function(item, index, arr) {
+            }).filter(function(item) {
                 return (!TypeUtil.isNone(item));
             });
         }
@@ -88,20 +88,20 @@ ArrayUtil = {
         return cln;
     },
 
-    contains: function(list, value1, value2, value3)
+    contains: function(list, value)
     {
-        var values = FunctionUtil.args(arguments, 1);
-        var value, valueFound;
+        var values = [value].concat(FunctionUtil.args(arguments, 2));
+        var val, valFound;
 
         for (var i = 0, j = values.length; i < j; i++) {
-            value = values[i];
-            valueFound = false;
+            val = values[i];
+            valFound = false;
             for (var k = 0, m = list.length; k < m; k++) {
-                if (ObjectUtil.equals(list[k], value)) {
-                    valueFound = true;
+                if (ObjectUtil.equals(list[k], val)) {
+                    valFound = true;
                 }
             }
-            if (!valueFound) {
+            if (!valFound) {
                 return false;
             }
         }
@@ -292,7 +292,7 @@ ArrayUtil = {
 
     zip: function(list1, list2)
     {
-        var lists = FunctionUtil.args(arguments);
+        var lists = [list1, list2].concat(FunctionUtil.args(arguments, 2));
         var listLength = 0;
         lists.forEach(function(item) {
             listLength = (listLength === 0 ? item.length : Math.min(listLength, item.length));
@@ -2123,7 +2123,7 @@ ObjectUtil = {
             }
             if (TypeUtil.isNone(val)) {
                 delete obj[key];
-                continue;
+                // continue;
             }
         }
         return obj;
@@ -2180,8 +2180,8 @@ ObjectUtil = {
 
     encodeParameters: function(obj, keysFilter)
     {
-        var objClean = utils.object.clean(utils.object.clone(obj), true);
-        var keys = (utils.type.isArray(keysFilter) ? keysFilter : utils.object.keys(obj, true));
+        var objClean = ObjectUtil.clean(ObjectUtil.clone(obj), true);
+        var keys = (TypeUtil.isArray(keysFilter) ? keysFilter : ObjectUtil.keys(obj, true));
         var key, val, keyval = [];
 
         for (var i = 0, j = keys.length; i < j; i++) {
@@ -2320,10 +2320,10 @@ ObjectUtil = {
         return m;
     },
 
-    merge: function(obj1, obj2, obj3)
+    merge: function(obj1, obj2)
     {
-        var args = [{}].concat(FunctionUtil.args(arguments));
-        var obj = ObjectUtil.assign.apply(null, args);
+        var objs = [{}, obj1, obj2].concat(FunctionUtil.args(arguments, 2));
+        var obj = ObjectUtil.assign.apply(null, objs);
         return obj;
     },
 
@@ -3453,4 +3453,3 @@ XMLUtil = {
 
     return utils;
 }));
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInV0aWxzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0EiLCJmaWxlIjoidXRpbHMuanMiLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gKHJvb3QsIGZhY3RvcnkpIHtcblxuICAgIGlmICh0eXBlb2YoZGVmaW5lKSA9PT0gJ2Z1bmN0aW9uJyAmJiBkZWZpbmUuYW1kKSB7XG4gICAgICAgIC8vIEFNRFxuICAgICAgICBkZWZpbmUoZmFjdG9yeSk7XG4gICAgfVxuICAgIGVsc2UgaWYgKHR5cGVvZihtb2R1bGUpID09PSAnb2JqZWN0Jykge1xuICAgICAgICAvLyBDb21tb25KU1xuICAgICAgICBtb2R1bGUuZXhwb3J0cyA9IGZhY3RvcnkoKTtcbiAgICB9XG4gICAgZWxzZSB7XG4gICAgICAgIC8vIFNjcmlwdCB0YWcgaW1wb3J0IGkuZS4sIElJRkVcbiAgICAgICAgcm9vdC51dGlscyA9IGZhY3RvcnkoKTtcbiAgICAgICAgcm9vdC51ID0gZmFjdG9yeSgpO1xuICAgIH1cblxufSh0aGlzLCBmdW5jdGlvbigpIHtcblxuICAgICd1c2Ugc3RyaWN0JztcblxuICAgIHZhciBBcnJheVV0aWwsIEJhc2U2NFV0aWwsXG4gICAgICAgIENvbG9yQ215a1V0aWwsIENvbG9ySGV4VXRpbCwgQ29sb3JSZ2JVdGlsLCBDb2xvclV0aWwsXG4gICAgICAgIERhdGVVdGlsLCBFYXNlVXRpbCwgRnVuY3Rpb25VdGlsLCBQb2ludFV0aWwsIEdlb21VdGlsLFxuICAgICAgICBIZXhVdGlsLCBJbnRlcnBvbGF0aW9uVXRpbCwgSlNPTlV0aWwsIE1hdGhVdGlsLCBOdW1iZXJVdGlsLFxuICAgICAgICBPYmplY3RVdGlsLCBSYW5kb21VdGlsLCBTdHJpbmdVdGlsLCBUZXN0VXRpbCwgVHJpZ29VdGlsLFxuICAgICAgICBUeXBlVXRpbCwgVVJMVXRpbCwgVVRGOFV0aWwsIFhNTFV0aWw7XG5cbiAgICBAaW1wb3J0ICcuL3V0aWxzL0FycmF5VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Jhc2U2NFV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9Db2xvckNteWtVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JIZXhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JSZ2JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvQ29sb3JVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvRGF0ZVV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9FYXNlVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0Z1bmN0aW9uVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1BvaW50VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0dlb21VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSGV4VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL0ludGVycG9sYXRpb25VdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvSlNPTlV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9NYXRoVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL051bWJlclV0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9PYmplY3RVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvUmFuZG9tVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1N0cmluZ1V0aWwuanMnXG4gICAgQGltcG9ydCAnLi91dGlscy9UZXN0VXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1RyaWdvVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1R5cGVVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvVVJMVXRpbC5qcydcbiAgICBAaW1wb3J0ICcuL3V0aWxzL1VURjhVdGlsLmpzJ1xuICAgIEBpbXBvcnQgJy4vdXRpbHMvWE1MVXRpbC5qcydcblxuICAgIHZhciB1dGlscyA9IHtcbiAgICAgICAgYXJyYXk6IEFycmF5VXRpbCxcbiAgICAgICAgYmFzZTY0OiBCYXNlNjRVdGlsLFxuICAgICAgICBjb2xvcjogQ29sb3JVdGlsLFxuICAgICAgICBkYXRlOiBEYXRlVXRpbCxcbiAgICAgICAgZWFzZTogRWFzZVV0aWwsXG4gICAgICAgIGZ1bmM6IEZ1bmN0aW9uVXRpbCxcbiAgICAgICAgZ2VvbTogR2VvbVV0aWwsXG4gICAgICAgIC8vIHBvaW50OiBQb2ludFV0aWwsXG4gICAgICAgIGhleDogSGV4VXRpbCxcbiAgICAgICAganNvbjogSlNPTlV0aWwsXG4gICAgICAgIG1hdGg6IE1hdGhVdGlsLFxuICAgICAgICAvLyBpbnRlcnBvbGF0aW9uOiBJbnRlcnBvbGF0aW9uVXRpbCxcbiAgICAgICAgbnVtYmVyOiBOdW1iZXJVdGlsLFxuICAgICAgICBvYmplY3Q6IE9iamVjdFV0aWwsXG4gICAgICAgIHJhbmRvbTogUmFuZG9tVXRpbCxcbiAgICAgICAgc3RyaW5nOiBTdHJpbmdVdGlsLFxuICAgICAgICB0ZXN0OiBUZXN0VXRpbCxcbiAgICAgICAgdHJpZ286IFRyaWdvVXRpbCxcbiAgICAgICAgdHlwZTogVHlwZVV0aWwsXG4gICAgICAgIHhtbDogWE1MVXRpbCxcbiAgICAgICAgdXJsOiBVUkxVdGlsLFxuICAgICAgICB1dGY4OiBVVEY4VXRpbFxuICAgIH07XG5cbiAgICByZXR1cm4gdXRpbHM7XG59KSk7Il19

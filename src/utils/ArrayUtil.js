@@ -12,11 +12,11 @@ ArrayUtil = {
     clean: function(list, hard)
     {
         var items = list.slice();
-        items = items.filter(function(item, index, arr) {
+        items = items.filter(function(item) {
             return (!TypeUtil.isNone(item));
         });
         if (hard === true) {
-            items = items.map(function(item, index, arr) {
+            items = items.map(function(item) {
                 var itemClean;
                 switch (TypeUtil.of(item)) {
                     case TypeUtil.ARRAY:
@@ -31,7 +31,7 @@ ArrayUtil = {
                     default:
                         return item;
                 }
-            }).filter(function(item, index, arr) {
+            }).filter(function(item) {
                 return (!TypeUtil.isNone(item));
             });
         }
@@ -61,20 +61,20 @@ ArrayUtil = {
         return cln;
     },
 
-    contains: function(list, value1, value2, value3)
+    contains: function(list, value)
     {
-        var values = FunctionUtil.args(arguments, 1);
-        var value, valueFound;
+        var values = [value].concat(FunctionUtil.args(arguments, 2));
+        var val, valFound;
 
         for (var i = 0, j = values.length; i < j; i++) {
-            value = values[i];
-            valueFound = false;
+            val = values[i];
+            valFound = false;
             for (var k = 0, m = list.length; k < m; k++) {
-                if (ObjectUtil.equals(list[k], value)) {
-                    valueFound = true;
+                if (ObjectUtil.equals(list[k], val)) {
+                    valFound = true;
                 }
             }
-            if (!valueFound) {
+            if (!valFound) {
                 return false;
             }
         }
@@ -265,7 +265,7 @@ ArrayUtil = {
 
     zip: function(list1, list2)
     {
-        var lists = FunctionUtil.args(arguments);
+        var lists = [list1, list2].concat(FunctionUtil.args(arguments, 2));
         var listLength = 0;
         lists.forEach(function(item) {
             listLength = (listLength === 0 ? item.length : Math.min(listLength, item.length));

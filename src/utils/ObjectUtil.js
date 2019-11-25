@@ -52,7 +52,7 @@ ObjectUtil = {
             }
             if (TypeUtil.isNone(val)) {
                 delete obj[key];
-                continue;
+                // continue;
             }
         }
         return obj;
@@ -109,8 +109,8 @@ ObjectUtil = {
 
     encodeParameters: function(obj, keysFilter)
     {
-        var objClean = utils.object.clean(utils.object.clone(obj), true);
-        var keys = (utils.type.isArray(keysFilter) ? keysFilter : utils.object.keys(obj, true));
+        var objClean = ObjectUtil.clean(ObjectUtil.clone(obj), true);
+        var keys = (TypeUtil.isArray(keysFilter) ? keysFilter : ObjectUtil.keys(obj, true));
         var key, val, keyval = [];
 
         for (var i = 0, j = keys.length; i < j; i++) {
@@ -249,10 +249,10 @@ ObjectUtil = {
         return m;
     },
 
-    merge: function(obj1, obj2, obj3)
+    merge: function(obj1, obj2)
     {
-        var args = [{}].concat(FunctionUtil.args(arguments));
-        var obj = ObjectUtil.assign.apply(null, args);
+        var objs = [{}, obj1, obj2].concat(FunctionUtil.args(arguments, 2));
+        var obj = ObjectUtil.assign.apply(null, objs);
         return obj;
     },
 
