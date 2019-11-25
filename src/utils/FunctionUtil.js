@@ -11,8 +11,8 @@ FunctionUtil = {
     attempt: function(func, scope)
     {
         try {
-            var args = FunctionUtil.args(arguments);
-            var result = FunctionUtil.call.apply(null, args);
+            var args = FunctionUtil.args(arguments, 2);
+            var result = FunctionUtil.call.apply(null, [func, scope].concat(args));
             return result;
         }
         catch(e) {
@@ -22,9 +22,9 @@ FunctionUtil = {
 
     bind: function(func, scope)
     {
-        var args = FunctionUtil.args(arguments);
-        return function(){
-            var result = FunctionUtil.call.apply(null, args);
+        var args = FunctionUtil.args(arguments, 2);
+        return function() {
+            var result = FunctionUtil.call.apply(null, [func, scope].concat(args));
             return result;
         };
     },
@@ -124,7 +124,7 @@ FunctionUtil = {
         var arg, argType, argTypes;
         for (i = 0, j = args.length; i < j; i++) {
             arg = args[i];
-            argType = TypeUtil.of(args[i]);
+            argType = TypeUtil.of(arg);
             argTypes = types[Math.min(i, (types.length - 1))];
             if (argTypes.indexOf(argType) === -1) {
                 throw new TypeError('invalid argument: type of argument[' + i + '] is "' + argType + '", expected "' + argTypes.join('" or "') + '".');

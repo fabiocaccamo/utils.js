@@ -39,6 +39,7 @@ TypeUtil = {
                 }
             }
             catch(e){
+                // value is not valid base64 data
             }
         }
         return false;
@@ -72,6 +73,7 @@ TypeUtil = {
                 return true;
             }
             catch(e){
+                // value is not valid json data
             }
         }
         return false;

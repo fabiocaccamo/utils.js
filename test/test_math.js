@@ -164,10 +164,11 @@ describe('math', function() {
             test.assertNumberAlmostEqual(f(10, null, 100, 1000), 100);
             test.assertNumberAlmostEqual(f(10, 100, null, 1000), 100);
             test.assertNumberAlmostEqual(f(10, 100, 100, null), 1000);
-            test.assertNaN(f(null, null, 100, 1000), 10);
-            test.assertNaN(f(10, null, null, 1000), 100);
-            test.assertNaN(f(10, 100, null, null), 100);
-            test.assertNaN(f(null, 100, 100, null), 1000);
+            test.assertNaN(f(null, null, 100, 1000));
+            test.assertNaN(f(10, null, null, 1000));
+            test.assertNaN(f(10, 100, null, null));
+            test.assertNaN(f(null, 100, 100, null));
+            test.assertNaN(f(1, 10, 10, 100));
         });
     });
     describe('roundDecimals', function() {

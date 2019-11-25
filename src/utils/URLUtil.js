@@ -54,6 +54,7 @@ URLUtil = {
         try {
             url = window.location.href;
         } catch(e) {
+            // catch exception if not running in browser
         }
         return url;
     },

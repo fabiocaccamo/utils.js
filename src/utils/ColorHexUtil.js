@@ -157,6 +157,9 @@ ColorHexUtil = {
                     b: fromHex(comps[4])
                 };
                 break;
+
+            default:
+                throw new Error('Invalid hex color length.');
         }
 
         // console.log(col, hex, rgb, comps);

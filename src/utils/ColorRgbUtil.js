@@ -238,7 +238,7 @@ ColorRgbUtil = {
         var g = (isNaN(color.g) ? 0 : color.g);
         var b = (isNaN(color.b) ? 0 : color.b);
         var hex = HexUtil.encodeInt;
-        return String((prefix || '#') + ((a == null || a >= 1.0) ? '' : hex(a * 255)) + hex(r) + hex(g) + hex(b));
+        return String((prefix || '#') + ((a === null || a >= 1.0) ? '' : hex(a * 255)) + hex(r) + hex(g) + hex(b));
     },
 
     // toHsl: function(color)

@@ -264,6 +264,9 @@ describe('color.hex', function() {
             r = f('0x000000');
             test.assertEqual(r, { r:0, g:0, b:0, a:1.0 });
         });
+        it('test invalid value', function() {
+            test.assertThrows(f, '0x000000000000');
+        });
     });
     describe('toString', function() {
         var f = hex.toString;
