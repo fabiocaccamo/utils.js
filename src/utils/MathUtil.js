@@ -10,14 +10,17 @@ MathUtil = {
         return Math.min(Math.max(n, Math.min(a, b)), Math.max(a, b));
     },
 
-    cycle: function(n, cycleLength)
+    cycle: function(n, len, shift)
     {
-        return (((n % cycleLength) + cycleLength) % cycleLength);
+        if (!TypeUtil.isNumber(shift)) {
+            shift = 0;
+        }
+        return (((((n - shift) % len) + len) % len) + shift);
     },
 
     equals: function(a, b, tolerance)
     {
-        if (isNaN(tolerance)) {
+        if (!TypeUtil.isNumber(tolerance)) {
             tolerance = 0.0000000001;
         } else if (tolerance > 0.0) {
             tolerance += 0.0000000001;

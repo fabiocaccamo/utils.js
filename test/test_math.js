@@ -26,21 +26,50 @@ describe('math', function() {
     });
     describe('cycle', function() {
         var f = math.cycle;
-        it('test n > cycle length', function() {
+        it('test n > cycle length && shift = 0', function() {
             test.assertNumberAlmostEqual(f(13, 10), 3);
             test.assertNumberAlmostEqual(f(27, 10), 7);
         });
-        it('test n < cycle length', function() {
+        it('test n < cycle length && shift = 0', function() {
             test.assertNumberAlmostEqual(f(2, 10), 2);
         });
-        it('test n == cycle length', function() {
+        it('test n == cycle length && shift = 0', function() {
             test.assertNumberAlmostEqual(f(10, 10), 0);
         });
-        it('test n < 0 && n < cycle length', function() {
+        it('test n > 0 && n < cycle length && shift = 0', function() {
+            test.assertNumberAlmostEqual(f(0, 10), 0);
+            test.assertNumberAlmostEqual(f(1, 10), 1);
+            test.assertNumberAlmostEqual(f(2, 10), 2);
+            test.assertNumberAlmostEqual(f(3, 10), 3);
+            test.assertNumberAlmostEqual(f(4, 10), 4);
+            test.assertNumberAlmostEqual(f(5, 10), 5);
+            test.assertNumberAlmostEqual(f(6, 10), 6);
+            test.assertNumberAlmostEqual(f(7, 10), 7);
+            test.assertNumberAlmostEqual(f(8, 10), 8);
+            test.assertNumberAlmostEqual(f(9, 10), 9);
+        });
+        it('test n < 0 && n < cycle length && shift = 0', function() {
             test.assertNumberAlmostEqual(f(-2, 10), 8);
         });
-        it('test n < 0 && n > cycle length', function() {
+        it('test n < 0 && n > cycle length && shift = 0', function() {
             test.assertNumberAlmostEqual(f(-13, 10), 7);
+        });
+        it('test n {-5,9} && shift = 1', function() {
+            test.assertNumberAlmostEqual(f(-5, 3, 1), 1);
+            test.assertNumberAlmostEqual(f(-4, 3, 1), 2);
+            test.assertNumberAlmostEqual(f(-3, 3, 1), 3);
+            test.assertNumberAlmostEqual(f(-2, 3, 1), 1);
+            test.assertNumberAlmostEqual(f(-1, 3, 1), 2);
+            test.assertNumberAlmostEqual(f(0, 3, 1), 3);
+            test.assertNumberAlmostEqual(f(1, 3, 1), 1);
+            test.assertNumberAlmostEqual(f(2, 3, 1), 2);
+            test.assertNumberAlmostEqual(f(3, 3, 1), 3);
+            test.assertNumberAlmostEqual(f(4, 3, 1), 1);
+            test.assertNumberAlmostEqual(f(5, 3, 1), 2);
+            test.assertNumberAlmostEqual(f(6, 3, 1), 3);
+            test.assertNumberAlmostEqual(f(7, 3, 1), 1);
+            test.assertNumberAlmostEqual(f(8, 3, 1), 2);
+            test.assertNumberAlmostEqual(f(9, 3, 1), 3);
         });
     });
     describe('equals', function() {
