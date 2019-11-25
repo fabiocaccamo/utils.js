@@ -25,7 +25,16 @@
         ObjectUtil, RandomUtil, StringUtil, TestUtil, TrigoUtil,
         TypeUtil, URLUtil, UTF8Util, XMLUtil;
 
-    ArrayUtil = {
+    /** global: ArrayUtil */
+/** global: DateUtil */
+/** global: FunctionUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: RandomUtil */
+/** global: StringUtil */
+/** global: TypeUtil */
+
+ArrayUtil = {
 
     clean: function(list, hard)
     {
@@ -299,7 +308,10 @@
     }
 
 };
-    Base64Util = {
+    /** global: Base64Util */
+/** global: UTF8Util */
+
+Base64Util = {
 
     CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
     CHARS_LIST: [
@@ -398,7 +410,10 @@
         return output;
     }
 };
-    ColorCmykUtil = {
+    /** global: ColorCmykUtil */
+/** global: ColorRgbUtil */
+
+ColorCmykUtil = {
 
     // average: function(colors)
     // {
@@ -531,7 +546,15 @@
     }
 
 };
-    ColorHexUtil = {
+    /** global: ColorHexUtil */
+/** global: ColorRgbUtil */
+/** global: HexUtil */
+/** global: InterpolationUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: TypeUtil */
+
+ColorHexUtil = {
 
     average: function(colors)
     {
@@ -700,7 +723,12 @@
     }
 
 };
-    ColorRgbUtil = {
+    /** global: ColorRgbUtil */
+/** global: HexUtil */
+/** global: InterpolationUtil */
+/** global: MathUtil */
+
+ColorRgbUtil = {
 
     average: function(colors)
     {
@@ -960,7 +988,12 @@
     }
 
 };
-    ColorUtil = {
+    /** global: ColorUtil */
+/** global: ColorCmykUtil */
+/** global: ColorHexUtil */
+/** global: ColorRgbUtil */
+
+ColorUtil = {
 
     cmyk: ColorCmykUtil,
     // cmykToGrayscale: ColorCmykUtil.toGrayscale,
@@ -1005,7 +1038,10 @@
     // rgbToHsv: ColorRgbUtil.toHsv
 
 };
-    DateUtil = {
+    /** global: DateUtil */
+/** global: StringUtil */
+
+DateUtil = {
 
     clone: function(date)
     {
@@ -1054,7 +1090,9 @@
         return (String(yy) + sep + StringUtil.padZeros(mm, 2) + sep + StringUtil.padZeros(dd, 2));
     }
 };
-    EaseUtil = {
+    /** global: EaseUtil */
+
+EaseUtil = {
 
     backIn: function(t, s)
     {
@@ -1455,7 +1493,10 @@
     }
 
 };
-    FunctionUtil = {
+    /** global: FunctionUtil */
+/** global: TypeUtil */
+
+FunctionUtil = {
 
     args: function(argumentsObj, skipCount)
     {
@@ -1586,7 +1627,12 @@
         }
     }
 };
-    PointUtil = {
+    /** global: MathUtil */
+/** global: InterpolationUtil */
+/** global: PointUtil */
+/** global: TrigoUtil */
+
+PointUtil = {
 
     add: function(a, b)
     {
@@ -1717,12 +1763,17 @@
     }
 
 };
-    GeomUtil = {
+    /** global: GeomUtil */
+/** global: PointUtil */
+
+GeomUtil = {
 
     point: PointUtil
 
 };
-    HexUtil = {
+    /** global: HexUtil */
+
+HexUtil = {
 
     decodeInt: function(s)
     {
@@ -1735,7 +1786,10 @@
         return (hex.length === 1 ? '0' + hex : hex);
     }
 };
-    InterpolationUtil = {
+    /** global: MathUtil */
+/** global: InterpolationUtil */
+
+InterpolationUtil = {
 
     bilinear: function(a, b, c, d, u, v)
     {
@@ -1770,7 +1824,9 @@
     }
 
 };
-    JSONUtil = {
+    /** global: JSONUtil */
+
+JSONUtil = {
 
     decode: function(str)
     {
@@ -1791,7 +1847,13 @@
         return JSON.stringify(obj);
     }
 };
-    MathUtil = {
+    /** global: ArrayUtil */
+/** global: FunctionUtil */
+/** global: InterpolationUtil */
+/** global: MathUtil */
+/** global: TypeUtil */
+
+MathUtil = {
 
     average: function(values)
     {
@@ -1946,7 +2008,9 @@
     }
 
 };
-    NumberUtil = {
+    /** global: NumberUtil */
+
+NumberUtil = {
 
     isBetween: function(n, min, max)
     {
@@ -2001,7 +2065,18 @@
     }
 
 };
-    ObjectUtil = {
+    /** global: ArrayUtil */
+/** global: Base64Util */
+/** global: DateUtil */
+/** global: FunctionUtil */
+/** global: JSONUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: StringUtil */
+/** global: TypeUtil */
+/** global: URLUtil */
+
+ObjectUtil = {
 
     assign: function(obj, obj1, obj2, obj3)
     {
@@ -2278,7 +2353,10 @@
     }
 
 };
-    RandomUtil = {
+    /** global: FunctionUtil */
+/** global: RandomUtil */
+
+RandomUtil = {
 
     argument: function()
     {
@@ -2340,7 +2418,11 @@
         return s;
     }
 };
-    StringUtil = {
+    /** global: ArrayUtil */
+/** global: RandomUtil */
+/** global: StringUtil */
+
+StringUtil = {
 
     contains: function(str, occurrence)
     {
@@ -2574,7 +2656,14 @@
     }
 
 };
-    TestUtil = {
+    /** global: FunctionUtil */
+/** global: JSONUtil */
+/** global: MathUtil */
+/** global: ObjectUtil */
+/** global: TestUtil */
+/** global: TypeUtil */
+
+TestUtil = {
 
     assertArray: function(val, len)
     {
@@ -2856,7 +2945,10 @@
     // }
 
 };
-    TrigoUtil = {
+    /** global: MathUtil */
+/** global: TrigoUtil */
+
+TrigoUtil = {
 
     DEG_0: 0.0,
     DEG_90: 90.0,
@@ -2939,7 +3031,13 @@
     }
 
 };
-    TypeUtil = {
+    /** global: Base64Util */
+/** global: JSONUtil */
+/** global: ObjectUtil */
+/** global: TypeUtil */
+/** global: URLUtil */
+
+TypeUtil = {
 
     ARRAY: 'array',
     BOOLEAN: 'boolean',
@@ -3128,7 +3226,9 @@
     }
 
 };
-    URLUtil = {
+    /** global: URLUtil */
+
+URLUtil = {
 
     getParameterByName: function(url, name, defaultValue)
     {
@@ -3213,7 +3313,9 @@
     }
 
 };
-    UTF8Util = {
+    /** global: UTF8Util */
+
+UTF8Util = {
 
     decode: function(input)
     {
@@ -3279,7 +3381,9 @@
         // return output;
     }
 };
-    XMLUtil = {
+    /** global: XMLUtil */
+
+XMLUtil = {
 
     // decode: function(str)
     // {
