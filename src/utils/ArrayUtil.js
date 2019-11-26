@@ -172,7 +172,7 @@ ArrayUtil = {
 
     remove: function(list, value)
     {
-        var values = FunctionUtil.args(arguments, 1);
+        var values = [value].concat(FunctionUtil.args(arguments, 2));
         for (var k = 0, m = values.length; k < m; k++) {
             for (var i = 0, j = list.length; i < j; i++) {
                 if (ObjectUtil.equals(list[i], values[k])) {

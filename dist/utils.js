@@ -199,7 +199,7 @@ ArrayUtil = {
 
     remove: function(list, value)
     {
-        var values = FunctionUtil.args(arguments, 1);
+        var values = [value].concat(FunctionUtil.args(arguments, 2));
         for (var k = 0, m = values.length; k < m; k++) {
             for (var i = 0, j = list.length; i < j; i++) {
                 if (ObjectUtil.equals(list[i], values[k])) {
@@ -1112,11 +1112,10 @@ EaseUtil = {
         if (t < 1.0) {
             s *= 1.525;
             return 0.5 * (t * t * ((s + 1.0) * t - s));
-        } else {
-            t -= 2.0;
-            s *= 1.525;
-            return 0.5 * (t * t * ((s + 1.0) * t + s) + 2.0);
         }
+        t -= 2.0;
+        s *= 1.525;
+        return 0.5 * (t * t * ((s + 1.0) * t + s) + 2.0);
     },
 
     backOut: function(t, s)
@@ -1130,7 +1129,6 @@ EaseUtil = {
     bounceIn: function(t)
     {
         t = (1.0 - t);
-
         if (t < (1.0 / 2.75)) {
             return 1.0 - (7.5625 * t * t);
         }
@@ -1142,17 +1140,14 @@ EaseUtil = {
             t -= (2.25 / 2.75);
             return 1.0 - (7.5625 * t * t + 0.9375);
         }
-        else {
-            t -= (2.625 / 2.75);
-            return 1.0 - (7.5625 * t * t + 0.984375);
-        }
+        t -= (2.625 / 2.75);
+        return 1.0 - (7.5625 * t * t + 0.984375);
     },
 
     bounceInOut: function(t)
     {
         if (t < 0.5) {
             t = (1.0 - t);
-
             if (t < (1.0 / 2.75)) {
                 return 1.0 - (7.5625 * t * t);
             }
@@ -1164,27 +1159,22 @@ EaseUtil = {
                 t -= (2.25 / 2.75);
                 return 1.0 - (7.5625 * t * t + 0.9375);
             }
-            else {
-                t -= (2.625 / 2.75);
-                return 1.0 - (7.5625 * t * t + 0.984375);
-            }
-        } else {
-            if (t < (1.0 / 2.75)) {
-                return (7.5625 * t * t);
-            }
-            else if (t < (2.0 / 2.75)) {
-                t -= (1.5 / 2.75);
-                return (7.5625 * t * t + 0.75);
-            }
-            else if (t < (2.5 / 2.75)) {
-                t -= (2.25 / 2.75);
-                return (7.5625 * t * t + 0.9375);
-            }
-            else {
-                t -= (2.625 / 2.75);
-                return (7.5625 * t * t + 0.984375);
-            }
+            t -= (2.625 / 2.75);
+            return 1.0 - (7.5625 * t * t + 0.984375);
         }
+        if (t < (1.0 / 2.75)) {
+            return (7.5625 * t * t);
+        }
+        else if (t < (2.0 / 2.75)) {
+            t -= (1.5 / 2.75);
+            return (7.5625 * t * t + 0.75);
+        }
+        else if (t < (2.5 / 2.75)) {
+            t -= (2.25 / 2.75);
+            return (7.5625 * t * t + 0.9375);
+        }
+        t -= (2.625 / 2.75);
+        return (7.5625 * t * t + 0.984375);
     },
 
     bounceOut: function(t)
@@ -1200,10 +1190,8 @@ EaseUtil = {
             t -= (2.25 / 2.75);
             return (7.5625 * t * t + 0.9375);
         }
-        else {
-            t -= (2.625 / 2.75);
-            return (7.5625 * t * t + 0.984375);
-        }
+        t -= (2.625 / 2.75);
+        return (7.5625 * t * t + 0.984375);
     },
 
     circularIn: function(t)
