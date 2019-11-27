@@ -664,8 +664,10 @@ ColorHexUtil = {
         var hex;
         if (TypeUtil.isNumber(color)) {
             hex = toHex(color);
+        } else if (TypeUtil.isString(color)) {
+            hex = color.replace(/\#|0x/, '');
         } else {
-            hex = String(color).replace(/\#|0x/, '');
+            return null;
         }
         hex = hex.toUpperCase();
 
@@ -707,7 +709,7 @@ ColorHexUtil = {
                 break;
 
             default:
-                throw new Error('Invalid hex color length.');
+                return null;
         }
 
         // console.log(col, hex, rgb, comps);
@@ -1885,7 +1887,7 @@ MathUtil = {
 
     gcd: function(a, b)
     {
-        if (a == b) {
+        if (a === b) {
             return a;
         }
         if (a < b) {
@@ -2084,8 +2086,10 @@ ObjectUtil = {
 
     clean: function(obj, hard)
     {
+        var keys = ObjectUtil.keys(obj);
         var key, val;
-        for (key in obj) {
+        for (var i = 0, j = keys.length; i < j; i++) {
+            key = keys[i];
             val = obj[key];
             if (hard === true) {
                 switch (TypeUtil.of(val)) {
@@ -2119,8 +2123,10 @@ ObjectUtil = {
     clone: function(obj)
     {
         var cln = {};
+        var keys = ObjectUtil.keys(obj);
         var key, val;
-        for (key in obj) {
+        for (var i = 0, j = keys.length; i < j; i++) {
+            key = keys[i];
             val = obj[key];
             switch (TypeUtil.of(val)) {
                 case TypeUtil.ARRAY:
@@ -3251,12 +3257,13 @@ URLUtil = {
         var paramsString = URLUtil.getParametersString(url);
         var paramsList = [];
         var paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
-        var paramMatch;
-        while (paramMatch = paramsRE.exec(paramsString)) {
+        var paramMatch = paramsRE.exec(paramsString);
+        while (paramMatch) {
             paramsList.push({
                 key: paramMatch[2],
                 value: decodeURIComponent(paramMatch[4] || '')
             });
+            paramMatch = paramsRE.exec(paramsString);
         }
         return paramsList;
     },

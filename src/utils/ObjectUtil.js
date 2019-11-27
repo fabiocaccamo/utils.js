@@ -25,8 +25,10 @@ ObjectUtil = {
 
     clean: function(obj, hard)
     {
+        var keys = ObjectUtil.keys(obj);
         var key, val;
-        for (key in obj) {
+        for (var i = 0, j = keys.length; i < j; i++) {
+            key = keys[i];
             val = obj[key];
             if (hard === true) {
                 switch (TypeUtil.of(val)) {
@@ -60,8 +62,10 @@ ObjectUtil = {
     clone: function(obj)
     {
         var cln = {};
+        var keys = ObjectUtil.keys(obj);
         var key, val;
-        for (key in obj) {
+        for (var i = 0, j = keys.length; i < j; i++) {
+            key = keys[i];
             val = obj[key];
             switch (TypeUtil.of(val)) {
                 case TypeUtil.ARRAY:

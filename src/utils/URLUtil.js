@@ -30,12 +30,13 @@ URLUtil = {
         var paramsString = URLUtil.getParametersString(url);
         var paramsList = [];
         var paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
-        var paramMatch;
-        while (paramMatch = paramsRE.exec(paramsString)) {
+        var paramMatch = paramsRE.exec(paramsString);
+        while (paramMatch) {
             paramsList.push({
                 key: paramMatch[2],
                 value: decodeURIComponent(paramMatch[4] || '')
             });
+            paramMatch = paramsRE.exec(paramsString);
         }
         return paramsList;
     },

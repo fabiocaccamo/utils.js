@@ -265,7 +265,7 @@ describe('color.hex', function() {
             test.assertEqual(r, { r:0, g:0, b:0, a:1.0 });
         });
         it('test invalid value', function() {
-            test.assertThrows(f, '0x000000000000');
+            test.assertNull(f('0x000000000000'));
         });
     });
     describe('toString', function() {

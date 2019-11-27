@@ -116,8 +116,10 @@ ColorHexUtil = {
         var hex;
         if (TypeUtil.isNumber(color)) {
             hex = toHex(color);
+        } else if (TypeUtil.isString(color)) {
+            hex = color.replace(/\#|0x/, '');
         } else {
-            hex = String(color).replace(/\#|0x/, '');
+            return null;
         }
         hex = hex.toUpperCase();
 
@@ -159,7 +161,7 @@ ColorHexUtil = {
                 break;
 
             default:
-                throw new Error('Invalid hex color length.');
+                return null;
         }
 
         // console.log(col, hex, rgb, comps);
