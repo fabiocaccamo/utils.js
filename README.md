@@ -12,39 +12,294 @@ JavaScript utils for lazy devs.
 
 ## Usage
 
-### Require JS
+### Browser
+```html
+<script src="node_modules/@fabiocaccamo/utils.js/dist/utils.min.js"></script>
+```
+
+### Node
 ```JavaScript
 var utils = require("@fabiocaccamo/utils.js");
 ```
 
 ## APIs
 
-### Packages
+### Packages & Methods
 -   `utils.array`
+    -   `clean`
+    -   `clone`
+    -   `contains`
+    -   `equals`
+    -   `flatten`
+    -   `index`
+    -   `insert`
+    -   `paginate`
+    -   `reduce`
+    -   `remove`
+    -   `replace`
+    -   `rotate`
+    -   `shuffle`
+    -   `sort`
+    -   `unique`
+    -   `unzip`
+    -   `zip`
 -   `utils.base64`
+    ​​-   `decode`
+    -   `encode`
 -   `utils.color`
 -   `utils.color.cmyk`
+    -   `cmykToHex`
+    -   `cmykToRgb`
 -   `utils.color.hex`
+    -   `hexToCmyk`
+    -   `hexToRgb`
 -   `utils.color.rgb`
+    -   `rgbToCmyk`
+    -   `rgbToHex`
 -   `utils.date`
+    -   `clone`
+    -   `timestamp`
+    -   `yyyymmdd`
 -   `utils.ease`
+    -   `backIn`
+    -   `backInOut`
+    -   `backOut`
+    -   `bounceIn`
+    -   `bounceInOut`
+    -   `bounceOut`
+    -   `circularIn`
+    -   `circularInOut`
+    -   `circularOut`
+    -   `cubicIn`
+    -   `cubicInOut`
+    -   `cubicOut`
+    -   `elasticIn`
+    -   `elasticInOut`:
+    -   `elasticOut`
+    -   `exponentialIn`
+    -   `exponentialInOut`
+    -   `exponentialOut`
+    -   `none`
+    -   `quadraticIn`
+    -   `quadraticInOut`
+    -   `quadraticOut`
+    -   `quarticIn`
+    -   `quarticInOut`
+    -   `quarticOut`
+    -   `quinticIn`:
+    -   `quinticInOut`
+    -   `quinticOut`
+    -   `sexticIn`
+    -   `sexticInOut`
+    -   `sexticOut`
+    -   `sineIn`
+    -   `sineInOut`
+    -   `sineOut`
+    -   `waveCosine`
+    -   `waveSawtooth`
+    -   `waveSine`
 -   `utils.func`
+    -   `args`
+    -   `attempt`
+    -   `bind`
+    -   `call`
+    -   `delay`
+    -   `memoize`
+    -   `noop`
+    -   `repeat`
+    -   `validate`
 -   `utils.geom`
 -   `utils.geom.point`
+    -   `add`
+    -   `angle`
+    -   `cross`
+    -   `distance`
+    -   `dot`
+    -   `equals`
+    -   `interpolate`
+    -   `length`
+    -   `magnitude`
+    -   `project`
+    -   `rect`
+    -   `rotate`
+    -   `scale`
+    -   `subtract`
+    -   `translate`
 -   `utils.hex`
+    -   `decodeInt`
+    -   `encodeInt`
 -   `utils.json`
+    -   `decode`
+    -   `encode`
 -   `utils.math`
+    -   `average`
+    -   `constrain`
+    -   `cycle`
+    -   `equals`
+    -   `factorial`
+    -   `gcd`
+    -   `lcm`
+    -   `lerp`
+    -   `map`
+    -   `nearest`
+    -   `normalize`
+    -   `proportion`
+    -   `roundDecimals`
+    -   `roundToMultiple`
+    -   `roundToNearest`
+    -   `roundToPower`
+    -   `sign`
+    -   `summation`
 -   `utils.math.interpolation`
+    -   `bilinear`
+    -   `linear`
+    -   `multilinear`
+    -   `scalar`
 -   `utils.number`
+    -   `isBetween`
+    -   `isEven`
+    -   `isFloat`
+    -   `isNegative`
+    -   `isOdd`
+    -   `isPositive`
+    -   `isPrime`
 -   `utils.object`
+    -   `assign`
+    -   `clean`
+    -   `clone`
+    -   `decodeBase64`
+    -   `decodeJSON`
+    -   `decodeParameters`
+    -   `encodeBase64`
+    -   `encodeJSON`
+    -   `encodeParameters`
+    -   `equals`
+    -   `is`
+    -   `keypath`
+    -   `keys`
+    -   `length`
+    -   `map`
+    -   `merge`
+    -   `search`
+    -   `values`
 -   `utils.random`
+    -   `argument`
+    -   `bit`
+    -   `boolean`
+    -   `color`
+    -   `element`
+    -   `float`
+    -   `index`
+    -   `integer`
+    -   `sign`
+    -   `string`
 -   `utils.string`
+    -   `contains`
+    -   `endsWith`
+    -   `icontains`
+    -   `levenshteinDistance`
+    -   `levenshteinSimilarity`
+    -   `padLeft`
+    -   `padRight`
+    -   `padZeros`
+    -   `replace`
+    -   `reverse`
+    -   `rotate`
+    -   `slugify`
+    -   `startsWith`
+    -   `toConstantCase`
+    -   `toRandomCase`
+    -   `toTitleCase`
+    -   `toUpperCaseFirst`
+    -   `trim`
+    -   `trimLeft`
+    -   `trimRight`
 -   `utils.test`
+    -   `assertArray`
+    -   `assertBase64`
+    -   `assertBoolean`
+    -   `assertDate`
+    -   `assertEqual`
+    -   `assertError`
+    -   `assertFalse`
+    -   `assertFunction`
+    -   `assertJSON`
+    -   `assertNaN`
+    -   `assertNone`
+    -   `assertNotArray`
+    -   `assertNotBase64`
+    -   `assertNotBoolean`
+    -   `assertNotDate`
+    -   `assertNotEqual`
+    -   `assertNotError`
+    -   `assertNotFunction`
+    -   `assertNotJSON`
+    -   `assertNotNone`
+    -   `assertNotNull`
+    -   `assertNotNumber`
+    -   `assertNotObject`
+    -   `assertNotRegExp`
+    -   `assertNotString`
+    -   `assertNotUndefined`
+    -   `assertNull`
+    -   `assertNumber`
+    -   `assertNumberAlmostEqual`
+    -   `assertObject`
+    -   `assertRegExp`
+    -   `assertString`
+    -   `assertThrows`
+    -   `assertTrue`
+    -   `assertUndefined`
 -   `utils.trigo`
+    -   `acosDeg`
+    -   `angleDeg`
+    -   `angleRad`
+    -   `asinDeg`
+    -   `atan2Deg`
+    -   `atanDeg`
+    -   `cosDeg`
+    -   `cycleDeg`
+    -   `degToRad`
+    -   `fastDeg`
+    -   `hypo`
+    -   `radToDeg`
+    -   `sinDeg`
+    -   `tanDeg`
 -   `utils.type`
+    -   `isArray`
+    -   `isBase64`
+    -   `isBoolean`
+    -   `isDate`
+    -   `isError`
+    -   `isFunction`
+    -   `isJSON`
+    -   `isNaN`
+    -   `isNone`
+    -   `isNull`
+    -   `isNumber`
+    -   `isObject`
+    -   `isRegExp`
+    -   `isString`
+    -   `isType`
+    -   `isUndefined`
+    -   `of`
 -   `utils.url`
+    -   `getParameterByName`
+    -   `getParameters`
+    -   `getParametersDict`
+    -   `getParametersList`
+    -   `getParametersString`
+    -   `getURL`
+    -   `hasParameter`
+    -   `isFile`
+    -   `isHttp`
+    -   `isHttps`
+    -   `isLocalhost`
 -   `utils.utf8`
+    -   `decode`
+    -   `encode`
 -   `utils.xml`
+    -   `removeNamespaces`
 
 ## Development
 
