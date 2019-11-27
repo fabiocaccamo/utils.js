@@ -86,7 +86,7 @@ TypeUtil = {
 
     isNone: function(val)
     {
-        return (ObjectUtil.is(val, undefined) || ObjectUtil.is(val, null) || ObjectUtil.is(val, NaN));
+        return (TypeUtil.isUndefined(val) || TypeUtil.isNull(val) || TypeUtil.isNaN(val));
     },
 
     isNumber: function(val)

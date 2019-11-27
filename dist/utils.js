@@ -2268,7 +2268,7 @@ ObjectUtil = {
                     return defaultValue;
                 }
             }
-            return ((cursor !== undefined) ? cursor : defaultValue);
+            return (TypeUtil.isUndefined(cursor) ? defaultValue : cursor);
         },
 
         set: function(obj, path, value)
@@ -2322,11 +2322,13 @@ ObjectUtil = {
 
     search: function(objs, filter)
     {
-        var results = [], obj, res, key, val;
-        for (var i = 0, j = objs.length; i < j; i++) {
+        var results = [], i, j, k, m, obj, res, keys, key, val;
+        for (i = 0, j = objs.length; i < j; i++) {
             obj = objs[i];
             res = obj;
-            for (key in filter) {
+            keys = ObjectUtil.keys(filter);
+            for (k = 0, m = keys.length; k < m; k++) {
+                key = keys[k];
                 val = filter[key];
                 if (!ObjectUtil.equals(obj[key], val)) {
                     res = null;
@@ -2474,7 +2476,7 @@ StringUtil = {
 
     padLeft: function(str, len, char)
     {
-        var i = str.length
+        var i = str.length;
         while (i < len) {
             str = (char + str);
             i++;
@@ -3116,7 +3118,7 @@ TypeUtil = {
 
     isNone: function(val)
     {
-        return (ObjectUtil.is(val, undefined) || ObjectUtil.is(val, null) || ObjectUtil.is(val, NaN));
+        return (TypeUtil.isUndefined(val) || TypeUtil.isNull(val) || TypeUtil.isNaN(val));
     },
 
     isNumber: function(val)

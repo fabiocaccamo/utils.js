@@ -207,7 +207,7 @@ ObjectUtil = {
                     return defaultValue;
                 }
             }
-            return ((cursor !== undefined) ? cursor : defaultValue);
+            return (TypeUtil.isUndefined(cursor) ? defaultValue : cursor);
         },
 
         set: function(obj, path, value)
@@ -261,11 +261,13 @@ ObjectUtil = {
 
     search: function(objs, filter)
     {
-        var results = [], obj, res, key, val;
-        for (var i = 0, j = objs.length; i < j; i++) {
+        var results = [], i, j, k, m, obj, res, keys, key, val;
+        for (i = 0, j = objs.length; i < j; i++) {
             obj = objs[i];
             res = obj;
-            for (key in filter) {
+            keys = ObjectUtil.keys(filter);
+            for (k = 0, m = keys.length; k < m; k++) {
+                key = keys[k];
                 val = filter[key];
                 if (!ObjectUtil.equals(obj[key], val)) {
                     res = null;

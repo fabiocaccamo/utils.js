@@ -57,7 +57,7 @@ StringUtil = {
 
     padLeft: function(str, len, char)
     {
-        var i = str.length
+        var i = str.length;
         while (i < len) {
             str = (char + str);
             i++;
