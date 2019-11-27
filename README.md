@@ -23,8 +23,6 @@ var utils = require("@fabiocaccamo/utils.js");
 ```
 
 ## APIs
-
-### Packages & Methods
 -   `utils.array`
 
     -   `clean`
