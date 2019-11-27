@@ -60,6 +60,7 @@ var utils = require("@fabiocaccamo/utils.js");
     -   `zip`
 
 -   `utils.base64`
+
     ​​-   `decode`
 
     -   `encode`
