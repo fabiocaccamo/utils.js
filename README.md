@@ -245,7 +245,7 @@ var utils = require("@fabiocaccamo/utils.js");
 </p>
 </details>
 
-<details><summary>utils.func</code></summary>
+<details><summary><code>utils.func</code></summary>
 <p>
 
 -   `args`
