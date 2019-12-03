@@ -23,607 +23,684 @@ var utils = require("@fabiocaccamo/utils.js");
 ```
 
 ## APIs
--   `utils.array`
+<details><summary><code>utils.array</code></summary>
+<p>
 
-    -   `clean`
+-   `clean`
 
-    -   `clone`
+-   `clone`
 
-    -   `contains`
+-   `contains`
 
-    -   `equals`
+-   `equals`
 
-    -   `flatten`
+-   `flatten`
 
-    -   `index`
+-   `index`
 
-    -   `insert`
+-   `insert`
 
-    -   `paginate`
+-   `paginate`
 
-    -   `reduce`
+-   `reduce`
 
-    -   `remove`
+-   `remove`
 
-    -   `replace`
+-   `replace`
 
-    -   `rotate`
+-   `rotate`
 
-    -   `shuffle`
+-   `shuffle`
 
-    -   `sort`
+-   `sort`
 
-    -   `unique`
+-   `unique`
 
-    -   `unzip`
+-   `unzip`
 
-    -   `zip`
+-   `zip`
+</p>
+</details>
 
--   `utils.base64`
+<details><summary><code>utils.base64</code></summary>
+<p>
 
-    -   `decode`
+-   `decode`
 
-    -   `encode`
+-   `encode`
+</p>
+</details>
 
--   `utils.color`
+<details><summary><code>utils.color</code></summary>
+<p>
 
-    -   `cmykToHex`
+-   `cmykToHex`
 
-    -   `cmykToRgb`
+-   `cmykToRgb`
 
-    -   `hexToCmyk`
+-   `hexToCmyk`
 
-    -   `hexToRgb`
+-   `hexToRgb`
 
-    -   `rgbToCmyk`
+-   `rgbToCmyk`
 
-    -   `rgbToHex`
+-   `rgbToHex`
+</p>
+</details>
 
--   `utils.color.cmyk`
+<details><summary><code>utils.color.cmyk</code></summary>
+<p>
 
-    -   `toString`
+-   `toString`
 
-    -   `toCSSString`
+-   `toCSSString`
+</p>
+</details>
 
--   `utils.color.hex`
+<details><summary><code>utils.color.hex</code></summary>
+<p>
 
-    -   `average`
+-   `average`
 
-    -   `distance`
+-   `distance`
 
-    -   `gradient`
+-   `gradient`
 
-    -   `gradientMatrix`
+-   `gradientMatrix`
 
-    -   `interpolateBilinear`
+-   `interpolateBilinear`
 
-    -   `interpolateLinear`
+-   `interpolateLinear`
 
-    -   `interpolateMultilinear`
+-   `interpolateMultilinear`
 
-    -   `nearest`
+-   `nearest`
 
-    -   `toCmyk`
+-   `toCmyk`
 
-    -   `toRgb`
+-   `toRgb`
 
-    -   `toString`
+-   `toString`
 
-    -   `toStringCSS`
+-   `toStringCSS`
+</p>
+</details>
 
--   `utils.color.rgb`
+<details><summary><code>utils.color.rgb</code></summary>
+<p>
 
-    -   `average`
+-   `average`
 
-    -   `distance`
+-   `distance`
 
-    -   `gradient`
+-   `gradient`
 
-    -   `gradientMatrix`
+-   `gradientMatrix`
 
-    -   `interpolateBilinear`
+-   `interpolateBilinear`
 
-    -   `interpolateLinear`
+-   `interpolateLinear`
 
-    -   `interpolateMultilinear`
+-   `interpolateMultilinear`
 
-    -   `nearest`
+-   `nearest`
 
-    -   `toCmyk`
+-   `toCmyk`
 
-    -   `toRgb`
+-   `toRgb`
 
-    -   `toString`
+-   `toString`
 
-    -   `toStringCSS`
+-   `toStringCSS`
+</p>
+</details>
 
--   `utils.date`
+<details><summary><code>utils.date</code></summary>
+<p>
 
-    -   `clone`
+-   `clone`
 
-    -   `timestamp`
+-   `timestamp`
 
-    -   `yyyymmdd`
+-   `yyyymmdd`
+</p>
+</details>
 
--   `utils.ease`
+<details><summary><code>utils.ease</code></summary>
+<p>
 
-    -   `backIn`
+-   `backIn`
 
-    -   `backInOut`
+-   `backInOut`
 
-    -   `backOut`
+-   `backOut`
 
-    -   `bounceIn`
+-   `bounceIn`
 
-    -   `bounceInOut`
+-   `bounceInOut`
 
-    -   `bounceOut`
+-   `bounceOut`
 
-    -   `circularIn`
+-   `circularIn`
 
-    -   `circularInOut`
+-   `circularInOut`
 
-    -   `circularOut`
+-   `circularOut`
 
-    -   `cubicIn`
+-   `cubicIn`
 
-    -   `cubicInOut`
+-   `cubicInOut`
 
-    -   `cubicOut`
+-   `cubicOut`
 
-    -   `elasticIn`
+-   `elasticIn`
 
-    -   `elasticInOut`
+-   `elasticInOut`
 
-    -   `elasticOut`
+-   `elasticOut`
 
-    -   `exponentialIn`
+-   `exponentialIn`
 
-    -   `exponentialInOut`
+-   `exponentialInOut`
 
-    -   `exponentialOut`
+-   `exponentialOut`
 
-    -   `none`
+-   `none`
 
-    -   `quadraticIn`
+-   `quadraticIn`
 
-    -   `quadraticInOut`
+-   `quadraticInOut`
 
-    -   `quadraticOut`
+-   `quadraticOut`
 
-    -   `quarticIn`
+-   `quarticIn`
 
-    -   `quarticInOut`
+-   `quarticInOut`
 
-    -   `quarticOut`
+-   `quarticOut`
 
-    -   `quinticIn`
+-   `quinticIn`
 
-    -   `quinticInOut`
+-   `quinticInOut`
 
-    -   `quinticOut`
+-   `quinticOut`
 
-    -   `sexticIn`
+-   `sexticIn`
 
-    -   `sexticInOut`
+-   `sexticInOut`
 
-    -   `sexticOut`
+-   `sexticOut`
 
-    -   `sineIn`
+-   `sineIn`
 
-    -   `sineInOut`
+-   `sineInOut`
 
-    -   `sineOut`
+-   `sineOut`
 
-    -   `waveCosine`
+-   `waveCosine`
 
-    -   `waveSawtooth`
+-   `waveSawtooth`
 
-    -   `waveSine`
+-   `waveSine`
+</p>
+</details>
 
--   `utils.func`
+<details><summary>utils.func</code></summary>
+<p>
 
-    -   `args`
+-   `args`
 
-    -   `attempt`
+-   `attempt`
 
-    -   `bind`
+-   `bind`
 
-    -   `call`
+-   `call`
 
-    -   `delay`
+-   `delay`
 
-    -   `memoize`
+-   `memoize`
 
-    -   `noop`
+-   `noop`
 
-    -   `repeat`
+-   `repeat`
 
-    -   `validate`
+-   `validate`
+</p>
+</details>
 
--   `utils.geom`
+<details><summary><code>utils.geom</code></summary>
+<p></p>
+</details>
 
--   `utils.geom.point`
+</p>
+</details>
 
-    -   `add`
+<details><summary><code>utils.geom.point</code></summary>
+<p>
 
-    -   `angle`
+-   `add`
 
-    -   `cross`
+-   `angle`
 
-    -   `distance`
+-   `cross`
 
-    -   `dot`
+-   `distance`
 
-    -   `equals`
+-   `dot`
 
-    -   `interpolate`
+-   `equals`
 
-    -   `length`
+-   `interpolate`
 
-    -   `magnitude`
+-   `length`
 
-    -   `project`
+-   `magnitude`
 
-    -   `rect`
+-   `project`
 
-    -   `rotate`
+-   `rect`
 
-    -   `scale`
+-   `rotate`
 
-    -   `subtract`
+-   `scale`
 
-    -   `translate`
+-   `subtract`
 
--   `utils.hex`
+-   `translate`
+</p>
+</details>
 
-    -   `decodeInt`
+<details><summary><code>utils.hex</code></summary>
+<p>
 
-    -   `encodeInt`
+-   `decodeInt`
 
--   `utils.json`
+-   `encodeInt`
+</p>
+</details>
 
-    -   `decode`
+<details><summary><code>utils.json</code></summary>
+<p>
 
-    -   `encode`
+-   `decode`
 
--   `utils.math`
+-   `encode`
+</p>
+</details>
 
-    -   `average`
+<details><summary><code>utils.math</code></summary>
+<p>
 
-    -   `constrain`
+-   `average`
 
-    -   `cycle`
+-   `constrain`
 
-    -   `equals`
+-   `cycle`
 
-    -   `factorial`
+-   `equals`
 
-    -   `gcd`
+-   `factorial`
 
-    -   `lcm`
+-   `gcd`
 
-    -   `lerp`
+-   `lcm`
 
-    -   `map`
+-   `lerp`
 
-    -   `nearest`
+-   `map`
 
-    -   `normalize`
+-   `nearest`
 
-    -   `proportion`
+-   `normalize`
 
-    -   `roundDecimals`
+-   `proportion`
 
-    -   `roundToMultiple`
+-   `roundDecimals`
 
-    -   `roundToNearest`
+-   `roundToMultiple`
 
-    -   `roundToPower`
+-   `roundToNearest`
 
-    -   `sign`
+-   `roundToPower`
 
-    -   `summation`
+-   `sign`
 
--   `utils.math.interpolation`
+-   `summation`
+</p>
+</details>
 
-    -   `bilinear`
+<details><summary><code>utils.math.interpolation</code></summary>
+<p>
 
-    -   `linear`
+-   `bilinear`
 
-    -   `multilinear`
+-   `linear`
 
-    -   `scalar`
+-   `multilinear`
 
--   `utils.number`
+-   `scalar`
+</p>
+</details>
 
-    -   `isBetween`
+<details><summary><code>utils.number</code></summary>
+<p>
 
-    -   `isEven`
+-   `isBetween`
 
-    -   `isFloat`
+-   `isEven`
 
-    -   `isNegative`
+-   `isFloat`
 
-    -   `isOdd`
+-   `isNegative`
 
-    -   `isPositive`
+-   `isOdd`
 
-    -   `isPrime`
+-   `isPositive`
 
--   `utils.object`
+-   `isPrime`
+</p>
+</details>
 
-    -   `assign`
+<details><summary><code>utils.object</code></summary>
+<p>
 
-    -   `clean`
+-   `assign`
 
-    -   `clone`
+-   `clean`
 
-    -   `decodeBase64`
+-   `clone`
 
-    -   `decodeJSON`
+-   `decodeBase64`
 
-    -   `decodeParameters`
+-   `decodeJSON`
 
-    -   `encodeBase64`
+-   `decodeParameters`
 
-    -   `encodeJSON`
+-   `encodeBase64`
 
-    -   `encodeParameters`
+-   `encodeJSON`
 
-    -   `equals`
+-   `encodeParameters`
 
-    -   `is`
+-   `equals`
 
-    -   `keypath`
+-   `is`
 
-    -   `keys`
+-   `keypath`
 
-    -   `length`
+-   `keys`
 
-    -   `map`
+-   `length`
 
-    -   `merge`
+-   `map`
 
-    -   `search`
+-   `merge`
 
-    -   `values`
+-   `search`
 
--   `utils.random`
+-   `values`
+</p>
+</details>
 
-    -   `argument`
+<details><summary><code>utils.random</code></summary>
+<p>
 
-    -   `bit`
+-   `argument`
 
-    -   `boolean`
+-   `bit`
 
-    -   `color`
+-   `boolean`
 
-    -   `element`
+-   `color`
 
-    -   `float`
+-   `element`
 
-    -   `index`
+-   `float`
 
-    -   `integer`
+-   `index`
 
-    -   `sign`
+-   `integer`
 
-    -   `string`
+-   `sign`
 
--   `utils.string`
+-   `string`
+</p>
+</details>
 
-    -   `contains`
+<details><summary><code>utils.string</code></summary>
+<p>
 
-    -   `endsWith`
+-   `contains`
 
-    -   `icontains`
+-   `endsWith`
 
-    -   `levenshteinDistance`
+-   `icontains`
 
-    -   `levenshteinSimilarity`
+-   `levenshteinDistance`
 
-    -   `padLeft`
+-   `levenshteinSimilarity`
 
-    -   `padRight`
+-   `padLeft`
 
-    -   `padZeros`
+-   `padRight`
 
-    -   `replace`
+-   `padZeros`
 
-    -   `reverse`
+-   `replace`
 
-    -   `rotate`
+-   `reverse`
 
-    -   `slugify`
+-   `rotate`
 
-    -   `startsWith`
+-   `slugify`
 
-    -   `toConstantCase`
+-   `startsWith`
 
-    -   `toRandomCase`
+-   `toConstantCase`
 
-    -   `toTitleCase`
+-   `toRandomCase`
 
-    -   `toUpperCaseFirst`
+-   `toTitleCase`
 
-    -   `trim`
+-   `toUpperCaseFirst`
 
-    -   `trimLeft`
+-   `trim`
 
-    -   `trimRight`
+-   `trimLeft`
 
--   `utils.test`
+-   `trimRight`
+</p>
+</details>
 
-    -   `assertArray`
+<details><summary><code>utils.test</code></summary>
+<p>
 
-    -   `assertBase64`
+-   `assertArray`
 
-    -   `assertBoolean`
+-   `assertBase64`
 
-    -   `assertDate`
+-   `assertBoolean`
 
-    -   `assertEqual`
+-   `assertDate`
 
-    -   `assertError`
+-   `assertEqual`
 
-    -   `assertFalse`
+-   `assertError`
 
-    -   `assertFunction`
+-   `assertFalse`
 
-    -   `assertJSON`
+-   `assertFunction`
 
-    -   `assertNaN`
+-   `assertJSON`
 
-    -   `assertNone`
+-   `assertNaN`
 
-    -   `assertNotArray`
+-   `assertNone`
 
-    -   `assertNotBase64`
+-   `assertNotArray`
 
-    -   `assertNotBoolean`
+-   `assertNotBase64`
 
-    -   `assertNotDate`
+-   `assertNotBoolean`
 
-    -   `assertNotEqual`
+-   `assertNotDate`
 
-    -   `assertNotError`
+-   `assertNotEqual`
 
-    -   `assertNotFunction`
+-   `assertNotError`
 
-    -   `assertNotJSON`
+-   `assertNotFunction`
 
-    -   `assertNotNone`
+-   `assertNotJSON`
 
-    -   `assertNotNull`
+-   `assertNotNone`
 
-    -   `assertNotNumber`
+-   `assertNotNull`
 
-    -   `assertNotObject`
+-   `assertNotNumber`
 
-    -   `assertNotRegExp`
+-   `assertNotObject`
 
-    -   `assertNotString`
+-   `assertNotRegExp`
 
-    -   `assertNotUndefined`
+-   `assertNotString`
 
-    -   `assertNull`
+-   `assertNotUndefined`
 
-    -   `assertNumber`
+-   `assertNull`
 
-    -   `assertNumberAlmostEqual`
+-   `assertNumber`
 
-    -   `assertObject`
+-   `assertNumberAlmostEqual`
 
-    -   `assertRegExp`
+-   `assertObject`
 
-    -   `assertString`
+-   `assertRegExp`
 
-    -   `assertThrows`
+-   `assertString`
 
-    -   `assertTrue`
+-   `assertThrows`
 
-    -   `assertUndefined`
+-   `assertTrue`
 
--   `utils.trigo`
+-   `assertUndefined`
+</p>
+</details>
 
-    -   `acosDeg`
+<details><summary><code>utils.trigo</code></summary>
+<p>
 
-    -   `angleDeg`
+-   `acosDeg`
 
-    -   `angleRad`
+-   `angleDeg`
 
-    -   `asinDeg`
+-   `angleRad`
 
-    -   `atan2Deg`
+-   `asinDeg`
 
-    -   `atanDeg`
+-   `atan2Deg`
 
-    -   `cosDeg`
+-   `atanDeg`
 
-    -   `cycleDeg`
+-   `cosDeg`
 
-    -   `degToRad`
+-   `cycleDeg`
 
-    -   `fastDeg`
+-   `degToRad`
 
-    -   `hypo`
+-   `fastDeg`
 
-    -   `radToDeg`
+-   `hypo`
 
-    -   `sinDeg`
+-   `radToDeg`
 
-    -   `tanDeg`
+-   `sinDeg`
 
--   `utils.type`
+-   `tanDeg`
+</p>
+</details>
 
-    -   `isArray`
+<details><summary><code>utils.type</code></summary>
+<p>
 
-    -   `isBase64`
+-   `isArray`
 
-    -   `isBoolean`
+-   `isBase64`
 
-    -   `isDate`
+-   `isBoolean`
 
-    -   `isError`
+-   `isDate`
 
-    -   `isFunction`
+-   `isError`
 
-    -   `isJSON`
+-   `isFunction`
 
-    -   `isNaN`
+-   `isJSON`
 
-    -   `isNone`
+-   `isNaN`
 
-    -   `isNull`
+-   `isNone`
 
-    -   `isNumber`
+-   `isNull`
 
-    -   `isObject`
+-   `isNumber`
 
-    -   `isRegExp`
+-   `isObject`
 
-    -   `isString`
+-   `isRegExp`
 
-    -   `isType`
+-   `isString`
 
-    -   `isUndefined`
+-   `isType`
 
-    -   `of`
+-   `isUndefined`
 
--   `utils.url`
+-   `of`
+</p>
+</details>
 
-    -   `getParameterByName`
+<details><summary><code>utils.url</code></summary>
+<p>
 
-    -   `getParameters`
+-   `getParameterByName`
 
-    -   `getParametersDict`
+-   `getParameters`
 
-    -   `getParametersList`
+-   `getParametersDict`
 
-    -   `getParametersString`
+-   `getParametersList`
 
-    -   `getURL`
+-   `getParametersString`
 
-    -   `hasParameter`
+-   `getURL`
 
-    -   `isFile`
+-   `hasParameter`
 
-    -   `isHttp`
+-   `isFile`
 
-    -   `isHttps`
+-   `isHttp`
 
-    -   `isLocalhost`
+-   `isHttps`
 
--   `utils.utf8`
+-   `isLocalhost`
+</p>
+</details>
 
-    -   `decode`
+<details><summary><code>utils.utf8</code></summary>
+<p>
 
-    -   `encode`
+-   `decode`
 
--   `utils.xml`
+-   `encode`
+</p>
+</details>
 
-    -   `removeNamespaces`
+<details><summary><code>utils.xml</code></summary>
+<p>
+
+-   `removeNamespaces`
+</p>
+</details>
 
 ## Development
 
