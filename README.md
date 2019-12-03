@@ -67,23 +67,75 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `utils.color`
 
--   `utils.color.cmyk`
-
     -   `cmykToHex`
 
     -   `cmykToRgb`
-
--   `utils.color.hex`
 
     -   `hexToCmyk`
 
     -   `hexToRgb`
 
--   `utils.color.rgb`
-
     -   `rgbToCmyk`
 
     -   `rgbToHex`
+
+-   `utils.color.cmyk`
+
+    -   `toString`
+
+    -   `toCSSString`
+
+-   `utils.color.hex`
+
+    -   `average`
+
+    -   `distance`
+
+    -   `gradient`
+
+    -   `gradientMatrix`
+
+    -   `interpolateBilinear`
+
+    -   `interpolateLinear`
+
+    -   `interpolateMultilinear`
+
+    -   `nearest`
+
+    -   `toCmyk`
+
+    -   `toRgb`
+
+    -   `toString`
+
+    -   `toStringCSS`
+
+-   `utils.color.rgb`
+
+    -   `average`
+
+    -   `distance`
+
+    -   `gradient`
+
+    -   `gradientMatrix`
+
+    -   `interpolateBilinear`
+
+    -   `interpolateLinear`
+
+    -   `interpolateMultilinear`
+
+    -   `nearest`
+
+    -   `toCmyk`
+
+    -   `toRgb`
+
+    -   `toString`
+
+    -   `toStringCSS`
 
 -   `utils.date`
 
