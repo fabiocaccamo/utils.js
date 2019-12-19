@@ -1,8 +1,13 @@
+[![npm version](https://img.shields.io/npm/v/@fabiocaccamo/utils.js?color=blue&logo=npm)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
+[![Downloads](https://img.shields.io/npm/dm/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
+[![Stars](https://img.shields.io/github/stars/fabiocaccamo/utils.js?color=blue&logo=github&logoColor=white&style=flat)](https://github.com/fabiocaccamo/utils.js)
+[![BundlePhobia](https://img.shields.io/bundlephobia/min/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
+[![BundlePhobia](https://img.shields.io/bundlephobia/minzip/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
+[![License](https://img.shields.io/github/license/fabiocaccamo/utils.js.svg?color=blue)](https://github.com/fabiocaccamo/utils.js/blob/master/README.md)
+
 [![Build Status](https://travis-ci.org/fabiocaccamo/utils.js.svg?branch=master)](https://travis-ci.org/fabiocaccamo/utils.js)
 [![codecov](https://codecov.io/gh/fabiocaccamo/utils.js/branch/master/graph/badge.svg)](https://codecov.io/gh/fabiocaccamo/utils.js)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/6bc3162a50224b518ed7dc366535b3ba)](https://www.codacy.com/app/fabiocaccamo/utils.js)
-[![npm version](https://badge.fury.io/js/%40fabiocaccamo%2Futils.js.svg)](https://badge.fury.io/js/%40fabiocaccamo%2Futils.js)
-[![GitHub](https://img.shields.io/github/license/fabiocaccamo/utils.js.svg)](https://github.com/fabiocaccamo/utils.js/)
 
 # utils.js
 JavaScript utils for lazy devs.
