@@ -1,5 +1,5 @@
 [![npm version](https://img.shields.io/npm/v/@fabiocaccamo/utils.js?color=blue&logo=npm)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
-[![Downloads](https://img.shields.io/npm/dm/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
+[![Downloads](https://img.shields.io/npm/dt/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
 [![Stars](https://img.shields.io/github/stars/fabiocaccamo/utils.js?color=blue&logo=github&logoColor=white&style=flat)](https://github.com/fabiocaccamo/utils.js)
 [![BundlePhobia](https://img.shields.io/bundlephobia/min/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
 [![BundlePhobia](https://img.shields.io/bundlephobia/minzip/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
@@ -98,7 +98,7 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `toString`
 
--   `toCSSString`
+-   `toStringCSS`
 </p>
 </details>
 
