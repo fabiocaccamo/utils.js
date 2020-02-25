@@ -121,6 +121,22 @@ describe('trigo', function() {
             test.assertNumberAlmostEqual(f(0, 359), -1.0);
         });
     });
+    describe('haversine', function() {
+        var f = trigo.haversine;
+        var latA = 45.0735886;
+        var lngA = 7.6055665;
+        var latB = 45.4628329;
+        var lngB = 9.1076923;
+        it('test distance default', function() {
+            test.assertNumberAlmostEqual(f(latA, lngA, latB, lngB), 125.265);
+        });
+        it('test distance km', function() {
+            test.assertNumberAlmostEqual(f(latA, lngA, latB, lngB, true), 125.265);
+        });
+        it('test distance miles', function() {
+            test.assertNumberAlmostEqual(f(latA, lngA, latB, lngB, false), 77.782);
+        });
+    });
     describe('hypo', function() {
         var f = trigo.hypo;
         it('test no distance', function() {

@@ -3009,6 +3009,29 @@ TrigoUtil = {
         return (degDiff > TrigoUtil.DEG_180 ? (-TrigoUtil.DEG_360 + degDiff) : (degDiff < -TrigoUtil.DEG_180 ? (TrigoUtil.DEG_360 + degTo) : degTo));
     },
 
+    haversine: function(lat1, lon1, lat2, lon2, km)
+    {
+        var degToRad = TrigoUtil.degToRad;
+        var lat1Rad = degToRad(lat1);
+        var lon1Rad = degToRad(lon1);
+        var lat2Rad = degToRad(lat2);
+        var lon2Rad = degToRad(lon2);
+        var latDist = (lat2Rad - lat1Rad);
+        var lonDist = (lon2Rad - lon1Rad);
+        var a = Math.sin(latDist / 2.0) * Math.sin(latDist / 2.0) +
+                Math.cos(lat1Rad) * Math.cos(lat2Rad) *
+                Math.sin(lonDist / 2.0) * Math.sin(lonDist / 2.0);
+        var c = (Math.atan2(Math.sqrt(a), Math.sqrt(1.0 - a)) * 2.0);
+        var r; // earth radius
+        if (km === false) {
+            r = 3956; // miles
+        } else {
+            r = 6371; // km
+        }
+        var distance = MathUtil.roundDecimals((r * c), 3);
+        return distance;
+    },
+
     hypo: function(distanceX, distanceY)
     {
         return Math.sqrt((distanceX * distanceX) + (distanceY * distanceY));

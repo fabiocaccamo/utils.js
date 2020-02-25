@@ -615,6 +615,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `fastDeg`
 
+-   `haversine`
+
 -   `hypo`
 
 -   `radToDeg`
