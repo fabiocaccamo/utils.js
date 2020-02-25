@@ -274,9 +274,7 @@ var utils = require("@fabiocaccamo/utils.js");
 </details>
 
 <details><summary><code>utils.geom</code></summary>
-<p></p>
-</details>
-
+<p>
 </p>
 </details>
 
