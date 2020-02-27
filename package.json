@@ -35,8 +35,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "build": "gulp build --production",
-    "docs": "./node_modules/.bin/documentation build -f html -o docs --theme ./docs-theme ./dist/utils.js",
-    "docs-devseed": "gulp build && ./node_modules/.bin/documentation build -f html -o docs --theme ./node_modules/documentation-devseed-theme ./dist/utils.js",
+    "docs": "gulp build && ./node_modules/.bin/jsdoc2md ./dist/utils.js > API.md",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "test": "nyc mocha",
     "watch": "gulp"
@@ -46,8 +45,6 @@
     "babel-register": "^6.26.0",
     "browser-sync": "^2.26.0",
     "codecov": "^3.0.4",
-    "documentation": "^9.0.0",
-    "documentation-devseed-theme": "^0.1.4",
     "gulp": "^4.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.0.1",
@@ -60,6 +57,8 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "js-yaml": "^3.4.6",
+    "jsdoc": "^3.6.3",
+    "jsdoc-to-markdown": "^5.0.3",
     "mocha": "^5.2.0",
     "nyc": "^12.0.2",
     "rimraf": "^2.4.3",
