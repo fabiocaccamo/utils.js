@@ -45,6 +45,23 @@ describe('url', function() {
             s = 'http://localhost:8000/?data=' + b64 + '&code=0123456789&';
             test.assertEqual(f(s), { data:b64, code:'0123456789' });
         });
+        it('test url without query string', function() {
+            s = 'http://localhost:8000/';
+            test.assertEqual(f(s), {});
+        });
+        it('test url with empty query string', function() {
+            s = 'http://localhost:8000/?';
+            test.assertEqual(f(s), {});
+        });
+        it('test url with "=" before query string', function() {
+            var b64 = 'QGZhYmlvY2FjY2Ftby91dGlscy5qcw==';
+            s = 'http://localhost:8000/page=123?data=' + b64 + '&code=0123456789&';
+            test.assertEqual(f(s), { data:b64, code:'0123456789' });
+        });
+        it('test url with "?" in param value', function() {
+            s = 'http://localhost:8000/?code=0123456789?';
+            test.assertEqual(f(s), { code:'0123456789?' });
+        });
     });
     describe('getURL', function() {
         var f = url.getURL;

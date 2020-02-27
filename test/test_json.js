@@ -32,6 +32,10 @@ describe('json', function() {
         it('test decode unquoted object', function() {
             test.assertEqual(d("{&quot;a&quot;:1,&quot;b&quot;:2,&quot;c&quot;:3}"), { a:1, b:2, c:3 });
         });
+        it('test decode html entities to avoid "SyntaxError: Unexpected token B in JSON"', function() {
+            test.assertEqual(d("{\"text\":\"&quot;Fabio&quot; &amp; &quot;Caccamo&quot;\"}"), { text:"&quot;Fabio&quot; &amp; &quot;Caccamo&quot;" });
+            test.assertEqual(d("{\"text\":\"Llanta de aleación 20&quot; Bicolor (1 ud.)\"}"), { text:"Llanta de aleación 20&quot; Bicolor (1 ud.)" });
+        });
     });
     describe('encode', function() {
         it('test encode empty', function() {
