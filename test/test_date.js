@@ -17,6 +17,81 @@ describe('date', function() {
                 a.getMinutes() === r.getMinutes());
         });
     });
+    describe('identifier', function() {
+        it('test type', function() {
+            var s = d.identifier();
+            test.assertString(s);
+        });
+        it('test format (now)', function() {
+            var s = d.identifier();
+            test.assertTrue(/^[0-9]{17}$/.test(s));
+        });
+        it('test format (custom date)', function() {
+            var s = d.identifier(new Date('85/4/3'));
+            test.assertTrue(/^[0-9]{17}$/.test(s));
+        });
+    });
+    describe('normalize', function() {
+        it('test type', function() {
+            var r = d.normalize(0);
+            test.assertObject(r);
+        });
+        it('test milliseconds', function() {
+            var ms = 500;
+            var r = d.normalize(ms);
+            test.assertEqual(r, {
+                milliseconds:   500,
+                seconds:        0,
+                minutes:        0,
+                hours:          0,
+                days:           0
+            });
+        });
+        it('test seconds', function() {
+            var ms = 1100 * 7;
+            var r = d.normalize(ms);
+            test.assertEqual(r, {
+                milliseconds:   700,
+                seconds:        7,
+                minutes:        0,
+                hours:          0,
+                days:           0
+            });
+        });
+        it('test minutes', function() {
+            var ms = 1000 * 125;
+            var r = d.normalize(ms);
+            test.assertEqual(r, {
+                milliseconds:   0,
+                seconds:        5,
+                minutes:        2,
+                hours:          0,
+                days:           0
+            });
+        });
+        it('test hours', function() {
+            var ms = 1000 * 980;
+            var r = d.normalize(ms);
+            test.assertEqual(r, {
+                milliseconds:   0,
+                seconds:        20,
+                minutes:        16,
+                hours:          0,
+                days:           0
+            });
+        });
+        it('test days', function() {
+            var ms = 1000 * 15270;
+            var r = d.normalize(ms);
+            test.assertEqual(r, {
+                milliseconds:   0,
+                seconds:        30,
+                minutes:        14,
+                hours:          4,
+                days:           0
+            });
+        });
+    });
     describe('timestamp', function() {
         it('test type', function() {
             var t = d.timestamp();
