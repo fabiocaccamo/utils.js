@@ -1,29 +1,26 @@
 'use strict';
 
-import plugins  from 'gulp-load-plugins';
-import yargs    from 'yargs';
-import browser  from 'browser-sync';
-import gulp     from 'gulp';
-import rimraf   from 'rimraf';
-import sherpa   from 'style-sherpa';
-import yaml     from 'js-yaml';
-import fs       from 'fs';
-import jsImport from 'gulp-js-import';
-import minify   from 'gulp-minify';
+import browser          from 'browser-sync';
+import gulp             from 'gulp';
+import jsImport         from 'gulp-js-import';
+import minify           from 'gulp-minify';
+import plugins          from 'gulp-load-plugins';
+import rimraf           from 'rimraf';
+import sherpa           from 'style-sherpa';
+import yargs            from 'yargs';
 
-function loadConfig() {
-    let ymlFile = fs.readFileSync('config.yml', 'utf8');
-    return yaml.load(ymlFile);
-}
-
-// Load all Gulp plugins into one variable
 const $ = plugins();
-
-// Check for --production flag
+const PATHS = {
+    'dist': 'dist',
+    'assets': [
+        'src/**/*.html'
+    ],
+    'javascript': [
+        'src/utils.js'
+    ]
+}
+const PORT = 8000
 const PRODUCTION = !!(yargs.argv.production);
-
-// Load settings from settings.yml
-const { PORT, PATHS } = loadConfig();
 
 function clean(done) {
     rimraf(PATHS.dist, done);
@@ -36,7 +33,7 @@ function copy() {
 
 function javascript() {
     return gulp.src(PATHS.javascript)
-        .pipe($.sourcemaps.init())
+        .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
         .pipe($.concat('utils.js'))
         .pipe(jsImport({
             hideConsole: true

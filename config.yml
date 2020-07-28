@@ -1,7 +1,0 @@
-PORT: 8000
-PATHS:
-  dist: "dist"
-  assets:
-    - "src/**/*.html"
-  javascript:
-    - "src/utils.js"
