@@ -139,6 +139,25 @@ describe('func', function() {
             test.assertThrows(function(){ f('dosomethingInvalid', obj); });
         });
     });
+    describe('debounce', function() {
+        var f = func.debounce;
+        it('test debounce', function(done) {
+            var counter = 0;
+            var counterInc = f(100, function() {
+                counter++;
+            });
+            var interval = setInterval(counterInc, 50);
+            setTimeout(function() {
+                clearInterval(interval);
+                test.assertEqual(counter, 0);
+                counterInc();
+            }, 300);
+            setTimeout(function() {
+                test.assertEqual(counter, 1);
+                done();
+            }, 500);
+        });
+    });
     describe('delay', function() {
         var f = func.delay;
         it('test delay func called once', function(done) {
@@ -306,6 +325,21 @@ describe('func', function() {
             test.assertFunction(repeatObj.cancel);
             repeatObj.cancel();
             func.delay(200, done);
+        });
+    });
+    describe('throttle', function() {
+        var f = func.throttle;
+        it('test throttle', function(done) {
+            var counter = 0;
+            var counterInc = f(200, function() {
+                counter++;
+            });
+            var interval = setInterval(counterInc, 50);
+            setTimeout(function() {
+                clearInterval(interval);
+                test.assertEqual(counter, 5);
+                done();
+            }, 1000);
         });
     });
     describe('validate', function() {

@@ -261,6 +261,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `call`
 
+-   `debounce`
+
 -   `delay`
 
 -   `memoize`
@@ -268,6 +270,8 @@ var utils = require("@fabiocaccamo/utils.js");
 -   `noop`
 
 -   `repeat`
+
+-   `throttle`
 
 -   `validate`
 </p>

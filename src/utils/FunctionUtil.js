@@ -39,6 +39,21 @@ FunctionUtil = {
         return result;
     },
 
+    debounce: function(milliseconds, func, scope)
+    {
+        var timeoutId;
+        return function() {
+            var args = arguments;
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            timeoutId = setTimeout(function() {
+                func.apply(scope, args);
+            }, milliseconds);
+        };
+    },
+
     delay: function(milliseconds, func, scope)
     {
         var args = FunctionUtil.args(arguments, 3);
@@ -84,6 +99,23 @@ FunctionUtil = {
             },
             func: wrapper,
             id: intervalId
+        };
+    },
+
+    throttle: function(milliseconds, func, scope)
+    {
+        var timeoutId;
+        return function() {
+            var args = arguments;
+            if (timeoutId) {
+                return;
+            } else {
+                func.apply(scope, args);
+                timeoutId = setTimeout(function() {
+                   clearTimeout(timeoutId);
+                   timeoutId = null;
+                }, milliseconds);
+            }
         };
     },
 
