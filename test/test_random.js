@@ -68,6 +68,18 @@ describe('random', function() {
             }
         });
     });
+    describe('map', function() {
+        it('test multiple expected results', function() {
+            r = random.map(function(n) {
+                return random.boolean();
+            }, j);
+            test.assertTrue(utils.type.isArray(r));
+            test.assertTrue(r.length === j);
+            r.forEach(function(el) {
+                test.assertTrue((el === true || el === false));
+            });
+        });
+    });
     describe('sign', function() {
         it('test multiple expected results', function() {
             for (i = 0; i < j; i++) {

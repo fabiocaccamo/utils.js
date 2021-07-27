@@ -468,6 +468,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `integer`
 
+-   `map`
+
 -   `sign`
 
 -   `string`

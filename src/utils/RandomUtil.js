@@ -44,6 +44,15 @@ RandomUtil = {
         return Math.floor(Math.round(RandomUtil.float(min - 0.5, max + 0.5)));
     },
 
+    map: function(func, count)
+    {
+        var m = [];
+        for (var i = 0; i < count; i++) {
+            m.push(func(i));
+        }
+        return m;
+    },
+
     sign: function(chance)
     {
         return (RandomUtil.boolean(chance) ? 1 : -1);
