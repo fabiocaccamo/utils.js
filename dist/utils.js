@@ -1527,9 +1527,10 @@ FunctionUtil = {
 
     bind: function(func, scope)
     {
-        var args = FunctionUtil.args(arguments, 2);
+        var argsBinded = FunctionUtil.args(arguments, 2);
         return function() {
-            var result = FunctionUtil.call.apply(null, [func, scope].concat(args));
+            var args = FunctionUtil.args(arguments);
+            var result = FunctionUtil.call.apply(null, [func, scope].concat(argsBinded).concat(args));
             return result;
         };
     },
@@ -2445,6 +2446,15 @@ RandomUtil = {
     integer: function(min, max)
     {
         return Math.floor(Math.round(RandomUtil.float(min - 0.5, max + 0.5)));
+    },
+
+    map: function(func, count)
+    {
+        var m = [];
+        for (var i = 0; i < count; i++) {
+            m.push(func(i));
+        }
+        return m;
     },
 
     sign: function(chance)
