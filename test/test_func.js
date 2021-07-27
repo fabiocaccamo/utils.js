@@ -82,29 +82,60 @@ describe('func', function() {
         var f = func.bind;
         var obj = {
             value: 'ok',
-            dosomething: function() {
+            getValue: function() {
                 return this.value;
+            },
+            getArgs: function(a, b, c, d) {
+                return [(a || null), (b || null), (c || null), (d || null)];
             }
         };
         it('test bind is function', function() {
-            var ref = f('dosomething', obj);
+            var ref = f('getValue', obj);
             test.assertFunction(ref);
         });
         it('test bind call with func', function() {
-            var ref = f(obj.dosomething, obj);
+            var ref = f(obj.getValue, obj);
             test.assertEqual(ref(), 'ok');
         });
         it('test bind call with func but scope', function() {
-            var ref = f(obj.dosomething);
+            var ref = f(obj.getValue);
             test.assertEqual(ref(), undefined);
         });
         it('test bind call with func name', function() {
-            var ref = f('dosomething', obj);
+            var ref = f('getValue', obj);
             test.assertEqual(ref(), 'ok');
         });
         it('test bind call with func name but scope', function() {
-            var ref = f('dosomething', null);
+            var ref = f('getValue', null);
             test.assertThrows(ref);
+        });
+        it('test bind with args', function() {
+            var ref;
+            ref = f(obj.getArgs, obj);
+            test.assertEqual(ref(), [null, null, null, null]);
+
+            ref = f(obj.getArgs, obj, 1);
+            test.assertEqual(ref(), [1, null, null, null]);
+
+            ref = f(obj.getArgs, obj, 1, 2);
+            test.assertEqual(ref(), [1, 2, null, null]);
+
+            ref = f(obj.getArgs, obj, 1, 2, 3, null);
+            test.assertEqual(ref(), [1, 2, 3, null]);
+
+            ref = f(obj.getArgs, obj, 1, 2, 3, 4);
+            test.assertEqual(ref(), [1, 2, 3, 4]);
+        });
+        it('test bind with args and call with args', function() {
+            var ref;
+            ref = f(obj.getArgs, obj);
+            test.assertEqual(ref('a'), ['a', null, null, null]);
+
+            ref = f(obj.getArgs, obj, 1);
+            test.assertEqual(ref('a'), [1, 'a', null, null]);
+
+            ref = f(obj.getArgs, obj, 1, 2);
+            test.assertEqual(ref('a', 'b'), [1, 2, 'a', 'b']);
         });
     });
     describe('call', function() {
