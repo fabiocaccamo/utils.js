@@ -11,8 +11,8 @@ FunctionUtil = {
     attempt: function(func, scope)
     {
         try {
-            var args = FunctionUtil.args(arguments, 2);
-            var result = FunctionUtil.call.apply(null, [func, scope].concat(args));
+            var args = FunctionUtil.args(arguments);
+            var result = FunctionUtil.call.apply(null, args);
             return result;
         }
         catch(e) {
@@ -22,10 +22,10 @@ FunctionUtil = {
 
     bind: function(func, scope)
     {
-        var argsBinded = FunctionUtil.args(arguments, 2);
+        var argsBinded = FunctionUtil.args(arguments);
         return function() {
             var args = FunctionUtil.args(arguments);
-            var result = FunctionUtil.call.apply(null, [func, scope].concat(argsBinded).concat(args));
+            var result = FunctionUtil.call.apply(null, argsBinded.concat(args));
             return result;
         };
     },
@@ -67,8 +67,8 @@ FunctionUtil = {
 
     delay: function(milliseconds, func, scope)
     {
-        var args = FunctionUtil.args(arguments, 3);
-        var wrapper = FunctionUtil.bind.apply(null, [func, scope].concat(args));
+        var args = FunctionUtil.args(arguments, 1);
+        var wrapper = FunctionUtil.bind.apply(null, args);
         var timeoutId = setTimeout(wrapper, milliseconds);
         return {
             cancel: function() {
@@ -101,8 +101,8 @@ FunctionUtil = {
 
     repeat: function(milliseconds, func, scope)
     {
-        var args = FunctionUtil.args(arguments, 3);
-        var wrapper = FunctionUtil.bind.apply(null, [func, scope].concat(args));
+        var args = FunctionUtil.args(arguments, 1);
+        var wrapper = FunctionUtil.bind.apply(null, args);
         var intervalId = setInterval(wrapper, milliseconds);
         return {
             cancel: function() {
@@ -130,11 +130,13 @@ FunctionUtil = {
 
     until: function(milliseconds, func, scope)
     {
+        var args = FunctionUtil.args(arguments, 1);
+        var wrapper = FunctionUtil.bind.apply(null, args);
         var interval = FunctionUtil.repeat(milliseconds, function() {
-            if (func() === false) {
+            if (wrapper() === false) {
                 interval.cancel();
             }
-        }, scope);
+        });
         return interval;
     },
 
