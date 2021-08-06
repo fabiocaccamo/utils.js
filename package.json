@@ -1,6 +1,6 @@
 {
   "name": "@fabiocaccamo/utils.js",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "JavaScript utils for lazy devs.",
   "keywords": [
     "utils",
@@ -37,7 +37,7 @@
     "build": "gulp build --production",
     "docs": "gulp build && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md && gulp build --production",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "test": "nyc mocha",
+    "test": "gulp build --production && nyc mocha",
     "watch": "gulp"
   },
   "devDependencies": {
