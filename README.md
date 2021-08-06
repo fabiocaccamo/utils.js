@@ -273,6 +273,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `throttle`
 
+-   `until`
+
 -   `validate`
 </p>
 </details>

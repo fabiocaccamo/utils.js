@@ -373,6 +373,23 @@ describe('func', function() {
             }, 1000);
         });
     });
+    describe('until', function() {
+        var f = func.until;
+        it('test until', function(done) {
+            var counter = 0;
+            var checker = f(50, function() {
+                counter++;
+                if (counter === 10) {
+                    return false;
+                }
+            });
+            setTimeout(function() {
+                // clearInterval(interval);
+                test.assertEqual(counter, 10);
+                done();
+            }, 1000);
+        });
+    });
     describe('validate', function() {
         var f = func.validate;
         it('test validate arguments all types', function() {

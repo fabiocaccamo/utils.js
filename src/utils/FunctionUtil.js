@@ -120,6 +120,16 @@ FunctionUtil = {
         };
     },
 
+    until: function(milliseconds, func, scope)
+    {
+        var interval = FunctionUtil.repeat(50, function() {
+            if (func() === false) {
+                interval.cancel();
+            }
+        }, this);
+        return interval;
+    },
+
     validate: function(argumentsObj)
     {
         // FunctionUtil.validate(arguments, 'number', 'string', ['string', 'undefined']);
