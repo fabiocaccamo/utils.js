@@ -44,15 +44,25 @@ FunctionUtil = {
     {
         var timeoutId;
         return function() {
-            var args = arguments;
             if (timeoutId) {
                 clearTimeout(timeoutId);
                 timeoutId = null;
             }
+            var args = arguments;
             timeoutId = setTimeout(function() {
                 func.apply(scope, args);
             }, milliseconds);
         };
+        /*
+        var timeoutId;
+        return function() {
+            if (timeoutId) {
+                timeoutId.cancel();
+                timeoutId = null;
+            }
+            timeoutId = FunctionUtil.delay.apply(null, [milliseconds, func, scope].concat(arguments));
+        };
+        */
     },
 
     delay: function(milliseconds, func, scope)
@@ -107,16 +117,14 @@ FunctionUtil = {
     {
         var timeoutId;
         return function() {
-            var args = arguments;
             if (timeoutId) {
                 return;
-            } else {
-                func.apply(scope, args);
-                timeoutId = setTimeout(function() {
-                   clearTimeout(timeoutId);
-                   timeoutId = null;
-                }, milliseconds);
             }
+            func.apply(scope, arguments);
+            timeoutId = setTimeout(function() {
+               clearTimeout(timeoutId);
+               timeoutId = null;
+            }, milliseconds);
         };
     },
 
