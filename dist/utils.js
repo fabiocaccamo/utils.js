@@ -1635,11 +1635,11 @@ FunctionUtil = {
 
     until: function(milliseconds, func, scope)
     {
-        var interval = FunctionUtil.repeat(50, function() {
+        var interval = FunctionUtil.repeat(milliseconds, function() {
             if (func() === false) {
                 interval.cancel();
             }
-        }, this);
+        }, scope);
         return interval;
     },
 
