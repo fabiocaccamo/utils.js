@@ -242,6 +242,12 @@ ArrayUtil = {
         return list.sort(compare);
     },
 
+    sum: function(list) {
+        return ArrayUtil.reduce(list, function(a, b) {
+            return (a + b);
+        }, 0);
+    },
+
     unique: function(list)
     {
         var item;

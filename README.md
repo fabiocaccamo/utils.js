@@ -59,6 +59,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `sort`
 
+-   `sum`
+
 -   `unique`
 
 -   `unzip`

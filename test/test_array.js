@@ -723,6 +723,13 @@ describe('array', function() {
             test.assertEqual(f(b, 'n'), a);
         });
     });
+    describe('sum', function() {
+        var f = arr.sum;
+        it('test array of numbers', function() {
+            a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            test.assertEqual(f(a), 45);
+        });
+    });
     describe('unique', function() {
         var f = arr.unique;
         it('test array empty', function() {
