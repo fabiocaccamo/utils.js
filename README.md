@@ -499,6 +499,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `padZeros`
 
+-   `render`
+
 -   `replace`
 
 -   `reverse`

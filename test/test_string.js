@@ -114,6 +114,36 @@ describe('string', function() {
         //     test.assertEqual(f(-12345, 5), '-12345');
         // });
     });
+    describe('render', function() {
+        var f = string.render;
+        it('test single placeholder', function() {
+            test.assertEqual(f('{{ name }}', { name:'utils.js' }), 'utils.js');
+        });
+        it('test single placeholder without data', function() {
+            test.assertEqual(f('{{ name }}', null), '');
+        });
+        it('test single placeholder with missing variable', function() {
+            test.assertEqual(f('{{ name }}', {}), '');
+        });
+        it('test single placeholder without white space around delimiters', function() {
+            test.assertEqual(f('{{name}}', { name:'utils.js' }), 'utils.js');
+        });
+        it('test single placeholder with extra white space around delimiters', function() {
+            test.assertEqual(f('{{     name     }}', { name:'utils.js' }), 'utils.js');
+        });
+        it('test single placeholder with custom delimiters', function() {
+            test.assertEqual(f('__name__', { name:'utils.js' }, '__', '__'), 'utils.js');
+        });
+        it('test multiple occurrencies of the same placeholder', function() {
+            test.assertEqual(f('{{ name }} {{ name }}', { name:'utils.js' }), 'utils.js utils.js');
+        });
+        it('test multiple mixed placeholders', function() {
+            test.assertEqual(f('npm install {{ user }}/{{ packageName }}@{{ version }} --save-dev', { user:'@fabiocaccamo', packageName:'utils.js', version:'latest' }), 'npm install @fabiocaccamo/utils.js@latest --save-dev');
+        });
+        it('test multiple mixed placeholders with custom delimiters', function() {
+            test.assertEqual(f('npm install {user}/{packageName}@{version} --save-dev', { user:'@fabiocaccamo', packageName:'utils.js', version:'latest' }, '{', '}'), 'npm install @fabiocaccamo/utils.js@latest --save-dev');
+        });
+    });
     describe('replace', function() {
         var f = string.replace;
         var s = 'Hello world, hello world, hElLo wOrLd, hello|world?, hello mountains, hello world';

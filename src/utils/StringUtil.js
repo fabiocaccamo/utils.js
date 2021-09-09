@@ -1,6 +1,7 @@
 /** global: ArrayUtil */
 /** global: RandomUtil */
 /** global: StringUtil */
+/** global: TypeUtil */
 
 StringUtil = {
 
@@ -78,6 +79,24 @@ StringUtil = {
     padZeros: function(str, len)
     {
         return StringUtil.padLeft(String(str), len, '0');
+    },
+
+    render: function(str, data, placeholderStart, placeholderEnd)
+    {
+        var pattern = ((placeholderStart || '{{') + '[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*' + (placeholderEnd || '}}'));
+        var regex = new RegExp(pattern, 'g');
+        var matches = Array.from(str.matchAll(regex));
+        var occurrence, replacement;
+        data = (data || {});
+        matches.forEach(function(match) {
+            occurrence = match[0];
+            replacement = data[match[1]];
+            if (TypeUtil.isNone(replacement)) {
+                replacement = '';
+            }
+            str = StringUtil.replace(str, occurrence, replacement);
+        });
+        return str;
     },
 
     replace: function(str, occurrence, replacement, caseSensitive)
