@@ -1952,6 +1952,13 @@ MathUtil = {
         return (Math.abs(a - b) <= tolerance);
     },
 
+    euclideanDistance: function(a, b) {
+        // https://en.wikipedia.org/wiki/Euclidean_distance#Higher_dimensions
+        return Math.sqrt(MathUtil.summation(a.map(function(value, index) {
+            return Math.pow(Math.abs(value - b[index]), 2);
+        })));
+    },
+
     factorial: function(n)
     {
         var f = 1;
