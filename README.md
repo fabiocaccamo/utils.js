@@ -350,6 +350,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `equals`
 
+-   `euclideanDistance`
+
 -   `factorial`
 
 -   `gcd`

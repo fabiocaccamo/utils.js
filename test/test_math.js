@@ -82,6 +82,14 @@ describe('math', function() {
             test.assertTrue(f(0.505, 0.500, 0.01));
         });
     });
+    describe('euclideanDistance', function() {
+        var f = math.euclideanDistance;
+        it('test simple', function() {
+            test.assertNumberAlmostEqual(f([1, 1, 1, 1, 1], [1, 1, 1, 1, 1]), 0.0);
+            test.assertNumberAlmostEqual(f([0, 0, 0, 0, 0], [1, 1, 1, 1, 1]), 2.23606797749979);
+            test.assertNumberAlmostEqual(f([8, 5, -3], [6, 0, 9]), 13.152946437965905);
+        });
+    });
     describe('factorial', function() {
         var f = math.factorial;
         it('test 0', function() {
