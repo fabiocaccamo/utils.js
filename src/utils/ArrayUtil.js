@@ -242,8 +242,11 @@ ArrayUtil = {
         return list.sort(compare);
     },
 
-    sum: function(list) {
+    sum: function(list, callback) {
         return ArrayUtil.reduce(list, function(a, b) {
+            if (TypeUtil.isFunction(callback)) {
+                return (a + callback(b));
+            }
             return (a + b);
         }, 0);
     },

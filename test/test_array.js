@@ -729,6 +729,12 @@ describe('array', function() {
             a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
             test.assertEqual(f(a), 45);
         });
+        it('test array of objects', function() {
+            a = [{ n:0 }, { n:1 }, { n:2 }, { n:3 }, { n:4 }, { n:5 }, { n:6 }, { n:7 }, { n:8 }, { n:9 }];
+            test.assertEqual(f(a, function(item) {
+                return item['n'];
+            }), 45);
+        });
     });
     describe('unique', function() {
         var f = arr.unique;
