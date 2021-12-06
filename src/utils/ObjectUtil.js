@@ -217,6 +217,9 @@ ObjectUtil = {
             var cursor = obj;
             for (var i = 0, j = keys.length; i < j; i++) {
                 key = keys[i];
+                if (key === '__proto__') {
+                    break;
+                }
                 if (!TypeUtil.isObject(cursor[key])) {
                     cursor[key] = {};
                 }

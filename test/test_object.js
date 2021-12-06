@@ -304,6 +304,11 @@ describe('object', function() {
             f(o, 'e.f.g', 'ok 2');
             test.assertEqual(o['e']['f']['g'], 'ok 2');
         });
+        it('test prototype pollution', function() {
+            f(o, '__proto__.polluted', true);
+            test.assertUndefined(o['polluted']);
+            test.assertUndefined({}.polluted);
+        });
     });
     describe('length', function() {
         var f = obj.length;
