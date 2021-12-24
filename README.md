@@ -5,7 +5,7 @@
 [![](https://img.shields.io/bundlephobia/minzip/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
 [![](https://img.shields.io/github/license/fabiocaccamo/utils.js.svg?color=blue)](https://github.com/fabiocaccamo/utils.js/blob/master/README.md)
 
-[![](https://img.shields.io/travis/fabiocaccamo/utils.js?logo=travis)](https://travis-ci.org/fabiocaccamo/utils.js)
+[![](https://img.shields.io/github/workflow/status/fabiocaccamo/utils.js/test-package?logo=github)](https://github.com/fabiocaccamo/utils.js/actions/workflows/test-package.yml)
 [![](https://codecov.io/gh/fabiocaccamo/utils.js/branch/master/graph/badge.svg)](https://codecov.io/gh/fabiocaccamo/utils.js)
 [![](https://api.codacy.com/project/badge/Grade/6bc3162a50224b518ed7dc366535b3ba)](https://www.codacy.com/app/fabiocaccamo/utils.js)
 
