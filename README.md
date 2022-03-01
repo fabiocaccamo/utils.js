@@ -45,6 +45,10 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `insert`
 
+-   `max`
+
+-   `min`
+
 -   `paginate`
 
 -   `reduce`
