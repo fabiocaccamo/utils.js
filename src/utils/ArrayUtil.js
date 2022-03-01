@@ -138,6 +138,24 @@ ArrayUtil = {
         return list;
     },
 
+    max: function(list, callback) {
+        return ArrayUtil.reduce(list, function(a, b) {
+            if (TypeUtil.isFunction(callback)) {
+                return Math.max(a, callback(b));
+            }
+            return Math.max(a, b);
+        }, Number.MIN_VALUE);
+    },
+
+    min: function(list, callback) {
+        return ArrayUtil.reduce(list, function(a, b) {
+            if (TypeUtil.isFunction(callback)) {
+                return Math.min(a, callback(b));
+            }
+            return Math.min(a, b);
+        }, Number.MAX_VALUE);
+    },
+
     paginate: function(list, itemsPerPage)
     {
         var itemsTotal = list.length;

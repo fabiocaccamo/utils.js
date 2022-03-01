@@ -498,6 +498,32 @@ describe('array', function() {
             test.assertEqual(f(a.slice(), 3, 'x'), ['a', 'b', 'c', 'x', 'd', 'e']);
         });
     });
+    describe('min', function() {
+        var f = arr.min;
+        it('test array of numbers', function() {
+            a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            test.assertEqual(f(a), 0);
+        });
+        it('test array of objects', function() {
+            a = [{ n:0 }, { n:1 }, { n:2 }, { n:3 }, { n:4 }, { n:5 }, { n:6 }, { n:7 }, { n:8 }, { n:9 }];
+            test.assertEqual(f(a, function(item) {
+                return item['n'];
+            }), 0);
+        });
+    });
+    describe('max', function() {
+        var f = arr.max;
+        it('test array of numbers', function() {
+            a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+            test.assertEqual(f(a), 9);
+        });
+        it('test array of objects', function() {
+            a = [{ n:0 }, { n:1 }, { n:2 }, { n:3 }, { n:4 }, { n:5 }, { n:6 }, { n:7 }, { n:8 }, { n:9 }];
+            test.assertEqual(f(a, function(item) {
+                return item['n'];
+            }), 9);
+        });
+    });
     describe('paginate', function() {
         var f = arr.paginate;
         var a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
