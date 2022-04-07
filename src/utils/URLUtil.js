@@ -46,6 +46,10 @@ URLUtil = {
         url = (url || URLUtil.getURL());
         var queryStringPosition = url.indexOf('?');
         var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
+        var hashDelimiterPosition = queryString.indexOf('#');
+        if (hashDelimiterPosition > -1) {
+            queryString = queryString.substring(0, hashDelimiterPosition);
+        }
         return queryString;
     },
 

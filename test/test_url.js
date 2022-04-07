@@ -95,6 +95,18 @@ describe('url', function() {
             test.assertEqual(f(s), { 'status-code':'1', 'status_code':'2', 'statuscode':'3' });
         });
     });
+    describe('getParametersString', function() {
+        var f = url.getParametersString;
+        var s;
+        it('test simple', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789&';
+            test.assertEqual(f(s), 'page=16&code=0123456789&');
+        });
+        it('test with hash', function() {
+            s = 'http://localhost:8000/?page=16&code=0123456789#section=footer';
+            test.assertEqual(f(s), 'page=16&code=0123456789');
+        });
+    });
     describe('getURL', function() {
         var f = url.getURL;
         it('test simple', function() {
