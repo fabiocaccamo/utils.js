@@ -257,6 +257,15 @@ describe('string', function() {
         it('test simple', function() {
             test.assertEqual(f(s), 'Lorem Ipsum Tempor. Ex Adipisicing Aliqua Consectetur A Duis Voluptate Quis Sunt.');
         });
+        it('test with accented letters', function() {
+            test.assertEqual(f('bàcédòçu édìfògù'), 'Bàcédòçu Édìfògù');
+        });
+        it('test with hyphen', function() {
+            test.assertEqual(f('bàcédòçu-édìfògù'), 'Bàcédòçu-Édìfògù');
+        });
+        it('test with apostroph', function() {
+            test.assertEqual(f('bàcédòç\'uédìfògù'), 'Bàcédòç\'Uédìfògù');
+        });
     });
     describe('toUpperCaseFirst', function() {
         var f = string.toUpperCaseFirst;

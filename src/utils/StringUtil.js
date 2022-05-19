@@ -215,7 +215,7 @@ StringUtil = {
 
     toTitleCase: function(str, toLowerCaseRest)
     {
-        return str.replace(/[\w]+/gm, function(match) {
+        return str.replace(/[^\'\‘\’\`\-\s]+/gm, function(match) {
             return StringUtil.toUpperCaseFirst(match, toLowerCaseRest);
         });
     },
