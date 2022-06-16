@@ -96,9 +96,10 @@ DateUtil = {
         return time;
     },
 
-    timestamp: function()
+    timestamp: function(date)
     {
-        return new Date().getTime();
+        var d = (date || new Date());
+        return d.getTime();
     },
 
     yyyymmdd: function(date, separator)
