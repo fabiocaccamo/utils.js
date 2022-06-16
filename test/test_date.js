@@ -17,6 +17,23 @@ describe('date', function() {
                 a.getMinutes() === r.getMinutes());
         });
     });
+    describe('format', function() {
+        it('test format 1', function() {
+            var a = new Date(1985, 3, 3, 23, 57, 5);
+            var s = d.format(a, "YYYY/MM/DD");
+            test.assertTrue(s === "1985/04/03");
+        });
+        it('test format 2', function() {
+            var a = new Date(1985, 3, 3, 23, 57, 5);
+            var s = d.format(a, "YYYYMMDD");
+            test.assertTrue(s === "19850403");
+        });
+        it('test format 3', function() {
+            var a = new Date(1985, 3, 3, 23, 57, 5);
+            var s = d.format(a, "XX D, 'YY");
+            test.assertTrue(s === "April 3, '85");
+        });
+    });
     describe('identifier', function() {
         it('test type', function() {
             var s = d.identifier();

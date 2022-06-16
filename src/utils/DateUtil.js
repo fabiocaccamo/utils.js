@@ -8,6 +8,53 @@ DateUtil = {
         return new Date(date.getTime());
     },
 
+    format: function(date, str) {
+        // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
+        var replace = StringUtil.replace;
+        var padZeros = StringUtil.padZeros;
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var dt = date.getDate();
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var monthNum = (month + 1);
+        var monthName = months[month];
+        var day = date.getDay();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var milliseconds = date.getMilliseconds();
+        var placeholders = [
+            ['YYYY', year],
+            ['YY', padZeros(year, 4).substring(2, 4)],
+            ['MM', padZeros(monthNum, 2)],
+            ['M', monthNum],
+            ['DD', padZeros(dt, 2)],
+            ['D', dt],
+            ['hh', padZeros(hours, 2)],
+            ['h', hours],
+            ['mm', padZeros(minutes, 2)],
+            ['m', minutes],
+            ['ss', padZeros(seconds, 2)],
+            ['s', seconds],
+            ['ll', padZeros(milliseconds, 2)],
+            ['XX', monthName],
+            ['X', monthName.substring(0, 3)],
+            ['ZZ', days[day]],
+            ['Z', days[day].substring(0, 3)]
+        ];
+        var placeholder, occurrence;
+        for (var i = 0, j = placeholders.length; i < j; i++) {
+            placeholder = placeholders[i];
+            occurrence = placeholder[0];
+            if (str.indexOf(occurrence) === -1) {
+                continue;
+            }
+            str = replace(str, occurrence, placeholder[1]);
+        }
+        return str;
+    },
+
     /*
     hhmm: function(hours, minutes, separator)
     {

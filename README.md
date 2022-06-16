@@ -171,6 +171,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `clone`
 
+-   `format`
+
 -   `timestamp`
 
 -   `yyyymmdd`

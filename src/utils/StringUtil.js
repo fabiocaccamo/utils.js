@@ -104,7 +104,7 @@ StringUtil = {
         var pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         var flags = (caseSensitive === false ? 'gi' : 'g');
         var regex = new RegExp(pattern, flags);
-        return str.replace(regex, replacement);
+        return str.replace(regex, String(replacement));
     },
 
     reverse: function(str)
