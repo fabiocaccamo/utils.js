@@ -173,6 +173,10 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `format`
 
+-   `isFuture`
+
+-   `isPast`
+
 -   `timestamp`
 
 -   `yyyymmdd`

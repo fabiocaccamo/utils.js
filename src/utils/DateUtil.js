@@ -84,6 +84,32 @@ DateUtil = {
                 StringUtil.padZeros(milliseconds, 3));
     },
 
+    isFuture: function(date, checkTime) {
+        var day = new Date(date.getTime());
+        var now = new Date();
+        if (checkTime !== true) {
+            day.setHours(0);
+            day.setMinutes(0);
+            day.setSeconds(0);
+            day.setMilliseconds(0);
+        }
+        var delta = (now.getTime() - day.getTime());
+        return (delta < 0);
+    },
+
+    isPast: function(date, checkTime) {
+        var day = new Date(date.getTime());
+        var now = new Date();
+        if (checkTime !== true) {
+            now.setHours(0);
+            now.setMinutes(0);
+            now.setSeconds(0);
+            now.setMilliseconds(0);
+        }
+        var delta = (now.getTime() - day.getTime());
+        return (delta > 0);
+    },
+
     normalize: function(ms)
     {
         var time = {

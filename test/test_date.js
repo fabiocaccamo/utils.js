@@ -48,6 +48,48 @@ describe('date', function() {
             test.assertTrue(/^[0-9]{17}$/.test(s));
         });
     });
+    describe('isFuture', function() {
+        it('test with past date', function() {
+            var date = new Date('1985/4/3');
+            test.assertFalse(d.isFuture(date));
+        });
+        it('test with future date', function() {
+            var date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            test.assertTrue(d.isFuture(date));
+        });
+        it('test with same day date', function() {
+            var date = new Date();
+            test.assertFalse(d.isFuture(date));
+        });
+        it('test with same day date ignoring time', function() {
+            var date = new Date();
+            date.setMinutes(date.getMinutes() + 1);
+            test.assertFalse(d.isFuture(date));
+            test.assertTrue(d.isFuture(date, true));
+        });
+    });
+    describe('isPast', function() {
+        it('test with past date', function() {
+            var date = new Date('1985/4/3');
+            test.assertTrue(d.isPast(date));
+        });
+        it('test with future date', function() {
+            var date = new Date();
+            date.setFullYear(date.getFullYear() + 1);
+            test.assertFalse(d.isPast(date));
+        });
+        it('test with same day date', function() {
+            var date = new Date();
+            test.assertFalse(d.isPast(date));
+        });
+        it('test with same day date ignoring time', function() {
+            var date = new Date();
+            date.setMinutes(date.getMinutes() - 1);
+            test.assertFalse(d.isPast(date));
+            test.assertTrue(d.isPast(date, true));
+        });
+    });
     describe('normalize', function() {
         it('test type', function() {
             var r = d.normalize(0);
