@@ -31,6 +31,10 @@ var utils = require("@fabiocaccamo/utils.js");
 <details><summary><code>utils.array</code></summary>
 <p>
 
+-   `all`
+
+-   `any`
+
 -   `clean`
 
 -   `clone`

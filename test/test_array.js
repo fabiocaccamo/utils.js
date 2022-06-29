@@ -3,6 +3,34 @@ var test = utils.test;
 var arr = utils.array;
 
 describe('array', function() {
+    describe('all', function() {
+        var f = arr.all;
+        it('test true', function() {
+            test.assertEqual(f([true, 1, "ok", [0], { 'a':0 }]), true);
+        });
+        it('test false', function() {
+            test.assertEqual(f([false, 1, "ok", [0], { 'a':0 }]), false);
+            test.assertEqual(f([true, 0, "ok", [0], { 'a':0 }]), false);
+            test.assertEqual(f([true, 1, "", [0], { 'a':0 }]), false);
+            test.assertEqual(f([true, 1, "ok", [], { 'a':0 }]), false);
+            test.assertEqual(f([true, 1, "ok", [0], {}]), false);
+        });
+    });
+    describe('any', function() {
+        var f = arr.any;
+        it('test true', function() {
+            test.assertEqual(f([true, 1, "ok", [0], { 'a':0 }]), true);
+            test.assertEqual(f([false, 1, "ok", [0], { 'a':0 }]), true);
+            test.assertEqual(f([true, 0, "ok", [0], { 'a':0 }]), true);
+            test.assertEqual(f([true, 1, "", [0], { 'a':0 }]), true);
+            test.assertEqual(f([true, 1, "ok", [], { 'a':0 }]), true);
+            test.assertEqual(f([true, 1, "ok", [0], {}]), true);
+            test.assertEqual(f([true, 0, "", [], {}]), true);
+        });
+        it('test false', function() {
+            test.assertEqual(f([false, 0, "", [], {}]), false);
+        });
+    });
     describe('clean', function() {
         var f = arr.clean;
 

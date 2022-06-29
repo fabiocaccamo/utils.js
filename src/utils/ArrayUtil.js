@@ -9,6 +9,32 @@
 
 ArrayUtil = {
 
+    all: function(list) {
+        return list.every(function(item) {
+            switch (TypeUtil.of(item)) {
+                case TypeUtil.ARRAY:
+                    return (item.length > 0);
+                case TypeUtil.OBJECT:
+                    return (ObjectUtil.length(item) > 0);
+                default:
+                    return Boolean(item);
+            }
+        });
+    },
+
+    any: function(list) {
+        return list.some(function(item) {
+            switch (TypeUtil.of(item)) {
+                case TypeUtil.ARRAY:
+                    return (item.length > 0);
+                case TypeUtil.OBJECT:
+                    return (ObjectUtil.length(item) > 0);
+                default:
+                    return Boolean(item);
+            }
+        });
+    },
+
     clean: function(list, hard)
     {
         var items = list.slice();
