@@ -36,6 +36,32 @@
 
 ArrayUtil = {
 
+    all: function(list) {
+        return list.every(function(item) {
+            switch (TypeUtil.of(item)) {
+                case TypeUtil.ARRAY:
+                    return (item.length > 0);
+                case TypeUtil.OBJECT:
+                    return (ObjectUtil.length(item) > 0);
+                default:
+                    return Boolean(item);
+            }
+        });
+    },
+
+    any: function(list) {
+        return list.some(function(item) {
+            switch (TypeUtil.of(item)) {
+                case TypeUtil.ARRAY:
+                    return (item.length > 0);
+                case TypeUtil.OBJECT:
+                    return (ObjectUtil.length(item) > 0);
+                default:
+                    return Boolean(item);
+            }
+        });
+    },
+
     clean: function(list, hard)
     {
         var items = list.slice();
@@ -1154,6 +1180,32 @@ DateUtil = {
                 StringUtil.padZeros(minutes, 2) +
                 StringUtil.padZeros(seconds, 2) +
                 StringUtil.padZeros(milliseconds, 3));
+    },
+
+    isFuture: function(date, checkTime) {
+        var day = new Date(date.getTime());
+        var now = new Date();
+        if (checkTime !== true) {
+            day.setHours(0);
+            day.setMinutes(0);
+            day.setSeconds(0);
+            day.setMilliseconds(0);
+        }
+        var delta = (now.getTime() - day.getTime());
+        return (delta < 0);
+    },
+
+    isPast: function(date, checkTime) {
+        var day = new Date(date.getTime());
+        var now = new Date();
+        if (checkTime !== true) {
+            now.setHours(0);
+            now.setMinutes(0);
+            now.setSeconds(0);
+            now.setMilliseconds(0);
+        }
+        var delta = (now.getTime() - day.getTime());
+        return (delta > 0);
     },
 
     normalize: function(ms)
