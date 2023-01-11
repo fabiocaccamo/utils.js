@@ -63,7 +63,7 @@
     "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "style-sherpa": "^1.0.2",
-    "yargs": "^15.4.1"
+    "yargs": "^17.6.2"
   },
   "dependencies": {},
   "babel": {
