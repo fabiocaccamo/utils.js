@@ -1,9 +1,7 @@
 /** global: XMLUtil */
 
 XMLUtil = {
-
-    // decode: function(str)
-    // {
+    // decode: function(str) {
     //     // https://stackoverflow.com/questions/17604071/parse-xml-using-javascript
     //     var doc = null;
     //         try {
@@ -21,17 +19,15 @@ XMLUtil = {
     //     return doc;
     // },
 
-    // encode: function(doc)
-    // {
+    // encode: function(doc) {
     //     var ser = new XMLSerializer();
     //     var str = ser.serializeToString(doc);
     //     return str;
     // },
 
-    removeNamespaces: function(str)
-    {
-        return str.replace(/(\<(.|\n)+?\>)/g, function(tag) {
+    removeNamespaces: function (str) {
+        return str.replace(/(\<(.|\n)+?\>)/g, function (tag) {
             return tag.replace(/(\s|\<\/?){1}([\w]+\:){1}/g, '$1');
         });
-    }
+    },
 };

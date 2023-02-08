@@ -4,7 +4,6 @@
 /** global: ColorRgbUtil */
 
 ColorUtil = {
-
     cmyk: ColorCmykUtil,
     // cmykToGrayscale: ColorCmykUtil.toGrayscale,
     cmykToHex: ColorCmykUtil.toHex,
@@ -43,8 +42,7 @@ ColorUtil = {
     rgb: ColorRgbUtil,
     rgbToCmyk: ColorRgbUtil.toCmyk,
     // rgbToGrayscale: ColorRgbUtil.toGrayscale,
-    rgbToHex: ColorRgbUtil.toRgb
+    rgbToHex: ColorRgbUtil.toRgb,
     // rgbToHsl: ColorRgbUtil.toHsl,
     // rgbToHsv: ColorRgbUtil.toHsv
-
 };

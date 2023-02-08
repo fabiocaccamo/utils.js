@@ -2,22 +2,41 @@
 /** global: StringUtil */
 
 DateUtil = {
-
-    clone: function(date)
-    {
+    clone: function (date) {
         return new Date(date.getTime());
     },
 
-    format: function(date, str) {
+    format: function (date, str) {
         // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
         var replace = StringUtil.replace;
         var padZeros = StringUtil.padZeros;
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var months = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+        ];
+        var days = [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+        ];
         var dt = date.getDate();
         var year = date.getFullYear();
         var month = date.getMonth();
-        var monthNum = (month + 1);
+        var monthNum = month + 1;
         var monthName = months[month];
         var day = date.getDay();
         var hours = date.getHours();
@@ -41,7 +60,7 @@ DateUtil = {
             ['XX', monthName],
             ['X', monthName.substring(0, 3)],
             ['ZZ', days[day]],
-            ['Z', days[day].substring(0, 3)]
+            ['Z', days[day].substring(0, 3)],
         ];
         var placeholder, occurrence;
         for (var i = 0, j = placeholders.length; i < j; i++) {
@@ -65,9 +84,8 @@ DateUtil = {
     },
     */
 
-    identifier: function(date)
-    {
-        var d = (date || new Date());
+    identifier: function (date) {
+        var d = date || new Date();
         var year = d.getFullYear();
         var month = d.getMonth() + 1; // getMonth() is zero-based
         var day = d.getDate();
@@ -75,16 +93,18 @@ DateUtil = {
         var minutes = d.getMinutes();
         var seconds = d.getSeconds();
         var milliseconds = d.getMilliseconds();
-        return (String(year) +
-                StringUtil.padZeros(month, 2) +
-                StringUtil.padZeros(day, 2) +
-                StringUtil.padZeros(hours, 2) +
-                StringUtil.padZeros(minutes, 2) +
-                StringUtil.padZeros(seconds, 2) +
-                StringUtil.padZeros(milliseconds, 3));
+        return (
+            String(year) +
+            StringUtil.padZeros(month, 2) +
+            StringUtil.padZeros(day, 2) +
+            StringUtil.padZeros(hours, 2) +
+            StringUtil.padZeros(minutes, 2) +
+            StringUtil.padZeros(seconds, 2) +
+            StringUtil.padZeros(milliseconds, 3)
+        );
     },
 
-    isFuture: function(date, checkTime) {
+    isFuture: function (date, checkTime) {
         var day = new Date(date.getTime());
         var now = new Date();
         if (checkTime !== true) {
@@ -93,11 +113,11 @@ DateUtil = {
             day.setSeconds(0);
             day.setMilliseconds(0);
         }
-        var delta = (now.getTime() - day.getTime());
-        return (delta < 0);
+        var delta = now.getTime() - day.getTime();
+        return delta < 0;
     },
 
-    isPast: function(date, checkTime) {
+    isPast: function (date, checkTime) {
         var day = new Date(date.getTime());
         var now = new Date();
         if (checkTime !== true) {
@@ -106,38 +126,35 @@ DateUtil = {
             now.setSeconds(0);
             now.setMilliseconds(0);
         }
-        var delta = (now.getTime() - day.getTime());
-        return (delta > 0);
+        var delta = now.getTime() - day.getTime();
+        return delta > 0;
     },
 
-    normalize: function(ms)
-    {
+    normalize: function (ms) {
         var time = {
-            milliseconds:   (ms % 1000),
-            seconds:        (Math.floor(ms / 1000) % 60),
-            minutes:        (Math.floor(ms / 1000 / 60) % 60),
-            hours:          (Math.floor(ms / 1000 / 60 / 60) % 24),
-            days:           (Math.floor(ms / 1000 / 60 / 60 / 24))
+            milliseconds: ms % 1000,
+            seconds: Math.floor(ms / 1000) % 60,
+            minutes: Math.floor(ms / 1000 / 60) % 60,
+            hours: Math.floor(ms / 1000 / 60 / 60) % 24,
+            days: Math.floor(ms / 1000 / 60 / 60 / 24),
         };
         return time;
     },
 
-    timestamp: function(date)
-    {
-        var d = (date || new Date());
+    timestamp: function (date) {
+        var d = date || new Date();
         return d.getTime();
     },
 
-    yyyymmdd: function(date, separator)
-    {
-        var d = (date || new Date());
+    yyyymmdd: function (date, separator) {
+        var d = date || new Date();
         var year = d.getFullYear();
         var month = d.getMonth() + 1; // getMonth() is zero-based
         var day = d.getDate();
-        var sep = (separator || '');
+        var sep = separator || '';
+        // prettier-ignore
         return (String(year) + sep +
                 StringUtil.padZeros(month, 2) + sep +
                 StringUtil.padZeros(day, 2));
-    }
-
+    },
 };

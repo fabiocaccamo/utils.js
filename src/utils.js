@@ -1,29 +1,43 @@
 (function (root, factory) {
-
-    if (typeof(define) === 'function' && define.amd) {
+    if (typeof define === 'function' && define.amd) {
         // AMD
         define(factory);
-    }
-    else if (typeof(module) === 'object') {
+    } else if (typeof module === 'object') {
         // CommonJS
         module.exports = factory();
-    }
-    else {
+    } else {
         // Script tag import i.e., IIFE
         root.utils = factory();
         root.u = factory();
     }
-
-}(this, function() {
-
+})(this, function () {
     'use strict';
 
-    var ArrayUtil, Base64Util,
-        ColorCmykUtil, ColorHexUtil, ColorRgbUtil, ColorUtil,
-        DateUtil, EaseUtil, FunctionUtil, PointUtil, GeomUtil,
-        HexUtil, InterpolationUtil, JSONUtil, MathUtil, NumberUtil,
-        ObjectUtil, RandomUtil, StringUtil, TestUtil, TrigoUtil,
-        TypeUtil, URLUtil, UTF8Util, XMLUtil;
+    var ArrayUtil,
+        Base64Util,
+        ColorCmykUtil,
+        ColorHexUtil,
+        ColorRgbUtil,
+        ColorUtil,
+        DateUtil,
+        EaseUtil,
+        FunctionUtil,
+        PointUtil,
+        GeomUtil,
+        HexUtil,
+        InterpolationUtil,
+        JSONUtil,
+        MathUtil,
+        NumberUtil,
+        ObjectUtil,
+        RandomUtil,
+        StringUtil,
+        TestUtil,
+        TrigoUtil,
+        TypeUtil,
+        URLUtil,
+        UTF8Util,
+        XMLUtil;
 
     @import './utils/ArrayUtil.js'
     @import './utils/Base64Util.js'
@@ -73,8 +87,8 @@
         type: TypeUtil,
         xml: XMLUtil,
         url: URLUtil,
-        utf8: UTF8Util
+        utf8: UTF8Util,
     };
 
     return utils;
-}));
+});

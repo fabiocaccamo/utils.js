@@ -2,8 +2,8 @@
 /** global: UTF8Util */
 
 Base64Util = {
-
     CHARS: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+    // prettier-ignore
     CHARS_LIST: [
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
         'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -11,6 +11,7 @@ Base64Util = {
         'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/', '='
     ],
+    // prettier-ignore
     CHARS_TABLE: {
         'A':  0, 'B':  1, 'C':  2, 'D':  3, 'E':  4, 'F':  5, 'G':  6, 'H':  7, 'I':  8, 'J':  9, 'K': 10, 'L': 11, 'M': 12,
         'N': 13, 'O': 14, 'P': 15, 'Q': 16, 'R': 17, 'S': 18, 'T': 19, 'U': 20, 'V': 21, 'W': 22, 'X': 23, 'Y': 24, 'Z': 25,
@@ -19,15 +20,13 @@ Base64Util = {
         '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
     },
 
-    decode: function(str)
-    {
+    decode: function (str) {
         var input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
         var output = '';
 
         try {
             output = window.atob(input);
-        }
-        catch (e) {
+        } catch (e) {
             var chars = Base64Util.CHARS_TABLE;
             var chr1, chr2, chr3;
             var enc1, enc2, enc3, enc4;
@@ -36,14 +35,14 @@ Base64Util = {
             var j = input.length;
 
             while (i < j) {
-                enc1 = chars[ input.charAt(i++) ];
-                enc2 = chars[ input.charAt(i++) ];
-                enc3 = chars[ input.charAt(i++) ];
-                enc4 = chars[ input.charAt(i++) ];
+                enc1 = chars[input.charAt(i++)];
+                enc2 = chars[input.charAt(i++)];
+                enc3 = chars[input.charAt(i++)];
+                enc4 = chars[input.charAt(i++)];
 
-                chr1 = ((enc1 << 2) | (enc2 >> 4));
-                chr2 = (((enc2 & 15) << 4) | (enc3 >> 2));
-                chr3 = (((enc3 & 3) << 6) | enc4);
+                chr1 = (enc1 << 2) | (enc2 >> 4);
+                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
+                chr3 = ((enc3 & 3) << 6) | enc4;
 
                 output += String.fromCharCode(chr1);
 
@@ -60,15 +59,13 @@ Base64Util = {
         return output;
     },
 
-    encode: function(str)
-    {
+    encode: function (str) {
         var input = UTF8Util.encode(str);
         var output = '';
 
         try {
             output = window.btoa(input);
-        }
-        catch (e) {
+        } catch (e) {
             var chars = Base64Util.CHARS_LIST;
             var chr1, chr2, chr3;
             var enc1, enc2, enc3, enc4;
@@ -81,10 +78,10 @@ Base64Util = {
                 chr2 = input.charCodeAt(i++);
                 chr3 = input.charCodeAt(i++);
 
-                enc1 = (chr1 >> 2);
+                enc1 = chr1 >> 2;
                 enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
                 enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                enc4 = (chr3 & 63);
+                enc4 = chr3 & 63;
 
                 if (isNaN(chr2)) {
                     enc3 = enc4 = 64;
@@ -93,10 +90,10 @@ Base64Util = {
                 }
 
                 // output += (chars.charAt(enc1) + chars.charAt(enc2) + chars.charAt(enc3) + chars.charAt(enc4));
-                output += (chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4]);
+                output += chars[enc1] + chars[enc2] + chars[enc3] + chars[enc4];
             }
         }
 
         return output;
-    }
+    },
 };

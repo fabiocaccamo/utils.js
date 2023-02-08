@@ -10,9 +10,7 @@
 /** global: URLUtil */
 
 ObjectUtil = {
-
-    assign: function(obj, other)
-    {
+    assign: function (obj, other) {
         var objs = [other].concat(FunctionUtil.args(arguments, 2));
         var i, j, k;
         for (i = 0, j = objs.length; i < j; i++) {
@@ -23,8 +21,7 @@ ObjectUtil = {
         return obj;
     },
 
-    clean: function(obj, hard)
-    {
+    clean: function (obj, hard) {
         var keys = ObjectUtil.keys(obj);
         var key, val;
         for (var i = 0, j = keys.length; i < j; i++) {
@@ -59,8 +56,7 @@ ObjectUtil = {
         return obj;
     },
 
-    clone: function(obj)
-    {
+    clone: function (obj) {
         var cln = {};
         var keys = ObjectUtil.keys(obj);
         var key, val;
@@ -85,36 +81,34 @@ ObjectUtil = {
         return cln;
     },
 
-    decodeBase64: function(str)
-    {
+    decodeBase64: function (str) {
         return JSONUtil.decode(Base64Util.decode(str));
     },
 
-    decodeJSON: function(str)
-    {
+    decodeJSON: function (str) {
         return JSONUtil.decode(str);
     },
 
-    decodeParameters: function(str)
-    {
+    decodeParameters: function (str) {
         return URLUtil.getParametersDict('?' + str);
     },
 
-    encodeBase64: function(obj)
-    {
+    encodeBase64: function (obj) {
         return Base64Util.encode(JSONUtil.encode(obj));
     },
 
-    encodeJSON: function(obj)
-    {
+    encodeJSON: function (obj) {
         return JSONUtil.encode(obj);
     },
 
-    encodeParameters: function(obj, keysFilter)
-    {
+    encodeParameters: function (obj, keysFilter) {
         var objClean = ObjectUtil.clean(ObjectUtil.clone(obj), true);
-        var keys = (TypeUtil.isArray(keysFilter) ? keysFilter : ObjectUtil.keys(obj, true));
-        var key, val, keyval = [];
+        var keys = TypeUtil.isArray(keysFilter)
+            ? keysFilter
+            : ObjectUtil.keys(obj, true);
+        var key,
+            val,
+            keyval = [];
 
         for (var i = 0, j = keys.length; i < j; i++) {
             key = keys[i];
@@ -127,8 +121,7 @@ ObjectUtil = {
         return keyval.join('&');
     },
 
-    equals: function(obj1, obj2)
-    {
+    equals: function (obj1, obj2) {
         if (obj1 === obj2 || ObjectUtil.is(obj1, obj2)) {
             return true;
         }
@@ -162,7 +155,12 @@ ObjectUtil = {
             val1 = obj1[key];
             val2 = obj2[key];
 
-            if (ObjectUtil.is(obj1, val1) || ObjectUtil.is(obj2, val2) || ObjectUtil.is(val1, val2) || val1 === val2) {
+            if (
+                ObjectUtil.is(obj1, val1) ||
+                ObjectUtil.is(obj2, val2) ||
+                ObjectUtil.is(val1, val2) ||
+                val1 === val2
+            ) {
                 continue;
             }
 
@@ -174,13 +172,13 @@ ObjectUtil = {
         return true;
     },
 
-    is: function(obj1, obj2)
-    {
+    is: function (obj1, obj2) {
         // https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Object/is
         if (!Object.is) {
-            Object.is = function(x, y) {
+            Object.is = function (x, y) {
                 // Algoritmo SameValue
-                if (x === y) { // Steps 1-5, 7-10
+                if (x === y) {
+                    // Steps 1-5, 7-10
                     // Steps 6.b-6.e: +0 != -0
                     return x !== 0 || 1 / x === 1 / y;
                 } else {
@@ -193,9 +191,7 @@ ObjectUtil = {
     },
 
     keypath: {
-
-        get: function(obj, path, defaultValue)
-        {
+        get: function (obj, path, defaultValue) {
             var keys = path.split('.');
             var key;
             var cursor = obj;
@@ -203,15 +199,14 @@ ObjectUtil = {
                 key = keys[i];
                 try {
                     cursor = cursor[key];
-                } catch(e) {
+                } catch (e) {
                     return defaultValue;
                 }
             }
-            return (TypeUtil.isUndefined(cursor) ? defaultValue : cursor);
+            return TypeUtil.isUndefined(cursor) ? defaultValue : cursor;
         },
 
-        set: function(obj, path, value)
-        {
+        set: function (obj, path, value) {
             var keys = path.split('.');
             var key;
             var cursor = obj;
@@ -223,17 +218,16 @@ ObjectUtil = {
                 if (!TypeUtil.isObject(cursor[key])) {
                     cursor[key] = {};
                 }
-                if (i < (j - 1)) {
+                if (i < j - 1) {
                     cursor = cursor[key];
                 } else {
                     cursor[key] = value;
                 }
             }
-        }
+        },
     },
 
-    keys: function(obj, sorted)
-    {
+    keys: function (obj, sorted) {
         var k = Object.keys(obj);
         if (sorted === true) {
             k.sort();
@@ -241,29 +235,26 @@ ObjectUtil = {
         return k;
     },
 
-    length: function(obj)
-    {
+    length: function (obj) {
         return ObjectUtil.keys(obj).length;
     },
 
-    map: function(obj, func)
-    {
+    map: function (obj, func) {
         var m = {};
-        ObjectUtil.keys(obj).forEach(function(k) {
+        ObjectUtil.keys(obj).forEach(function (k) {
             m[k] = func.call(null, obj[k], k, obj);
         });
         return m;
     },
 
-    merge: function(obj1, obj2)
-    {
+    merge: function (obj1, obj2) {
         var objs = [{}, obj1, obj2].concat(FunctionUtil.args(arguments, 2));
         var obj = ObjectUtil.assign.apply(null, objs);
         return obj;
     },
 
-    search: function(objs, filter)
-    {
+    search: function (objs, filter) {
+        // prettier-ignore
         var results = [], i, j, k, m, obj, res, keys, key, val;
         for (i = 0, j = objs.length; i < j; i++) {
             obj = objs[i];
@@ -283,14 +274,12 @@ ObjectUtil = {
         return results;
     },
 
-    values: function(obj, sorted)
-    {
+    values: function (obj, sorted) {
         var keys = ObjectUtil.keys(obj, sorted);
         var vals = [];
         for (var i = 0, j = keys.length; i < j; i++) {
             vals.push(obj[keys[i]]);
         }
         return vals;
-    }
-
+    },
 };

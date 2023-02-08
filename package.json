@@ -61,11 +61,11 @@
     "jsdoc-to-markdown": "^8.0.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
+    "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
     "style-sherpa": "^1.0.2",
     "yargs": "^17.6.2"
   },
-  "dependencies": {},
   "babel": {
     "presets": [
       "@babel/preset-env"

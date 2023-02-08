@@ -2,7 +2,5 @@
 /** global: PointUtil */
 
 GeomUtil = {
-
-    point: PointUtil
-
+    point: PointUtil,
 };

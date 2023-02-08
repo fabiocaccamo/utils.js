@@ -1,20 +1,18 @@
 /** global: URLUtil */
 
 URLUtil = {
-
-    getParameterByName: function(url, name, defaultValue)
-    {
+    getParameterByName: function (url, name, defaultValue) {
         var paramsDict = URLUtil.getParameters(url);
-        return ((name in paramsDict) ? (paramsDict[name] || defaultValue || '') : defaultValue);
+        return name in paramsDict
+            ? paramsDict[name] || defaultValue || ''
+            : defaultValue;
     },
 
-    getParameters: function(url)
-    {
+    getParameters: function (url) {
         return URLUtil.getParametersDict(url);
     },
 
-    getParametersDict: function(url)
-    {
+    getParametersDict: function (url) {
         var paramsList = URLUtil.getParametersList(url);
         var param;
         var paramsDict = {};
@@ -25,8 +23,7 @@ URLUtil = {
         return paramsDict;
     },
 
-    getParametersList: function(url)
-    {
+    getParametersList: function (url) {
         var paramsString = URLUtil.getParametersString(url);
         var paramsList = [];
         var paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
@@ -34,17 +31,17 @@ URLUtil = {
         while (paramMatch) {
             paramsList.push({
                 key: paramMatch[2],
-                value: decodeURIComponent(paramMatch[4] || '')
+                value: decodeURIComponent(paramMatch[4] || ''),
             });
             paramMatch = paramsRE.exec(paramsString);
         }
         return paramsList;
     },
 
-    getParametersString: function(url)
-    {
-        url = (url || URLUtil.getURL());
+    getParametersString: function (url) {
+        url = url || URLUtil.getURL();
         var queryStringPosition = url.indexOf('?');
+        // prettier-ignore
         var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
         var hashDelimiterPosition = queryString.indexOf('#');
         if (hashDelimiterPosition > -1) {
@@ -53,41 +50,34 @@ URLUtil = {
         return queryString;
     },
 
-    getURL: function()
-    {
+    getURL: function () {
         var url = '';
         try {
             url = window.location.href;
-        } catch(e) {
+        } catch (e) {
             // catch exception if not running in browser
         }
         return url;
     },
 
-    hasParameter: function(url, name)
-    {
-        return (name in URLUtil.getParametersDict(url));
+    hasParameter: function (url, name) {
+        return name in URLUtil.getParametersDict(url);
     },
 
-    isFile: function(url)
-    {
-        return ((url || URLUtil.getURL()).indexOf('file://') === 0);
+    isFile: function (url) {
+        return (url || URLUtil.getURL()).indexOf('file://') === 0;
     },
 
-    isHttp: function(url)
-    {
-        return ((url || URLUtil.getURL()).indexOf('http://') === 0);
+    isHttp: function (url) {
+        return (url || URLUtil.getURL()).indexOf('http://') === 0;
     },
 
-    isHttps: function(url)
-    {
-        return ((url || URLUtil.getURL()).indexOf('https://') === 0);
+    isHttps: function (url) {
+        return (url || URLUtil.getURL()).indexOf('https://') === 0;
     },
 
-    isLocalhost: function(url)
-    {
+    isLocalhost: function (url) {
         var re = /^(https?\:\/\/)(localhost|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
-        return re.test((url || URLUtil.getURL()));
-    }
-
+        return re.test(url || URLUtil.getURL());
+    },
 };

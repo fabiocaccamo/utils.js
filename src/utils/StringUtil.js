@@ -4,27 +4,22 @@
 /** global: TypeUtil */
 
 StringUtil = {
-
-    contains: function(str, occurrence)
-    {
+    contains: function (str, occurrence) {
         return Boolean(str.indexOf(occurrence) > -1);
     },
 
-    endsWith: function(str, search)
-    {
+    endsWith: function (str, search) {
         // if (String.prototype.endsWith) {
         //     return str.endsWith(search);
         // }
-        return (str.substring((str.length - search.length), str.length) === search);
+        return str.substring(str.length - search.length, str.length) === search;
     },
 
-    icontains: function(str, occurrence)
-    {
+    icontains: function (str, occurrence) {
         return StringUtil.contains(str.toLowerCase(), occurrence.toLowerCase());
     },
 
-    levenshteinDistance: function(a, b)
-    {
+    levenshteinDistance: function (a, b) {
         // taken from GitHub here:
         // https://gist.github.com/andrei-m/982927#gistcomment-586471
         var m = [];
@@ -38,57 +33,58 @@ StringUtil = {
                 if (j === 0) {
                     continue;
                 }
-                m[i][j] = b.charAt(i - 1) === a.charAt(j - 1) ? m[i - 1][j - 1] : Math.min(
-                    m[i-1][j-1] + 1,
-                    m[i][j-1] + 1,
-                    m[i-1][j] + 1
-                );
+                m[i][j] =
+                    b.charAt(i - 1) === a.charAt(j - 1)
+                        ? m[i - 1][j - 1]
+                        : Math.min(
+                              m[i - 1][j - 1] + 1,
+                              m[i][j - 1] + 1,
+                              m[i - 1][j] + 1
+                          );
             }
         }
         return m[b.length][a.length];
     },
 
-    levenshteinSimilarity: function(a, b)
-    {
+    levenshteinSimilarity: function (a, b) {
         var d = StringUtil.levenshteinDistance(a, b);
         var l = Math.max(a.length, b.length);
 
-        return ((l === 0) ? 1.0 : (1.0 - (d / l)));
+        return l === 0 ? 1.0 : 1.0 - d / l;
     },
 
-    padLeft: function(str, len, char)
-    {
+    padLeft: function (str, len, char) {
         var i = str.length;
         while (i < len) {
-            str = (char + str);
+            str = char + str;
             i++;
         }
         return str;
     },
 
-    padRight: function(str, len, char)
-    {
+    padRight: function (str, len, char) {
         var i = str.length;
         while (i < len) {
-            str = (str + char);
+            str = str + char;
             i++;
         }
         return str;
     },
 
-    padZeros: function(str, len)
-    {
+    padZeros: function (str, len) {
         return StringUtil.padLeft(String(str), len, '0');
     },
 
-    render: function(str, data, placeholderStart, placeholderEnd)
-    {
-        var pattern = ((placeholderStart || '{{') + '[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*' + (placeholderEnd || '}}'));
+    render: function (str, data, placeholderStart, placeholderEnd) {
+        var pattern =
+            (placeholderStart || '{{') +
+            '[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*' +
+            (placeholderEnd || '}}');
         var regex = new RegExp(pattern, 'g');
         var matches = Array.from(str.matchAll(regex));
         var occurrence, replacement;
-        data = (data || {});
-        matches.forEach(function(match) {
+        data = data || {};
+        matches.forEach(function (match) {
             occurrence = match[0];
             replacement = data[match[1]];
             if (TypeUtil.isNone(replacement)) {
@@ -99,31 +95,28 @@ StringUtil = {
         return str;
     },
 
-    replace: function(str, occurrence, replacement, caseSensitive)
-    {
+    replace: function (str, occurrence, replacement, caseSensitive) {
         var pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        var flags = (caseSensitive === false ? 'gi' : 'g');
+        var flags = caseSensitive === false ? 'gi' : 'g';
         var regex = new RegExp(pattern, flags);
         return str.replace(regex, String(replacement));
     },
 
-    reverse: function(str)
-    {
+    reverse: function (str) {
         var chars = str.split('');
         chars.reverse();
         return chars.join('');
     },
 
-    rotate: function(str, count)
-    {
+    rotate: function (str, count) {
         var chars = str.split('');
         chars = ArrayUtil.rotate(chars, count);
         return chars.join('');
     },
 
-    slugify: function(str)
-    {
+    slugify: function (str) {
         var sep = '-';
+        // prettier-ignore
         var chars = {
             // Latin
             'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Æ': 'AE',
@@ -193,65 +186,56 @@ StringUtil = {
         return str;
     },
 
-    startsWith: function(str, search)
-    {
+    startsWith: function (str, search) {
         // if (String.prototype.startsWith) {
         //     return str.startsWith(search);
         // }
-        return (str.substr(0, search.length) === search);
+        return str.substr(0, search.length) === search;
     },
 
-    toConstantCase: function(str)
-    {
+    toConstantCase: function (str) {
         return str.replace(/[\s]/gm, '_').toUpperCase();
     },
 
-    toRandomCase: function(str)
-    {
-        return str.replace(/./gm, function(match) {
-            return (RandomUtil.boolean() ? match.toUpperCase() : match.toLowerCase());
+    toRandomCase: function (str) {
+        return str.replace(/./gm, function (match) {
+            return RandomUtil.boolean() ? match.toUpperCase() : match.toLowerCase();
         });
     },
 
-    toTitleCase: function(str, toLowerCaseRest)
-    {
-        return str.replace(/[^\'\‘\’\`\-\s]+/gm, function(match) {
+    toTitleCase: function (str, toLowerCaseRest) {
+        return str.replace(/[^\'\‘\’\`\-\s]+/gm, function (match) {
             return StringUtil.toUpperCaseFirst(match, toLowerCaseRest);
         });
     },
 
-    toUpperCaseFirst: function(str, toLowerCaseRest)
-    {
+    toUpperCaseFirst: function (str, toLowerCaseRest) {
         if (str.length === 0) {
             return str;
         }
         var f = str.substr(0, 1).toUpperCase();
-        var r = (str.length > 1 ? str.substr(1) : '');
-        return (f + ((toLowerCaseRest === true) ? r.toLowerCase() : r));
+        var r = str.length > 1 ? str.substr(1) : '';
+        return f + (toLowerCaseRest === true ? r.toLowerCase() : r);
     },
 
-    trim: function(str)
-    {
+    trim: function (str) {
         // if (String.prototype.trim) {
         //     return str.trim();
         // }
         return str.replace(/^[\s]+|[\s]+$/gm, '');
     },
 
-    trimLeft: function(str)
-    {
+    trimLeft: function (str) {
         // if (String.prototype.trimStart) {
         //     return str.trimStart();
         // }
         return str.replace(/^[\s]+/gm, '');
     },
 
-    trimRight: function(str)
-    {
+    trimRight: function (str) {
         // if (String.prototype.trimEnd) {
         //     return str.trimEnd();
         // }
         return str.replace(/[\s]+$/gm, '');
-    }
-
+    },
 };

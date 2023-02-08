@@ -1,0 +1,7 @@
+bracketSpacing: true
+printWidth: 88
+quoteProps: "preserve"
+semi: true
+singleQuote: true
+tabWidth: 4
+useTabs: false

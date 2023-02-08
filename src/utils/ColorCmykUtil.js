@@ -2,7 +2,6 @@
 /** global: ColorRgbUtil */
 
 ColorCmykUtil = {
-
     // average: function(colors)
     // {
     //     return ColorRgbUtil.toCmyk(
@@ -85,10 +84,8 @@ ColorCmykUtil = {
     //         ColorCmykUtil.toRgb(color));
     // },
 
-    toHex: function(color, prefix)
-    {
-        return ColorRgbUtil.toHex(
-            ColorCmykUtil.toRgb(color), prefix);
+    toHex: function (color, prefix) {
+        return ColorRgbUtil.toHex(ColorCmykUtil.toRgb(color), prefix);
     },
 
     // toHsl: function(color)
@@ -103,34 +100,32 @@ ColorCmykUtil = {
     //         ColorCmykUtil.toRgb(color));
     // },
 
-    toRgb: function(color)
-    {
-        var c = (color.c / 100);
-        var m = (color.m / 100);
-        var y = (color.y / 100);
-        var k = (color.k / 100);
-        var ik = (1.0 - k);
+    toRgb: function (color) {
+        var c = color.c / 100;
+        var m = color.m / 100;
+        var y = color.y / 100;
+        var k = color.k / 100;
+        var ik = 1.0 - k;
 
-        var r = (1.0 - Math.min(1.0, ((c * ik) + k)));
-        var g = (1.0 - Math.min(1.0, ((m * ik) + k)));
-        var b = (1.0 - Math.min(1.0, ((y * ik) + k)));
+        var r = 1.0 - Math.min(1.0, c * ik + k);
+        var g = 1.0 - Math.min(1.0, m * ik + k);
+        var b = 1.0 - Math.min(1.0, y * ik + k);
 
         var round = Math.round;
         r = round(r * 255);
         g = round(g * 255);
         b = round(b * 255);
 
-        return { r:r, g:g, b:b, a:1.0 };
+        return { r: r, g: g, b: b, a: 1.0 };
     },
 
-    toString: function(color)
-    {
+    toString: function (color) {
+        // prettier-ignore
         return '{ c:' + String(color.c) + ', m:' + String(color.m) + ', y:' + String(color.y) + ', k:' + String(color.k) + ' }';
     },
 
-    toStringCSS: function(color)
-    {
+    toStringCSS: function (color) {
+        // prettier-ignore
         return 'cmyk(' + String(color.c) + '%, ' + String(color.m) + '%, ' + String(color.y) + '%, ' + String(color.k) + '%)';
-    }
-
+    },
 };
