@@ -10,24 +10,50 @@
 [![](https://api.codacy.com/project/badge/Grade/6bc3162a50224b518ed7dc366535b3ba)](https://www.codacy.com/app/fabiocaccamo/utils.js)
 
 # utils.js
-JavaScript utils for lazy devs.
+
+JavaScript utils for lazy devs. This repository contains several commonly used utils in Vanilla JavaScript with zero dependencies. Available through [npm](https://www.npmjs.com/package/@fabiocaccamo/utils.js).
+
+## Table of contents
+
+1. Installation
+2. Usage
+3. APIs
+4. Development
+5. Contribution
+6. License
 
 ## Installation
+
 `npm install @fabiocaccamo/utils.js`
 
 ## Usage
 
 ### Browser
+
 ```html
 <script src="node_modules/@fabiocaccamo/utils.js/dist/utils.min.js"></script>
 ```
 
 ### Node
+
 ```JavaScript
 var utils = require("@fabiocaccamo/utils.js");
 ```
 
+### Simple Array Example
+
+```JavaScript
+var utils = require("@fabiocaccamo/utils.js");
+
+const exampleArray = [0, 1, 1];
+const result = utils.array.all(exampleArray);
+console.log(result);
+```
+
+Expected output: `false`
+
 ## APIs
+
 <details><summary><code>utils.array</code></summary>
 <p>
 
@@ -738,17 +764,55 @@ var utils = require("@fabiocaccamo/utils.js");
 ## Development
 
 ### Setup
+
 -   `git clone https://github.com/fabiocaccamo/utils.js.git`
 -   `npm install`
 
 ### Watch
+
 `npm run watch`
 
 ### Test
-`npm run test` *(tests run against dist)*
+
+`npm run test` _(tests run against dist)_
 
 ### Build
+
 `npm run build`
 
+## Contribution
+
+### Formatting
+
+Use [`prettier`](https://prettier.io/) code formatter to maintain consistency.
+Refer to [.prettierrc](./.prettierrc) for specific formatting.
+
+### Testing Guidelines
+
+`npm run test` uses [gulp](https://gulpjs.com/) task runner and [Mocha](https://mochajs.org/) Javascript testing framework
+
+####[Test Array Example](./test/test_array.js)
+
+```JavaScript
+describe('array', function() {
+    describe('all', function() {
+        var f = arr.all;
+        it('test true', function() {
+            test.assertEqual(f([true, 1, "ok", [0], { 'a':0 }]), true);
+        });
+        it('test false', function() {
+            test.assertEqual(f([false, 1, "ok", [0], { 'a':0 }]), false);
+        });
+    });
+});
+```
+
+Include code coverage report with pull request.
+
+### Security
+
+Refer to [SECURITY.md](./SECURITY.md)
+
 ## License
+
 Released under [MIT License](https://github.com/fabiocaccamo/utils.js/blob/main/LICENSE.txt).
