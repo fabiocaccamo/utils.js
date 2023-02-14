@@ -34,9 +34,10 @@
   },
   "main": "dist/utils.js",
   "scripts": {
-    "build": "gulp build --production",
+    "build": "npm run format && gulp build --production",
     "docs": "gulp build && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md && gulp build --production",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "format": "./node_modules/.bin/prettier --config .prettierrc --loglevel warn --write src/utils/*.js",
     "test": "gulp build --production && nyc mocha",
     "watch": "gulp"
   },
@@ -61,7 +62,7 @@
     "jsdoc-to-markdown": "^8.0.0",
     "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "rimraf": "^3.0.2",
     "style-sherpa": "^1.0.2",
     "yargs": "^17.6.2"
