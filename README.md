@@ -11,24 +11,32 @@
 
 # utils.js
 
-JavaScript utils for lazy devs. This repository contains several commonly used utils in Vanilla JavaScript with zero dependencies. Available through [npm](https://www.npmjs.com/package/@fabiocaccamo/utils.js).
+👷 🔧 zero dependencies vanilla JavaScript utils.
 
 ## Table of contents
 
-1. Installation
-2. Usage
-3. APIs
-4. Development
-5. Contribution
-6. License
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [APIs](#apis)
+4. [Development](#development)
+5. [Security](#security)
+5. [License](#license)
 
 ## Installation
+
+This library is available through [npm](https://www.npmjs.com/package/@fabiocaccamo/utils.js):
 
 `npm install @fabiocaccamo/utils.js`
 
 ## Usage
 
-### Browser
+### CDN
+
+```html
+<script src=" https://cdn.jsdelivr.net/npm/@fabiocaccamo/utils.js/dist/utils.min.js"></script>
+```
+
+### Local 
 
 ```html
 <script src="node_modules/@fabiocaccamo/utils.js/dist/utils.min.js"></script>
@@ -39,18 +47,6 @@ JavaScript utils for lazy devs. This repository contains several commonly used u
 ```JavaScript
 var utils = require("@fabiocaccamo/utils.js");
 ```
-
-### Simple Array Example
-
-```JavaScript
-var utils = require("@fabiocaccamo/utils.js");
-
-const exampleArray = [0, 1, 1];
-const result = utils.array.all(exampleArray);
-console.log(result);
-```
-
-Expected output: `false`
 
 ## APIs
 
@@ -770,46 +766,21 @@ Expected output: `false`
 
 ### Watch
 
-`npm run watch`
+-   `npm run watch`
 
-### Test
+### Testing
 
-`npm run test` _(tests run against dist)_
-
-### Build
-
-`npm run build`
-
-## Contribution
+-   `npm run test` _(run tests against dist using [`Gulp`](https://gulpjs.com/) task runner and [`Mocha`](https://mochajs.org/) Javascript testing framework)_
 
 ### Formatting
 
-Use [`prettier`](https://prettier.io/) code formatter to maintain consistency.
-Refer to [.prettierrc](./.prettierrc) for specific formatting.
+-   `npm run format` _(format code using [`Prettier`](https://prettier.io/) code formatter, refer to [.prettierrc](./.prettierrc) for specific formatting options)_
 
-### Testing Guidelines
+### Build
 
-`npm run test` uses [gulp](https://gulpjs.com/) task runner and [Mocha](https://mochajs.org/) Javascript testing framework
+-   `npm run build`
 
-####[Test Array Example](./test/test_array.js)
-
-```JavaScript
-describe('array', function() {
-    describe('all', function() {
-        var f = arr.all;
-        it('test true', function() {
-            test.assertEqual(f([true, 1, "ok", [0], { 'a':0 }]), true);
-        });
-        it('test false', function() {
-            test.assertEqual(f([false, 1, "ok", [0], { 'a':0 }]), false);
-        });
-    });
-});
-```
-
-Include code coverage report with pull request.
-
-### Security
+## Security
 
 Refer to [SECURITY.md](./SECURITY.md)
 
