@@ -52,7 +52,7 @@ ArrayUtil = {
                             return ObjectUtil.length(itemClean) > 0 ? itemClean : null;
                         case TypeUtil.STRING:
                             itemClean = StringUtil.trim(item);
-                            return itemClean !== "" ? item : null;
+                            return itemClean !== '' ? item : null;
                         default:
                             return item;
                     }
