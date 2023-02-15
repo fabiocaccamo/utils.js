@@ -15,12 +15,12 @@
 
 ## Table of contents
 
-1. [Installation](#installation)
-2. [Usage](#usage)
-3. [APIs](#apis)
-4. [Development](#development)
-5. [Security](#security)
-5. [License](#license)
+- [Installation](#installation)
+- [Usage](#usage)
+- [APIs](#apis)
+- [Development](#development)
+- [Security](#security)
+- [License](#license)
 
 ## Installation
 
@@ -36,7 +36,7 @@ This library is available through [npm](https://www.npmjs.com/package/@fabiocacc
 <script src=" https://cdn.jsdelivr.net/npm/@fabiocaccamo/utils.js/dist/utils.min.js"></script>
 ```
 
-### Local 
+### Local
 
 ```html
 <script src="node_modules/@fabiocaccamo/utils.js/dist/utils.min.js"></script>
