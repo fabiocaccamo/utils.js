@@ -8,7 +8,7 @@
 TestUtil = {
     assertArray: function (val, len) {
         if (!TypeUtil.isArray(val)) {
-            throw new Error('value is not array.');
+            throw new Error('value is not array: ' + String(val) + '.');
         }
         if (TypeUtil.isNumber(len)) {
             TestUtil.assertEqual(val.length, len);
@@ -17,19 +17,19 @@ TestUtil = {
 
     assertBase64: function (val) {
         if (!TypeUtil.isBase64(val)) {
-            throw new Error('value is not base64.');
+            throw new Error('value is not base64: ' + String(val) + '.');
         }
     },
 
     assertBoolean: function (val) {
         if (!TypeUtil.isBoolean(val)) {
-            throw new Error('value is not boolean.');
+            throw new Error('value is not boolean: ' + String(val) + '.');
         }
     },
 
     assertDate: function (val) {
         if (!TypeUtil.isDate(val)) {
-            throw new Error('value is not date.');
+            throw new Error('value is not date: ' + String(val) + '.');
         }
     },
 
@@ -46,62 +46,62 @@ TestUtil = {
 
     assertError: function (val) {
         if (!TypeUtil.isError(val)) {
-            throw new Error('value is not error.');
+            throw new Error('value is not error: ' + String(val) + '.');
         }
     },
 
     assertFalse: function (val) {
         TestUtil.assertBoolean(val);
         if (val !== false) {
-            throw new Error('value is not false.');
+            throw new Error('value is not false: ' + String(val) + '.');
         }
     },
 
     assertFunction: function (val) {
         if (!TypeUtil.isFunction(val)) {
-            throw new Error('value is not function.');
+            throw new Error('value is not function: ' + String(val) + '.');
         }
     },
 
     assertJSON: function (val) {
         if (!TypeUtil.isJSON(val)) {
-            throw new Error('value is not json.');
+            throw new Error('value is not json: ' + String(val) + '.');
         }
     },
 
     assertNaN: function (val) {
         if (!TypeUtil.isNaN(val)) {
-            throw new Error('value is not NaN. ' + val);
+            throw new Error('value is not NaN: ' + String(val) + '.');
         }
     },
 
     assertNone: function (val) {
         if (!TypeUtil.isNone(val)) {
-            throw new Error('value is not none.');
+            throw new Error('value is not none: ' + String(val) + '.');
         }
     },
 
     assertNotArray: function (val) {
         if (TypeUtil.isArray(val)) {
-            throw new Error('value is array.');
+            throw new Error('value is array: ' + String(val) + '.');
         }
     },
 
     assertNotBase64: function (val) {
         if (TypeUtil.isBase64(val)) {
-            throw new Error('value is base64.');
+            throw new Error('value is base64: ' + String(val) + '.');
         }
     },
 
     assertNotBoolean: function (val) {
         if (TypeUtil.isBoolean(val)) {
-            throw new Error('value is boolean.');
+            throw new Error('value is boolean: ' + String(val) + '.');
         }
     },
 
     assertNotDate: function (val) {
         if (TypeUtil.isDate(val)) {
-            throw new Error('value is date.');
+            throw new Error('value is date: ' + String(val) + '.');
         }
     },
 
@@ -121,74 +121,74 @@ TestUtil = {
 
     assertNotError: function (val) {
         if (TypeUtil.isError(val)) {
-            throw new Error('value is error.');
+            throw new Error('value is error: ' + String(val) + '.');
         }
     },
 
     assertNotFunction: function (val) {
         if (TypeUtil.isFunction(val)) {
-            throw new Error('value is function.');
+            throw new Error('value is function: ' + String(val) + '.');
         }
     },
 
     assertNotJSON: function (val) {
         if (TypeUtil.isJSON(val)) {
-            throw new Error('value is json.');
+            throw new Error('value is json: ' + String(val) + '.');
         }
     },
 
     assertNotNone: function (val) {
         if (TypeUtil.isNone(val)) {
-            throw new Error('value is none.');
+            throw new Error('value is none: ' + String(val) + '.');
         }
     },
 
     assertNotNumber: function (val) {
         if (TypeUtil.isNumber(val)) {
-            throw new Error('value is number.');
+            throw new Error('value is number: ' + String(val) + '.');
         }
     },
 
     assertNotNull: function (val) {
         if (TypeUtil.isNull(val)) {
-            throw new Error('value is null.');
+            throw new Error('value is null: ' + String(val) + '.');
         }
     },
 
     assertNotObject: function (val) {
         if (TypeUtil.isObject(val)) {
-            throw new Error('value is object.');
+            throw new Error('value is object: ' + String(val) + '.');
         }
     },
 
     assertNotRegExp: function (val) {
         if (TypeUtil.isRegExp(val)) {
-            throw new Error('value is regexp.');
+            throw new Error('value is regexp: ' + String(val) + '.');
         }
     },
 
     assertNotString: function (val) {
         if (TypeUtil.isString(val)) {
-            throw new Error('value is string.');
+            throw new Error('value is string: ' + String(val) + '.');
         }
     },
 
     assertNotUndefined: function (val) {
         if (TypeUtil.isUndefined(val)) {
-            throw new Error('value is undefined.');
+            throw new Error('value is undefined: ' + String(val) + '.');
         }
     },
 
     // assertNotXML: function(val)
     // {
     //     if (TypeUtil.isXML(val)) {
-    //         throw new Error('value is xml.');
+    //         throw new Error('value is xml: ' + String(val) + '.');
     //     }
     // },
 
     assertNumber: function (val) {
         if (!TypeUtil.isNumber(val)) {
-            throw new Error('value is not number.');
+            throw new Error('value is not number: ' + String(val) + '.');
         }
     },
 
@@ -210,25 +210,25 @@ TestUtil = {
 
     assertNull: function (val) {
         if (!TypeUtil.isNull(val)) {
-            throw new Error('value is not null.');
+            throw new Error('value is not null: ' + String(val) + '.');
         }
     },
 
     assertObject: function (val) {
         if (!TypeUtil.isObject(val)) {
-            throw new Error('value is not object.');
+            throw new Error('value is not object: ' + String(val) + '.');
         }
     },
 
     assertRegExp: function (val) {
         if (!TypeUtil.isRegExp(val)) {
-            throw new Error('value is not regexp.');
+            throw new Error('value is not regexp: ' + String(val) + '.');
         }
     },
 
     assertString: function (val) {
         if (!TypeUtil.isString(val)) {
-            throw new Error('value is not string.');
+            throw new Error('value is not string: ' + String(val) + '.');
         }
     },
 
@@ -242,26 +242,26 @@ TestUtil = {
         } catch (e) {
             return;
         }
-        throw new Error("value didn't throw error.");
+        throw new Error("value didn't throw error: " + String(val) + '.');
     },
 
     assertTrue: function (val) {
         TestUtil.assertBoolean(val);
         if (val !== true) {
-            throw new Error('value is not true.');
+            throw new Error('value is not true: ' + String(val) + '.');
         }
     },
 
     assertUndefined: function (val) {
         if (!TypeUtil.isUndefined(val)) {
-            throw new Error('value is not undefined.');
+            throw new Error('value is not undefined: ' + String(val) + '.');
         }
     },
 
     // assertXML: function(val)
     // {
     //     if (!TypeUtil.isXML(val)) {
-    //         throw new Error('value is not xml.');
+    //         throw new Error('value is not xml: ' + String(val) + '.');
     //     }
     // }
 };
