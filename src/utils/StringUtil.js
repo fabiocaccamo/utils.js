@@ -222,7 +222,7 @@ StringUtil = {
         // if (String.prototype.trim) {
         //     return str.trim();
         // }
-        return str.replace(/^[\s]+|[\s]+$/gm, '');
+        return str.replace(/^[\s]+|(?<!\s)[\s]+$/gm, '');
     },
 
     trimLeft: function (str) {
