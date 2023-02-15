@@ -1,7 +1,7 @@
 {
   "name": "@fabiocaccamo/utils.js",
   "version": "0.20.0",
-  "description": "JavaScript utils for lazy devs.",
+  "description": "zero dependencies vanilla JavaScript utils.",
   "keywords": [
     "utils",
     "u",
