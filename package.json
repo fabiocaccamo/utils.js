@@ -42,10 +42,10 @@
     "watch": "gulp"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
+    "@babel/core": "^7.21.0",
     "@babel/preset-env": "^7.10.4",
-    "@babel/register": "^7.10.5",
-    "browser-sync": "^2.26.12",
+    "@babel/register": "^7.21.0",
+    "browser-sync": "^2.27.12",
     "codecov": "^3.7.2",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
@@ -65,7 +65,7 @@
     "prettier": "^2.8.4",
     "rimraf": "^3.0.2",
     "style-sherpa": "^1.0.2",
-    "yargs": "^17.7.0"
+    "yargs": "^17.7.1"
   },
   "babel": {
     "presets": [
