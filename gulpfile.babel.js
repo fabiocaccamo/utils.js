@@ -23,7 +23,9 @@ const PORT = 8000
 const PRODUCTION = !!(yargs.argv.production);
 
 function clean(done) {
-    rimraf(PATHS.dist, done);
+    rimraf(PATHS.dist, {}).then(function() {
+        done();
+    });
 }
 
 function copy() {
