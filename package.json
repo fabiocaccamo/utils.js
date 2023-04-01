@@ -42,7 +42,7 @@
     "watch": "gulp"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.3",
+    "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.10.4",
     "@babel/register": "^7.21.0",
     "browser-sync": "^2.29.1",
