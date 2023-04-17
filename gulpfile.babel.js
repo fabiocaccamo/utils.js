@@ -5,7 +5,7 @@ import gulp             from 'gulp';
 import jsImport         from 'gulp-js-import';
 import minify           from 'gulp-minify';
 import plugins          from 'gulp-load-plugins';
-import rimraf           from 'rimraf';
+import { rimraf }       from 'rimraf';
 import sherpa           from 'style-sherpa';
 import yargs            from 'yargs';
 
