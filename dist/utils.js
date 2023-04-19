@@ -2797,24 +2797,18 @@ StringUtil = {
     },
 
     trim: function (str) {
-        // if (String.prototype.trim) {
-        //     return str.trim();
-        // }
-        return str.replace(/^[\s]+|(?<!\s)[\s]+$/gm, '');
+        // return str.replace(/^[\s]+|(?<!\s)[\s]+$/gm, '');
+        return str.trim();
     },
 
     trimLeft: function (str) {
-        // if (String.prototype.trimStart) {
-        //     return str.trimStart();
-        // }
-        return str.replace(/^\s+/gm, '');
+        // return str.replace(/^\s+/gm, '');
+        return str.trimStart();
     },
 
     trimRight: function (str) {
-        // if (String.prototype.trimEnd) {
-        //     return str.trimEnd();
-        // }
-        return str.replace(/\s+$/gm, '');
+        // return str.replace(/\s+$/gm, '');
+        return str.trimEnd();
     },
 };
 
