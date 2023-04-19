@@ -229,13 +229,13 @@ StringUtil = {
         // if (String.prototype.trimStart) {
         //     return str.trimStart();
         // }
-        return str.replace(/^[\s]+/gm, '');
+        return str.replace(/^\s+/gm, '');
     },
 
     trimRight: function (str) {
         // if (String.prototype.trimEnd) {
         //     return str.trimEnd();
         // }
-        return str.replace(/[\s]+$/gm, '');
+        return str.replace(/\s+$/gm, '');
     },
 };
