@@ -1264,6 +1264,14 @@ DateUtil = {
         return delta > 0;
     },
 
+    max: function (date, other) {
+        return date.getTime() > other.getTime() ? date : other;
+    },
+
+    min: function (date, other) {
+        return date.getTime() <= other.getTime() ? date : other;
+    },
+
     normalize: function (ms) {
         var time = {
             milliseconds: ms % 1000,
@@ -1278,6 +1286,27 @@ DateUtil = {
     timestamp: function (date) {
         var d = date || new Date();
         return d.getTime();
+    },
+
+    today: function () {
+        var d = new Date();
+        d.setHours(0);
+        d.setMinutes(0);
+        d.setSeconds(0);
+        d.setMilliseconds(0);
+        return d;
+    },
+
+    tomorrow: function () {
+        var d = DateUtil.today();
+        d.setDate(d.getDate() + 1);
+        return d;
+    },
+
+    yesterday: function () {
+        var d = DateUtil.today();
+        d.setDate(d.getDate() - 1);
+        return d;
     },
 
     yyyymmdd: function (date, separator) {
