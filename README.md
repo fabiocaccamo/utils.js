@@ -203,7 +203,17 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `isPast`
 
+-   `max`
+
+-   `min`
+
 -   `timestamp`
+
+-   `today`
+
+-   `tomorrow`
+
+-   `yesterday`
 
 -   `yyyymmdd`
 </p>

@@ -90,6 +90,38 @@ describe('date', function() {
             test.assertTrue(d.isPast(date, true));
         });
     });
+    describe('max', function() {
+        it('test max with past comparison', function() {
+            var a = new Date();
+            var b = new Date();
+            b.setFullYear(2022);
+            var r = d.max(a, b);
+            test.assertEqual(r, a);
+        });
+        it('test max with future comparison', function() {
+            var a = new Date();
+            var b = new Date();
+            b.setFullYear(2024);
+            var r = d.max(a, b);
+            test.assertEqual(r, b);
+        });
+    });
+    describe('min', function() {
+        it('test min with past comparison', function() {
+            var a = new Date();
+            var b = new Date();
+            b.setFullYear(2022);
+            var r = d.min(a, b);
+            test.assertEqual(r, b);
+        });
+        it('test min with future comparison', function() {
+            var a = new Date();
+            var b = new Date();
+            b.setFullYear(2024);
+            var r = d.min(a, b);
+            test.assertEqual(r, a);
+        });
+    });
     describe('normalize', function() {
         it('test type', function() {
             var r = d.normalize(0);
@@ -155,6 +187,27 @@ describe('date', function() {
         it('test type', function() {
             var t = d.timestamp();
             test.assertNumber(t);
+        });
+    });
+    describe('today', function() {
+        it('test today', function() {
+            var t = d.today();
+            var now = new Date();
+            test.assertEqual(t.getDate(), now.getDate());
+        });
+    });
+    describe('tomorrow', function() {
+        it('test tomorrow', function() {
+            var t = d.tomorrow();
+            var now = new Date();
+            test.assertEqual(t.getDate(), now.getDate() + 1);
+        });
+    });
+    describe('yesterday', function() {
+        it('test yesterday', function() {
+            var y = d.yesterday();
+            var now = new Date();
+            test.assertEqual(y.getDate(), now.getDate() - 1);
         });
     });
     describe('yyyymmdd', function() {
