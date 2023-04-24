@@ -1140,6 +1140,12 @@ DateUtil = {
         return new Date(date.getTime());
     },
 
+    constrain: function (date, a, b) {
+        var dateMin = DateUtil.min(a, b);
+        var dateMax = DateUtil.max(a, b);
+        return DateUtil.min(DateUtil.max(date, dateMin), dateMax);
+    },
+
     format: function (date, str) {
         // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
         var replace = StringUtil.replace;
