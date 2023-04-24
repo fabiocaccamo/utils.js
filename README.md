@@ -197,6 +197,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `clone`
 
+-   `constrain`
+
 -   `format`
 
 -   `isFuture`

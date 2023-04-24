@@ -17,6 +17,48 @@ describe('date', function() {
                 a.getMinutes() === r.getMinutes());
         });
     });
+    describe('constrain', function() {
+        it('test constrain with date < min', function() {
+            var a = new Date();
+            a.setFullYear(2022)
+            var b = new Date();
+            b.setFullYear(2023);
+            var c = new Date();
+            c.setFullYear(2019);
+            var r = d.constrain(c, a, b);
+            test.assertEqual(r, a);
+        });
+        it('test constrain with date < min and inverted min/max', function() {
+            var a = new Date();
+            a.setFullYear(2022)
+            var b = new Date();
+            b.setFullYear(2023);
+            var c = new Date();
+            c.setFullYear(2019);
+            var r = d.constrain(c, b, a);
+            test.assertEqual(r, a);
+        });
+        it('test constrain with date > max', function() {
+            var a = new Date();
+            a.setFullYear(2022)
+            var b = new Date();
+            b.setFullYear(2023);
+            var c = new Date();
+            c.setFullYear(2024);
+            var r = d.constrain(c, a, b);
+            test.assertEqual(r, b);
+        });
+        it('test constrain with date > max and inverted min/max', function() {
+            var a = new Date();
+            a.setFullYear(2022)
+            var b = new Date();
+            b.setFullYear(2023);
+            var c = new Date();
+            c.setFullYear(2024);
+            var r = d.constrain(c, b, a);
+            test.assertEqual(r, b);
+        });
+    });
     describe('format', function() {
         it('test format 1', function() {
             var a = new Date(1985, 3, 3, 23, 57, 5);
