@@ -242,14 +242,16 @@ describe('date', function() {
         it('test tomorrow', function() {
             var t = d.tomorrow();
             var now = new Date();
-            test.assertEqual(t.getDate(), now.getDate() + 1);
+            now.setDate(now.getDate() + 1);
+            test.assertEqual(t.getDate(), now.getDate());
         });
     });
     describe('yesterday', function() {
         it('test yesterday', function() {
             var y = d.yesterday();
             var now = new Date();
-            test.assertEqual(y.getDate(), now.getDate() - 1);
+            now.setDate(now.getDate() - 1);
+            test.assertEqual(y.getDate(), now.getDate());
         });
     });
     describe('yyyymmdd', function() {
