@@ -239,10 +239,16 @@ describe('date', function() {
         it('test parse with timestamp value (as number)', function() {
             var dt = d.parse(818035920000);
             test.assertDate(dt);
+            test.assertEqual(dt.getFullYear(), 1995);
+            test.assertEqual(dt.getMonth(), 11);
+            test.assertEqual(dt.getDate(), 4);
         });
         it('test parse with timestamp value (as string)', function() {
             var dt = d.parse('818035920000');
             test.assertDate(dt);
+            test.assertEqual(dt.getFullYear(), 1995);
+            test.assertEqual(dt.getMonth(), 11);
+            test.assertEqual(dt.getDate(), 4);
         });
         it('test parse with date string', function() {
             var dt = d.parse('04 Dec 1995 00:12:00 GMT');
@@ -250,6 +256,13 @@ describe('date', function() {
             test.assertEqual(dt.getFullYear(), 1995);
             test.assertEqual(dt.getMonth(), 11);
             test.assertEqual(dt.getDate(), 4);
+        });
+        it('test parse with date string (other format)', function() {
+            var dt = d.parse('2024-04-30T00:00:00Z');
+            test.assertDate(dt);
+            test.assertEqual(dt.getFullYear(), 2024);
+            test.assertEqual(dt.getMonth(), 3);
+            test.assertEqual(dt.getDate(), 30);
         });
     });
     describe('timestamp', function() {
