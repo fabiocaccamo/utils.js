@@ -209,6 +209,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 -   `min`
 
+-   `parse`
+
 -   `timestamp`
 
 -   `today`

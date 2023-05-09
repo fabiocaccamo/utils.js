@@ -225,6 +225,30 @@ describe('date', function() {
             });
         });
     });
+    describe('parse', function() {
+        it('test parse with invalid value', function() {
+            var dt = d.parse(null);
+            test.assertNull(dt);
+        });
+        it('test parse with date value', function() {
+            var now = new Date();
+            var dt = d.parse(now);
+            test.assertDate(dt);
+            test.assertEqual(dt, now);
+        });
+        it('test parse with timestamp value (as number)', function() {
+            var dt = d.parse(818035920000);
+            test.assertDate(dt);
+        });
+        it('test parse with timestamp value (as string)', function() {
+            var dt = d.parse('818035920000');
+            test.assertDate(dt);
+        });
+        it('test parse with date string', function() {
+            var dt = d.parse('04 Dec 1995 00:12:00 GMT');
+            test.assertDate(dt);
+        });
+    });
     describe('timestamp', function() {
         it('test type', function() {
             var t = d.timestamp();
