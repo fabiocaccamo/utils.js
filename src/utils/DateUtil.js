@@ -158,19 +158,23 @@ DateUtil = {
 
     parse: function (date) {
         var timestamp;
-        if (!date) {
-            return null;
-        } else if (TypeUtil.isDate(date)) {
+        var timestampIsValid = function (t) {
+            return TypeUtil.isNumber(t) && t >= 0 && t <= DateUtil.timestamp();
+        };
+        if (TypeUtil.isDate(date)) {
             return date;
         } else if (TypeUtil.isNumber(date)) {
             timestamp = date;
-            return new Date(timestamp);
-        } else if (TypeUtil.isString(date)) {
-            timestamp = parseInt(date);
-            if (!TypeUtil.isNumber(timestamp)) {
-                timestamp = Date.parse(date);
+            if (timestampIsValid(timestamp)) {
+                return new Date(timestamp);
             }
-            if (TypeUtil.isNumber(timestamp)) {
+        } else if (TypeUtil.isString(date)) {
+            timestamp = Number(date);
+            if (timestampIsValid(timestamp)) {
+                return new Date(timestamp);
+            }
+            timestamp = Date.parse(date);
+            if (timestampIsValid(timestamp)) {
                 return new Date(timestamp);
             }
         }
