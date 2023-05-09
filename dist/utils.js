@@ -1293,7 +1293,11 @@ DateUtil = {
     parse: function (date) {
         var timestamp;
         var timestampIsValid = function (t) {
-            return TypeUtil.isNumber(t) && t >= 0 && t <= DateUtil.timestamp();
+            return (
+                TypeUtil.isNumber(t) &&
+                t >= 0 &&
+                TypeUtil.isNumber(new Date(t).getTime())
+            );
         };
         if (TypeUtil.isDate(date)) {
             return date;
@@ -3617,6 +3621,7 @@ XMLUtil = {
         xml: XMLUtil,
         url: URLUtil,
         utf8: UTF8Util,
+        version: '0.23.2',
     };
 
     return utils;
