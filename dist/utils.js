@@ -1134,6 +1134,7 @@ ColorUtil = {
 
     /** global: DateUtil */
 /** global: StringUtil */
+/** global: isDate */
 
 DateUtil = {
     clone: function (date) {
@@ -1287,6 +1288,27 @@ DateUtil = {
             days: Math.floor(ms / 1000 / 60 / 60 / 24),
         };
         return time;
+    },
+
+    parse: function (date) {
+        var timestamp;
+        if (!date) {
+            return null;
+        } else if (TypeUtil.isDate(date)) {
+            return date;
+        } else if (TypeUtil.isNumber(date)) {
+            timestamp = date;
+            return new Date(timestamp);
+        } else if (TypeUtil.isString(date)) {
+            timestamp = parseInt(date);
+            if (!TypeUtil.isNumber(timestamp)) {
+                timestamp = Date.parse(date);
+            }
+            if (TypeUtil.isNumber(timestamp)) {
+                return new Date(timestamp);
+            }
+        }
+        return null;
     },
 
     timestamp: function (date) {
