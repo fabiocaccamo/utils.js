@@ -88,6 +88,7 @@
         xml: XMLUtil,
         url: URLUtil,
         utf8: UTF8Util,
+        version: '0.23.2',
     };
 
     return utils;
