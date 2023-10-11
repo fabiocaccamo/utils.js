@@ -3,113 +3,116 @@ var test = utils.test;
 var type = utils.type;
 var func = utils.func;
 
-describe('func', function() {
-    describe('args', function() {
+describe('func', function () {
+    describe('args', function () {
         var f = func.args;
-        var a = function(a, b, c) {
+        var a = function (a, b, c) {
             return f(arguments);
         };
-        var b = function(a, b, c) {
+        var b = function (a, b, c) {
             return f(arguments, 2);
         };
-        it('test args', function() {
+        it('test args', function () {
             test.assertEqual(a(), []);
         });
-        it('test args.length = 1, skipCount = 0', function() {
+        it('test args.length = 1, skipCount = 0', function () {
             test.assertEqual(a(1), [1]);
         });
-        it('test args.length = 2, skipCount = 0', function() {
+        it('test args.length = 2, skipCount = 0', function () {
             test.assertEqual(a(1, 2), [1, 2]);
         });
-        it('test args.length = 3, skipCount = 0', function() {
+        it('test args.length = 3, skipCount = 0', function () {
             test.assertEqual(a(1, 2, 3), [1, 2, 3]);
         });
-        it('test args.length = 4, skipCount = 0', function() {
+        it('test args.length = 4, skipCount = 0', function () {
             test.assertEqual(a(1, 2, 3, 4), [1, 2, 3, 4]);
         });
-        it('test args.length = 5, skipCount = 0', function() {
+        it('test args.length = 5, skipCount = 0', function () {
             test.assertEqual(a(1, 2, 3, 4, 5), [1, 2, 3, 4, 5]);
         });
-        it('test args.length = 0, skipCount = 2', function() {
+        it('test args.length = 0, skipCount = 2', function () {
             test.assertEqual(b(), []);
         });
-        it('test args.length = 1, skipCount = 2', function() {
+        it('test args.length = 1, skipCount = 2', function () {
             test.assertEqual(b(1), []);
         });
-        it('test args.length = 2, skipCount = 2', function() {
+        it('test args.length = 2, skipCount = 2', function () {
             test.assertEqual(b(1, 2), []);
         });
-        it('test args.length = 3, skipCount = 2', function() {
+        it('test args.length = 3, skipCount = 2', function () {
             test.assertEqual(b(1, 2, 3), [3]);
         });
-        it('test args.length = 4, skipCount = 2', function() {
+        it('test args.length = 4, skipCount = 2', function () {
             test.assertEqual(b(1, 2, 3, 4), [3, 4]);
         });
-        it('test args.length = 5, skipCount = 2', function() {
+        it('test args.length = 5, skipCount = 2', function () {
             test.assertEqual(b(1, 2, 3, 4, 5), [3, 4, 5]);
         });
     });
-    describe('attempt', function() {
+    describe('attempt', function () {
         var f = func.attempt;
         var obj = {
-            dosomething: function() {
+            dosomething: function () {
                 return true;
             },
-            dosomethingWithArguments: function() {
+            dosomethingWithArguments: function () {
                 return func.args(arguments);
-            }
+            },
         };
-        it('test attempt func name with scope', function() {
+        it('test attempt func name with scope', function () {
             test.assertTrue(f('dosomething', obj));
         });
-        it('test attempt invalid func name with scope', function() {
+        it('test attempt invalid func name with scope', function () {
             test.assertError(f('dosomethingInvalid', obj));
         });
-        it('test attempt no func with scope', function() {
+        it('test attempt no func with scope', function () {
             test.assertError(f(null, obj));
         });
-        it('test attempt func name without scope', function() {
+        it('test attempt func name without scope', function () {
             test.assertError(f('dosomething', null));
         });
-        it('test attempt func without scope', function() {
+        it('test attempt func without scope', function () {
             test.assertTrue(f(obj['dosomething']));
         });
-        it('test attempt func without scope but arguments', function() {
-            test.assertEqual(f(obj['dosomethingWithArguments'], null, 1, 2, 3), [1, 2, 3]);
+        it('test attempt func without scope but arguments', function () {
+            test.assertEqual(
+                f(obj['dosomethingWithArguments'], null, 1, 2, 3),
+                [1, 2, 3]
+            );
         });
     });
-    describe('bind', function() {
+    describe('bind', function () {
         var f = func.bind;
         var obj = {
             value: 'ok',
-            getValue: function() {
+            getValue: function () {
                 return this.value;
             },
-            getArgs: function(a, b, c, d) {
-                return [(a || null), (b || null), (c || null), (d || null)];
-            }
+            getArgs: function (a, b, c, d) {
+                return [a || null, b || null, c || null, d || null];
+            },
         };
-        it('test bind is function', function() {
+        it('test bind is function', function () {
             var ref = f('getValue', obj);
             test.assertFunction(ref);
         });
-        it('test bind call with func', function() {
+        it('test bind call with func', function () {
             var ref = f(obj.getValue, obj);
             test.assertEqual(ref(), 'ok');
         });
-        it('test bind call with func but scope', function() {
+        it('test bind call with func but scope', function () {
             var ref = f(obj.getValue);
             test.assertEqual(ref(), undefined);
         });
-        it('test bind call with func name', function() {
+        it('test bind call with func name', function () {
             var ref = f('getValue', obj);
             test.assertEqual(ref(), 'ok');
         });
-        it('test bind call with func name but scope', function() {
+        it('test bind call with func name but scope', function () {
             var ref = f('getValue', null);
             test.assertThrows(ref);
         });
-        it('test bind with args', function() {
+        it('test bind with args', function () {
             var ref;
             ref = f(obj.getArgs, obj);
             test.assertEqual(ref(), [null, null, null, null]);
@@ -126,7 +129,7 @@ describe('func', function() {
             ref = f(obj.getArgs, obj, 1, 2, 3, 4);
             test.assertEqual(ref(), [1, 2, 3, 4]);
         });
-        it('test bind with args and call with args', function() {
+        it('test bind with args and call with args', function () {
             var ref;
             ref = f(obj.getArgs, obj);
             test.assertEqual(ref('a'), ['a', null, null, null]);
@@ -138,103 +141,131 @@ describe('func', function() {
             test.assertEqual(ref('a', 'b'), [1, 2, 'a', 'b']);
         });
     });
-    describe('call', function() {
+    describe('call', function () {
         var f = func.call;
         var obj = {
-            dosomething: function() {
+            dosomething: function () {
                 return true;
             },
-            dosomethingWithArguments: function() {
+            dosomethingWithArguments: function () {
                 return func.args(arguments);
-            }
+            },
         };
-        it('test call func', function() {
+        it('test call func', function () {
             test.assertTrue(f(obj['dosomething']));
         });
-        it('test call func with arguments', function() {
-            test.assertEqual(f(obj['dosomethingWithArguments'], null, 1, 2, 3), [1, 2, 3]);
+        it('test call func with arguments', function () {
+            test.assertEqual(
+                f(obj['dosomethingWithArguments'], null, 1, 2, 3),
+                [1, 2, 3]
+            );
         });
-        it('test call invalid func', function() {
-            test.assertThrows(function(){ f(null, obj); });
+        it('test call invalid func', function () {
+            test.assertThrows(function () {
+                f(null, obj);
+            });
         });
-        it('test call func by name with scope', function() {
+        it('test call func by name with scope', function () {
             test.assertTrue(f('dosomething', obj));
         });
-        it('test call func by name with scope and arguments', function() {
+        it('test call func by name with scope and arguments', function () {
             test.assertEqual(f('dosomethingWithArguments', obj, 1, 2, 3), [1, 2, 3]);
         });
-        it('test call func by name without scope', function() {
-            test.assertThrows(function(){ f('dosomething', null); });
+        it('test call func by name without scope', function () {
+            test.assertThrows(function () {
+                f('dosomething', null);
+            });
         });
-        it('test call func by invalid name', function() {
-            test.assertThrows(function(){ f('dosomethingInvalid', obj); });
+        it('test call func by invalid name', function () {
+            test.assertThrows(function () {
+                f('dosomethingInvalid', obj);
+            });
         });
     });
-    describe('debounce', function() {
+    describe('debounce', function () {
         var f = func.debounce;
-        it('test debounce', function(done) {
+        it('test debounce', function (done) {
             var counter = 0;
-            var counterInc = f(100, function() {
+            var counterInc = f(100, function () {
                 counter++;
             });
             var interval = setInterval(counterInc, 50);
-            setTimeout(function() {
+            setTimeout(function () {
                 clearInterval(interval);
                 test.assertEqual(counter, 0);
                 counterInc();
             }, 300);
-            setTimeout(function() {
+            setTimeout(function () {
                 test.assertEqual(counter, 1);
                 done();
             }, 500);
         });
     });
-    describe('delay', function() {
+    describe('delay', function () {
         var f = func.delay;
-        it('test delay func called once', function(done) {
+        it('test delay func called once', function (done) {
             var counter = 0;
-            f(100, function(){
-                counter++;
-            }, null);
+            f(
+                100,
+                function () {
+                    counter++;
+                },
+                null
+            );
             test.assertEqual(counter, 0);
-            setTimeout(function(){
+            setTimeout(function () {
                 test.assertEqual(counter, 0);
             }, 50);
-            setTimeout(function(){
+            setTimeout(function () {
                 test.assertEqual(counter, 1);
                 done();
             }, 300);
         });
-        it('test delay func delay accuracy', function(done) {
+        it('test delay func delay accuracy', function (done) {
             var timestamp = utils.date.timestamp();
             var delayElapsed;
             var delayExpected = 100;
             var delayDiff;
             var delayTolerance = 20;
-            f(delayExpected, function(){
-                delayElapsed = (utils.date.timestamp() - timestamp);
-                delayDiff = Math.abs(delayElapsed - delayExpected);
-                test.assertTrue(delayDiff <= delayTolerance);
-                done();
-            }, null);
-        });
-        it('test delay func arguments', function(done) {
-            f(100, function(){
-                var args = func.args(arguments);
-                test.assertEqual(args, [0, 1, true, false, 'a', 'b', 'c']);
-                done();
-            }, null, 0, 1, true, false, 'a', 'b', 'c');
-        });
-        it('test delay func by name with scope', function(done) {
-            var obj = {
-                dosomething: function(done) {
+            f(
+                delayExpected,
+                function () {
+                    delayElapsed = utils.date.timestamp() - timestamp;
+                    delayDiff = Math.abs(delayElapsed - delayExpected);
+                    test.assertTrue(delayDiff <= delayTolerance);
                     done();
-                }
+                },
+                null
+            );
+        });
+        it('test delay func arguments', function (done) {
+            f(
+                100,
+                function () {
+                    var args = func.args(arguments);
+                    test.assertEqual(args, [0, 1, true, false, 'a', 'b', 'c']);
+                    done();
+                },
+                null,
+                0,
+                1,
+                true,
+                false,
+                'a',
+                'b',
+                'c'
+            );
+        });
+        it('test delay func by name with scope', function (done) {
+            var obj = {
+                dosomething: function (done) {
+                    done();
+                },
             };
             f(100, 'dosomething', obj, done);
         });
-        it('test delay func cancelled', function(done) {
-            var dosomething = function(){
+        it('test delay func cancelled', function (done) {
+            var dosomething = function () {
                 throw new Error('delay func not cancelled');
             };
             var delayObj = f(100, dosomething);
@@ -243,11 +274,11 @@ describe('func', function() {
             delayObj.cancel();
             f(200, done);
         });
-        it('test delay func by name cancelled', function(done) {
+        it('test delay func by name cancelled', function (done) {
             var obj = {
-                dosomething: function(done) {
+                dosomething: function (done) {
                     throw new Error('delay func by name not cancelled');
-                }
+                },
             };
             var delayObj = f(100, 'dosomething', obj);
             test.assertFunction(delayObj.func);
@@ -256,37 +287,37 @@ describe('func', function() {
             f(200, done);
         });
     });
-    describe('memoize', function() {
+    describe('memoize', function () {
         var f = func.memoize;
-        var sum = function(a, b) {
-            return (a + b);
+        var sum = function (a, b) {
+            return a + b;
         };
         var obj = {
-            sum: function(a, b) {
-                return (a + b);
-            }
+            sum: function (a, b) {
+                return a + b;
+            },
         };
-        it('test memoize func without scope', function() {
+        it('test memoize func without scope', function () {
             var sumMemoized = f(sum, null);
             test.assertEqual(sumMemoized(1, 2), 3);
         });
-        it('test memoize func with scope', function() {
+        it('test memoize func with scope', function () {
             var sumMemoized = f(obj.sum, obj);
             test.assertEqual(sumMemoized(1, 2), 3);
         });
-        it('test memoize func by name and scope', function() {
+        it('test memoize func by name and scope', function () {
             var sumMemoized = f('sum', obj);
             test.assertEqual(sumMemoized(1, 2), 3);
         });
-        it('test memoize func by name and scope', function() {
+        it('test memoize func by name and scope', function () {
             var sumMemoized = f('sum', obj);
             test.assertEqual(sumMemoized(1, 2), 3);
         });
-        it('test memoize func calls count', function() {
+        it('test memoize func calls count', function () {
             var subCount = 0;
-            var sub = function(a, b) {
+            var sub = function (a, b) {
                 subCount++;
-                return (a - b);
+                return a - b;
             };
             var subMemoized = f(sub);
             for (var i = 0; i < 5; i++) {
@@ -297,46 +328,61 @@ describe('func', function() {
             test.assertEqual(subCount, 2);
         });
     });
-    describe('noop', function() {
+    describe('noop', function () {
         var f = func.noop;
-        it('test noop', function() {
+        it('test noop', function () {
             test.assertTrue(f());
         });
     });
-    describe('repeat', function() {
+    describe('repeat', function () {
         var f = func.repeat;
-        it('test repeat func called multiple times', function(done) {
+        it('test repeat func called multiple times', function (done) {
             var counter = 0;
-            var repeatObj = f(100, function(){
-                counter++;
-            }, null);
+            var repeatObj = f(
+                100,
+                function () {
+                    counter++;
+                },
+                null
+            );
             test.assertEqual(counter, 0);
-            setTimeout(function(){
+            setTimeout(function () {
                 test.assertTrue(counter >= 9 && counter <= 10);
                 repeatObj.cancel();
                 done();
             }, 1050);
         });
-        it('test repeat func arguments', function(done) {
-            var repeatObj = f(100, function(){
-                var args = func.args(arguments);
-                test.assertEqual(args, [0, 1, true, false, 'a', 'b', 'c']);
-                repeatObj.cancel();
-                done();
-            }, null, 0, 1, true, false, 'a', 'b', 'c');
-        });
-        it('test repeat func by name with scope', function(done) {
-            var repeatObj;
-            var obj = {
-                dosomething: function(done) {
+        it('test repeat func arguments', function (done) {
+            var repeatObj = f(
+                100,
+                function () {
+                    var args = func.args(arguments);
+                    test.assertEqual(args, [0, 1, true, false, 'a', 'b', 'c']);
                     repeatObj.cancel();
                     done();
-                }
+                },
+                null,
+                0,
+                1,
+                true,
+                false,
+                'a',
+                'b',
+                'c'
+            );
+        });
+        it('test repeat func by name with scope', function (done) {
+            var repeatObj;
+            var obj = {
+                dosomething: function (done) {
+                    repeatObj.cancel();
+                    done();
+                },
             };
             repeatObj = f(100, 'dosomething', obj, done);
         });
-        it('test repeat func cancelled', function(done) {
-            var dosomething = function(){
+        it('test repeat func cancelled', function (done) {
+            var dosomething = function () {
                 throw new Error('repeat func not cancelled');
             };
             var repeatObj = f(100, dosomething);
@@ -345,11 +391,11 @@ describe('func', function() {
             repeatObj.cancel();
             func.delay(200, done);
         });
-        it('test repeat func by name cancelled', function(done) {
+        it('test repeat func by name cancelled', function (done) {
             var obj = {
-                dosomething: function(done) {
+                dosomething: function (done) {
                     throw new Error('repeat func by name not cancelled');
-                }
+                },
             };
             var repeatObj = f(100, 'dosomething', obj);
             test.assertFunction(repeatObj.func);
@@ -358,49 +404,80 @@ describe('func', function() {
             func.delay(200, done);
         });
     });
-    describe('throttle', function() {
+    describe('throttle', function () {
         var f = func.throttle;
-        it('test throttle', function(done) {
+        it('test throttle', function (done) {
             var counter = 0;
-            var counterInc = f(200, function() {
+            var counterInc = f(200, function () {
                 counter++;
             });
             var interval = setInterval(counterInc, 50);
-            setTimeout(function() {
+            setTimeout(function () {
                 clearInterval(interval);
                 test.assertEqual(counter, 5);
                 done();
             }, 1000);
         });
     });
-    describe('until', function() {
+    describe('until', function () {
         var f = func.until;
-        it('test until', function(done) {
+        it('test until', function (done) {
             var counter = 0;
-            var checker = f(50, function() {
+            var checker = f(50, function () {
                 counter++;
                 if (counter === 10) {
                     return false;
                 }
             });
-            setTimeout(function() {
+            setTimeout(function () {
                 // clearInterval(interval);
                 test.assertEqual(counter, 10);
                 done();
             }, 1000);
         });
     });
-    describe('validate', function() {
+    describe('validate', function () {
         var f = func.validate;
-        it('test validate arguments all types', function() {
-            var v = function() {
-                func.validate(arguments, type.ARRAY, type.BOOLEAN, type.DATE, type.ERROR, type.FUNCTION, type.NAN, type.NUMBER, type.NULL, type.OBJECT, type.REGEXP, type.STRING, type.UNDEFINED);
+        it('test validate arguments all types', function () {
+            var v = function () {
+                func.validate(
+                    arguments,
+                    type.ARRAY,
+                    type.BOOLEAN,
+                    type.DATE,
+                    type.ERROR,
+                    type.FUNCTION,
+                    type.NAN,
+                    type.NUMBER,
+                    type.NULL,
+                    type.OBJECT,
+                    type.REGEXP,
+                    type.STRING,
+                    type.UNDEFINED
+                );
             };
-            v([], true, new Date(), new Error(), function(){}, NaN, 0, null, {}, /^$/, '', undefined);
+            v(
+                [],
+                true,
+                new Date(),
+                new Error(),
+                function () {},
+                NaN,
+                0,
+                null,
+                {},
+                /^$/,
+                '',
+                undefined
+            );
         });
-        it('test validate arguments multiple possible type for same argument', function() {
-            var v = function() {
-                func.validate(arguments, [type.STRING, type.BOOLEAN], [type.NUMBER, type.UNDEFINED]);
+        it('test validate arguments multiple possible type for same argument', function () {
+            var v = function () {
+                func.validate(
+                    arguments,
+                    [type.STRING, type.BOOLEAN],
+                    [type.NUMBER, type.UNDEFINED]
+                );
             };
             v('ok');
             v('ok', undefined);
@@ -410,21 +487,21 @@ describe('func', function() {
             v(true, 0);
             test.assertThrows(v, true, '');
         });
-        it('test validate arguments invalid count', function() {
-            var v = function() {
+        it('test validate arguments invalid count', function () {
+            var v = function () {
                 func.validate(arguments, type.STRING, type.STRING);
             };
             test.assertThrows(v, '');
             v('', '', '', '', '', '');
         });
-        it('test validate arguments invalid expected type', function() {
-            var v = function() {
+        it('test validate arguments invalid expected type', function () {
+            var v = function () {
                 func.validate(arguments, 't y p e');
             };
             test.assertThrows(v, '');
         });
-        it('test validate arguments invalid argument', function() {
-            var v = function() {
+        it('test validate arguments invalid argument', function () {
+            var v = function () {
                 func.validate(arguments, type.STRING);
             };
             test.assertThrows(v, true);

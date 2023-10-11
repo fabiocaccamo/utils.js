@@ -4,7 +4,7 @@ var cmyk = utils.color.cmyk;
 var hex = utils.color.hex;
 var rgb = utils.color.rgb;
 
-describe('color.cmyk', function() {
+describe('color.cmyk', function () {
     // describe('average', function() {
     //     var f = cmyk.average;
     //     it('test simple', function() {
@@ -137,31 +137,31 @@ describe('color.cmyk', function() {
     //         test.assertTrue(true);
     //     });
     // });
-    describe('toHex', function() {
+    describe('toHex', function () {
         var f = cmyk.toHex;
         var r;
-        it('test black', function() {
-            r = f({ c:0, m:0, y:0, k:100 });
+        it('test black', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, '#000000');
         });
-        it('test white', function() {
-            r = f({ c:0, m:0, y:0, k:0 });
+        it('test white', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, '#FFFFFF');
         });
-        it('test red', function() {
-            r = f({ c:0, m:100, y:100, k:0 });
+        it('test red', function () {
+            r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, '#FF0000');
         });
-        it('test green', function() {
-            r = f({ c:100, m:0, y:100, k:0 });
+        it('test green', function () {
+            r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, '#00FF00');
         });
-        it('test blue', function() {
-            r = f({ c:100, m:100, y:0, k:0 });
+        it('test blue', function () {
+            r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, '#0000FF');
         });
-        it('test gray', function() {
-            r = f({ c:0, m:0, y:0, k:50 });
+        it('test gray', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, '#808080');
         });
     });
@@ -175,87 +175,87 @@ describe('color.cmyk', function() {
     //         test.assertTrue(true);
     //     });
     // });
-    describe('toRgb', function() {
+    describe('toRgb', function () {
         var f = cmyk.toRgb;
         var r;
-        it('test black', function() {
-            r = f({ c:0, m:0, y:0, k:100 });
-            test.assertEqual(r, { r:0, g:0, b:0, a:1.0 });
+        it('test black', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 100 });
+            test.assertEqual(r, { r: 0, g: 0, b: 0, a: 1.0 });
         });
-        it('test white', function() {
-            r = f({ c:0, m:0, y:0, k:0 });
-            test.assertEqual(r, { r:255, g:255, b:255, a:1.0 });
+        it('test white', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 0 });
+            test.assertEqual(r, { r: 255, g: 255, b: 255, a: 1.0 });
         });
-        it('test red', function() {
-            r = f({ c:0, m:100, y:100, k:0 });
-            test.assertEqual(r, { r:255, g:0, b:0, a:1.0 });
+        it('test red', function () {
+            r = f({ c: 0, m: 100, y: 100, k: 0 });
+            test.assertEqual(r, { r: 255, g: 0, b: 0, a: 1.0 });
         });
-        it('test green', function() {
-            r = f({ c:100, m:0, y:100, k:0 });
-            test.assertEqual(r, { r:0, g:255, b:0, a:1.0 });
+        it('test green', function () {
+            r = f({ c: 100, m: 0, y: 100, k: 0 });
+            test.assertEqual(r, { r: 0, g: 255, b: 0, a: 1.0 });
         });
-        it('test blue', function() {
-            r = f({ c:100, m:100, y:0, k:0 });
-            test.assertEqual(r, { r:0, g:0, b:255, a:1.0 });
+        it('test blue', function () {
+            r = f({ c: 100, m: 100, y: 0, k: 0 });
+            test.assertEqual(r, { r: 0, g: 0, b: 255, a: 1.0 });
         });
-        it('test gray', function() {
-            r = f({ c:0, m:0, y:0, k:50 });
-            test.assertEqual(r, { r:128, g:128, b:128, a:1.0 });
+        it('test gray', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 50 });
+            test.assertEqual(r, { r: 128, g: 128, b: 128, a: 1.0 });
         });
     });
-    describe('toString', function() {
+    describe('toString', function () {
         var f = cmyk.toString;
         var r;
-        it('test black', function() {
-            r = f({ c:0, m:0, y:0, k:100 });
+        it('test black', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, '{ c:0, m:0, y:0, k:100 }');
         });
-        it('test white', function() {
-            r = f({ c:0, m:0, y:0, k:0 });
+        it('test white', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, '{ c:0, m:0, y:0, k:0 }');
         });
-        it('test red', function() {
-            r = f({ c:0, m:100, y:100, k:0 });
+        it('test red', function () {
+            r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, '{ c:0, m:100, y:100, k:0 }');
         });
-        it('test green', function() {
-            r = f({ c:100, m:0, y:100, k:0 });
+        it('test green', function () {
+            r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, '{ c:100, m:0, y:100, k:0 }');
         });
-        it('test blue', function() {
-            r = f({ c:100, m:100, y:0, k:0 });
+        it('test blue', function () {
+            r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, '{ c:100, m:100, y:0, k:0 }');
         });
-        it('test gray', function() {
-            r = f({ c:0, m:0, y:0, k:50 });
+        it('test gray', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, '{ c:0, m:0, y:0, k:50 }');
         });
     });
-    describe('toStringCSS', function() {
+    describe('toStringCSS', function () {
         var f = cmyk.toStringCSS;
         var r;
-        it('test black', function() {
-            r = f({ c:0, m:0, y:0, k:100 });
+        it('test black', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, 'cmyk(0%, 0%, 0%, 100%)');
         });
-        it('test white', function() {
-            r = f({ c:0, m:0, y:0, k:0 });
+        it('test white', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, 'cmyk(0%, 0%, 0%, 0%)');
         });
-        it('test red', function() {
-            r = f({ c:0, m:100, y:100, k:0 });
+        it('test red', function () {
+            r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, 'cmyk(0%, 100%, 100%, 0%)');
         });
-        it('test green', function() {
-            r = f({ c:100, m:0, y:100, k:0 });
+        it('test green', function () {
+            r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, 'cmyk(100%, 0%, 100%, 0%)');
         });
-        it('test blue', function() {
-            r = f({ c:100, m:100, y:0, k:0 });
+        it('test blue', function () {
+            r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, 'cmyk(100%, 100%, 0%, 0%)');
         });
-        it('test gray', function() {
-            r = f({ c:0, m:0, y:0, k:50 });
+        it('test gray', function () {
+            r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, 'cmyk(0%, 0%, 0%, 50%)');
         });
     });
