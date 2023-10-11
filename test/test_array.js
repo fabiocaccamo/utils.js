@@ -1204,6 +1204,18 @@ describe('array', function () {
             ]);
             test.assertEqual(f(b, 'n'), a);
         });
+        it('test array of arrays on index', function () {
+            a = [
+                [4, 0, 7],
+                [0, 1, 2],
+                [2, 2, 4],
+                [4, 3, 7],
+                [8, 4, 0],
+                [9, 5, 6],
+            ];
+            b = s(a);
+            test.assertEqual(f(b, 1), a);
+        });
     });
     describe('sum', function () {
         var f = arr.sum;
