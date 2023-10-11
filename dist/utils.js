@@ -290,20 +290,31 @@
         },
 
         sort: function (list, key) {
+            var isArray = TypeUtil.isArray;
+            var isObject = TypeUtil.isObject;
+            var isNumber = TypeUtil.isNumber;
+            var isString = TypeUtil.isString;
+
             var compare = function (a, b) {
                 var aVal;
                 var bVal;
 
-                if (TypeUtil.isString(key)) {
+                if (isObject(a) && isObject(b) && isString(key)) {
+                    // comparing objects
                     aVal = key in a ? a[key] : a;
                     bVal = key in b ? b[key] : b;
+                } else if (isArray(a) && isArray(b) && isNumber(key)) {
+                    // comparing arrays
+                    var index = key;
+                    aVal = index >= 0 && index < a.length ? a[index] : a;
+                    bVal = index >= 0 && index < b.length ? b[index] : b;
                 } else {
                     aVal = a;
                     bVal = b;
                 }
 
-                var aValIsNum = TypeUtil.isNumber(aVal);
-                var bValIsNum = TypeUtil.isNumber(bVal);
+                var aValIsNum = isNumber(aVal);
+                var bValIsNum = isNumber(bVal);
 
                 if (aValIsNum && bValIsNum) {
                     return aVal <= bVal ? -1 : 1;
