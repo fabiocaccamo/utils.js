@@ -7,3 +7,4 @@ src/*.html
 *.swp
 .nyc_output
 coverage.lcov
+venv
