@@ -1,5 +1,7 @@
 github: [fabiocaccamo]
+polar: fabiocaccamo
 ko_fi: fabiocaccamo
 liberapay: fabiocaccamo
 tidelift: npm/@fabiocaccamo/utils.js
-custom: ["https://www.buymeacoffee.com/fabiocaccamo", "https://www.paypal.me/fabiocaccamo"]
+custom:
+    ['https://www.buymeacoffee.com/fabiocaccamo', 'https://www.paypal.me/fabiocaccamo']
