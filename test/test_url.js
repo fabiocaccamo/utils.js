@@ -182,12 +182,14 @@ describe('url', function () {
             test.assertTrue(f('http://localhost:8000'));
             test.assertTrue(f('http://localhost:8000/'));
             test.assertTrue(f('http://localhost:8000/index.html'));
+            test.assertTrue(f('http://localhost.my-domain.com:8000/index.html'));
 
             test.assertTrue(f('https://localhost'));
             test.assertTrue(f('https://localhost/'));
             test.assertTrue(f('https://localhost:8000'));
             test.assertTrue(f('https://localhost:8000/'));
             test.assertTrue(f('https://localhost:8000/index.html'));
+            test.assertTrue(f('https://localhost.my-domain.com:8000/index.html'));
 
             test.assertTrue(f('http://127.0.0.1'));
             test.assertTrue(f('http://127.0.0.1/'));

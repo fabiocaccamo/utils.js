@@ -77,7 +77,8 @@ URLUtil = {
     },
 
     isLocalhost: function (url) {
-        var re = /^(https?\:\/\/)(localhost|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
+        var re =
+            /^(https?\:\/\/)(localhost(.[a-z0-9\-])*|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
         return re.test(url || URLUtil.getURL());
     },
 };
