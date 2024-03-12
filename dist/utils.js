@@ -3452,6 +3452,22 @@
     /** global: URLUtil */
 
     URLUtil = {
+        getDomain: function (url, level) {
+            url = url || URLUtil.getURL();
+            // remove protocol, www and port
+            let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
+            domain = domain.split(':')[0];
+            if (!level) {
+                return domain;
+            }
+            let parts = domain.split('.');
+            if (level > parts.length || level <= 0) {
+                return '';
+            }
+            let domainName = parts[parts.length - level];
+            return domainName;
+        },
+
         getParameterByName: function (url, name, defaultValue) {
             var paramsDict = URLUtil.getParameters(url);
             return name in paramsDict
@@ -3528,7 +3544,8 @@
         },
 
         isLocalhost: function (url) {
-            var re = /^(https?\:\/\/)(localhost|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
+            var re =
+                /^(https?\:\/\/)(localhost(.[a-z0-9\-])*|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
             return re.test(url || URLUtil.getURL());
         },
     };
