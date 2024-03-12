@@ -3,6 +3,35 @@ var test = utils.test;
 var url = utils.url;
 
 describe('url', function () {
+    describe('getDomain', function () {
+        var f = url.getDomain;
+        it('test localhost', function () {
+            test.assertEqual(f('http://localhost:8000'), 'localhost');
+            test.assertEqual(f('https://localhost:8000'), 'localhost');
+        });
+        it('test url with querystring', function () {
+            test.assertEqual(
+                f('http://localhost:8000/?page=16&code=0123456789'),
+                'localhost'
+            );
+            test.assertEqual(
+                f('https://localhost:8000/?page=16&code=0123456789'),
+                'localhost'
+            );
+        });
+        it('test www', function () {
+            test.assertEqual(f('http://www.google.com'), 'google.com');
+            test.assertEqual(f('https://www.google.com'), 'google.com');
+        });
+        it('test subdomain', function () {
+            test.assertEqual(f('http://mail.google.com'), 'mail.google.com');
+            test.assertEqual(f('https://mail.google.com'), 'mail.google.com');
+        });
+        it('test specific domain level', function () {
+            test.assertEqual(f('http://mail.google.com', 3), 'mail');
+            test.assertEqual(f('https://mail.google.com', 3), 'mail');
+        });
+    });
     describe('getParameterByName', function () {
         var f = url.getParameterByName;
         var s;

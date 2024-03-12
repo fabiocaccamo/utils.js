@@ -15,12 +15,12 @@
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [APIs](#apis)
-- [Development](#development)
-- [Security](#security)
-- [License](#license)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [APIs](#apis)
+-   [Development](#development)
+-   [Security](#security)
+-   [License](#license)
 
 ## Installation
 
@@ -730,6 +730,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 <details><summary><code>utils.url</code></summary>
 <p>
+
+-   `getDomain`
 
 -   `getParameterByName`
 
