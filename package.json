@@ -47,7 +47,7 @@
     "@babel/register": "^7.21.0",
     "browser-sync": "^3.0.2",
     "codecov": "^3.7.2",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cli": "^2.3.0",
     "gulp-concat": "^2.5.2",
