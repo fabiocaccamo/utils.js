@@ -1,6 +1,6 @@
 {
   "name": "@fabiocaccamo/utils.js",
-  "version": "0.24.0",
+  "version": "0.24.1",
   "description": "zero dependencies vanilla JavaScript utils.",
   "keywords": [
     "utils",
