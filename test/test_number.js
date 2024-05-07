@@ -102,6 +102,19 @@ describe('number', function () {
             test.assertFalse(f(14));
             test.assertFalse(f(15));
         });
+        it('test numbers from 0 to 100', function () {
+            const expectedPrimes = [
+                2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
+                71, 73, 79, 83, 89, 97,
+            ];
+            const resultPrimes = [];
+            for (let i = 0; i <= 100; i++) {
+                if (f(i)) {
+                    resultPrimes.push(i);
+                }
+            }
+            test.assertEqual(resultPrimes, expectedPrimes);
+        });
         it('test negative numbers', function () {
             test.assertFalse(f(-5));
             test.assertFalse(f(-4));
