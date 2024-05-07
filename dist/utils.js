@@ -2306,18 +2306,20 @@
         },
 
         isPrime: function (n) {
-            if (n <= 0 || NumberUtil.isFloat(n)) {
+            if (typeof n !== 'number' || Number.isNaN(n) || NumberUtil.isFloat(n)) {
                 return false;
             }
-            if (n === 1) {
+            if (n <= 1) {
                 return false;
-            } else if (n === 2) {
+            }
+            if (n <= 3) {
                 return true;
-            } else if (n % 2 === 0) {
+            }
+            if (n % 2 === 0 || n % 3 === 0) {
                 return false;
             }
-            for (var i = 3; i * i <= n; i += 2) {
-                if (n % i === 0) {
+            for (var i = 5; i * i <= n; i += 6) {
+                if (n % i === 0 || n % (i + 2) === 0) {
                     return false;
                 }
             }
@@ -3673,7 +3675,7 @@
         xml: XMLUtil,
         url: URLUtil,
         utf8: UTF8Util,
-        version: '0.23.2',
+        version: '0.24.1',
     };
 
     return utils;
