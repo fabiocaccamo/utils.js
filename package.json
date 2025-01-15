@@ -33,6 +33,7 @@
     "url": "https://github.com/fabiocaccamo/utils.js"
   },
   "main": "dist/utils.js",
+  "type": "module",
   "scripts": {
     "build": "npm run format && gulp build --production",
     "docs": "gulp build && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md && gulp build --production",
