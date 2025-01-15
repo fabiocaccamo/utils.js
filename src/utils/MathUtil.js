@@ -5,22 +5,22 @@
 /** global: TypeUtil */
 
 MathUtil = {
-    average: function (values) {
+    average(values) {
         return MathUtil.summation(values) / values.length;
     },
 
-    constrain: function (n, a, b) {
+    constrain(n, a, b) {
         return Math.min(Math.max(n, Math.min(a, b)), Math.max(a, b));
     },
 
-    cycle: function (n, len, shift) {
+    cycle(n, len, shift) {
         if (!TypeUtil.isNumber(shift)) {
             shift = 0;
         }
         return ((((n - shift) % len) + len) % len) + shift;
     },
 
-    equals: function (a, b, tolerance) {
+    equals(a, b, tolerance) {
         if (!TypeUtil.isNumber(tolerance)) {
             tolerance = 0.0000000001;
         } else if (tolerance > 0.0) {
@@ -29,26 +29,26 @@ MathUtil = {
         return Math.abs(a - b) <= tolerance;
     },
 
-    euclideanDistance: function (a, b) {
+    euclideanDistance(a, b) {
         // https://en.wikipedia.org/wiki/Euclidean_distance#Higher_dimensions
         return Math.sqrt(
             MathUtil.summation(
-                a.map(function (value, index) {
-                    return Math.pow(Math.abs(value - b[index]), 2);
+                a.map((value, index) => {
+                    return Math.abs(value - b[index]) ** 2;
                 })
             )
         );
     },
 
-    factorial: function (n) {
-        var f = 1;
-        for (var i = f; i <= n; i++) {
+    factorial(n) {
+        let f = 1;
+        for (let i = f; i <= n; i++) {
             f *= i;
         }
         return f;
     },
 
-    gcd: function (a, b) {
+    gcd(a, b) {
         if (a === b) {
             return a;
         }
@@ -62,29 +62,29 @@ MathUtil = {
 
     interpolation: InterpolationUtil,
 
-    lcm: function (a, b) {
+    lcm(a, b) {
         return (a * b) / MathUtil.gcd(a, b);
     },
 
-    lerp: function (a, b, t) {
+    lerp(a, b, t) {
         return InterpolationUtil.linear(a, b, t);
     },
 
-    map: function (n, a, b, c, d) {
+    map(n, a, b, c, d) {
         return InterpolationUtil.linear(c, d, MathUtil.normalize(n, a, b));
     },
 
-    nearest: function (n, a, b) {
+    nearest(n, a, b) {
         return Math.abs(n - a) <= Math.abs(n - b) ? a : b;
     },
 
-    normalize: function (n, a, b) {
+    normalize(n, a, b) {
         return (n - a) / (b - a);
     },
 
-    proportion: function (a, b, x, y) {
-        var args = FunctionUtil.args(arguments);
-        var argsOk = ArrayUtil.clean(args);
+    proportion(a, b, x, y) {
+        const args = FunctionUtil.args(arguments);
+        const argsOk = ArrayUtil.clean(args);
         if (argsOk.length !== 3) {
             return NaN;
         }
@@ -102,17 +102,17 @@ MathUtil = {
         return NaN;
     },
 
-    roundDecimals: function (n, decimalsPlaces) {
+    roundDecimals(n, decimalsPlaces) {
         return Number(n.toFixed(decimalsPlaces || 2));
     },
 
-    roundToMultiple: function (n, multiplier) {
+    roundToMultiple(n, multiplier) {
         return Math.round(n / multiplier) * multiplier;
     },
 
-    roundToNearest: function (n, values) {
-        var a = ArrayUtil.sort(values.concat());
-        var i = 0,
+    roundToNearest(n, values) {
+        const a = ArrayUtil.sort(values.concat());
+        let i = 0,
             j = 0,
             k = a.length;
         if (k === 0) {
@@ -133,17 +133,17 @@ MathUtil = {
         return MathUtil.nearest(n, a[i], a[j]);
     },
 
-    roundToPower: function (n, base) {
-        return Math.pow(base, Math.round(Math.log(n) / Math.log(base)));
+    roundToPower(n, base) {
+        return base ** Math.round(Math.log(n) / Math.log(base));
     },
 
-    sign: function (n) {
+    sign(n) {
         return n >= 0.0 ? 1 : -1;
     },
 
-    summation: function (values) {
-        var s = 0.0;
-        for (var i = 0, j = values.length; i < j; i++) {
+    summation(values) {
+        let s = 0.0;
+        for (let i = 0, j = values.length; i < j; i++) {
             s += values[i];
         }
         return s;

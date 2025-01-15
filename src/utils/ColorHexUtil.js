@@ -7,49 +7,49 @@
 /** global: TypeUtil */
 
 ColorHexUtil = {
-    average: function (colors) {
+    average(colors) {
         return ColorRgbUtil.toHex(
             ColorRgbUtil.average(
-                colors.map(function (color) {
+                colors.map((color) => {
                     return ColorHexUtil.toRgb(color);
                 })
             )
         );
     },
 
-    distance: function (colorA, colorB) {
+    distance(colorA, colorB) {
         return ColorRgbUtil.distance(
             ColorHexUtil.toRgb(colorA),
             ColorHexUtil.toRgb(colorB)
         );
     },
 
-    gradient: function (colors, steps) {
+    gradient(colors, steps) {
         return ColorRgbUtil.gradient(
-            colors.map(function (color) {
+            colors.map((color) => {
                 return ColorHexUtil.toRgb(color);
             }),
             steps
-        ).map(function (color) {
+        ).map((color) => {
             return ColorRgbUtil.toHex(color);
         });
     },
 
-    gradientMatrix: function (colors, stepsX, stepsY) {
+    gradientMatrix(colors, stepsX, stepsY) {
         return ColorRgbUtil.gradientMatrix(
-            ObjectUtil.map(colors, function (color) {
+            ObjectUtil.map(colors, (color) => {
                 return ColorHexUtil.toRgb(color);
             }),
             stepsX,
             stepsY
-        ).map(function (colors) {
-            return colors.map(function (color) {
+        ).map((colors) => {
+            return colors.map((color) => {
                 return ColorRgbUtil.toHex(color);
             });
         });
     },
 
-    interpolateBilinear: function (a, b, c, d, u, v) {
+    interpolateBilinear(a, b, c, d, u, v) {
         return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateBilinear(
                 ColorHexUtil.toRgb(a),
@@ -62,7 +62,7 @@ ColorHexUtil = {
         );
     },
 
-    interpolateLinear: function (colorFrom, colorTo, t) {
+    interpolateLinear(colorFrom, colorTo, t) {
         return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateLinear(
                 ColorHexUtil.toRgb(colorFrom),
@@ -72,10 +72,10 @@ ColorHexUtil = {
         );
     },
 
-    interpolateMultilinear: function (colors, t) {
+    interpolateMultilinear(colors, t) {
         return ColorRgbUtil.toHex(
             ColorRgbUtil.interpolateMultilinear(
-                colors.map(function (color) {
+                colors.map((color) => {
                     return ColorHexUtil.toRgb(color);
                 }),
                 t
@@ -83,18 +83,18 @@ ColorHexUtil = {
         );
     },
 
-    nearest: function (colorSearch, colors) {
+    nearest(colorSearch, colors) {
         return ColorRgbUtil.toHex(
             ColorRgbUtil.nearest(
                 ColorHexUtil.toRgb(colorSearch),
-                colors.map(function (color) {
+                colors.map((color) => {
                     return ColorHexUtil.toRgb(color);
                 })
             )
         );
     },
 
-    toCmyk: function (color) {
+    toCmyk(color) {
         return ColorRgbUtil.toCmyk(ColorHexUtil.toRgb(color));
     },
 
@@ -116,11 +116,11 @@ ColorHexUtil = {
     //         ColorHexUtil.toRgb(color));
     // },
 
-    toRgb: function (color) {
-        var fromHex = HexUtil.decodeInt;
-        var toHex = HexUtil.encodeInt;
+    toRgb(color) {
+        const fromHex = HexUtil.decodeInt;
+        const toHex = HexUtil.encodeInt;
 
-        var hex;
+        let hex;
         if (TypeUtil.isNumber(color)) {
             hex = toHex(color);
         } else if (TypeUtil.isString(color)) {
@@ -130,8 +130,8 @@ ColorHexUtil = {
         }
         hex = hex.toUpperCase();
 
-        var rgb;
-        var comps;
+        let rgb;
+        let comps;
 
         switch (hex.length) {
             case 3:
@@ -175,11 +175,11 @@ ColorHexUtil = {
         return rgb;
     },
 
-    toString: function (color, prefix) {
+    toString(color, prefix) {
         return ColorRgbUtil.toHex(ColorHexUtil.toRgb(color), prefix);
     },
 
-    toStringCSS: function (color) {
+    toStringCSS(color) {
         return ColorHexUtil.toString(color, '#');
     },
 };

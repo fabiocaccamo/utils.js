@@ -1,8 +1,7 @@
 /** global: URLUtil */
 
 URLUtil = {
-    getDomain: function (url, level) {
-        url = url || URLUtil.getURL();
+    getDomain(url = URLUtil.getURL(), level) {
         // remove protocol, www and port
         let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
         domain = domain.split(':')[0];
@@ -17,33 +16,33 @@ URLUtil = {
         return domainName;
     },
 
-    getParameterByName: function (url, name, defaultValue) {
-        var paramsDict = URLUtil.getParameters(url);
+    getParameterByName(url, name, defaultValue) {
+        const paramsDict = URLUtil.getParameters(url);
         return name in paramsDict
             ? paramsDict[name] || defaultValue || ''
             : defaultValue;
     },
 
-    getParameters: function (url) {
+    getParameters(url) {
         return URLUtil.getParametersDict(url);
     },
 
-    getParametersDict: function (url) {
-        var paramsList = URLUtil.getParametersList(url);
-        var param;
-        var paramsDict = {};
-        for (var i = 0, j = paramsList.length; i < j; i++) {
+    getParametersDict(url) {
+        const paramsList = URLUtil.getParametersList(url);
+        let param;
+        const paramsDict = {};
+        for (let i = 0, j = paramsList.length; i < j; i++) {
             param = paramsList[i];
             paramsDict[param['key']] = param['value'];
         }
         return paramsDict;
     },
 
-    getParametersList: function (url) {
-        var paramsString = URLUtil.getParametersString(url);
-        var paramsList = [];
-        var paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
-        var paramMatch = paramsRE.exec(paramsString);
+    getParametersList(url) {
+        const paramsString = URLUtil.getParametersString(url);
+        const paramsList = [];
+        const paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
+        let paramMatch = paramsRE.exec(paramsString);
         while (paramMatch) {
             paramsList.push({
                 key: paramMatch[2],
@@ -54,20 +53,19 @@ URLUtil = {
         return paramsList;
     },
 
-    getParametersString: function (url) {
-        url = url || URLUtil.getURL();
-        var queryStringPosition = url.indexOf('?');
+    getParametersString(url = URLUtil.getURL()) {
+        const queryStringPosition = url.indexOf('?');
         // prettier-ignore
-        var queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
-        var hashDelimiterPosition = queryString.indexOf('#');
+        let queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
+        const hashDelimiterPosition = queryString.indexOf('#');
         if (hashDelimiterPosition > -1) {
             queryString = queryString.substring(0, hashDelimiterPosition);
         }
         return queryString;
     },
 
-    getURL: function () {
-        var url = '';
+    getURL() {
+        let url = '';
         try {
             url = window.location.href;
         } catch (e) {
@@ -76,24 +74,24 @@ URLUtil = {
         return url;
     },
 
-    hasParameter: function (url, name) {
+    hasParameter(url, name) {
         return name in URLUtil.getParametersDict(url);
     },
 
-    isFile: function (url) {
+    isFile(url) {
         return (url || URLUtil.getURL()).indexOf('file://') === 0;
     },
 
-    isHttp: function (url) {
+    isHttp(url) {
         return (url || URLUtil.getURL()).indexOf('http://') === 0;
     },
 
-    isHttps: function (url) {
+    isHttps(url) {
         return (url || URLUtil.getURL()).indexOf('https://') === 0;
     },
 
-    isLocalhost: function (url) {
-        var re =
+    isLocalhost(url) {
+        const re =
             /^(https?\:\/\/)(localhost(.[a-z0-9\-])*|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
         return re.test(url || URLUtil.getURL());
     },

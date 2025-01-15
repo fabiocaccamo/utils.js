@@ -6,176 +6,176 @@
 /** global: TypeUtil */
 
 TestUtil = {
-    assertArray: function (val, len) {
+    assertArray(val, len) {
         if (!TypeUtil.isArray(val)) {
-            throw new Error('value is not array: ' + String(val) + '.');
+            throw new Error(`value is not array: ${String(val)}.`);
         }
         if (TypeUtil.isNumber(len)) {
             TestUtil.assertEqual(val.length, len);
         }
     },
 
-    assertBase64: function (val) {
+    assertBase64(val) {
         if (!TypeUtil.isBase64(val)) {
-            throw new Error('value is not base64: ' + String(val) + '.');
+            throw new Error(`value is not base64: ${String(val)}.`);
         }
     },
 
-    assertBoolean: function (val) {
+    assertBoolean(val) {
         if (!TypeUtil.isBoolean(val)) {
-            throw new Error('value is not boolean: ' + String(val) + '.');
+            throw new Error(`value is not boolean: ${String(val)}.`);
         }
     },
 
-    assertDate: function (val) {
+    assertDate(val) {
         if (!TypeUtil.isDate(val)) {
-            throw new Error('value is not date: ' + String(val) + '.');
+            throw new Error(`value is not date: ${String(val)}.`);
         }
     },
 
-    assertEqual: function (val1, val2) {
+    assertEqual(val1, val2) {
         // prettier-ignore
         if (!ObjectUtil.equals(val1, val2)) {
-            var out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? '\n' + JSONUtil.encode(val1) + '\n' : String(val1));
-            var out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? '\n' + JSONUtil.encode(val2) : String(val2));
-            out1 = (TypeUtil.isString(val1) ? String('"' + out1 + '"') : out1);
-            out2 = (TypeUtil.isString(val2) ? String('"' + out2 + '"') : out2);
-            throw new Error('values are not equal: ' + out1 + ' != ' + out2);
+            let out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? `\n${JSONUtil.encode(val1)}\n` : String(val1));
+            let out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? `\n${JSONUtil.encode(val2)}` : String(val2));
+            out1 = (TypeUtil.isString(val1) ? String(`"${out1}"`) : out1);
+            out2 = (TypeUtil.isString(val2) ? String(`"${out2}"`) : out2);
+            throw new Error(`values are not equal: ${out1} != ${out2}`);
         }
     },
 
-    assertError: function (val) {
+    assertError(val) {
         if (!TypeUtil.isError(val)) {
-            throw new Error('value is not error: ' + String(val) + '.');
+            throw new Error(`value is not error: ${String(val)}.`);
         }
     },
 
-    assertFalse: function (val) {
+    assertFalse(val) {
         TestUtil.assertBoolean(val);
         if (val !== false) {
-            throw new Error('value is not false: ' + String(val) + '.');
+            throw new Error(`value is not false: ${String(val)}.`);
         }
     },
 
-    assertFunction: function (val) {
+    assertFunction(val) {
         if (!TypeUtil.isFunction(val)) {
-            throw new Error('value is not function: ' + String(val) + '.');
+            throw new Error(`value is not function: ${String(val)}.`);
         }
     },
 
-    assertJSON: function (val) {
+    assertJSON(val) {
         if (!TypeUtil.isJSON(val)) {
-            throw new Error('value is not json: ' + String(val) + '.');
+            throw new Error(`value is not json: ${String(val)}.`);
         }
     },
 
-    assertNaN: function (val) {
+    assertNaN(val) {
         if (!TypeUtil.isNaN(val)) {
-            throw new Error('value is not NaN: ' + String(val) + '.');
+            throw new Error(`value is not NaN: ${String(val)}.`);
         }
     },
 
-    assertNone: function (val) {
+    assertNone(val) {
         if (!TypeUtil.isNone(val)) {
-            throw new Error('value is not none: ' + String(val) + '.');
+            throw new Error(`value is not none: ${String(val)}.`);
         }
     },
 
-    assertNotArray: function (val) {
+    assertNotArray(val) {
         if (TypeUtil.isArray(val)) {
-            throw new Error('value is array: ' + String(val) + '.');
+            throw new Error(`value is array: ${String(val)}.`);
         }
     },
 
-    assertNotBase64: function (val) {
+    assertNotBase64(val) {
         if (TypeUtil.isBase64(val)) {
-            throw new Error('value is base64: ' + String(val) + '.');
+            throw new Error(`value is base64: ${String(val)}.`);
         }
     },
 
-    assertNotBoolean: function (val) {
+    assertNotBoolean(val) {
         if (TypeUtil.isBoolean(val)) {
-            throw new Error('value is boolean: ' + String(val) + '.');
+            throw new Error(`value is boolean: ${String(val)}.`);
         }
     },
 
-    assertNotDate: function (val) {
+    assertNotDate(val) {
         if (TypeUtil.isDate(val)) {
-            throw new Error('value is date: ' + String(val) + '.');
+            throw new Error(`value is date: ${String(val)}.`);
         }
     },
 
-    assertNotEqual: function (val1, val2) {
+    assertNotEqual(val1, val2) {
         if (ObjectUtil.equals(val1, val2)) {
-            var out1 =
+            const out1 =
                 TypeUtil.isArray(val1) || TypeUtil.isObject(val1)
-                    ? '\n' + JSONUtil.encode(val1) + '\n'
+                    ? `\n${JSONUtil.encode(val1)}\n`
                     : String(val1);
-            var out2 =
+            const out2 =
                 TypeUtil.isArray(val2) || TypeUtil.isObject(val2)
-                    ? '\n' + JSONUtil.encode(val2)
+                    ? `\n${JSONUtil.encode(val2)}`
                     : String(val2);
-            throw new Error('values are equal: ' + out1 + ' == ' + out2);
+            throw new Error(`values are equal: ${out1} == ${out2}`);
         }
     },
 
-    assertNotError: function (val) {
+    assertNotError(val) {
         if (TypeUtil.isError(val)) {
-            throw new Error('value is error: ' + String(val) + '.');
+            throw new Error(`value is error: ${String(val)}.`);
         }
     },
 
-    assertNotFunction: function (val) {
+    assertNotFunction(val) {
         if (TypeUtil.isFunction(val)) {
-            throw new Error('value is function: ' + String(val) + '.');
+            throw new Error(`value is function: ${String(val)}.`);
         }
     },
 
-    assertNotJSON: function (val) {
+    assertNotJSON(val) {
         if (TypeUtil.isJSON(val)) {
-            throw new Error('value is json: ' + String(val) + '.');
+            throw new Error(`value is json: ${String(val)}.`);
         }
     },
 
-    assertNotNone: function (val) {
+    assertNotNone(val) {
         if (TypeUtil.isNone(val)) {
-            throw new Error('value is none: ' + String(val) + '.');
+            throw new Error(`value is none: ${String(val)}.`);
         }
     },
 
-    assertNotNumber: function (val) {
+    assertNotNumber(val) {
         if (TypeUtil.isNumber(val)) {
-            throw new Error('value is number: ' + String(val) + '.');
+            throw new Error(`value is number: ${String(val)}.`);
         }
     },
 
-    assertNotNull: function (val) {
+    assertNotNull(val) {
         if (TypeUtil.isNull(val)) {
-            throw new Error('value is null: ' + String(val) + '.');
+            throw new Error(`value is null: ${String(val)}.`);
         }
     },
 
-    assertNotObject: function (val) {
+    assertNotObject(val) {
         if (TypeUtil.isObject(val)) {
-            throw new Error('value is object: ' + String(val) + '.');
+            throw new Error(`value is object: ${String(val)}.`);
         }
     },
 
-    assertNotRegExp: function (val) {
+    assertNotRegExp(val) {
         if (TypeUtil.isRegExp(val)) {
-            throw new Error('value is regexp: ' + String(val) + '.');
+            throw new Error(`value is regexp: ${String(val)}.`);
         }
     },
 
-    assertNotString: function (val) {
+    assertNotString(val) {
         if (TypeUtil.isString(val)) {
-            throw new Error('value is string: ' + String(val) + '.');
+            throw new Error(`value is string: ${String(val)}.`);
         }
     },
 
-    assertNotUndefined: function (val) {
+    assertNotUndefined(val) {
         if (TypeUtil.isUndefined(val)) {
-            throw new Error('value is undefined: ' + String(val) + '.');
+            throw new Error(`value is undefined: ${String(val)}.`);
         }
     },
 
@@ -186,75 +186,69 @@ TestUtil = {
     //     }
     // },
 
-    assertNumber: function (val) {
+    assertNumber(val) {
         if (!TypeUtil.isNumber(val)) {
-            throw new Error('value is not number: ' + String(val) + '.');
+            throw new Error(`value is not number: ${String(val)}.`);
         }
     },
 
-    assertNumberAlmostEqual: function (val1, val2, tolerance) {
+    assertNumberAlmostEqual(val1, val2, tolerance) {
         TestUtil.assertNumber(val1);
         TestUtil.assertNumber(val2);
         if (!MathUtil.equals(val1, val2, tolerance)) {
             throw new Error(
-                'values are not almost equals (tolerance = ' +
-                    String(tolerance) +
-                    '): ' +
-                    String(val1) +
-                    ' != ' +
-                    String(val2) +
-                    '.'
+                `values are not almost equals (tolerance = ${String(tolerance)}): ${String(val1)} != ${String(val2)}.`
             );
         }
     },
 
-    assertNull: function (val) {
+    assertNull(val) {
         if (!TypeUtil.isNull(val)) {
-            throw new Error('value is not null: ' + String(val) + '.');
+            throw new Error(`value is not null: ${String(val)}.`);
         }
     },
 
-    assertObject: function (val) {
+    assertObject(val) {
         if (!TypeUtil.isObject(val)) {
-            throw new Error('value is not object: ' + String(val) + '.');
+            throw new Error(`value is not object: ${String(val)}.`);
         }
     },
 
-    assertRegExp: function (val) {
+    assertRegExp(val) {
         if (!TypeUtil.isRegExp(val)) {
-            throw new Error('value is not regexp: ' + String(val) + '.');
+            throw new Error(`value is not regexp: ${String(val)}.`);
         }
     },
 
-    assertString: function (val) {
+    assertString(val) {
         if (!TypeUtil.isString(val)) {
-            throw new Error('value is not string: ' + String(val) + '.');
+            throw new Error(`value is not string: ${String(val)}.`);
         }
     },
 
-    assertThrows: function (val) {
+    assertThrows(val) {
         TestUtil.assertFunction(val);
         try {
-            var scope = null;
-            var args = FunctionUtil.args(arguments, 1);
+            const scope = null;
+            let args = FunctionUtil.args(arguments, 1);
             args = [val, scope].concat(args);
             FunctionUtil.call.apply(null, args);
         } catch (e) {
             return;
         }
-        throw new Error("value didn't throw error: " + String(val) + '.');
+        throw new Error(`value didn't throw error: ${String(val)}.`);
     },
 
-    assertTrue: function (val) {
+    assertTrue(val) {
         TestUtil.assertBoolean(val);
         if (val !== true) {
-            throw new Error('value is not true: ' + String(val) + '.');
+            throw new Error(`value is not true: ${String(val)}.`);
         }
     },
 
-    assertUndefined: function (val) {
+    assertUndefined(val) {
         if (!TypeUtil.isUndefined(val)) {
-            throw new Error('value is not undefined: ' + String(val) + '.');
+            throw new Error(`value is not undefined: ${String(val)}.`);
         }
     },
 

@@ -8,8 +8,8 @@
 /** global: TypeUtil */
 
 ArrayUtil = {
-    all: function (list) {
-        return list.every(function (item) {
+    all(list) {
+        return list.every((item) => {
             switch (TypeUtil.of(item)) {
                 case TypeUtil.ARRAY:
                     return item.length > 0;
@@ -21,8 +21,8 @@ ArrayUtil = {
         });
     },
 
-    any: function (list) {
-        return list.some(function (item) {
+    any(list) {
+        return list.some((item) => {
             switch (TypeUtil.of(item)) {
                 case TypeUtil.ARRAY:
                     return item.length > 0;
@@ -34,15 +34,15 @@ ArrayUtil = {
         });
     },
 
-    clean: function (list, hard) {
-        var items = list.slice();
-        items = items.filter(function (item) {
+    clean(list, hard) {
+        let items = list.slice();
+        items = items.filter((item) => {
             return !TypeUtil.isNone(item);
         });
         if (hard === true) {
             items = items
-                .map(function (item) {
-                    var itemClean;
+                .map((item) => {
+                    let itemClean;
                     switch (TypeUtil.of(item)) {
                         case TypeUtil.ARRAY:
                             itemClean = ArrayUtil.clean(item, hard);
@@ -57,17 +57,17 @@ ArrayUtil = {
                             return item;
                     }
                 })
-                .filter(function (item) {
+                .filter((item) => {
                     return !TypeUtil.isNone(item);
                 });
         }
         return items;
     },
 
-    clone: function (list) {
-        var cln = list.slice();
-        var val;
-        for (var i = 0, j = cln.length; i < j; i++) {
+    clone(list) {
+        const cln = list.slice();
+        let val;
+        for (let i = 0, j = cln.length; i < j; i++) {
             val = cln[i];
             switch (TypeUtil.of(val)) {
                 case TypeUtil.ARRAY:
@@ -86,14 +86,14 @@ ArrayUtil = {
         return cln;
     },
 
-    contains: function (list, value) {
-        var values = [value].concat(FunctionUtil.args(arguments, 2));
-        var val, valFound;
+    contains(list, value) {
+        const values = [value].concat(FunctionUtil.args(arguments, 2));
+        let val, valFound;
 
-        for (var i = 0, j = values.length; i < j; i++) {
+        for (let i = 0, j = values.length; i < j; i++) {
             val = values[i];
             valFound = false;
-            for (var k = 0, m = list.length; k < m; k++) {
+            for (let k = 0, m = list.length; k < m; k++) {
                 if (ObjectUtil.equals(list[k], val)) {
                     valFound = true;
                 }
@@ -106,15 +106,15 @@ ArrayUtil = {
         return true;
     },
 
-    equals: function (listA, listB) {
+    equals(listA, listB) {
         return ObjectUtil.equals(listA, listB);
     },
 
-    flatten: function (list) {
-        var items = [];
-        for (var i = 0, j = list.length; i < j; i++) {
+    flatten(list) {
+        const items = [];
+        for (let i = 0, j = list.length; i < j; i++) {
             if (TypeUtil.isArray(list[i])) {
-                items.push.apply(items, ArrayUtil.flatten(list[i]));
+                items.push(...ArrayUtil.flatten(list[i]));
             } else {
                 items.push(list[i]);
             }
@@ -122,20 +122,20 @@ ArrayUtil = {
         return items;
     },
 
-    index: function (list, keys, flat) {
-        var dict = {},
-            item,
-            key,
-            val;
+    index(list, keys, flat) {
+        const dict = {};
+        let item;
+        let key;
+        let val;
 
         if (TypeUtil.isString(keys)) {
             keys = [keys];
         }
 
-        for (var i = 0, j = list.length; i < j; i++) {
+        for (let i = 0, j = list.length; i < j; i++) {
             item = list[i];
 
-            for (var m = 0, n = keys.length; m < n; m++) {
+            for (let m = 0, n = keys.length; m < n; m++) {
                 key = String(keys[m]);
                 val = String(item[key]);
 
@@ -153,15 +153,15 @@ ArrayUtil = {
         return dict;
     },
 
-    insert: function (list, index, item) {
+    insert(list, index, item) {
         list.splice(index, 0, item);
         return list;
     },
 
-    max: function (list, callback) {
+    max(list, callback) {
         return ArrayUtil.reduce(
             list,
-            function (a, b) {
+            (a, b) => {
                 if (TypeUtil.isFunction(callback)) {
                     return Math.max(a, callback(b));
                 }
@@ -171,10 +171,10 @@ ArrayUtil = {
         );
     },
 
-    min: function (list, callback) {
+    min(list, callback) {
         return ArrayUtil.reduce(
             list,
-            function (a, b) {
+            (a, b) => {
                 if (TypeUtil.isFunction(callback)) {
                     return Math.min(a, callback(b));
                 }
@@ -184,11 +184,11 @@ ArrayUtil = {
         );
     },
 
-    paginate: function (list, itemsPerPage) {
-        var itemsTotal = list.length;
-        var pagesTotal = itemsPerPage > 0 ? Math.ceil(itemsTotal / itemsPerPage) : 0;
-        var pages = [];
-        var i, j;
+    paginate(list, itemsPerPage) {
+        const itemsTotal = list.length;
+        const pagesTotal = itemsPerPage > 0 ? Math.ceil(itemsTotal / itemsPerPage) : 0;
+        const pages = [];
+        let i, j;
         for (i = 0, j = 0; i < pagesTotal; i++) {
             j = i * itemsPerPage;
             pages[i] = list.slice(j, j + Math.min(itemsPerPage, itemsTotal));
@@ -196,16 +196,16 @@ ArrayUtil = {
         return pages;
     },
 
-    reduce: function (list, reducer, initialValue) {
-        var value = TypeUtil.isUndefined(initialValue) ? 0 : initialValue;
-        for (var i = 0, j = list.length; i < j; i++) {
+    reduce(list, reducer, initialValue) {
+        let value = TypeUtil.isUndefined(initialValue) ? 0 : initialValue;
+        for (let i = 0, j = list.length; i < j; i++) {
             value = reducer(value, list[i], i, list);
         }
         return value;
     },
 
-    replace: function (list, searchValue, replacementValue) {
-        for (var i = 0, j = list.length; i < j; i++) {
+    replace(list, searchValue, replacementValue) {
+        for (let i = 0, j = list.length; i < j; i++) {
             if (ObjectUtil.equals(list[i], searchValue)) {
                 list[i] = replacementValue;
             }
@@ -213,10 +213,10 @@ ArrayUtil = {
         return list;
     },
 
-    remove: function (list, value) {
-        var values = [value].concat(FunctionUtil.args(arguments, 2));
-        for (var k = 0, m = values.length; k < m; k++) {
-            for (var i = 0, j = list.length; i < j; i++) {
+    remove(list, value) {
+        const values = [value].concat(FunctionUtil.args(arguments, 2));
+        for (let k = 0, m = values.length; k < m; k++) {
+            for (let i = 0, j = list.length; i < j; i++) {
                 if (ObjectUtil.equals(list[i], values[k])) {
                     list.splice(i, 1);
                     i--;
@@ -227,33 +227,33 @@ ArrayUtil = {
         return list;
     },
 
-    rotate: function (list, count) {
-        var cursor = MathUtil.cycle(count, list.length);
+    rotate(list, count) {
+        const cursor = MathUtil.cycle(count, list.length);
         return list.slice(cursor).concat(list.slice(0, cursor));
     },
 
-    shuffle: function (list) {
-        var items = list.slice();
-        var randomIndex;
-        var randomItems;
-        var sortedItems = list.length;
+    shuffle(list) {
+        const items = list.slice();
+        let randomIndex;
+        let randomItems;
+        let sortedItems = list.length;
         while (sortedItems) {
             randomIndex = RandomUtil.integer(0, --sortedItems);
             randomItems = items.splice(randomIndex, 1);
-            items.push.apply(items, randomItems);
+            items.push(...randomItems);
         }
         return items;
     },
 
-    sort: function (list, key) {
-        var isArray = TypeUtil.isArray;
-        var isObject = TypeUtil.isObject;
-        var isNumber = TypeUtil.isNumber;
-        var isString = TypeUtil.isString;
+    sort(list, key) {
+        const isArray = TypeUtil.isArray;
+        const isObject = TypeUtil.isObject;
+        const isNumber = TypeUtil.isNumber;
+        const isString = TypeUtil.isString;
 
-        var compare = function (a, b) {
-            var aVal;
-            var bVal;
+        const compare = (a, b) => {
+            let aVal;
+            let bVal;
 
             if (isObject(a) && isObject(b) && isString(key)) {
                 // comparing objects
@@ -261,7 +261,7 @@ ArrayUtil = {
                 bVal = key in b ? b[key] : b;
             } else if (isArray(a) && isArray(b) && isNumber(key)) {
                 // comparing arrays
-                var index = key;
+                const index = key;
                 aVal = index >= 0 && index < a.length ? a[index] : a;
                 bVal = index >= 0 && index < b.length ? b[index] : b;
             } else {
@@ -269,8 +269,8 @@ ArrayUtil = {
                 bVal = b;
             }
 
-            var aValIsNum = isNumber(aVal);
-            var bValIsNum = isNumber(bVal);
+            const aValIsNum = isNumber(aVal);
+            const bValIsNum = isNumber(bVal);
 
             if (aValIsNum && bValIsNum) {
                 return aVal <= bVal ? -1 : 1;
@@ -279,7 +279,7 @@ ArrayUtil = {
             } else if (bValIsNum) {
                 return 1;
             } else {
-                var ab = [aVal, bVal];
+                const ab = [aVal, bVal];
                 ab.sort();
                 return ab.indexOf(aVal) <= ab.indexOf(bVal) ? -1 : 1;
             }
@@ -288,10 +288,10 @@ ArrayUtil = {
         return list.sort(compare);
     },
 
-    sum: function (list, callback) {
+    sum(list, callback) {
         return ArrayUtil.reduce(
             list,
-            function (a, b) {
+            (a, b) => {
                 if (TypeUtil.isFunction(callback)) {
                     return a + callback(b);
                 }
@@ -301,13 +301,13 @@ ArrayUtil = {
         );
     },
 
-    unique: function (list) {
-        var item;
-        var items = [];
-        var itemsNotEquals = function (itemUnique) {
+    unique(list) {
+        let item;
+        const items = [];
+        const itemsNotEquals = (itemUnique) => {
             return !ObjectUtil.equals(item, itemUnique);
         };
-        for (var i = 0, j = list.length; i < j; i++) {
+        for (let i = 0, j = list.length; i < j; i++) {
             item = list[i];
             if (items.every(itemsNotEquals)) {
                 items.push(item);
@@ -316,21 +316,21 @@ ArrayUtil = {
         return items;
     },
 
-    unzip: function (list) {
+    unzip(list) {
         return ArrayUtil.zip.apply(null, list);
     },
 
-    zip: function (list1, list2) {
-        var lists = [list1, list2].concat(FunctionUtil.args(arguments, 2));
-        var listLength = 0;
-        lists.forEach(function (item) {
+    zip(list1, list2) {
+        const lists = [list1, list2].concat(FunctionUtil.args(arguments, 2));
+        let listLength = 0;
+        lists.forEach((item) => {
             listLength =
                 listLength === 0 ? item.length : Math.min(listLength, item.length);
         });
-        var list = [];
-        for (var i = 0; i < listLength; i++) {
+        const list = [];
+        for (let i = 0; i < listLength; i++) {
             list[i] = [];
-            for (var j = 0, k = lists.length; j < k; j++) {
+            for (let j = 0, k = lists.length; j < k; j++) {
                 list[i][j] = lists[j][i];
             }
         }

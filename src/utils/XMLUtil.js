@@ -25,8 +25,8 @@ XMLUtil = {
     //     return str;
     // },
 
-    removeNamespaces: function (str) {
-        return str.replace(/(\<(.|\n)+?\>)/g, function (tag) {
+    removeNamespaces(str) {
+        return str.replace(/(\<(.|\n)+?\>)/g, (tag) => {
             return tag.replace(/(\s|\<\/?){1}([\w]+\:){1}/g, '$1');
         });
     },

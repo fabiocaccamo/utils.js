@@ -1,8 +1,8 @@
 /** global: JSONUtil */
 
 JSONUtil = {
-    decode: function (str) {
-        var output = '';
+    decode(str) {
+        let output = '';
         try {
             output = JSON.parse(str);
         } catch (error) {
@@ -13,7 +13,7 @@ JSONUtil = {
         return output;
     },
 
-    encode: function (obj) {
+    encode(obj) {
         return JSON.stringify(obj);
     },
 };

@@ -3,21 +3,21 @@
 /** global: isDate */
 
 DateUtil = {
-    clone: function (date) {
+    clone(date) {
         return new Date(date.getTime());
     },
 
-    constrain: function (date, a, b) {
-        var dateMin = DateUtil.min(a, b);
-        var dateMax = DateUtil.max(a, b);
+    constrain(date, a, b) {
+        const dateMin = DateUtil.min(a, b);
+        const dateMax = DateUtil.max(a, b);
         return DateUtil.min(DateUtil.max(date, dateMin), dateMax);
     },
 
-    format: function (date, str) {
+    format(date, str) {
         // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
-        var replace = StringUtil.replace;
-        var padZeros = StringUtil.padZeros;
-        var months = [
+        const replace = StringUtil.replace;
+        const padZeros = StringUtil.padZeros;
+        const months = [
             'January',
             'February',
             'March',
@@ -31,7 +31,7 @@ DateUtil = {
             'November',
             'December',
         ];
-        var days = [
+        const days = [
             'Sunday',
             'Monday',
             'Tuesday',
@@ -40,17 +40,17 @@ DateUtil = {
             'Friday',
             'Saturday',
         ];
-        var dt = date.getDate();
-        var year = date.getFullYear();
-        var month = date.getMonth();
-        var monthNum = month + 1;
-        var monthName = months[month];
-        var day = date.getDay();
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var seconds = date.getSeconds();
-        var milliseconds = date.getMilliseconds();
-        var placeholders = [
+        const dt = date.getDate();
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const monthNum = month + 1;
+        const monthName = months[month];
+        const day = date.getDay();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+        const seconds = date.getSeconds();
+        const milliseconds = date.getMilliseconds();
+        const placeholders = [
             ['YYYY', year],
             ['YY', padZeros(year, 4).substring(2, 4)],
             ['MM', padZeros(monthNum, 2)],
@@ -69,11 +69,11 @@ DateUtil = {
             ['ZZ', days[day]],
             ['Z', days[day].substring(0, 3)],
         ];
-        var placeholder, occurrence;
-        for (var i = 0, j = placeholders.length; i < j; i++) {
+        let placeholder, occurrence;
+        for (let i = 0, j = placeholders.length; i < j; i++) {
             placeholder = placeholders[i];
             occurrence = placeholder[0];
-            if (str.indexOf(occurrence) === -1) {
+            if (!str.includes(occurrence)) {
                 continue;
             }
             str = replace(str, occurrence, placeholder[1]);
@@ -91,15 +91,15 @@ DateUtil = {
     },
     */
 
-    identifier: function (date) {
-        var d = date || new Date();
-        var year = d.getFullYear();
-        var month = d.getMonth() + 1; // getMonth() is zero-based
-        var day = d.getDate();
-        var hours = d.getHours();
-        var minutes = d.getMinutes();
-        var seconds = d.getSeconds();
-        var milliseconds = d.getMilliseconds();
+    identifier(date) {
+        const d = date || new Date();
+        const year = d.getFullYear();
+        const month = d.getMonth() + 1; // getMonth() is zero-based
+        const day = d.getDate();
+        const hours = d.getHours();
+        const minutes = d.getMinutes();
+        const seconds = d.getSeconds();
+        const milliseconds = d.getMilliseconds();
         return (
             String(year) +
             StringUtil.padZeros(month, 2) +
@@ -111,42 +111,42 @@ DateUtil = {
         );
     },
 
-    isFuture: function (date, checkTime) {
-        var day = new Date(date.getTime());
-        var now = new Date();
+    isFuture(date, checkTime) {
+        const day = new Date(date.getTime());
+        const now = new Date();
         if (checkTime !== true) {
             day.setHours(0);
             day.setMinutes(0);
             day.setSeconds(0);
             day.setMilliseconds(0);
         }
-        var delta = now.getTime() - day.getTime();
+        const delta = now.getTime() - day.getTime();
         return delta < 0;
     },
 
-    isPast: function (date, checkTime) {
-        var day = new Date(date.getTime());
-        var now = new Date();
+    isPast(date, checkTime) {
+        const day = new Date(date.getTime());
+        const now = new Date();
         if (checkTime !== true) {
             now.setHours(0);
             now.setMinutes(0);
             now.setSeconds(0);
             now.setMilliseconds(0);
         }
-        var delta = now.getTime() - day.getTime();
+        const delta = now.getTime() - day.getTime();
         return delta > 0;
     },
 
-    max: function (date, other) {
+    max(date, other) {
         return date.getTime() > other.getTime() ? date : other;
     },
 
-    min: function (date, other) {
+    min(date, other) {
         return date.getTime() <= other.getTime() ? date : other;
     },
 
-    normalize: function (ms) {
-        var time = {
+    normalize(ms) {
+        const time = {
             milliseconds: ms % 1000,
             seconds: Math.floor(ms / 1000) % 60,
             minutes: Math.floor(ms / 1000 / 60) % 60,
@@ -156,9 +156,9 @@ DateUtil = {
         return time;
     },
 
-    parse: function (date) {
-        var timestamp;
-        var timestampIsValid = function (t) {
+    parse(date) {
+        let timestamp;
+        const timestampIsValid = (t) => {
             return (
                 TypeUtil.isNumber(t) &&
                 t >= 0 &&
@@ -185,13 +185,13 @@ DateUtil = {
         return null;
     },
 
-    timestamp: function (date) {
-        var d = date || new Date();
+    timestamp(date) {
+        const d = date || new Date();
         return d.getTime();
     },
 
-    today: function () {
-        var d = new Date();
+    today() {
+        const d = new Date();
         d.setHours(0);
         d.setMinutes(0);
         d.setSeconds(0);
@@ -199,24 +199,24 @@ DateUtil = {
         return d;
     },
 
-    tomorrow: function () {
-        var d = DateUtil.today();
+    tomorrow() {
+        const d = DateUtil.today();
         d.setDate(d.getDate() + 1);
         return d;
     },
 
-    yesterday: function () {
-        var d = DateUtil.today();
+    yesterday() {
+        const d = DateUtil.today();
         d.setDate(d.getDate() - 1);
         return d;
     },
 
-    yyyymmdd: function (date, separator) {
-        var d = date || new Date();
-        var year = d.getFullYear();
-        var month = d.getMonth() + 1; // getMonth() is zero-based
-        var day = d.getDate();
-        var sep = separator || '';
+    yyyymmdd(date, separator) {
+        const d = date || new Date();
+        const year = d.getFullYear();
+        const month = d.getMonth() + 1; // getMonth() is zero-based
+        const day = d.getDate();
+        const sep = separator || '';
         // prettier-ignore
         return (String(year) + sep +
                 StringUtil.padZeros(month, 2) + sep +

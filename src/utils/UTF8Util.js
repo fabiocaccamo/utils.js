@@ -1,7 +1,7 @@
 /** global: UTF8Util */
 
 UTF8Util = {
-    decode: function (input) {
+    decode(input) {
         return decodeURIComponent(escape(input));
 
         // var output = '';
@@ -33,7 +33,7 @@ UTF8Util = {
         // return output;
     },
 
-    encode: function (input) {
+    encode(input) {
         return unescape(encodeURIComponent(input));
 
         // input = input.replace(/\r\n/g, '\n');

@@ -84,7 +84,7 @@ ColorCmykUtil = {
     //         ColorCmykUtil.toRgb(color));
     // },
 
-    toHex: function (color, prefix) {
+    toHex(color, prefix) {
         return ColorRgbUtil.toHex(ColorCmykUtil.toRgb(color), prefix);
     },
 
@@ -100,18 +100,18 @@ ColorCmykUtil = {
     //         ColorCmykUtil.toRgb(color));
     // },
 
-    toRgb: function (color) {
-        var c = color.c / 100;
-        var m = color.m / 100;
-        var y = color.y / 100;
-        var k = color.k / 100;
-        var ik = 1.0 - k;
+    toRgb(color) {
+        const c = color.c / 100;
+        const m = color.m / 100;
+        const y = color.y / 100;
+        const k = color.k / 100;
+        const ik = 1.0 - k;
 
-        var r = 1.0 - Math.min(1.0, c * ik + k);
-        var g = 1.0 - Math.min(1.0, m * ik + k);
-        var b = 1.0 - Math.min(1.0, y * ik + k);
+        let r = 1.0 - Math.min(1.0, c * ik + k);
+        let g = 1.0 - Math.min(1.0, m * ik + k);
+        let b = 1.0 - Math.min(1.0, y * ik + k);
 
-        var round = Math.round;
+        const round = Math.round;
         r = round(r * 255);
         g = round(g * 255);
         b = round(b * 255);
@@ -119,13 +119,13 @@ ColorCmykUtil = {
         return { r: r, g: g, b: b, a: 1.0 };
     },
 
-    toString: function (color) {
+    toString(color) {
         // prettier-ignore
-        return '{ c:' + String(color.c) + ', m:' + String(color.m) + ', y:' + String(color.y) + ', k:' + String(color.k) + ' }';
+        return `{ c:${String(color.c)}, m:${String(color.m)}, y:${String(color.y)}, k:${String(color.k)} }`;
     },
 
-    toStringCSS: function (color) {
+    toStringCSS(color) {
         // prettier-ignore
-        return 'cmyk(' + String(color.c) + '%, ' + String(color.m) + '%, ' + String(color.y) + '%, ' + String(color.k) + '%)';
+        return `cmyk(${String(color.c)}%, ${String(color.m)}%, ${String(color.y)}%, ${String(color.k)}%)`;
     },
 };

@@ -20,7 +20,7 @@ TypeUtil = {
     UNKNOWN: 'unknown',
     // XML: 'xml',
 
-    isArray: function (val) {
+    isArray(val) {
         // https://stackoverflow.com/questions/4775722/check-if-object-is-array
         if (Array.isArray) {
             return Array.isArray(val);
@@ -28,7 +28,7 @@ TypeUtil = {
         return Object.prototype.toString.call(val) === '[object Array]';
     },
 
-    isBase64: function (val) {
+    isBase64(val) {
         if (TypeUtil.isString(val)) {
             try {
                 if (Base64Util.decode(val) !== '') {
@@ -41,23 +41,23 @@ TypeUtil = {
         return false;
     },
 
-    isBoolean: function (val) {
+    isBoolean(val) {
         return typeof val === 'boolean';
     },
 
-    isDate: function (val) {
+    isDate(val) {
         return Object.prototype.toString.call(val) === '[object Date]';
     },
 
-    isError: function (val) {
+    isError(val) {
         return val instanceof Error;
     },
 
-    isFunction: function (val) {
+    isFunction(val) {
         return typeof val === 'function';
     },
 
-    isJSON: function (val) {
+    isJSON(val) {
         if (TypeUtil.isString(val)) {
             try {
                 JSONUtil.decode(val);
@@ -69,38 +69,38 @@ TypeUtil = {
         return false;
     },
 
-    isNaN: function (val) {
+    isNaN(val) {
         return ObjectUtil.is(val, NaN);
     },
 
-    isNone: function (val) {
+    isNone(val) {
         return TypeUtil.isUndefined(val) || TypeUtil.isNull(val) || TypeUtil.isNaN(val);
     },
 
-    isNumber: function (val) {
+    isNumber(val) {
         return typeof val === 'number' && !isNaN(val) && isFinite(val);
     },
 
-    isNull: function (val) {
+    isNull(val) {
         return val === null;
     },
 
-    isObject: function (val) {
+    isObject(val) {
         return (
             typeof val === 'object' &&
             Object.prototype.toString.call(val) === '[object Object]'
         );
     },
 
-    isRegExp: function (val) {
+    isRegExp(val) {
         return val instanceof RegExp;
     },
 
-    isString: function (val) {
+    isString(val) {
         return typeof val === 'string';
     },
 
-    isType: function (val) {
+    isType(val) {
         switch (val) {
             case TypeUtil.ARRAY:
             case TypeUtil.BOOLEAN:
@@ -122,7 +122,7 @@ TypeUtil = {
         }
     },
 
-    isUndefined: function (val) {
+    isUndefined(val) {
         return typeof val === 'undefined';
     },
 
@@ -131,7 +131,7 @@ TypeUtil = {
     //     return false;
     // },
 
-    of: function (val) {
+    of(val) {
         if (TypeUtil.isArray(val)) {
             return TypeUtil.ARRAY;
         } else if (TypeUtil.isBoolean(val)) {

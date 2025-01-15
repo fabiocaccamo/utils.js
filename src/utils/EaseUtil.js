@@ -1,13 +1,13 @@
 /** global: EaseUtil */
 
 EaseUtil = {
-    backIn: function (t, s) {
+    backIn(t, s) {
         // s = overshoot = 1.70158
         s = isNaN(s) ? 1.70158 : s;
         return t * t * ((s + 1.0) * t - s);
     },
 
-    backInOut: function (t, s) {
+    backInOut(t, s) {
         // s = overshoot = 1.70158
         s = isNaN(s) ? 1.70158 : s;
         t /= 0.5;
@@ -20,14 +20,14 @@ EaseUtil = {
         return 0.5 * (t * t * ((s + 1.0) * t + s) + 2.0);
     },
 
-    backOut: function (t, s) {
+    backOut(t, s) {
         // s = overshoot = 1.70158
         s = isNaN(s) ? 1.70158 : s;
         t -= 1.0;
         return t * t * ((s + 1.0) * t + s) + 1.0;
     },
 
-    bounceIn: function (t) {
+    bounceIn(t) {
         t = 1.0 - t;
         if (t < 1.0 / 2.75) {
             return 1.0 - 7.5625 * t * t;
@@ -42,7 +42,7 @@ EaseUtil = {
         return 1.0 - (7.5625 * t * t + 0.984375);
     },
 
-    bounceInOut: function (t) {
+    bounceInOut(t) {
         if (t < 0.5) {
             t = 1.0 - t;
             if (t < 1.0 / 2.75) {
@@ -70,7 +70,7 @@ EaseUtil = {
         return 7.5625 * t * t + 0.984375;
     },
 
-    bounceOut: function (t) {
+    bounceOut(t) {
         if (t < 1.0 / 2.75) {
             return 7.5625 * t * t;
         } else if (t < 2.0 / 2.75) {
@@ -84,11 +84,11 @@ EaseUtil = {
         return 7.5625 * t * t + 0.984375;
     },
 
-    circularIn: function (t) {
+    circularIn(t) {
         return -(Math.sqrt(1.0 - t * t) - 1.0);
     },
 
-    circularInOut: function (t) {
+    circularInOut(t) {
         t /= 0.5;
         if (t < 1.0) {
             return -0.5 * (Math.sqrt(1.0 - t * t) - 1.0);
@@ -97,16 +97,16 @@ EaseUtil = {
         return 0.5 * (Math.sqrt(1.0 - t * t) + 1.0);
     },
 
-    circularOut: function (t) {
+    circularOut(t) {
         t -= 1.0;
         return Math.sqrt(1.0 - t * t);
     },
 
-    cubicIn: function (t) {
+    cubicIn(t) {
         return t * t * t;
     },
 
-    cubicInOut: function (t) {
+    cubicInOut(t) {
         t /= 0.5;
         if (t < 1.0) {
             return 0.5 * t * t * t;
@@ -115,12 +115,12 @@ EaseUtil = {
         return 0.5 * (t * t * t + 2.0);
     },
 
-    cubicOut: function (t) {
+    cubicOut(t) {
         t -= 1.0;
         return t * t * t + 1.0;
     },
 
-    elasticIn: function (t, a, p) {
+    elasticIn(t, a, p) {
         // a = amplitude = 0.0, p = period = 0.3
         if (t === 0.0) {
             return 0.0;
@@ -130,7 +130,7 @@ EaseUtil = {
         }
         a = isNaN(a) ? 0.0 : a;
         p = isNaN(p) ? 0.3 : p;
-        var s;
+        let s;
         if (a < 1.0) {
             a = 1.0;
             s = p / 4.0;
@@ -138,14 +138,10 @@ EaseUtil = {
             s = (p / (2.0 * Math.PI)) * Math.asin(1.0 / a);
         }
         t -= 1.0;
-        return -(
-            a *
-            Math.pow(2.0, 10.0 * t) *
-            Math.sin(((t - s) * (2.0 * Math.PI)) / p)
-        );
+        return -(a * 2.0 ** (10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p));
     },
 
-    elasticInOut: function (t, a, p) {
+    elasticInOut(t, a, p) {
         // a = amplitude = 0.0, p = period = 0.3
         if (t === 0.0) {
             return 0.0;
@@ -156,7 +152,7 @@ EaseUtil = {
         }
         a = isNaN(a) ? 0.0 : a;
         p = isNaN(p) ? 0.3 : p;
-        var s;
+        let s;
         if (p === 0.3) {
             p *= 1.5;
         }
@@ -170,22 +166,17 @@ EaseUtil = {
             t -= 1.0;
             return (
                 -0.5 *
-                (a *
-                    Math.pow(2.0, 10.0 * t) *
-                    Math.sin(((t - s) * (2.0 * Math.PI)) / p))
+                (a * 2.0 ** (10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p))
             );
         }
         t -= 1.0;
         return (
-            a *
-                Math.pow(2.0, -10.0 * t) *
-                Math.sin(((t - s) * (2.0 * Math.PI)) / p) *
-                0.5 +
+            a * 2.0 ** (-10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p) * 0.5 +
             1.0
         );
     },
 
-    elasticOut: function (t, a, p) {
+    elasticOut(t, a, p) {
         // a = amplitude = 0.0, p = period = 0.3
         if (t === 0.0) {
             return 0.0;
@@ -195,27 +186,24 @@ EaseUtil = {
         }
         a = isNaN(a) ? 0.0 : a;
         p = isNaN(p) ? 0.3 : p;
-        var s;
+        let s;
         if (a < 1.0) {
             a = 1.0;
             s = p / 4.0;
         } else {
             s = (p / (2.0 * Math.PI)) * Math.asin(1.0 / a);
         }
-        return (
-            a * Math.pow(2.0, -10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p) +
-            1.0
-        );
+        return a * 2.0 ** (-10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p) + 1.0;
     },
 
-    exponentialIn: function (t) {
+    exponentialIn(t) {
         if (t === 0.0) {
             return 0.0;
         }
-        return Math.pow(2.0, 10.0 * (t - 1.0));
+        return 2.0 ** (10.0 * (t - 1.0));
     },
 
-    exponentialInOut: function (t) {
+    exponentialInOut(t) {
         if (t === 0.0) {
             return 0.0;
         }
@@ -224,28 +212,28 @@ EaseUtil = {
         }
         t /= 0.5;
         if (t < 1.0) {
-            return 0.5 * Math.pow(2.0, 10.0 * (t - 1.0));
+            return 0.5 * 2.0 ** (10.0 * (t - 1.0));
         }
         t -= 1.0;
-        return 0.5 * (-Math.pow(2.0, -10.0 * t) + 2.0);
+        return 0.5 * (-(2.0 ** (-10.0 * t)) + 2.0);
     },
 
-    exponentialOut: function (t) {
+    exponentialOut(t) {
         if (t === 1.0) {
             return t;
         }
-        return -Math.pow(2.0, -10.0 * t) + 1.0;
+        return -(2.0 ** (-10.0 * t)) + 1.0;
     },
 
-    none: function (t) {
+    none(t) {
         return t;
     },
 
-    quadraticIn: function (t) {
+    quadraticIn(t) {
         return t * t;
     },
 
-    quadraticInOut: function (t) {
+    quadraticInOut(t) {
         t /= 0.5;
         if (t < 1.0) {
             return 0.5 * t * t;
@@ -254,15 +242,15 @@ EaseUtil = {
         return -0.5 * (t * (t - 2.0) - 1.0);
     },
 
-    quadraticOut: function (t) {
+    quadraticOut(t) {
         return -t * (t - 2.0);
     },
 
-    quarticIn: function (t) {
+    quarticIn(t) {
         return t * t * t * t;
     },
 
-    quarticInOut: function (t) {
+    quarticInOut(t) {
         t /= 0.5;
         if (t < 1.0) {
             return 0.5 * t * t * t * t;
@@ -271,16 +259,16 @@ EaseUtil = {
         return -0.5 * (t * t * t * t - 2.0);
     },
 
-    quarticOut: function (t) {
+    quarticOut(t) {
         t -= 1.0;
         return -(t * t * t * t - 1.0);
     },
 
-    quinticIn: function (t) {
+    quinticIn(t) {
         return t * t * t * t * t;
     },
 
-    quinticInOut: function (t) {
+    quinticInOut(t) {
         t /= 0.5;
         if (t < 1.0) {
             return 0.5 * t * t * t * t * t;
@@ -289,16 +277,16 @@ EaseUtil = {
         return 0.5 * (t * t * t * t * t + 2.0);
     },
 
-    quinticOut: function (t) {
+    quinticOut(t) {
         t -= 1.0;
         return t * t * t * t * t + 1.0;
     },
 
-    sexticIn: function (t) {
+    sexticIn(t) {
         return t * t * t * t * t * t;
     },
 
-    sexticInOut: function (t) {
+    sexticInOut(t) {
         t /= 0.5;
         if (t < 1.0) {
             return 0.5 * t * t * t * t * t * t;
@@ -307,54 +295,54 @@ EaseUtil = {
         return -0.5 * (t * t * t * t * t * t - 2.0);
     },
 
-    sexticOut: function (t) {
+    sexticOut(t) {
         t -= 1.0;
         return -(t * t * t * t * t * t - 1.0);
     },
 
-    sineIn: function (t) {
+    sineIn(t) {
         return -Math.cos(t * (Math.PI / 2.0)) + 1.0;
     },
 
-    sineInOut: function (t) {
+    sineInOut(t) {
         return -0.5 * (Math.cos(Math.PI * t) - 1.0);
     },
 
-    sineOut: function (t) {
+    sineOut(t) {
         return Math.sin(t * (Math.PI / 2.0));
     },
 
-    waveCosine: function (t, f, a, i) {
+    waveCosine(t, f, a, i) {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = isNaN(f) ? 1.0 : f;
         a = a === true ? true : false;
         i = i === true ? true : false;
 
-        var w = Math.cos(Math.PI * t * f);
+        let w = Math.cos(Math.PI * t * f);
         w = a ? Math.abs(w) : w;
         w = i ? 1.0 - w : w;
         return w;
     },
 
-    waveSawtooth: function (t, f, a, i) {
+    waveSawtooth(t, f, a, i) {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = isNaN(f) ? 1.0 : f;
         a = a === true ? true : false;
         i = i === true ? true : false;
 
-        var w = (t * f) % 1.0;
+        let w = (t * f) % 1.0;
         w = a ? Math.abs(w) : w;
         w = i ? 1.0 - w : w;
         return w;
     },
 
-    waveSine: function (t, f, a, i) {
+    waveSine(t, f, a, i) {
         // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
         f = isNaN(f) ? 1.0 : f;
         a = a === true ? true : false;
         i = i === true ? true : false;
 
-        var w = Math.sin(Math.PI * t * f);
+        let w = Math.sin(Math.PI * t * f);
         w = a ? Math.abs(w) : w;
         w = i ? 1.0 - w : w;
         return w;

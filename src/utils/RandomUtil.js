@@ -2,58 +2,59 @@
 /** global: RandomUtil */
 
 RandomUtil = {
-    argument: function () {
-        var args = FunctionUtil.args(arguments);
+    argument() {
+        const args = FunctionUtil.args(arguments);
         return RandomUtil.element(args);
     },
 
-    bit: function (chance) {
+    bit(chance) {
         return RandomUtil.boolean(chance) ? 1 : 0;
     },
 
-    boolean: function (chance) {
+    boolean(chance) {
         return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
     },
 
-    color: function () {
+    color() {
         return RandomUtil.integer(0, 0xffffff);
     },
 
-    element: function (array) {
+    element(array) {
         return array[RandomUtil.index(array)];
     },
 
-    float: function (min, max) {
+    float(min, max) {
         return min + Math.random() * (max - min);
     },
 
-    index: function (array) {
+    index(array) {
         return RandomUtil.integer(0, array.length - 1);
     },
 
-    integer: function (min, max) {
+    integer(min, max) {
         return Math.floor(Math.round(RandomUtil.float(min - 0.5, max + 0.5)));
     },
 
-    map: function (func, count) {
-        var m = [];
-        for (var i = 0; i < count; i++) {
+    map(func, count) {
+        const m = [];
+        for (let i = 0; i < count; i++) {
             m.push(func(i));
         }
         return m;
     },
 
-    sign: function (chance) {
+    sign(chance) {
         return RandomUtil.boolean(chance) ? 1 : -1;
     },
 
-    string: function (length, charset) {
-        // prettier-ignore
-        charset = (charset || 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;');
-        var c = charset.split('');
-        var r = RandomUtil.element;
-        var i = 0;
-        var s = '';
+    string(
+        length,
+        charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
+    ) {
+        const c = charset.split('');
+        const r = RandomUtil.element;
+        let i = 0;
+        let s = '';
         while (i < length) {
             s += r(c);
             i++;

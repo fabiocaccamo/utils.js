@@ -1,31 +1,31 @@
 /** global: NumberUtil */
 
 NumberUtil = {
-    isBetween: function (n, min, max) {
+    isBetween(n, min, max) {
         return n >= min && n <= max;
     },
 
-    isEven: function (n) {
+    isEven(n) {
         return n % 2.0 === 0.0 && !NumberUtil.isFloat(n);
     },
 
-    isFloat: function (n) {
+    isFloat(n) {
         return n % 1 !== 0;
     },
 
-    isNegative: function (n) {
+    isNegative(n) {
         return n < 0.0;
     },
 
-    isOdd: function (n) {
+    isOdd(n) {
         return n % 2.0 !== 0.0 && !NumberUtil.isFloat(n);
     },
 
-    isPositive: function (n) {
+    isPositive(n) {
         return n >= 0.0;
     },
 
-    isPrime: function (n) {
+    isPrime(n) {
         if (typeof n !== 'number' || Number.isNaN(n) || NumberUtil.isFloat(n)) {
             return false;
         }
@@ -38,7 +38,7 @@ NumberUtil = {
         if (n % 2 === 0 || n % 3 === 0) {
             return false;
         }
-        for (var i = 5; i * i <= n; i += 6) {
+        for (let i = 5; i * i <= n; i += 6) {
             if (n % i === 0 || n % (i + 2) === 0) {
                 return false;
             }

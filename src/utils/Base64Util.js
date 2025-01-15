@@ -20,19 +20,19 @@ Base64Util = {
         '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
     },
 
-    decode: function (str) {
-        var input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
-        var output = '';
+    decode(str) {
+        const input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+        let output = '';
 
         try {
             output = window.atob(input);
         } catch (e) {
-            var chars = Base64Util.CHARS_TABLE;
-            var chr1, chr2, chr3;
-            var enc1, enc2, enc3, enc4;
+            const chars = Base64Util.CHARS_TABLE;
+            let chr1, chr2, chr3;
+            let enc1, enc2, enc3, enc4;
 
-            var i = 0;
-            var j = input.length;
+            let i = 0;
+            const j = input.length;
 
             while (i < j) {
                 enc1 = chars[input.charAt(i++)];
@@ -59,19 +59,19 @@ Base64Util = {
         return output;
     },
 
-    encode: function (str) {
-        var input = UTF8Util.encode(str);
-        var output = '';
+    encode(str) {
+        const input = UTF8Util.encode(str);
+        let output = '';
 
         try {
             output = window.btoa(input);
         } catch (e) {
-            var chars = Base64Util.CHARS_LIST;
-            var chr1, chr2, chr3;
-            var enc1, enc2, enc3, enc4;
+            const chars = Base64Util.CHARS_LIST;
+            let chr1, chr2, chr3;
+            let enc1, enc2, enc3, enc4;
 
-            var i = 0;
-            var j = input.length;
+            let i = 0;
+            const j = input.length;
 
             while (i < j) {
                 chr1 = input.charCodeAt(i++);
