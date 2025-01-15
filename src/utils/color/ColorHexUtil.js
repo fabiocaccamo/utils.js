@@ -1,13 +1,13 @@
-/** global: ColorRgbUtil */
-/** global: HexUtil */
-/** global: InterpolationUtil */
-/** global: MathUtil */
-/** global: ObjectUtil */
-/** global: TypeUtil */
+import * as RGBColorUtil from './rgb.js';
+import * as HexUtil from '../hex.js';
+import * as InterpolationUtil from '../interpolation.js';
+import * as MathUtil from '../math.js';
+import * as ObjectUtil from '../object.js';
+import * as TypeUtil from '../type.js';
 
 export function average(colors) {
-    return ColorRgbUtil.toHex(
-        ColorRgbUtil.average(
+    return RGBColorUtil.toHex(
+        RGBColorUtil.average(
             colors.map((color) => {
                 return toRgb(color);
             })
@@ -16,22 +16,22 @@ export function average(colors) {
 }
 
 export function distance(colorA, colorB) {
-    return ColorRgbUtil.distance(toRgb(colorA), toRgb(colorB));
+    return RGBColorUtil.distance(toRgb(colorA), toRgb(colorB));
 }
 
 export function gradient(colors, steps) {
-    return ColorRgbUtil.gradient(
+    return RGBColorUtil.gradient(
         colors.map((color) => {
             return toRgb(color);
         }),
         steps
     ).map((color) => {
-        return ColorRgbUtil.toHex(color);
+        return RGBColorUtil.toHex(color);
     });
 }
 
 export function gradientMatrix(colors, stepsX, stepsY) {
-    return ColorRgbUtil.gradientMatrix(
+    return RGBColorUtil.gradientMatrix(
         ObjectUtil.map(colors, (color) => {
             return toRgb(color);
         }),
@@ -39,26 +39,26 @@ export function gradientMatrix(colors, stepsX, stepsY) {
         stepsY
     ).map((colors) => {
         return colors.map((color) => {
-            return ColorRgbUtil.toHex(color);
+            return RGBColorUtil.toHex(color);
         });
     });
 }
 
 export function interpolateBilinear(a, b, c, d, u, v) {
-    return ColorRgbUtil.toHex(
-        ColorRgbUtil.interpolateBilinear(toRgb(a), toRgb(b), toRgb(c), toRgb(d), u, v)
+    return RGBColorUtil.toHex(
+        RGBColorUtil.interpolateBilinear(toRgb(a), toRgb(b), toRgb(c), toRgb(d), u, v)
     );
 }
 
 export function interpolateLinear(colorFrom, colorTo, t) {
-    return ColorRgbUtil.toHex(
-        ColorRgbUtil.interpolateLinear(toRgb(colorFrom), toRgb(colorTo), t)
+    return RGBColorUtil.toHex(
+        RGBColorUtil.interpolateLinear(toRgb(colorFrom), toRgb(colorTo), t)
     );
 }
 
 export function interpolateMultilinear(colors, t) {
-    return ColorRgbUtil.toHex(
-        ColorRgbUtil.interpolateMultilinear(
+    return RGBColorUtil.toHex(
+        RGBColorUtil.interpolateMultilinear(
             colors.map((color) => {
                 return toRgb(color);
             }),
@@ -68,8 +68,8 @@ export function interpolateMultilinear(colors, t) {
 }
 
 export function nearest(colorSearch, colors) {
-    return ColorRgbUtil.toHex(
-        ColorRgbUtil.nearest(
+    return RGBColorUtil.toHex(
+        RGBColorUtil.nearest(
             toRgb(colorSearch),
             colors.map((color) => {
                 return toRgb(color);
@@ -79,21 +79,21 @@ export function nearest(colorSearch, colors) {
 }
 
 export function toCmyk(color) {
-    return ColorRgbUtil.toCmyk(toRgb(color));
+    return RGBColorUtil.toCmyk(toRgb(color));
 }
 
 // export function toGrayscale(color) {
-//     return ColorRgbUtil.toGrayscale(
+//     return RGBColorUtil.toGrayscale(
 //         toRgb(color));
 // };
 
 // export function toHsl(color) {
-//     return ColorRgbUtil.toHsl(
+//     return RGBColorUtil.toHsl(
 //         toRgb(color));
 // };
 
 // export function toHsv(color) {
-//     return ColorRgbUtil.toHsv(
+//     return RGBColorUtil.toHsv(
 //         toRgb(color));
 // };
 
@@ -157,7 +157,7 @@ export function toRgb(color) {
 }
 
 export function toString(color, prefix) {
-    return ColorRgbUtil.toHex(toRgb(color), prefix);
+    return RGBColorUtil.toHex(toRgb(color), prefix);
 }
 
 export function toStringCSS(color) {

@@ -1,4 +1,4 @@
-/** global: TypeUtil */
+import * as TypeUtil from './type.js';
 
 export function args(argumentsObj, skipCount) {
     return [].slice.call(argumentsObj, skipCount || 0);

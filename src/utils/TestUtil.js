@@ -1,8 +1,8 @@
-/** global: FunctionUtil */
-/** global: JSONUtil */
-/** global: MathUtil */
-/** global: ObjectUtil */
-/** global: TypeUtil */
+import * as FunctionUtil from './function.js';
+import * as JSONUtil from './json.js';
+import * as MathUtil from './math.js';
+import * as ObjectUtil from './object.js';
+import * as TypeUtil from './type.js';
 
 export function assertArray(val, len) {
     if (!TypeUtil.isArray(val)) {

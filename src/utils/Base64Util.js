@@ -1,4 +1,4 @@
-/** global: UTF8Util */
+import * as UTF8Util from './utf8.js';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 // prettier-ignore

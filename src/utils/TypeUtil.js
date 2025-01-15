@@ -1,7 +1,7 @@
-/** global: Base64Util */
-/** global: JSONUtil */
-/** global: ObjectUtil */
-/** global: URLUtil */
+import * as Base64Util from './base64.js';
+import * as JSONUtil from './json.js';
+import * as ObjectUtil from './object.js';
+import * as URLUtil from './url.js';
 
 ARRAY = 'array';
 BOOLEAN = 'boolean';

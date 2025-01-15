@@ -1,4 +1,4 @@
-/** global: StringUtil */
+import * as StringUtil from './string.js';
 
 export function clone(date) {
     return new Date(date.getTime());

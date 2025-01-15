@@ -1,4 +1,4 @@
-/** global: MathUtil */
+import * as MathUtil from './math.js';
 
 const DEG_0 = 0.0;
 const DEG_90 = 90.0;

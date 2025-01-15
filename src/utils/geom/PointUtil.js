@@ -1,6 +1,6 @@
-/** global: MathUtil */
-/** global: InterpolationUtil */
-/** global: TrigoUtil */
+import * as MathUtil from '../math.js';
+import * as InterpolationUtil from '../interpolation.js';
+import * as TrigoUtil from '../trigo.js';
 
 export function add(a, b) {
     return {

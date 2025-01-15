@@ -1,4 +1,4 @@
-/** global: MathUtil */
+import * as MathUtil from './math.js';
 
 export function bilinear(a, b, c, d, u, v) {
     const f = linear;

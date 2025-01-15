@@ -1,6 +1,6 @@
-/** global: ArrayUtil */
-/** global: RandomUtil */
-/** global: TypeUtil */
+import * as ArrayUtil from './array.js';
+import * as RandomUtil from './random.js';
+import * as TypeUtil from './type.js';
 
 export function contains(str, occurrence) {
     return Boolean(str.includes(occurrence));

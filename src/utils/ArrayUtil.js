@@ -1,10 +1,10 @@
-/** global: DateUtil */
-/** global: FunctionUtil */
-/** global: MathUtil */
-/** global: ObjectUtil */
-/** global: RandomUtil */
-/** global: StringUtil */
-/** global: TypeUtil */
+import * as DateUtil from './date.js';
+import * as FunctionUtil from './function.js';
+import * as MathUtil from './math.js';
+import * as ObjectUtil from './object.js';
+import * as RandomUtil from './random.js';
+import * as StringUtil from './string.js';
+import * as TypeUtil from './type.js';
 
 export function all(list) {
     return list.every((item) => {

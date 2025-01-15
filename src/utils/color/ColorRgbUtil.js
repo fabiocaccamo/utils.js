@@ -1,6 +1,6 @@
-/** global: HexUtil */
-/** global: InterpolationUtil */
-/** global: MathUtil */
+import * as HexUtil from '../hex.js';
+import * as InterpolationUtil from '../interpolation.js';
+import * as MathUtil from '../math.js';
 
 export function average(colors) {
     let c;

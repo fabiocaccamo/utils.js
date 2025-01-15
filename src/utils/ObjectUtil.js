@@ -1,12 +1,12 @@
-/** global: ArrayUtil */
-/** global: Base64Util */
-/** global: DateUtil */
-/** global: FunctionUtil */
-/** global: JSONUtil */
-/** global: MathUtil */
-/** global: StringUtil */
-/** global: TypeUtil */
-/** global: URLUtil */
+import * as ArrayUtil from './array.js';
+import * as Base64Util from './base64.js';
+import * as DateUtil from './date.js';
+import * as FunctionUtil from './function.js';
+import * as JSONUtil from './json.js';
+import * as MathUtil from './math.js';
+import * as StringUtil from './string.js';
+import * as TypeUtil from './type.js';
+import * as URLUtil from './url.js';
 
 export function assign(obj, other) {
     const objs = [other].concat(FunctionUtil.args(arguments, 2));

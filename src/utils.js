@@ -1,95 +1,59 @@
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD
-        define(factory);
-    } else if (typeof module === 'object') {
-        // CommonJS
-        module.exports = factory();
-    } else {
-        // Script tag import i.e., IIFE
-        root.utils = factory();
-        root.u = factory();
-    }
-})(this, function () {
-    'use strict';
+import * as ArrayUtil from './utils/array.js';
+import * as Base64Util from './utils/base64.js';
+import * as ColorUtil from './utils/color.js';
+import * as DateUtil from './utils/date.js';
+import * as EaseUtil from './utils/ease.js';
+import * as FunctionUtil from './utils/function.js';
+import * as GeomUtil from './utils/geom.js';
+import * as HexUtil from './utils/hex.js';
+import * as InterpolationUtil from './utils/interpolation.js';
+import * as JSONUtil from './utils/json.js';
+import * as MathUtil from './utils/math.js';
+import * as NumberUtil from './utils/number.js';
+import * as ObjectUtil from './utils/object.js';
+import * as RandomUtil from './utils/random.js';
+import * as StringUtil from './utils/string.js';
+import * as TestUtil from './utils/test.js';
+import * as TrigoUtil from './utils/trigo.js';
+import * as TypeUtil from './utils/type.js';
+import * as URLUtil from './utils/url.js';
+import * as UTF8Util from './utils/utf8.js';
+import * as XMLUtil from './utils/xml.js';
 
-    var ArrayUtil,
-        Base64Util,
-        ColorCmykUtil,
-        ColorHexUtil,
-        ColorRgbUtil,
-        ColorUtil,
-        DateUtil,
-        EaseUtil,
-        FunctionUtil,
-        PointUtil,
-        GeomUtil,
-        HexUtil,
-        InterpolationUtil,
-        JSONUtil,
-        MathUtil,
-        NumberUtil,
-        ObjectUtil,
-        RandomUtil,
-        StringUtil,
-        TestUtil,
-        TrigoUtil,
-        TypeUtil,
-        URLUtil,
-        UTF8Util,
-        XMLUtil;
 
-    @import './utils/ArrayUtil.js'
-    @import './utils/Base64Util.js'
-    @import './utils/ColorCmykUtil.js'
-    @import './utils/ColorHexUtil.js'
-    @import './utils/ColorRgbUtil.js'
-    @import './utils/ColorUtil.js'
-    @import './utils/DateUtil.js'
-    @import './utils/EaseUtil.js'
-    @import './utils/FunctionUtil.js'
-    @import './utils/PointUtil.js'
-    @import './utils/GeomUtil.js'
-    @import './utils/HexUtil.js'
-    @import './utils/InterpolationUtil.js'
-    @import './utils/JSONUtil.js'
-    @import './utils/MathUtil.js'
-    @import './utils/NumberUtil.js'
-    @import './utils/ObjectUtil.js'
-    @import './utils/RandomUtil.js'
-    @import './utils/StringUtil.js'
-    @import './utils/TestUtil.js'
-    @import './utils/TrigoUtil.js'
-    @import './utils/TypeUtil.js'
-    @import './utils/URLUtil.js'
-    @import './utils/UTF8Util.js'
-    @import './utils/XMLUtil.js'
+export const utils = {
+    array: ArrayUtil,
+    base64: Base64Util,
+    color: ColorUtil,
+    date: DateUtil,
+    ease: EaseUtil,
+    func: FunctionUtil,
+    geom: GeomUtil,
+    hex: HexUtil,
+    json: JSONUtil,
+    math: MathUtil,
+    number: NumberUtil,
+    object: ObjectUtil,
+    random: RandomUtil,
+    string: StringUtil,
+    test: TestUtil,
+    trigo: TrigoUtil,
+    type: TypeUtil,
+    xml: XMLUtil,
+    url: URLUtil,
+    utf8: UTF8Util,
+    version: '0.24.1',
+};
 
-    var utils = {
-        array: ArrayUtil,
-        base64: Base64Util,
-        color: ColorUtil,
-        date: DateUtil,
-        ease: EaseUtil,
-        func: FunctionUtil,
-        geom: GeomUtil,
-        // point: PointUtil,
-        hex: HexUtil,
-        json: JSONUtil,
-        math: MathUtil,
-        // interpolation: InterpolationUtil,
-        number: NumberUtil,
-        object: ObjectUtil,
-        random: RandomUtil,
-        string: StringUtil,
-        test: TestUtil,
-        trigo: TrigoUtil,
-        type: TypeUtil,
-        xml: XMLUtil,
-        url: URLUtil,
-        utf8: UTF8Util,
-        version: '0.24.1',
-    };
+export default utils;
 
-    return utils;
-});
+// backward compatibility - add to global scope for legacy usage
+if (typeof window !== 'undefined') {
+    // for browsers
+    window.utils = utils;
+    window.u = utils; // alias for legacy code
+} else if (typeof global !== 'undefined') {
+    // for Node.js
+    global.utils = utils;
+    global.u = utils; // alias for legacy code
+}

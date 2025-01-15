@@ -1,4 +1,4 @@
-/** global: FunctionUtil */
+import * as FunctionUtil from './function.js';
 
 export function argument() {
     const args = FunctionUtil.args(arguments);

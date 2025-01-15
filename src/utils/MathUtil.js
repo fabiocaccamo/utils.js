@@ -1,7 +1,7 @@
-/** global: ArrayUtil */
-/** global: FunctionUtil */
-/** global: InterpolationUtil */
-/** global: TypeUtil */
+import * as ArrayUtil from './array.js';
+import * as FunctionUtil from './function.js';
+import * as InterpolationUtil from './interpolation.js';
+import * as TypeUtil from './type.js';
 
 export function average(values) {
     return summation(values) / values.length;

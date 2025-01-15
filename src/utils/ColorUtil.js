@@ -1,14 +1,14 @@
-/** global: ColorCmykUtil */
-/** global: ColorHexUtil */
-/** global: ColorRgbUtil */
+import * as CMYKColorUtil from './color/cmyk.js';
+import * as HexColorUtil from './color/hex.js';
+import * as RGBColorUtil from './color/rgb.js';
 
 const ColorUtil = {
-    cmyk: ColorCmykUtil,
-    // cmykToGrayscale: ColorCmykUtil.toGrayscale,
-    cmykToHex: ColorCmykUtil.toHex,
-    // cmykToHsl: ColorCmykUtil.toHsl,
-    // cmykToHsv: ColorCmykUtil.toHsv,
-    cmykToRgb: ColorCmykUtil.toRgb,
+    cmyk: CMYKColorUtil,
+    // cmykToGrayscale: CMYKColorUtil.toGrayscale,
+    cmykToHex: CMYKColorUtil.toHex,
+    // cmykToHsl: CMYKColorUtil.toHsl,
+    // cmykToHsv: CMYKColorUtil.toHsv,
+    cmykToRgb: CMYKColorUtil.toRgb,
 
     // grayscale: ColorGrayscaleUtil,
     // grayscaleToGrayscale: ColorGrayscaleUtil.toGrayscale,
@@ -17,12 +17,12 @@ const ColorUtil = {
     // grayscaleToHsv: ColorGrayscaleUtil.toHsv,
     // grayscaleToRgb: ColorGrayscaleUtil.toRgb,
 
-    hex: ColorHexUtil,
-    hexToCmyk: ColorHexUtil.toCmyk,
-    // hexToGrayscale: ColorHexUtil.toGrayscale,
-    // hexToHsl: ColorHexUtil.toHsl,
-    // hexToHsv: ColorHexUtil.toHsv,
-    hexToRgb: ColorHexUtil.toRgb,
+    hex: HexColorUtil,
+    hexToCmyk: HexColorUtil.toCmyk,
+    // hexToGrayscale: HexColorUtil.toGrayscale,
+    // hexToHsl: HexColorUtil.toHsl,
+    // hexToHsv: HexColorUtil.toHsv,
+    hexToRgb: HexColorUtil.toRgb,
 
     // hsl: ColorHslUtil,
     // hslToGrayscale: ColorHslUtil.toGrayscale,
@@ -38,10 +38,10 @@ const ColorUtil = {
     // hsvToHsv: ColorHsvUtil.toHsv,
     // hsvToRgb: ColorHsvUtil.toRgb,
 
-    rgb: ColorRgbUtil,
-    rgbToCmyk: ColorRgbUtil.toCmyk,
-    // rgbToGrayscale: ColorRgbUtil.toGrayscale,
-    rgbToHex: ColorRgbUtil.toRgb,
-    // rgbToHsl: ColorRgbUtil.toHsl,
-    // rgbToHsv: ColorRgbUtil.toHsv
+    rgb: RGBColorUtil,
+    rgbToCmyk: RGBColorUtil.toCmyk,
+    // rgbToGrayscale: RGBColorUtil.toGrayscale,
+    rgbToHex: RGBColorUtil.toRgb,
+    // rgbToHsl: RGBColorUtil.toHsl,
+    // rgbToHsv: RGBColorUtil.toHsv
 };
