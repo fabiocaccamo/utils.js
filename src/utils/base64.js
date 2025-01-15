@@ -1,5 +1,7 @@
 import * as UTF8Util from './utf8.js';
 
+export default { decode, encode };
+
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 // prettier-ignore
 const CHARS_LIST = [

@@ -3,6 +3,26 @@ import * as JSONUtil from './json.js';
 import * as ObjectUtil from './object.js';
 import * as URLUtil from './url.js';
 
+export default {
+    isArray,
+    isBase64,
+    isBoolean,
+    isDate,
+    isError,
+    isFunction,
+    isJSON,
+    isNaN,
+    isNone,
+    isNumber,
+    isNull,
+    isObject,
+    isRegExp,
+    isString,
+    isType,
+    isUndefined,
+    of,
+};
+
 ARRAY = 'array';
 BOOLEAN = 'boolean';
 DATE = 'date';

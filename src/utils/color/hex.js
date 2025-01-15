@@ -5,6 +5,21 @@ import * as MathUtil from '../math.js';
 import * as ObjectUtil from '../object.js';
 import * as TypeUtil from '../type.js';
 
+export default {
+    average,
+    distance,
+    gradient,
+    gradientMatrix,
+    interpolateBilinear,
+    interpolateLinear,
+    interpolateMultilinear,
+    nearest,
+    toCmyk,
+    toRgb,
+    toString,
+    toStringCSS,
+};
+
 export function average(colors) {
     return RGBColorUtil.toHex(
         RGBColorUtil.average(

@@ -2,6 +2,30 @@ import * as ArrayUtil from './array.js';
 import * as RandomUtil from './random.js';
 import * as TypeUtil from './type.js';
 
+export default {
+    contains,
+    endsWith,
+    icontains,
+    levenshteinDistance,
+    levenshteinSimilarity,
+    padLeft,
+    padRight,
+    padZeros,
+    render,
+    replace,
+    reverse,
+    rotate,
+    slugify,
+    startsWith,
+    toConstantCase,
+    toRandomCase,
+    toTitleCase,
+    toUpperCaseFirst,
+    trim,
+    trimLeft,
+    trimRight,
+};
+
 export function contains(str, occurrence) {
     return Boolean(str.includes(occurrence));
 }

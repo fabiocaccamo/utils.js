@@ -2,6 +2,21 @@ import * as HexUtil from '../hex.js';
 import * as InterpolationUtil from '../interpolation.js';
 import * as MathUtil from '../math.js';
 
+export default {
+    average,
+    distance,
+    gradient,
+    gradientMatrix,
+    interpolateBilinear,
+    interpolateLinear,
+    interpolateMultilinear,
+    nearest,
+    toCmyk,
+    toHex,
+    toString,
+    toStringCSS,
+};
+
 export function average(colors) {
     let c;
     let r = 0;

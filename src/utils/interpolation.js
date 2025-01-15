@@ -1,5 +1,12 @@
 import * as MathUtil from './math.js';
 
+export default {
+    bilinear,
+    linear,
+    multilinear,
+    scalar,
+};
+
 export function bilinear(a, b, c, d, u, v) {
     const f = linear;
     return f(f(a, b, u), f(c, d, u), v);

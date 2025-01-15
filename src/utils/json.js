@@ -1,3 +1,8 @@
+export default {
+    decode,
+    encode,
+};
+
 export function decode(str) {
     let output = '';
     try {

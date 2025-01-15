@@ -1,3 +1,18 @@
+export default {
+    getDomain,
+    getParameterByName,
+    getParameters,
+    getParametersDict,
+    getParametersList,
+    getParametersString,
+    getURL,
+    hasParameter,
+    isFile,
+    isHttp,
+    isHttps,
+    isLocalhost,
+};
+
 export function getDomain(url = getURL(), level) {
     // remove protocol, www and port
     let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');

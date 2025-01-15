@@ -2,7 +2,7 @@ import * as CMYKColorUtil from './color/cmyk.js';
 import * as HexColorUtil from './color/hex.js';
 import * as RGBColorUtil from './color/rgb.js';
 
-const ColorUtil = {
+export default {
     cmyk: CMYKColorUtil,
     // cmykToGrayscale: CMYKColorUtil.toGrayscale,
     cmykToHex: CMYKColorUtil.toHex,
@@ -10,12 +10,12 @@ const ColorUtil = {
     // cmykToHsv: CMYKColorUtil.toHsv,
     cmykToRgb: CMYKColorUtil.toRgb,
 
-    // grayscale: ColorGrayscaleUtil,
-    // grayscaleToGrayscale: ColorGrayscaleUtil.toGrayscale,
-    // grayscaleToHex: ColorGrayscaleUtil.toHex,
-    // grayscaleToHsl: ColorGrayscaleUtil.toHsl,
-    // grayscaleToHsv: ColorGrayscaleUtil.toHsv,
-    // grayscaleToRgb: ColorGrayscaleUtil.toRgb,
+    // grayscale: GrayscaleColorUtil,
+    // grayscaleToGrayscale: GrayscaleColorUtil.toGrayscale,
+    // grayscaleToHex: GrayscaleColorUtil.toHex,
+    // grayscaleToHsl: GrayscaleColorUtil.toHsl,
+    // grayscaleToHsv: GrayscaleColorUtil.toHsv,
+    // grayscaleToRgb: GrayscaleColorUtil.toRgb,
 
     hex: HexColorUtil,
     hexToCmyk: HexColorUtil.toCmyk,
@@ -24,19 +24,19 @@ const ColorUtil = {
     // hexToHsv: HexColorUtil.toHsv,
     hexToRgb: HexColorUtil.toRgb,
 
-    // hsl: ColorHslUtil,
-    // hslToGrayscale: ColorHslUtil.toGrayscale,
-    // hslToHex: ColorHslUtil.toHex,
-    // hslToHsl: ColorHslUtil.toHsl,
-    // hslToHsv: ColorHslUtil.toHsv,
-    // hslToRgb: ColorHslUtil.toRgb,
+    // hsl: HSLColorUtil,
+    // hslToGrayscale: HSLColorUtil.toGrayscale,
+    // hslToHex: HSLColorUtil.toHex,
+    // hslToHsl: HSLColorUtil.toHsl,
+    // hslToHsv: HSLColorUtil.toHsv,
+    // hslToRgb: HSLColorUtil.toRgb,
 
-    // hsv: ColorHsvUtil,
-    // hsvToGrayscale: ColorHsvUtil.toGrayscale,
-    // hsvToHex: ColorHsvUtil.toHex,
-    // hsvToHsl: ColorHsvUtil.toHsl,
-    // hsvToHsv: ColorHsvUtil.toHsv,
-    // hsvToRgb: ColorHsvUtil.toRgb,
+    // hsv: HSVColorUtil,
+    // hsvToGrayscale: HSVColorUtil.toGrayscale,
+    // hsvToHex: HSVColorUtil.toHex,
+    // hsvToHsl: HSVColorUtil.toHsl,
+    // hsvToHsv: HSVColorUtil.toHsv,
+    // hsvToRgb: HSVColorUtil.toRgb,
 
     rgb: RGBColorUtil,
     rgbToCmyk: RGBColorUtil.toCmyk,

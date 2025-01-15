@@ -1,5 +1,7 @@
 import * as RGBColorUtil from './rgb.js';
 
+export default { toHex, toRgb, toString, toStringCSS };
+
 // export function average(colors) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.average(

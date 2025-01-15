@@ -8,6 +8,27 @@ import * as StringUtil from './string.js';
 import * as TypeUtil from './type.js';
 import * as URLUtil from './url.js';
 
+export default {
+    assign,
+    clean,
+    clone,
+    decodeBase64,
+    decodeJSON,
+    decodeParameters,
+    encodeBase64,
+    encodeJSON,
+    encodeParameters,
+    equals,
+    is,
+    keypath,
+    keys,
+    length,
+    map,
+    merge,
+    search,
+    values,
+};
+
 export function assign(obj, other) {
     const objs = [other].concat(FunctionUtil.args(arguments, 2));
     let i, j, k;

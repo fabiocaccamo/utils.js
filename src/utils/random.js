@@ -1,5 +1,19 @@
 import * as FunctionUtil from './function.js';
 
+export default {
+    argument,
+    bit,
+    boolean,
+    color,
+    element,
+    float,
+    index,
+    integer,
+    map,
+    sign,
+    string,
+};
+
 export function argument() {
     const args = FunctionUtil.args(arguments);
     return element(args);

@@ -1,3 +1,5 @@
+export default { removeNamespaces };
+
 // export function decode(str) {
 //     // https://stackoverflow.com/questions/17604071/parse-xml-using-javascript
 //     var doc = null;

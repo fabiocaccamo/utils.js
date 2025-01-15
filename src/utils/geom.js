@@ -1,5 +1,5 @@
 import * as PointUtil from './geom/point.js';
 
-const GeomUtil = {
+export default {
     point: PointUtil,
 };

@@ -1,5 +1,23 @@
 import * as MathUtil from './math.js';
 
+export default {
+    acosDeg,
+    angleDeg,
+    angleRad,
+    asinDeg,
+    atanDeg,
+    atan2Deg,
+    cosDeg,
+    cycleDeg,
+    degToRad,
+    fastDeg,
+    haversine,
+    hypo,
+    radToDeg,
+    sinDeg,
+    tanDeg,
+};
+
 const DEG_0 = 0.0;
 const DEG_90 = 90.0;
 const DEG_180 = 180.0;

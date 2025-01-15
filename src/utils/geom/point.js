@@ -2,6 +2,24 @@ import * as MathUtil from '../math.js';
 import * as InterpolationUtil from '../interpolation.js';
 import * as TrigoUtil from '../trigo.js';
 
+export default {
+    add,
+    angle,
+    cross,
+    distance,
+    dot,
+    equals,
+    interpolate,
+    length,
+    magnitude,
+    project,
+    rect,
+    rotate,
+    scale,
+    subtract,
+    translate,
+};
+
 export function add(a, b) {
     return {
         x: a.x + b.x,

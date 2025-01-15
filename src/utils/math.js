@@ -3,6 +3,28 @@ import * as FunctionUtil from './function.js';
 import * as InterpolationUtil from './interpolation.js';
 import * as TypeUtil from './type.js';
 
+export default {
+    average,
+    constrain,
+    cycle,
+    equals,
+    euclideanDistance,
+    factorial,
+    gcd,
+    lcm,
+    lerp,
+    map,
+    nearest,
+    normalize,
+    proportion,
+    roundDecimals,
+    roundToMultiple,
+    roundToNearest,
+    roundToPower,
+    sign,
+    summation,
+};
+
 export function average(values) {
     return summation(values) / values.length;
 }

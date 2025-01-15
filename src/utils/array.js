@@ -6,6 +6,31 @@ import * as RandomUtil from './random.js';
 import * as StringUtil from './string.js';
 import * as TypeUtil from './type.js';
 
+export default {
+    all,
+    any,
+    clean,
+    clone,
+    contains,
+    equals,
+    flatten,
+    index,
+    insert,
+    max,
+    min,
+    paginate,
+    reduce,
+    replace,
+    remove,
+    rotate,
+    shuffle,
+    sort,
+    sum,
+    unique,
+    unzip,
+    zip,
+};
+
 export function all(list) {
     return list.every((item) => {
         switch (TypeUtil.of(item)) {

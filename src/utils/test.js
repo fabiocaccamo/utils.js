@@ -4,6 +4,44 @@ import * as MathUtil from './math.js';
 import * as ObjectUtil from './object.js';
 import * as TypeUtil from './type.js';
 
+export default {
+    assertArray,
+    assertBase64,
+    assertBoolean,
+    assertDate,
+    assertEqual,
+    assertError,
+    assertFalse,
+    assertFunction,
+    assertJSON,
+    assertNaN,
+    assertNone,
+    assertNotArray,
+    assertNotBase64,
+    assertNotBoolean,
+    assertNotDate,
+    assertNotEqual,
+    assertNotError,
+    assertNotFunction,
+    assertNotJSON,
+    assertNotNone,
+    assertNotNumber,
+    assertNotNull,
+    assertNotObject,
+    assertNotRegExp,
+    assertNotString,
+    assertNotUndefined,
+    assertNumber,
+    assertNumberAlmostEqual,
+    assertNull,
+    assertObject,
+    assertRegExp,
+    assertString,
+    assertThrows,
+    assertTrue,
+    assertUndefined,
+};
+
 export function assertArray(val, len) {
     if (!TypeUtil.isArray(val)) {
         throw new Error(`value is not array: ${String(val)}.`);

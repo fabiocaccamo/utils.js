@@ -1,5 +1,23 @@
 import * as StringUtil from './string.js';
 
+export default {
+    clone,
+    constrain,
+    format,
+    identifier,
+    isFuture,
+    isPast,
+    max,
+    min,
+    normalize,
+    parse,
+    timestamp,
+    today,
+    tomorrow,
+    yesterday,
+    yyyymmdd,
+};
+
 export function clone(date) {
     return new Date(date.getTime());
 }
@@ -77,16 +95,6 @@ export function format(date, str) {
     }
     return str;
 }
-
-/*
-export function hhmm: function(hours, minutes, separator)
-{
-    var hh = StringUtil.padZeros(hours, 2);
-    var mm = StringUtil.padZeros(minutes, 2);
-    var sep = (separator || ':');
-    return (hh + sep + mm);
-};
-*/
 
 export function identifier(date) {
     const d = date || new Date();

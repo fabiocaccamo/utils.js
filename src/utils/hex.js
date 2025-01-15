@@ -1,3 +1,8 @@
+export default {
+    decodeInt,
+    encodeInt,
+};
+
 export function decodeInt(s) {
     return parseInt(s, 16);
 }

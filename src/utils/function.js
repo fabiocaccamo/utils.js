@@ -1,5 +1,20 @@
 import * as TypeUtil from './type.js';
 
+export default {
+    args,
+    attempt,
+    bind,
+    call,
+    debounce,
+    delay,
+    memoize,
+    noop,
+    repeat,
+    throttle,
+    until,
+    validate,
+};
+
 export function args(argumentsObj, skipCount) {
     return [].slice.call(argumentsObj, skipCount || 0);
 }
