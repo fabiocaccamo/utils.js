@@ -1,5 +1,3 @@
-'use strict';
-
 import browser from 'browser-sync';
 import gulp from 'gulp';
 import minify from 'gulp-minify';
@@ -17,9 +15,7 @@ const PORT = 8000;
 const PRODUCTION = !!yargs.argv.production;
 
 function clean(done) {
-    rimraf(PATHS.dist, {}).then(function () {
-        done();
-    });
+    rimraf(PATHS.dist, {}).then(() => done());
 }
 
 function copy() {
@@ -27,18 +23,13 @@ function copy() {
 }
 
 function javascript() {
-    return (
-        gulp
-            .src(PATHS.javascript)
-            .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
-            .pipe($.concat('utils.js'))
-            // .pipe($.if(PRODUCTION, $.uglify()
-            //     .on('error', e => { console.log(e.message, e.fileName, e.lineNumber); })
-            // ))
-            .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
-            .pipe(minify({ ext: { min: '.min.js' } }))
-            .pipe(gulp.dest(PATHS.dist))
-    );
+    return gulp
+        .src(PATHS.javascript)
+        .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
+        .pipe($.concat('utils.js'))
+        .pipe($.if(!PRODUCTION, $.sourcemaps.write()))
+        .pipe(minify({ ext: { min: '.min.js' } }))
+        .pipe(gulp.dest(PATHS.dist));
 }
 
 function server(done) {
