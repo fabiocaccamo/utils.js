@@ -23,20 +23,20 @@ export default {
     of,
 };
 
-ARRAY = 'array';
-BOOLEAN = 'boolean';
-DATE = 'date';
-ERROR = 'error';
-FUNCTION = 'function';
-NAN = 'nan';
-NUMBER = 'number';
-NULL = 'null';
-OBJECT = 'object';
-REGEXP = 'regexp';
-STRING = 'string';
-UNDEFINED = 'undefined';
-UNKNOWN = 'unknown';
-// XML = 'xml';
+const ARRAY = 'array';
+const BOOLEAN = 'boolean';
+const DATE = 'date';
+const ERROR = 'error';
+const FUNCTION = 'function';
+const NAN = 'nan';
+const NUMBER = 'number';
+const NULL = 'null';
+const OBJECT = 'object';
+const REGEXP = 'regexp';
+const STRING = 'string';
+const UNDEFINED = 'undefined';
+const UNKNOWN = 'unknown';
+// const XML = 'xml';
 
 export function isArray(val) {
     // https://stackoverflow.com/questions/4775722/check-if-object-is-array
