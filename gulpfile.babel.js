@@ -2,7 +2,6 @@
 
 import browser from 'browser-sync';
 import gulp from 'gulp';
-import jsImport from 'gulp-js-import';
 import minify from 'gulp-minify';
 import plugins from 'gulp-load-plugins';
 import { rimraf } from 'rimraf';
@@ -33,7 +32,6 @@ function javascript() {
             .src(PATHS.javascript)
             .pipe($.if(!PRODUCTION, $.sourcemaps.init()))
             .pipe($.concat('utils.js'))
-            .pipe(jsImport({ hideConsole: true }))
             // .pipe($.if(PRODUCTION, $.uglify()
             //     .on('error', e => { console.log(e.message, e.fileName, e.lineNumber); })
             // ))
