@@ -1,6 +1,5 @@
-/** global: GeomUtil */
 /** global: PointUtil */
 
-GeomUtil = {
+const GeomUtil = {
     point: PointUtil,
 };

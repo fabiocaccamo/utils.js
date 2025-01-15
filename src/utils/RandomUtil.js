@@ -1,64 +1,61 @@
 /** global: FunctionUtil */
-/** global: RandomUtil */
 
-RandomUtil = {
-    argument() {
-        const args = FunctionUtil.args(arguments);
-        return RandomUtil.element(args);
-    },
+export function argument() {
+    const args = FunctionUtil.args(arguments);
+    return element(args);
+}
 
-    bit(chance) {
-        return RandomUtil.boolean(chance) ? 1 : 0;
-    },
+export function bit(chance) {
+    return boolean(chance) ? 1 : 0;
+}
 
-    boolean(chance) {
-        return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
-    },
+export function boolean(chance) {
+    return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
+}
 
-    color() {
-        return RandomUtil.integer(0, 0xffffff);
-    },
+export function color() {
+    return integer(0, 0xffffff);
+}
 
-    element(array) {
-        return array[RandomUtil.index(array)];
-    },
+export function element(array) {
+    return array[index(array)];
+}
 
-    float(min, max) {
-        return min + Math.random() * (max - min);
-    },
+export function float(min, max) {
+    return min + Math.random() * (max - min);
+}
 
-    index(array) {
-        return RandomUtil.integer(0, array.length - 1);
-    },
+export function index(array) {
+    return integer(0, array.length - 1);
+}
 
-    integer(min, max) {
-        return Math.floor(Math.round(RandomUtil.float(min - 0.5, max + 0.5)));
-    },
+export function integer(min, max) {
+    return Math.floor(Math.round(float(min - 0.5, max + 0.5)));
+}
 
-    map(func, count) {
-        const m = [];
-        for (let i = 0; i < count; i++) {
-            m.push(func(i));
-        }
-        return m;
-    },
+export function map(func, count) {
+    const m = [];
+    for (let i = 0; i < count; i++) {
+        m.push(func(i));
+    }
+    return m;
+}
 
-    sign(chance) {
-        return RandomUtil.boolean(chance) ? 1 : -1;
-    },
+export function sign(chance) {
+    return boolean(chance) ? 1 : -1;
+}
 
-    string(
-        length,
-        charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
-    ) {
-        const c = charset.split('');
-        const r = RandomUtil.element;
-        let i = 0;
-        let s = '';
-        while (i < length) {
-            s += r(c);
-            i++;
-        }
-        return s;
-    },
-};
+export function string(
+    length,
+    charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
+) {
+    const c = charset.split('');
+    const r = element;
+    let i = 0;
+    let s = '';
+    while (i < length) {
+        s += r(c);
+        i++;
+    }
+    return s;
+}

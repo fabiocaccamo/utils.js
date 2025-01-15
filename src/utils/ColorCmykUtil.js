@@ -1,131 +1,117 @@
-/** global: ColorCmykUtil */
 /** global: ColorRgbUtil */
 
-ColorCmykUtil = {
-    // average: function(colors)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.average(
-    //             colors.map(function(color){
-    //                 return ColorCmykUtil.toRgb(color);
-    //             })
-    //         ));
-    // },
+// export function average(colors) {
+//     return ColorRgbUtil.toCmyk(
+//         ColorRgbUtil.average(
+//             colors.map(function(color){
+//                 return toRgb(color);
+//             })
+//         ));
+// };
 
-    // distance: function(colorA, colorB)
-    // {
-    //     return ColorRgbUtil.distance(
-    //         ColorCmykUtil.toRgb(colorA),
-    //         ColorCmykUtil.toRgb(colorB));
-    // },
+// export function distance(colorA, colorB) {
+//     return ColorRgbUtil.distance(
+//         toRgb(colorA),
+//         toRgb(colorB));
+// };
 
-    // gradient: function(colors, steps)
-    // {
-    //     return ColorRgbUtil.gradient(colors.map(function(color){
-    //             return ColorCmykUtil.toRgb(color);
-    //         }), steps).map(function(color){
-    //             return ColorRgbUtil.toCmyk(color);
-    //         });
-    // },
+// export function gradient(colors, steps) {
+//     return ColorRgbUtil.gradient(colors.map(function(color){
+//             return toRgb(color);
+//         }), steps).map(function(color){
+//             return ColorRgbUtil.toCmyk(color);
+//         });
+// };
 
-    // gradientMatrix: function(colors, stepsX, stepsY)
-    // {
-    //     return ColorRgbUtil.gradientMatrix(
-    //         ObjectUtil.map(colors, function(color){
-    //             return ColorCmykUtil.toRgb(color);
-    //         }), stepsX, stepsY).map(function(colors){
-    //             return colors.map(function(color){
-    //                 return ColorRgbUtil.toCmyk(color);
-    //             });
-    //         });
-    // },
+// export function gradientMatrix(colors, stepsX, stepsY) {
+//     return ColorRgbUtil.gradientMatrix(
+//         ObjectUtil.map(colors, function(color){
+//             return toRgb(color);
+//         }), stepsX, stepsY).map(function(colors){
+//             return colors.map(function(color){
+//                 return ColorRgbUtil.toCmyk(color);
+//             });
+//         });
+// };
 
-    // interpolateBilinear: function(a, b, c, d, u, v)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.interpolateBilinear(
-    //             ColorCmykUtil.toRgb(a),
-    //             ColorCmykUtil.toRgb(b),
-    //             ColorCmykUtil.toRgb(c),
-    //             ColorCmykUtil.toRgb(d), u, v));
-    // },
+// export function interpolateBilinear(a, b, c, d, u, v) {
+//     return ColorRgbUtil.toCmyk(
+//         ColorRgbUtil.interpolateBilinear(
+//             toRgb(a),
+//             toRgb(b),
+//             toRgb(c),
+//             toRgb(d), u, v));
+// };
 
-    // interpolateLinear: function(colorFrom, colorTo, t)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.interpolateLinear(
-    //             ColorCmykUtil.toRgb(colorFrom),
-    //             ColorCmykUtil.toRgb(colorTo), t));
-    // },
+// export function interpolateLinear(colorFrom, colorTo, t) {
+//     return ColorRgbUtil.toCmyk(
+//         ColorRgbUtil.interpolateLinear(
+//             toRgb(colorFrom),
+//             toRgb(colorTo), t));
+// };
 
-    // interpolateMultilinear: function(colors, t)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.interpolateMultilinear(
-    //             colors.map(function(color){
-    //                 return ColorCmykUtil.toRgb(color);
-    //             }), t));
-    // },
+// export function interpolateMultilinear(colors, t) {
+//     return ColorRgbUtil.toCmyk(
+//         ColorRgbUtil.interpolateMultilinear(
+//             colors.map(function(color){
+//                 return toRgb(color);
+//             }), t));
+// };
 
-    // nearest: function(colorSearch, colors)
-    // {
-    //     return ColorRgbUtil.toCmyk(
-    //         ColorRgbUtil.nearest(
-    //             ColorCmykUtil.toRgb(colorSearch),
-    //             colors.map(function(color){
-    //                 return ColorCmykUtil.toRgb(color);
-    //             })
-    //         ));
-    // },
+// export function nearest(colorSearch, colors) {
+//     return ColorRgbUtil.toCmyk(
+//         ColorRgbUtil.nearest(
+//             toRgb(colorSearch),
+//             colors.map(function(color){
+//                 return toRgb(color);
+//             })
+//         ));
+// };
 
-    // toGrayscale: function(color)
-    // {
-    //     return ColorRgbUtil.toGrayscale(
-    //         ColorCmykUtil.toRgb(color));
-    // },
+// export function toGrayscale(color) {
+//     return ColorRgbUtil.toGrayscale(
+//         toRgb(color));
+// };
 
-    toHex(color, prefix) {
-        return ColorRgbUtil.toHex(ColorCmykUtil.toRgb(color), prefix);
-    },
+export function toHex(color, prefix) {
+    return ColorRgbUtil.toHex(toRgb(color), prefix);
+}
 
-    // toHsl: function(color)
-    // {
-    //     return ColorRgbUtil.toHsl(
-    //         ColorCmykUtil.toRgb(color));
-    // },
+// export function toHsl(color) {
+//     return ColorRgbUtil.toHsl(
+//         toRgb(color));
+// };
 
-    // toHsv: function(color)
-    // {
-    //     return ColorRgbUtil.toHsv(
-    //         ColorCmykUtil.toRgb(color));
-    // },
+// export function toHsv(color) {
+//     return ColorRgbUtil.toHsv(
+//         toRgb(color));
+// };
 
-    toRgb(color) {
-        const c = color.c / 100;
-        const m = color.m / 100;
-        const y = color.y / 100;
-        const k = color.k / 100;
-        const ik = 1.0 - k;
+export function toRgb(color) {
+    const c = color.c / 100;
+    const m = color.m / 100;
+    const y = color.y / 100;
+    const k = color.k / 100;
+    const ik = 1.0 - k;
 
-        let r = 1.0 - Math.min(1.0, c * ik + k);
-        let g = 1.0 - Math.min(1.0, m * ik + k);
-        let b = 1.0 - Math.min(1.0, y * ik + k);
+    let r = 1.0 - Math.min(1.0, c * ik + k);
+    let g = 1.0 - Math.min(1.0, m * ik + k);
+    let b = 1.0 - Math.min(1.0, y * ik + k);
 
-        const round = Math.round;
-        r = round(r * 255);
-        g = round(g * 255);
-        b = round(b * 255);
+    const round = Math.round;
+    r = round(r * 255);
+    g = round(g * 255);
+    b = round(b * 255);
 
-        return { r: r, g: g, b: b, a: 1.0 };
-    },
+    return { r: r, g: g, b: b, a: 1.0 };
+}
 
-    toString(color) {
-        // prettier-ignore
-        return `{ c:${String(color.c)}, m:${String(color.m)}, y:${String(color.y)}, k:${String(color.k)} }`;
-    },
+export function toString(color) {
+    // prettier-ignore
+    return `{ c:${String(color.c)}, m:${String(color.m)}, y:${String(color.y)}, k:${String(color.k)} }`;
+}
 
-    toStringCSS(color) {
-        // prettier-ignore
-        return `cmyk(${String(color.c)}%, ${String(color.m)}%, ${String(color.y)}%, ${String(color.k)}%)`;
-    },
-};
+export function toStringCSS(color) {
+    // prettier-ignore
+    return `cmyk(${String(color.c)}%, ${String(color.m)}%, ${String(color.y)}%, ${String(color.k)}%)`;
+}

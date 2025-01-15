@@ -1,9 +1,8 @@
-/** global: ColorUtil */
 /** global: ColorCmykUtil */
 /** global: ColorHexUtil */
 /** global: ColorRgbUtil */
 
-ColorUtil = {
+const ColorUtil = {
     cmyk: ColorCmykUtil,
     // cmykToGrayscale: ColorCmykUtil.toGrayscale,
     cmykToHex: ColorCmykUtil.toHex,

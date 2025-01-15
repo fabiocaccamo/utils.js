@@ -1,167 +1,164 @@
 /** global: Base64Util */
 /** global: JSONUtil */
 /** global: ObjectUtil */
-/** global: TypeUtil */
 /** global: URLUtil */
 
-TypeUtil = {
-    ARRAY: 'array',
-    BOOLEAN: 'boolean',
-    DATE: 'date',
-    ERROR: 'error',
-    FUNCTION: 'function',
-    NAN: 'nan',
-    NUMBER: 'number',
-    NULL: 'null',
-    OBJECT: 'object',
-    REGEXP: 'regexp',
-    STRING: 'string',
-    UNDEFINED: 'undefined',
-    UNKNOWN: 'unknown',
-    // XML: 'xml',
+ARRAY = 'array';
+BOOLEAN = 'boolean';
+DATE = 'date';
+ERROR = 'error';
+FUNCTION = 'function';
+NAN = 'nan';
+NUMBER = 'number';
+NULL = 'null';
+OBJECT = 'object';
+REGEXP = 'regexp';
+STRING = 'string';
+UNDEFINED = 'undefined';
+UNKNOWN = 'unknown';
+// XML = 'xml';
 
-    isArray(val) {
-        // https://stackoverflow.com/questions/4775722/check-if-object-is-array
-        if (Array.isArray) {
-            return Array.isArray(val);
-        }
-        return Object.prototype.toString.call(val) === '[object Array]';
-    },
+export function isArray(val) {
+    // https://stackoverflow.com/questions/4775722/check-if-object-is-array
+    if (Array.isArray) {
+        return Array.isArray(val);
+    }
+    return Object.prototype.toString.call(val) === '[object Array]';
+}
 
-    isBase64(val) {
-        if (TypeUtil.isString(val)) {
-            try {
-                if (Base64Util.decode(val) !== '') {
-                    return true;
-                }
-            } catch (e) {
-                // value is not valid base64 data
-            }
-        }
-        return false;
-    },
-
-    isBoolean(val) {
-        return typeof val === 'boolean';
-    },
-
-    isDate(val) {
-        return Object.prototype.toString.call(val) === '[object Date]';
-    },
-
-    isError(val) {
-        return val instanceof Error;
-    },
-
-    isFunction(val) {
-        return typeof val === 'function';
-    },
-
-    isJSON(val) {
-        if (TypeUtil.isString(val)) {
-            try {
-                JSONUtil.decode(val);
+export function isBase64(val) {
+    if (isString(val)) {
+        try {
+            if (Base64Util.decode(val) !== '') {
                 return true;
-            } catch (e) {
-                // value is not valid json data
             }
+        } catch (e) {
+            // value is not valid base64 data
         }
-        return false;
-    },
+    }
+    return false;
+}
 
-    isNaN(val) {
-        return ObjectUtil.is(val, NaN);
-    },
+export function isBoolean(val) {
+    return typeof val === 'boolean';
+}
 
-    isNone(val) {
-        return TypeUtil.isUndefined(val) || TypeUtil.isNull(val) || TypeUtil.isNaN(val);
-    },
+export function isDate(val) {
+    return Object.prototype.toString.call(val) === '[object Date]';
+}
 
-    isNumber(val) {
-        return typeof val === 'number' && !isNaN(val) && isFinite(val);
-    },
+export function isError(val) {
+    return val instanceof Error;
+}
 
-    isNull(val) {
-        return val === null;
-    },
+export function isFunction(val) {
+    return typeof val === 'function';
+}
 
-    isObject(val) {
-        return (
-            typeof val === 'object' &&
-            Object.prototype.toString.call(val) === '[object Object]'
-        );
-    },
-
-    isRegExp(val) {
-        return val instanceof RegExp;
-    },
-
-    isString(val) {
-        return typeof val === 'string';
-    },
-
-    isType(val) {
-        switch (val) {
-            case TypeUtil.ARRAY:
-            case TypeUtil.BOOLEAN:
-            case TypeUtil.DATE:
-            case TypeUtil.ERROR:
-            case TypeUtil.FUNCTION:
-            case TypeUtil.NAN:
-            case TypeUtil.NUMBER:
-            case TypeUtil.NULL:
-            case TypeUtil.OBJECT:
-            case TypeUtil.REGEXP:
-            case TypeUtil.STRING:
-            case TypeUtil.UNDEFINED:
-            case TypeUtil.UNKNOWN:
-                // case TypeUtil.XML:
-                return true;
-            default:
-                return false;
+export function isJSON(val) {
+    if (isString(val)) {
+        try {
+            JSONUtil.decode(val);
+            return true;
+        } catch (e) {
+            // value is not valid json data
         }
-    },
+    }
+    return false;
+}
 
-    isUndefined(val) {
-        return typeof val === 'undefined';
-    },
+export function isNaN(val) {
+    return ObjectUtil.is(val, NaN);
+}
 
-    // isXML: function(val) {
-    //     // TODO
-    //     return false;
-    // },
+export function isNone(val) {
+    return isUndefined(val) || isNull(val) || isNaN(val);
+}
 
-    of(val) {
-        if (TypeUtil.isArray(val)) {
-            return TypeUtil.ARRAY;
-        } else if (TypeUtil.isBoolean(val)) {
-            return TypeUtil.BOOLEAN;
-        } else if (TypeUtil.isDate(val)) {
-            return TypeUtil.DATE;
-        } else if (TypeUtil.isError(val)) {
-            return TypeUtil.ERROR;
-        } else if (TypeUtil.isFunction(val)) {
-            return TypeUtil.FUNCTION;
-        } else if (TypeUtil.isNaN(val)) {
-            return TypeUtil.NAN;
-        } else if (TypeUtil.isNumber(val)) {
-            return TypeUtil.NUMBER;
-        } else if (TypeUtil.isNull(val)) {
-            return TypeUtil.NULL;
-        } else if (TypeUtil.isRegExp(val)) {
-            return TypeUtil.REGEXP;
-        } else if (TypeUtil.isString(val)) {
-            return TypeUtil.STRING;
-        } else if (TypeUtil.isUndefined(val)) {
-            return TypeUtil.UNDEFINED;
-        }
-        // else if (TypeUtil.isXML(val)) {
-        //     return TypeUtil.XML;
-        // }
-        else if (TypeUtil.isObject(val)) {
-            return TypeUtil.OBJECT;
-        } else {
-            return TypeUtil.UNKNOWN;
-        }
-    },
-};
+export function isNumber(val) {
+    return typeof val === 'number' && !isNaN(val) && isFinite(val);
+}
+
+export function isNull(val) {
+    return val === null;
+}
+
+export function isObject(val) {
+    return (
+        typeof val === 'object' &&
+        Object.prototype.toString.call(val) === '[object Object]'
+    );
+}
+
+export function isRegExp(val) {
+    return val instanceof RegExp;
+}
+
+export function isString(val) {
+    return typeof val === 'string';
+}
+
+export function isType(val) {
+    switch (val) {
+        case ARRAY:
+        case BOOLEAN:
+        case DATE:
+        case ERROR:
+        case FUNCTION:
+        case NAN:
+        case NUMBER:
+        case NULL:
+        case OBJECT:
+        case REGEXP:
+        case STRING:
+        case UNDEFINED:
+        case UNKNOWN:
+            // case XML:
+            return true;
+        default:
+            return false;
+    }
+}
+
+export function isUndefined(val) {
+    return typeof val === 'undefined';
+}
+
+// export function isXML(val) {
+//     // TODO
+//     return false;
+// };
+
+export function of(val) {
+    if (isArray(val)) {
+        return ARRAY;
+    } else if (isBoolean(val)) {
+        return BOOLEAN;
+    } else if (isDate(val)) {
+        return DATE;
+    } else if (isError(val)) {
+        return ERROR;
+    } else if (isFunction(val)) {
+        return FUNCTION;
+    } else if (isNaN(val)) {
+        return NAN;
+    } else if (isNumber(val)) {
+        return NUMBER;
+    } else if (isNull(val)) {
+        return NULL;
+    } else if (isRegExp(val)) {
+        return REGEXP;
+    } else if (isString(val)) {
+        return STRING;
+    } else if (isUndefined(val)) {
+        return UNDEFINED;
+    }
+    // else if (isXML(val)) {
+    //     return XML;
+    // }
+    else if (isObject(val)) {
+        return OBJECT;
+    } else {
+        return UNKNOWN;
+    }
+}
