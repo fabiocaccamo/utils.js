@@ -137,14 +137,14 @@ describe('date', function () {
         it('test max with past comparison', function () {
             var a = new Date();
             var b = new Date();
-            b.setFullYear(2022);
+            b.setFullYear(a.getFullYear() - 1);
             var r = d.max(a, b);
             test.assertEqual(r, a);
         });
         it('test max with future comparison', function () {
             var a = new Date();
             var b = new Date();
-            b.setFullYear(2024);
+            b.setFullYear(a.getFullYear() + 1);
             var r = d.max(a, b);
             test.assertEqual(r, b);
         });
@@ -153,14 +153,14 @@ describe('date', function () {
         it('test min with past comparison', function () {
             var a = new Date();
             var b = new Date();
-            b.setFullYear(2022);
+            b.setFullYear(a.getFullYear() - 1);
             var r = d.min(a, b);
             test.assertEqual(r, b);
         });
         it('test min with future comparison', function () {
             var a = new Date();
             var b = new Date();
-            b.setFullYear(2024);
+            b.setFullYear(a.getFullYear() + 1);
             var r = d.min(a, b);
             test.assertEqual(r, a);
         });
