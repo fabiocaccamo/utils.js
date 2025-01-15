@@ -14,6 +14,7 @@ export default {
     assertFalse,
     assertFunction,
     assertJSON,
+    assertModule,
     assertNaN,
     assertNone,
     assertNotArray,
@@ -24,6 +25,7 @@ export default {
     assertNotError,
     assertNotFunction,
     assertNotJSON,
+    assertNotModule,
     assertNotNone,
     assertNotNumber,
     assertNotNull,
@@ -105,6 +107,12 @@ export function assertJSON(val) {
     }
 }
 
+export function assertModule(val) {
+    if (!TypeUtil.isModule(val)) {
+        throw new Error(`value is not module: ${String(val)}.`);
+    }
+}
+
 export function assertNaN(val) {
     if (!TypeUtil.isNaN(val)) {
         throw new Error(`value is not NaN: ${String(val)}.`);
@@ -170,6 +178,12 @@ export function assertNotFunction(val) {
 export function assertNotJSON(val) {
     if (TypeUtil.isJSON(val)) {
         throw new Error(`value is json: ${String(val)}.`);
+    }
+}
+
+export function assertNotModule(val) {
+    if (TypeUtil.isModule(val)) {
+        throw new Error(`value is module: ${String(val)}.`);
     }
 }
 

@@ -11,6 +11,7 @@ export default {
     isError,
     isFunction,
     isJSON,
+    isModule,
     isNaN,
     isNone,
     isNumber,
@@ -28,6 +29,7 @@ const BOOLEAN = 'boolean';
 const DATE = 'date';
 const ERROR = 'error';
 const FUNCTION = 'function';
+const MODULE = 'module';
 const NAN = 'nan';
 const NUMBER = 'number';
 const NULL = 'null';
@@ -87,6 +89,10 @@ export function isJSON(val) {
     return false;
 }
 
+export function isModule(val) {
+    return Object.prototype.toString.call(val) === '[object Module]';
+}
+
 export function isNaN(val) {
     return ObjectUtil.is(val, NaN);
 }
@@ -125,6 +131,7 @@ export function isType(val) {
         case DATE:
         case ERROR:
         case FUNCTION:
+        case MODULE:
         case NAN:
         case NUMBER:
         case NULL:
@@ -160,6 +167,8 @@ export function of(val) {
         return ERROR;
     } else if (isFunction(val)) {
         return FUNCTION;
+    } else if (isModule(val)) {
+        return MODULE;
     } else if (isNaN(val)) {
         return NAN;
     } else if (isNumber(val)) {
