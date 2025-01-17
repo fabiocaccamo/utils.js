@@ -1,24 +1,6 @@
-import * as MathUtil from '../math.js';
-import * as InterpolationUtil from '../interpolation.js';
-import * as TrigoUtil from '../trigo.js';
-
-export default {
-    add,
-    angle,
-    cross,
-    distance,
-    dot,
-    equals,
-    interpolate,
-    length,
-    magnitude,
-    project,
-    rect,
-    rotate,
-    scale,
-    subtract,
-    translate,
-};
+import MathUtil from '../math.js';
+import InterpolationUtil from '../interpolation.js';
+import TrigoUtil from '../trigo.js';
 
 function add(a, b) {
     return {
@@ -134,3 +116,21 @@ function translate(p, x, y) {
         y: p.y + y,
     };
 }
+
+export default {
+    add,
+    angle,
+    cross,
+    distance,
+    dot,
+    equals,
+    interpolate,
+    length,
+    magnitude,
+    project,
+    rect,
+    rotate,
+    scale,
+    subtract,
+    translate,
+};

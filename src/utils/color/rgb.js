@@ -1,21 +1,6 @@
-import * as HexUtil from '../hex.js';
-import * as InterpolationUtil from '../interpolation.js';
-import * as MathUtil from '../math.js';
-
-export default {
-    average,
-    distance,
-    gradient,
-    gradientMatrix,
-    interpolateBilinear,
-    interpolateLinear,
-    interpolateMultilinear,
-    nearest,
-    toCmyk,
-    toHex,
-    toString,
-    toStringCSS,
-};
+import HexUtil from '../hex.js';
+import InterpolationUtil from '../interpolation.js';
+import MathUtil from '../math.js';
 
 function average(colors) {
     let c;
@@ -290,3 +275,18 @@ function toStringCSS(color) {
     // prettier-ignore
     return `rgba(${String(color.r)}, ${String(color.g)}, ${String(color.b)}, ${String(isNaN(color.a) ? 1.0 : color.a)})`;
 }
+
+export default {
+    average,
+    distance,
+    gradient,
+    gradientMatrix,
+    interpolateBilinear,
+    interpolateLinear,
+    interpolateMultilinear,
+    nearest,
+    toCmyk,
+    toHex,
+    toString,
+    toStringCSS,
+};

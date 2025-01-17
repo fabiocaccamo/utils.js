@@ -1,22 +1,4 @@
-import * as MathUtil from './math.js';
-
-export default {
-    acosDeg,
-    angleDeg,
-    angleRad,
-    asinDeg,
-    atanDeg,
-    atan2Deg,
-    cosDeg,
-    cycleDeg,
-    degToRad,
-    fastDeg,
-    haversine,
-    hypo,
-    radToDeg,
-    sinDeg,
-    tanDeg,
-};
+import MathUtil from './math.js';
 
 const DEG_0 = 0.0;
 const DEG_90 = 90.0;
@@ -111,3 +93,28 @@ function sinDeg(deg) {
 function tanDeg(deg) {
     return Math.tan(deg * DEG_TO_RAD);
 }
+
+export default {
+    DEG_0,
+    DEG_90,
+    DEG_180,
+    DEG_270,
+    DEG_360,
+    DEG_TO_RAD,
+    RAD_TO_DEG,
+    acosDeg,
+    angleDeg,
+    angleRad,
+    asinDeg,
+    atanDeg,
+    atan2Deg,
+    cosDeg,
+    cycleDeg,
+    degToRad,
+    fastDeg,
+    haversine,
+    hypo,
+    radToDeg,
+    sinDeg,
+    tanDeg,
+};

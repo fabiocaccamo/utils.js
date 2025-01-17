@@ -1,6 +1,6 @@
-import * as CMYKColorUtil from './color/cmyk.js';
-import * as HexColorUtil from './color/hex.js';
-import * as RGBColorUtil from './color/rgb.js';
+import CMYKColorUtil from './color/cmyk.js';
+import HexColorUtil from './color/hex.js';
+import RGBColorUtil from './color/rgb.js';
 
 export default {
     cmyk: CMYKColorUtil,

@@ -1,8 +1,3 @@
-export default {
-    decode,
-    encode,
-};
-
 function decode(str) {
     let output = '';
     try {
@@ -18,3 +13,8 @@ function decode(str) {
 function encode(obj) {
     return JSON.stringify(obj);
 }
+
+export default {
+    decode,
+    encode,
+};

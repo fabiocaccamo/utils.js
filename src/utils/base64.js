@@ -1,6 +1,4 @@
-import * as UTF8Util from './utf8.js';
-
-export default { decode, encode };
+import UTF8Util from './utf8.js';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 // prettier-ignore
@@ -96,3 +94,5 @@ function encode(str) {
 
     return output;
 }
+
+export default { decode, encode };

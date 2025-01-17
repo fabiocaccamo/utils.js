@@ -1,13 +1,3 @@
-export default {
-    isBetween,
-    isEven,
-    isFloat,
-    isNegative,
-    isOdd,
-    isPositive,
-    isPrime,
-};
-
 function isBetween(n, min, max) {
     return n >= min && n <= max;
 }
@@ -52,3 +42,13 @@ function isPrime(n) {
     }
     return true;
 }
+
+export default {
+    isBetween,
+    isEven,
+    isFloat,
+    isNegative,
+    isOdd,
+    isPositive,
+    isPrime,
+};

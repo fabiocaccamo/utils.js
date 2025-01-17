@@ -1,11 +1,4 @@
-import * as MathUtil from './math.js';
-
-export default {
-    bilinear,
-    linear,
-    multilinear,
-    scalar,
-};
+import MathUtil from './math.js';
 
 function bilinear(a, b, c, d, u, v) {
     const f = linear;
@@ -34,3 +27,10 @@ function scalar(parts, t) {
     const tReduced = tScaled - tIndex;
     return { index: tIndex, t: tReduced };
 }
+
+export default {
+    bilinear,
+    linear,
+    multilinear,
+    scalar,
+};

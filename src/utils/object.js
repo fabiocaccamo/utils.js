@@ -1,12 +1,12 @@
-import * as ArrayUtil from './array.js';
-import * as Base64Util from './base64.js';
-import * as DateUtil from './date.js';
-import * as FunctionUtil from './function.js';
-import * as JSONUtil from './json.js';
-import * as MathUtil from './math.js';
-import * as StringUtil from './string.js';
-import * as TypeUtil from './type.js';
-import * as URLUtil from './url.js';
+import ArrayUtil from './array.js';
+import Base64Util from './base64.js';
+import DateUtil from './date.js';
+import FunctionUtil from './function.js';
+import JSONUtil from './json.js';
+import MathUtil from './math.js';
+import StringUtil from './string.js';
+import TypeUtil from './type.js';
+import URLUtil from './url.js';
 
 function assign(obj, other) {
     const objs = [other].concat(FunctionUtil.args(arguments, 2));
@@ -181,7 +181,7 @@ function is(obj1, obj2) {
     return Object.is(obj1, obj2);
 }
 
-export const keypath = {
+const keypath = {
     get(obj, path, defaultValue) {
         const keys = path.split('.');
         let key;

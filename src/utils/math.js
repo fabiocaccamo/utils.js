@@ -1,7 +1,7 @@
-import * as ArrayUtil from './array.js';
-import * as FunctionUtil from './function.js';
-import * as InterpolationUtil from './interpolation.js';
-import * as TypeUtil from './type.js';
+import ArrayUtil from './array.js';
+import FunctionUtil from './function.js';
+import InterpolationUtil from './interpolation.js';
+import TypeUtil from './type.js';
 
 function average(values) {
     return summation(values) / values.length;

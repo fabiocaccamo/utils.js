@@ -1,24 +1,9 @@
-import * as RGBColorUtil from './rgb.js';
-import * as HexUtil from '../hex.js';
-import * as InterpolationUtil from '../interpolation.js';
-import * as MathUtil from '../math.js';
-import * as ObjectUtil from '../object.js';
-import * as TypeUtil from '../type.js';
-
-export default {
-    average,
-    distance,
-    gradient,
-    gradientMatrix,
-    interpolateBilinear,
-    interpolateLinear,
-    interpolateMultilinear,
-    nearest,
-    toCmyk,
-    toRgb,
-    toString,
-    toStringCSS,
-};
+import RGBColorUtil from './rgb.js';
+import HexUtil from '../hex.js';
+import InterpolationUtil from '../interpolation.js';
+import MathUtil from '../math.js';
+import ObjectUtil from '../object.js';
+import TypeUtil from '../type.js';
 
 function average(colors) {
     return RGBColorUtil.toHex(
@@ -178,3 +163,18 @@ function toString(color, prefix) {
 function toStringCSS(color) {
     return toString(color, '#');
 }
+
+export default {
+    average,
+    distance,
+    gradient,
+    gradientMatrix,
+    interpolateBilinear,
+    interpolateLinear,
+    interpolateMultilinear,
+    nearest,
+    toCmyk,
+    toRgb,
+    toString,
+    toStringCSS,
+};

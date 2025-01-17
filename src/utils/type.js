@@ -1,28 +1,7 @@
-import * as Base64Util from './base64.js';
-import * as JSONUtil from './json.js';
-import * as ObjectUtil from './object.js';
-import * as URLUtil from './url.js';
-
-export default {
-    isArray,
-    isBase64,
-    isBoolean,
-    isDate,
-    isError,
-    isFunction,
-    isJSON,
-    isModule,
-    isNaN,
-    isNone,
-    isNumber,
-    isNull,
-    isObject,
-    isRegExp,
-    isString,
-    isType,
-    isUndefined,
-    of,
-};
+import Base64Util from './base64.js';
+import JSONUtil from './json.js';
+import ObjectUtil from './object.js';
+import URLUtil from './url.js';
 
 const ARRAY = 'array';
 const BOOLEAN = 'boolean';
@@ -191,3 +170,39 @@ function of(val) {
         return UNKNOWN;
     }
 }
+
+export default {
+    ARRAY,
+    BOOLEAN,
+    DATE,
+    ERROR,
+    FUNCTION,
+    MODULE,
+    NAN,
+    NUMBER,
+    NULL,
+    OBJECT,
+    REGEXP,
+    STRING,
+    UNDEFINED,
+    UNKNOWN,
+    // XML,
+    isArray,
+    isBase64,
+    isBoolean,
+    isDate,
+    isError,
+    isFunction,
+    isJSON,
+    isModule,
+    isNaN,
+    isNone,
+    isNumber,
+    isNull,
+    isObject,
+    isRegExp,
+    isString,
+    isType,
+    isUndefined,
+    of,
+};

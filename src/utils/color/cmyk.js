@@ -1,6 +1,4 @@
-import * as RGBColorUtil from './rgb.js';
-
-export default { toHex, toRgb, toString, toStringCSS };
+import RGBColorUtil from './rgb.js';
 
 // function average(colors) {
 //     return RGBColorUtil.toCmyk(
@@ -117,3 +115,5 @@ function toStringCSS(color) {
     // prettier-ignore
     return `cmyk(${String(color.c)}%, ${String(color.m)}%, ${String(color.y)}%, ${String(color.k)}%)`;
 }
+
+export default { toHex, toRgb, toString, toStringCSS };

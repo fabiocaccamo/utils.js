@@ -1,35 +1,10 @@
-import * as DateUtil from './date.js';
-import * as FunctionUtil from './function.js';
-import * as MathUtil from './math.js';
-import * as ObjectUtil from './object.js';
-import * as RandomUtil from './random.js';
-import * as StringUtil from './string.js';
-import * as TypeUtil from './type.js';
-
-export default {
-    all,
-    any,
-    clean,
-    clone,
-    contains,
-    equals,
-    flatten,
-    index,
-    insert,
-    max,
-    min,
-    paginate,
-    reduce,
-    replace,
-    remove,
-    rotate,
-    shuffle,
-    sort,
-    sum,
-    unique,
-    unzip,
-    zip,
-};
+import DateUtil from './date.js';
+import FunctionUtil from './function.js';
+import MathUtil from './math.js';
+import ObjectUtil from './object.js';
+import RandomUtil from './random.js';
+import StringUtil from './string.js';
+import TypeUtil from './type.js';
 
 function all(list) {
     return list.every((item) => {
@@ -358,3 +333,28 @@ function zip(list1, list2) {
     }
     return list;
 }
+
+export default {
+    all,
+    any,
+    clean,
+    clone,
+    contains,
+    equals,
+    flatten,
+    index,
+    insert,
+    max,
+    min,
+    paginate,
+    reduce,
+    replace,
+    remove,
+    rotate,
+    shuffle,
+    sort,
+    sum,
+    unique,
+    unzip,
+    zip,
+};

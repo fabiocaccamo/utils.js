@@ -1,30 +1,6 @@
-import * as ArrayUtil from './array.js';
-import * as RandomUtil from './random.js';
-import * as TypeUtil from './type.js';
-
-export default {
-    contains,
-    endsWith,
-    icontains,
-    levenshteinDistance,
-    levenshteinSimilarity,
-    padLeft,
-    padRight,
-    padZeros,
-    render,
-    replace,
-    reverse,
-    rotate,
-    slugify,
-    startsWith,
-    toConstantCase,
-    toRandomCase,
-    toTitleCase,
-    toUpperCaseFirst,
-    trim,
-    trimLeft,
-    trimRight,
-};
+import ArrayUtil from './array.js';
+import RandomUtil from './random.js';
+import TypeUtil from './type.js';
 
 function contains(str, occurrence) {
     return Boolean(str.includes(occurrence));
@@ -247,3 +223,27 @@ function trimRight(str) {
     // return str.replace(/\s+$/gm, '');
     return str.trimEnd();
 }
+
+export default {
+    contains,
+    endsWith,
+    icontains,
+    levenshteinDistance,
+    levenshteinSimilarity,
+    padLeft,
+    padRight,
+    padZeros,
+    render,
+    replace,
+    reverse,
+    rotate,
+    slugify,
+    startsWith,
+    toConstantCase,
+    toRandomCase,
+    toTitleCase,
+    toUpperCaseFirst,
+    trim,
+    trimLeft,
+    trimRight,
+};

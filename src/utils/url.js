@@ -1,18 +1,3 @@
-export default {
-    getDomain,
-    getParameterByName,
-    getParameters,
-    getParametersDict,
-    getParametersList,
-    getParametersString,
-    getURL,
-    hasParameter,
-    isFile,
-    isHttp,
-    isHttps,
-    isLocalhost,
-};
-
 function getDomain(url = getURL(), level) {
     // remove protocol, www and port
     let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
@@ -105,3 +90,18 @@ function isLocalhost(url) {
         /^(https?\:\/\/)(localhost(.[a-z0-9\-])*|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
     return re.test(url || getURL());
 }
+
+export default {
+    getDomain,
+    getParameterByName,
+    getParameters,
+    getParametersDict,
+    getParametersList,
+    getParametersString,
+    getURL,
+    hasParameter,
+    isFile,
+    isHttp,
+    isHttps,
+    isLocalhost,
+};

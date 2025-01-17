@@ -1,48 +1,8 @@
-import * as FunctionUtil from './function.js';
-import * as JSONUtil from './json.js';
-import * as MathUtil from './math.js';
-import * as ObjectUtil from './object.js';
-import * as TypeUtil from './type.js';
-
-export default {
-    assertArray,
-    assertBase64,
-    assertBoolean,
-    assertDate,
-    assertEqual,
-    assertError,
-    assertFalse,
-    assertFunction,
-    assertJSON,
-    assertModule,
-    assertNaN,
-    assertNone,
-    assertNotArray,
-    assertNotBase64,
-    assertNotBoolean,
-    assertNotDate,
-    assertNotEqual,
-    assertNotError,
-    assertNotFunction,
-    assertNotJSON,
-    assertNotModule,
-    assertNotNone,
-    assertNotNumber,
-    assertNotNull,
-    assertNotObject,
-    assertNotRegExp,
-    assertNotString,
-    assertNotUndefined,
-    assertNumber,
-    assertNumberAlmostEqual,
-    assertNull,
-    assertObject,
-    assertRegExp,
-    assertString,
-    assertThrows,
-    assertTrue,
-    assertUndefined,
-};
+import FunctionUtil from './function.js';
+import JSONUtil from './json.js';
+import MathUtil from './math.js';
+import ObjectUtil from './object.js';
+import TypeUtil from './type.js';
 
 function assertArray(val, len) {
     if (!TypeUtil.isArray(val)) {
@@ -308,3 +268,43 @@ function assertUndefined(val) {
 //         throw new Error('value is not xml: ' + String(val) + '.');
 //     }
 // };
+
+export default {
+    assertArray,
+    assertBase64,
+    assertBoolean,
+    assertDate,
+    assertEqual,
+    assertError,
+    assertFalse,
+    assertFunction,
+    assertJSON,
+    assertModule,
+    assertNaN,
+    assertNone,
+    assertNotArray,
+    assertNotBase64,
+    assertNotBoolean,
+    assertNotDate,
+    assertNotEqual,
+    assertNotError,
+    assertNotFunction,
+    assertNotJSON,
+    assertNotModule,
+    assertNotNone,
+    assertNotNumber,
+    assertNotNull,
+    assertNotObject,
+    assertNotRegExp,
+    assertNotString,
+    assertNotUndefined,
+    assertNumber,
+    assertNumberAlmostEqual,
+    assertNull,
+    assertObject,
+    assertRegExp,
+    assertString,
+    assertThrows,
+    assertTrue,
+    assertUndefined,
+};

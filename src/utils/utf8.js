@@ -1,8 +1,3 @@
-export default {
-    decode,
-    encode,
-};
-
 function decode(input) {
     return decodeURIComponent(escape(input));
 
@@ -64,3 +59,8 @@ function encode(input) {
 
     // return output;
 }
+
+export default {
+    decode,
+    encode,
+};

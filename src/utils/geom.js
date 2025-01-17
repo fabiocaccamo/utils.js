@@ -1,4 +1,4 @@
-import * as PointUtil from './geom/point.js';
+import PointUtil from './geom/point.js';
 
 export default {
     point: PointUtil,

@@ -1,22 +1,4 @@
-import * as StringUtil from './string.js';
-
-export default {
-    clone,
-    constrain,
-    format,
-    identifier,
-    isFuture,
-    isPast,
-    max,
-    min,
-    normalize,
-    parse,
-    timestamp,
-    today,
-    tomorrow,
-    yesterday,
-    yyyymmdd,
-};
+import StringUtil from './string.js';
 
 function clone(date) {
     return new Date(date.getTime());
@@ -225,3 +207,21 @@ function yyyymmdd(date, separator) {
             StringUtil.padZeros(month, 2) + sep +
             StringUtil.padZeros(day, 2));
 }
+
+export default {
+    clone,
+    constrain,
+    format,
+    identifier,
+    isFuture,
+    isPast,
+    max,
+    min,
+    normalize,
+    parse,
+    timestamp,
+    today,
+    tomorrow,
+    yesterday,
+    yyyymmdd,
+};
