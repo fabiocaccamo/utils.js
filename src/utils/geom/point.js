@@ -20,39 +20,39 @@ export default {
     translate,
 };
 
-export function add(a, b) {
+function add(a, b) {
     return {
         x: a.x + b.x,
         y: a.y + b.y,
     };
 }
 
-export function angle(a, b) {
+function angle(a, b) {
     const angle = TrigoUtil.angleDeg(b.y - a.y, b.x - a.x);
     return TrigoUtil.cycleDeg(angle);
 }
 
-export function cross(a, b) {
+function cross(a, b) {
     // z coordinate of the cross product; x and y coordinates are zero
     return a.x * b.y - a.y * b.x;
 }
 
-export function distance(a, b) {
+function distance(a, b) {
     const dX = b.x - a.x;
     const dY = b.y - a.y;
     return Math.sqrt(dX * dX + dY * dY);
 }
 
-export function dot(a, b) {
+function dot(a, b) {
     return a.x * b.x + a.y * b.y;
 }
 
-export function equals(a, b, tolerance) {
+function equals(a, b, tolerance) {
     const f = MathUtil.equals;
     return f(a.x, b.x, tolerance) && f(a.y, b.y, tolerance);
 }
 
-export function interpolate(a, b, t) {
+function interpolate(a, b, t) {
     const f = InterpolationUtil.linear;
     return {
         x: f(a.x, b.x, t),
@@ -60,22 +60,22 @@ export function interpolate(a, b, t) {
     };
 }
 
-export function length(p) {
+function length(p) {
     return PointUtil.distance(p, { x: 0, y: 0 });
 }
 
-export function magnitude(p) {
+function magnitude(p) {
     return PointUtil.length(p);
 }
 
-export function project(p, distance, angle) {
+function project(p, distance, angle) {
     return {
         x: p.x + distance * TrigoUtil.cosDeg(angle),
         y: p.y + distance * TrigoUtil.sinDeg(angle),
     };
 }
 
-export function rect(points) {
+function rect(points) {
     let point;
     const pointsX = [];
     const pointsY = [];
@@ -101,7 +101,7 @@ export function rect(points) {
     };
 }
 
-export function rotate(p, angle, pivot) {
+function rotate(p, angle, pivot) {
     const pointPivot = pivot || { x: 0.0, y: 0.0 };
     const pointRel = PointUtil.subtract(p, pointPivot);
     const angleCos = TrigoUtil.cosDeg(angle);
@@ -114,21 +114,21 @@ export function rotate(p, angle, pivot) {
     return pointAbs;
 }
 
-export function scale(p, amount) {
+function scale(p, amount) {
     return {
         x: p.x * amount,
         y: p.y * amount,
     };
 }
 
-export function subtract(a, b) {
+function subtract(a, b) {
     return {
         x: a.x - b.x,
         y: a.y - b.y,
     };
 }
 
-export function translate(p, x, y) {
+function translate(p, x, y) {
     return {
         x: p.x + x,
         y: p.y + y,

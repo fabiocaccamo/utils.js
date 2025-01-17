@@ -15,11 +15,11 @@ export default {
     validate,
 };
 
-export function args(argumentsObj, skipCount) {
+function args(argumentsObj, skipCount) {
     return [].slice.call(argumentsObj, skipCount || 0);
 }
 
-export function attempt(func, scope) {
+function attempt(func, scope) {
     try {
         const args = args(arguments);
         const result = call.apply(null, args);
@@ -29,7 +29,7 @@ export function attempt(func, scope) {
     }
 }
 
-export function bind(func, scope) {
+function bind(func, scope) {
     const argsBinded = args(arguments);
     return function () {
         const args = args(arguments);
@@ -38,7 +38,7 @@ export function bind(func, scope) {
     };
 }
 
-export function call(func, scope) {
+function call(func, scope) {
     if (TypeUtil.isString(func)) {
         func = scope[func];
     }
@@ -47,7 +47,7 @@ export function call(func, scope) {
     return result;
 }
 
-export function debounce(milliseconds, func, scope) {
+function debounce(milliseconds, func, scope) {
     let timeoutId;
     return function () {
         if (timeoutId) {
@@ -71,7 +71,7 @@ export function debounce(milliseconds, func, scope) {
     */
 }
 
-export function delay(milliseconds, func, scope) {
+function delay(milliseconds, func, scope) {
     const args = args(arguments, 1);
     const wrapper = bind.apply(null, args);
     const timeoutId = setTimeout(wrapper, milliseconds);
@@ -84,7 +84,7 @@ export function delay(milliseconds, func, scope) {
     };
 }
 
-export function memoize(func, scope) {
+function memoize(func, scope) {
     const cache = {};
 
     return function () {
@@ -97,11 +97,11 @@ export function memoize(func, scope) {
     };
 }
 
-export function noop() {
+function noop() {
     return true;
 }
 
-export function repeat(milliseconds, func, scope) {
+function repeat(milliseconds, func, scope) {
     const args = args(arguments, 1);
     const wrapper = bind.apply(null, args);
     const intervalId = setInterval(wrapper, milliseconds);
@@ -114,7 +114,7 @@ export function repeat(milliseconds, func, scope) {
     };
 }
 
-export function throttle(milliseconds, func, scope) {
+function throttle(milliseconds, func, scope) {
     let timeoutId;
     return (...args) => {
         if (timeoutId) {
@@ -128,7 +128,7 @@ export function throttle(milliseconds, func, scope) {
     };
 }
 
-export function until(milliseconds, func, scope) {
+function until(milliseconds, func, scope) {
     const args = args(arguments, 1);
     const wrapper = bind.apply(null, args);
     const interval = repeat(milliseconds, () => {
@@ -139,7 +139,7 @@ export function until(milliseconds, func, scope) {
     return interval;
 }
 
-export function validate(argumentsObj) {
+function validate(argumentsObj) {
     // validate(arguments, 'number', 'string', ['string', 'undefined']);
 
     const args = args(argumentsObj);

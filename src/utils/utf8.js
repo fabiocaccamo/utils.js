@@ -3,7 +3,7 @@ export default {
     encode,
 };
 
-export function decode(input) {
+function decode(input) {
     return decodeURIComponent(escape(input));
 
     // var output = '';
@@ -35,7 +35,7 @@ export function decode(input) {
     // return output;
 }
 
-export function encode(input) {
+function encode(input) {
     return unescape(encodeURIComponent(input));
 
     // input = input.replace(/\r\n/g, '\n');

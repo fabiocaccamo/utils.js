@@ -1,6 +1,6 @@
 export default { removeNamespaces };
 
-// export function decode(str) {
+// function decode(str) {
 //     // https://stackoverflow.com/questions/17604071/parse-xml-using-javascript
 //     var doc = null;
 //         try {
@@ -18,13 +18,13 @@ export default { removeNamespaces };
 //     return doc;
 // };
 
-// export function encode(doc) {
+// function encode(doc) {
 //     var ser = new XMLSerializer();
 //     var str = ser.serializeToString(doc);
 //     return str;
 // };
 
-export function removeNamespaces(str) {
+function removeNamespaces(str) {
     return str.replace(/(\<(.|\n)+?\>)/g, (tag) => {
         return tag.replace(/(\s|\<\/?){1}([\w]+\:){1}/g, '$1');
     });

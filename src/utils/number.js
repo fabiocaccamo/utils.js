@@ -8,31 +8,31 @@ export default {
     isPrime,
 };
 
-export function isBetween(n, min, max) {
+function isBetween(n, min, max) {
     return n >= min && n <= max;
 }
 
-export function isEven(n) {
+function isEven(n) {
     return n % 2.0 === 0.0 && !isFloat(n);
 }
 
-export function isFloat(n) {
+function isFloat(n) {
     return n % 1 !== 0;
 }
 
-export function isNegative(n) {
+function isNegative(n) {
     return n < 0.0;
 }
 
-export function isOdd(n) {
+function isOdd(n) {
     return n % 2.0 !== 0.0 && !isFloat(n);
 }
 
-export function isPositive(n) {
+function isPositive(n) {
     return n >= 0.0;
 }
 
-export function isPrime(n) {
+function isPrime(n) {
     if (typeof n !== 'number' || Number.isNaN(n) || isFloat(n)) {
         return false;
     }

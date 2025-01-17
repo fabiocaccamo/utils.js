@@ -18,17 +18,17 @@ export default {
     yyyymmdd,
 };
 
-export function clone(date) {
+function clone(date) {
     return new Date(date.getTime());
 }
 
-export function constrain(date, a, b) {
+function constrain(date, a, b) {
     const dateMin = min(a, b);
     const dateMax = max(a, b);
     return min(max(date, dateMin), dateMax);
 }
 
-export function format(date, str) {
+function format(date, str) {
     // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
     const replace = StringUtil.replace;
     const padZeros = StringUtil.padZeros;
@@ -96,7 +96,7 @@ export function format(date, str) {
     return str;
 }
 
-export function identifier(date) {
+function identifier(date) {
     const d = date || new Date();
     const year = d.getFullYear();
     const month = d.getMonth() + 1; // getMonth() is zero-based
@@ -116,7 +116,7 @@ export function identifier(date) {
     );
 }
 
-export function isFuture(date, checkTime) {
+function isFuture(date, checkTime) {
     const day = new Date(date.getTime());
     const now = new Date();
     if (checkTime !== true) {
@@ -129,7 +129,7 @@ export function isFuture(date, checkTime) {
     return delta < 0;
 }
 
-export function isPast(date, checkTime) {
+function isPast(date, checkTime) {
     const day = new Date(date.getTime());
     const now = new Date();
     if (checkTime !== true) {
@@ -142,15 +142,15 @@ export function isPast(date, checkTime) {
     return delta > 0;
 }
 
-export function max(date, other) {
+function max(date, other) {
     return date.getTime() > other.getTime() ? date : other;
 }
 
-export function min(date, other) {
+function min(date, other) {
     return date.getTime() <= other.getTime() ? date : other;
 }
 
-export function normalize(ms) {
+function normalize(ms) {
     const time = {
         milliseconds: ms % 1000,
         seconds: Math.floor(ms / 1000) % 60,
@@ -161,7 +161,7 @@ export function normalize(ms) {
     return time;
 }
 
-export function parse(date) {
+function parse(date) {
     let timestamp;
     const timestampIsValid = (t) => {
         return (
@@ -188,12 +188,12 @@ export function parse(date) {
     return null;
 }
 
-export function timestamp(date) {
+function timestamp(date) {
     const d = date || new Date();
     return d.getTime();
 }
 
-export function today() {
+function today() {
     const d = new Date();
     d.setHours(0);
     d.setMinutes(0);
@@ -202,19 +202,19 @@ export function today() {
     return d;
 }
 
-export function tomorrow() {
+function tomorrow() {
     const d = today();
     d.setDate(d.getDate() + 1);
     return d;
 }
 
-export function yesterday() {
+function yesterday() {
     const d = today();
     d.setDate(d.getDate() - 1);
     return d;
 }
 
-export function yyyymmdd(date, separator) {
+function yyyymmdd(date, separator) {
     const d = date || new Date();
     const year = d.getFullYear();
     const month = d.getMonth() + 1; // getMonth() is zero-based

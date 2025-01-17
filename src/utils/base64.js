@@ -20,7 +20,7 @@ const CHARS_TABLE = {
     '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
 };
 
-export function decode(str) {
+function decode(str) {
     const input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
     let output = '';
 
@@ -59,7 +59,7 @@ export function decode(str) {
     return output;
 }
 
-export function encode(str) {
+function encode(str) {
     const input = UTF8Util.encode(str);
     let output = '';
 

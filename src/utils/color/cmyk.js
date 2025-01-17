@@ -2,7 +2,7 @@ import * as RGBColorUtil from './rgb.js';
 
 export default { toHex, toRgb, toString, toStringCSS };
 
-// export function average(colors) {
+// function average(colors) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.average(
 //             colors.map(function(color){
@@ -11,13 +11,13 @@ export default { toHex, toRgb, toString, toStringCSS };
 //         ));
 // };
 
-// export function distance(colorA, colorB) {
+// function distance(colorA, colorB) {
 //     return RGBColorUtil.distance(
 //         toRgb(colorA),
 //         toRgb(colorB));
 // };
 
-// export function gradient(colors, steps) {
+// function gradient(colors, steps) {
 //     return RGBColorUtil.gradient(colors.map(function(color){
 //             return toRgb(color);
 //         }), steps).map(function(color){
@@ -25,7 +25,7 @@ export default { toHex, toRgb, toString, toStringCSS };
 //         });
 // };
 
-// export function gradientMatrix(colors, stepsX, stepsY) {
+// function gradientMatrix(colors, stepsX, stepsY) {
 //     return RGBColorUtil.gradientMatrix(
 //         ObjectUtil.map(colors, function(color){
 //             return toRgb(color);
@@ -36,7 +36,7 @@ export default { toHex, toRgb, toString, toStringCSS };
 //         });
 // };
 
-// export function interpolateBilinear(a, b, c, d, u, v) {
+// function interpolateBilinear(a, b, c, d, u, v) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.interpolateBilinear(
 //             toRgb(a),
@@ -45,14 +45,14 @@ export default { toHex, toRgb, toString, toStringCSS };
 //             toRgb(d), u, v));
 // };
 
-// export function interpolateLinear(colorFrom, colorTo, t) {
+// function interpolateLinear(colorFrom, colorTo, t) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.interpolateLinear(
 //             toRgb(colorFrom),
 //             toRgb(colorTo), t));
 // };
 
-// export function interpolateMultilinear(colors, t) {
+// function interpolateMultilinear(colors, t) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.interpolateMultilinear(
 //             colors.map(function(color){
@@ -60,7 +60,7 @@ export default { toHex, toRgb, toString, toStringCSS };
 //             }), t));
 // };
 
-// export function nearest(colorSearch, colors) {
+// function nearest(colorSearch, colors) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.nearest(
 //             toRgb(colorSearch),
@@ -70,26 +70,26 @@ export default { toHex, toRgb, toString, toStringCSS };
 //         ));
 // };
 
-// export function toGrayscale(color) {
+// function toGrayscale(color) {
 //     return RGBColorUtil.toGrayscale(
 //         toRgb(color));
 // };
 
-export function toHex(color, prefix) {
+function toHex(color, prefix) {
     return RGBColorUtil.toHex(toRgb(color), prefix);
 }
 
-// export function toHsl(color) {
+// function toHsl(color) {
 //     return RGBColorUtil.toHsl(
 //         toRgb(color));
 // };
 
-// export function toHsv(color) {
+// function toHsv(color) {
 //     return RGBColorUtil.toHsv(
 //         toRgb(color));
 // };
 
-export function toRgb(color) {
+function toRgb(color) {
     const c = color.c / 100;
     const m = color.m / 100;
     const y = color.y / 100;
@@ -108,12 +108,12 @@ export function toRgb(color) {
     return { r: r, g: g, b: b, a: 1.0 };
 }
 
-export function toString(color) {
+function toString(color) {
     // prettier-ignore
     return `{ c:${String(color.c)}, m:${String(color.m)}, y:${String(color.y)}, k:${String(color.k)} }`;
 }
 
-export function toStringCSS(color) {
+function toStringCSS(color) {
     // prettier-ignore
     return `cmyk(${String(color.c)}%, ${String(color.m)}%, ${String(color.y)}%, ${String(color.k)}%)`;
 }

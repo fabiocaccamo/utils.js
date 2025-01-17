@@ -3,7 +3,7 @@ export default {
     encode,
 };
 
-export function decode(str) {
+function decode(str) {
     let output = '';
     try {
         output = JSON.parse(str);
@@ -15,6 +15,6 @@ export function decode(str) {
     return output;
 }
 
-export function encode(obj) {
+function encode(obj) {
     return JSON.stringify(obj);
 }

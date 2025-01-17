@@ -17,7 +17,7 @@ export default {
     toStringCSS,
 };
 
-export function average(colors) {
+function average(colors) {
     let c;
     let r = 0;
     let g = 0;
@@ -40,7 +40,7 @@ export function average(colors) {
     return { r: r, g: g, b: b, a: a };
 }
 
-export function distance(colorA, colorB) {
+function distance(colorA, colorB) {
     const rDiff = colorA.r - colorB.r;
     const gDiff = colorA.g - colorB.g;
     const bDiff = colorA.b - colorB.b;
@@ -50,7 +50,7 @@ export function distance(colorA, colorB) {
     return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff + aDiff * aDiff);
 }
 
-export function gradient(colors, steps) {
+function gradient(colors, steps) {
     const colorsOutput = [];
     let color;
     const mlerp = interpolateMultilinear;
@@ -66,7 +66,7 @@ export function gradient(colors, steps) {
     return colorsOutput;
 }
 
-export function gradientMatrix(colors, stepsX, stepsY) {
+function gradientMatrix(colors, stepsX, stepsY) {
     // colors: { top, topRight, right, bottomLeft, bottom, bottomRight, left, center };
     // only 4 corners are required
     let colorTopLeft = colors.topLeft;
@@ -168,7 +168,7 @@ export function gradientMatrix(colors, stepsX, stepsY) {
     return colorsMatrix;
 }
 
-export function interpolateBilinear(
+function interpolateBilinear(
     colorTopLeft,
     colorBottomLeft,
     colorTopRight,
@@ -184,7 +184,7 @@ export function interpolateBilinear(
     );
 }
 
-export function interpolateLinear(colorFrom, colorTo, t) {
+function interpolateLinear(colorFrom, colorTo, t) {
     const lerp = InterpolationUtil.linear;
     const round = Math.round;
     return {
@@ -201,13 +201,13 @@ export function interpolateLinear(colorFrom, colorTo, t) {
     };
 }
 
-export function interpolateMultilinear(colors, t) {
+function interpolateMultilinear(colors, t) {
     const s = InterpolationUtil.scalar(colors.length - 1, t);
     const i = s.index;
     return interpolateLinear(colors[i], colors[i + 1], s.t);
 }
 
-export function nearest(colorSearch, colors) {
+function nearest(colorSearch, colors) {
     const calcDistance = distance;
     let tempDistance;
     let nearestDistance =
@@ -223,7 +223,7 @@ export function nearest(colorSearch, colors) {
     return nearestColor;
 }
 
-export function toCmyk(color) {
+function toCmyk(color) {
     const r = color.r / 255;
     const g = color.g / 255;
     const b = color.b / 255;
@@ -252,12 +252,12 @@ export function toCmyk(color) {
     return { c: c, m: m, y: y, k: k };
 }
 
-// export function toGrayscale(color, algorithm) {
+// function toGrayscale(color, algorithm) {
 //     // TODO
 //     // http://cadik.posvete.cz/color_to_gray_evaluation/
 // };
 
-export function toHex(color, prefix) {
+function toHex(color, prefix) {
     const a = isNaN(color.a) ? null : color.a;
     const r = isNaN(color.r) ? 0 : color.r;
     const g = isNaN(color.g) ? 0 : color.g;
@@ -272,21 +272,21 @@ export function toHex(color, prefix) {
     );
 }
 
-// export function toHsl(color) {
+// function toHsl(color) {
 //     // TODO
 // };
 
-// export function toHsv(color) {
+// function toHsv(color) {
 //     // TODO
 //     // https://gist.github.com/felipesabino/5066336/revisions
 // };
 
-export function toString(color) {
+function toString(color) {
     // prettier-ignore
     return `{ r:${String(color.r)}, g:${String(color.g)}, b:${String(color.b)}, a:${String(isNaN(color.a) ? 1.0 : color.a)} }`;
 }
 
-export function toStringCSS(color) {
+function toStringCSS(color) {
     // prettier-ignore
     return `rgba(${String(color.r)}, ${String(color.g)}, ${String(color.b)}, ${String(isNaN(color.a) ? 1.0 : color.a)})`;
 }

@@ -8,28 +8,7 @@ import * as StringUtil from './string.js';
 import * as TypeUtil from './type.js';
 import * as URLUtil from './url.js';
 
-export default {
-    assign,
-    clean,
-    clone,
-    decodeBase64,
-    decodeJSON,
-    decodeParameters,
-    encodeBase64,
-    encodeJSON,
-    encodeParameters,
-    equals,
-    is,
-    keypath,
-    keys,
-    length,
-    map,
-    merge,
-    search,
-    values,
-};
-
-export function assign(obj, other) {
+function assign(obj, other) {
     const objs = [other].concat(FunctionUtil.args(arguments, 2));
     let i, j, k;
     for (i = 0, j = objs.length; i < j; i++) {
@@ -40,7 +19,7 @@ export function assign(obj, other) {
     return obj;
 }
 
-export function clean(obj, hard) {
+function clean(obj, hard) {
     const keys = keys(obj);
     let key, val;
     for (let i = 0, j = keys.length; i < j; i++) {
@@ -75,7 +54,7 @@ export function clean(obj, hard) {
     return obj;
 }
 
-export function clone(obj) {
+function clone(obj) {
     const cln = {};
     const keys = keys(obj);
     let key, val;
@@ -100,27 +79,27 @@ export function clone(obj) {
     return cln;
 }
 
-export function decodeBase64(str) {
+function decodeBase64(str) {
     return JSONUtil.decode(Base64Util.decode(str));
 }
 
-export function decodeJSON(str) {
+function decodeJSON(str) {
     return JSONUtil.decode(str);
 }
 
-export function decodeParameters(str) {
+function decodeParameters(str) {
     return URLUtil.getParametersDict(`?${str}`);
 }
 
-export function encodeBase64(obj) {
+function encodeBase64(obj) {
     return Base64Util.encode(JSONUtil.encode(obj));
 }
 
-export function encodeJSON(obj) {
+function encodeJSON(obj) {
     return JSONUtil.encode(obj);
 }
 
-export function encodeParameters(obj, keysFilter) {
+function encodeParameters(obj, keysFilter) {
     const objClean = clean(clone(obj), true);
     const keys = TypeUtil.isArray(keysFilter) ? keysFilter : keys(obj, true);
     let key;
@@ -138,7 +117,7 @@ export function encodeParameters(obj, keysFilter) {
     return keyval.join('&');
 }
 
-export function equals(obj1, obj2) {
+function equals(obj1, obj2) {
     if (obj1 === obj2 || is(obj1, obj2)) {
         return true;
     }
@@ -184,7 +163,7 @@ export function equals(obj1, obj2) {
     return true;
 }
 
-export function is(obj1, obj2) {
+function is(obj1, obj2) {
     // https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Object/is
     if (!Object.is) {
         Object.is = (x, y) => {
@@ -202,7 +181,7 @@ export function is(obj1, obj2) {
     return Object.is(obj1, obj2);
 }
 
-const keypath = {
+export const keypath = {
     get(obj, path, defaultValue) {
         const keys = path.split('.');
         let key;
@@ -239,7 +218,7 @@ const keypath = {
     },
 };
 
-export function keys(obj, sorted) {
+function keys(obj, sorted) {
     const k = Object.keys(obj);
     if (sorted === true) {
         k.sort();
@@ -247,11 +226,11 @@ export function keys(obj, sorted) {
     return k;
 }
 
-export function length(obj) {
+function length(obj) {
     return keys(obj).length;
 }
 
-export function map(obj, func) {
+function map(obj, func) {
     const m = {};
     keys(obj).forEach((k) => {
         m[k] = func.call(null, obj[k], k, obj);
@@ -259,13 +238,13 @@ export function map(obj, func) {
     return m;
 }
 
-export function merge(obj1, obj2) {
+function merge(obj1, obj2) {
     const objs = [{}, obj1, obj2].concat(FunctionUtil.args(arguments, 2));
     const obj = assign.apply(null, objs);
     return obj;
 }
 
-export function search(objs, filter) {
+function search(objs, filter) {
     // prettier-ignore
     const results = [];
     let i, j, k, m, obj, res, keys, key, val;
@@ -287,7 +266,7 @@ export function search(objs, filter) {
     return results;
 }
 
-export function values(obj, sorted) {
+function values(obj, sorted) {
     const keys = keys(obj, sorted);
     const vals = [];
     for (let i = 0, j = keys.length; i < j; i++) {
@@ -295,3 +274,24 @@ export function values(obj, sorted) {
     }
     return vals;
 }
+
+export default {
+    assign,
+    clean,
+    clone,
+    decodeBase64,
+    decodeJSON,
+    decodeParameters,
+    encodeBase64,
+    encodeJSON,
+    encodeParameters,
+    equals,
+    is,
+    keypath,
+    keys,
+    length,
+    map,
+    merge,
+    search,
+    values,
+};

@@ -26,43 +26,43 @@ const DEG_360 = 360.0;
 const DEG_TO_RAD = Math.PI / 180.0; // 0.017453292519943295
 const RAD_TO_DEG = 180.0 / Math.PI; // 57.29577951308232
 
-export function acosDeg(rad) {
+function acosDeg(rad) {
     return Math.acos(rad) * RAD_TO_DEG;
 }
 
-export function angleDeg(y, x) {
+function angleDeg(y, x) {
     return atan2Deg(y, x);
 }
 
-export function angleRad(y, x) {
+function angleRad(y, x) {
     return Math.atan2(y, x);
 }
 
-export function asinDeg(rad) {
+function asinDeg(rad) {
     return Math.asin(rad) * RAD_TO_DEG;
 }
 
-export function atanDeg(rad) {
+function atanDeg(rad) {
     return Math.atan(rad) * RAD_TO_DEG;
 }
 
-export function atan2Deg(y, x) {
+function atan2Deg(y, x) {
     return Math.atan2(y, x) * RAD_TO_DEG;
 }
 
-export function cosDeg(deg) {
+function cosDeg(deg) {
     return Math.cos(deg * DEG_TO_RAD);
 }
 
-export function cycleDeg(deg) {
+function cycleDeg(deg) {
     return MathUtil.cycle(deg, DEG_360);
 }
 
-export function degToRad(deg) {
+function degToRad(deg) {
     return deg * DEG_TO_RAD;
 }
 
-export function fastDeg(degFrom, degTo) {
+function fastDeg(degFrom, degTo) {
     const degDiff = degTo - degFrom;
     if (degDiff > DEG_180) {
         return -DEG_360 + degDiff;
@@ -73,7 +73,7 @@ export function fastDeg(degFrom, degTo) {
     }
 }
 
-export function haversine(lat1, lon1, lat2, lon2, km) {
+function haversine(lat1, lon1, lat2, lon2, km) {
     const degToRad = degToRad;
     const lat1Rad = degToRad(lat1);
     const lon1Rad = degToRad(lon1);
@@ -96,18 +96,18 @@ export function haversine(lat1, lon1, lat2, lon2, km) {
     return distance;
 }
 
-export function hypo(distanceX, distanceY) {
+function hypo(distanceX, distanceY) {
     return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 }
 
-export function radToDeg(rad) {
+function radToDeg(rad) {
     return rad * RAD_TO_DEG;
 }
 
-export function sinDeg(deg) {
+function sinDeg(deg) {
     return Math.sin(deg * DEG_TO_RAD);
 }
 
-export function tanDeg(deg) {
+function tanDeg(deg) {
     return Math.tan(deg * DEG_TO_RAD);
 }

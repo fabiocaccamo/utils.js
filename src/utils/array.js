@@ -31,7 +31,7 @@ export default {
     zip,
 };
 
-export function all(list) {
+function all(list) {
     return list.every((item) => {
         switch (TypeUtil.of(item)) {
             case TypeUtil.ARRAY:
@@ -44,7 +44,7 @@ export function all(list) {
     });
 }
 
-export function any(list) {
+function any(list) {
     return list.some((item) => {
         switch (TypeUtil.of(item)) {
             case TypeUtil.ARRAY:
@@ -57,7 +57,7 @@ export function any(list) {
     });
 }
 
-export function clean(list, hard) {
+function clean(list, hard) {
     let items = list.slice();
     items = items.filter((item) => {
         return !TypeUtil.isNone(item);
@@ -87,7 +87,7 @@ export function clean(list, hard) {
     return items;
 }
 
-export function clone(list) {
+function clone(list) {
     const cln = list.slice();
     let val;
     for (let i = 0, j = cln.length; i < j; i++) {
@@ -109,7 +109,7 @@ export function clone(list) {
     return cln;
 }
 
-export function contains(list, value) {
+function contains(list, value) {
     const values = [value].concat(FunctionUtil.args(arguments, 2));
     let val, valFound;
 
@@ -129,11 +129,11 @@ export function contains(list, value) {
     return true;
 }
 
-export function equals(listA, listB) {
+function equals(listA, listB) {
     return ObjectUtil.equals(listA, listB);
 }
 
-export function flatten(list) {
+function flatten(list) {
     const items = [];
     for (let i = 0, j = list.length; i < j; i++) {
         if (TypeUtil.isArray(list[i])) {
@@ -145,7 +145,7 @@ export function flatten(list) {
     return items;
 }
 
-export function index(list, keys, flat) {
+function index(list, keys, flat) {
     const dict = {};
     let item;
     let key;
@@ -176,12 +176,12 @@ export function index(list, keys, flat) {
     return dict;
 }
 
-export function insert(list, index, item) {
+function insert(list, index, item) {
     list.splice(index, 0, item);
     return list;
 }
 
-export function max(list, callback) {
+function max(list, callback) {
     return reduce(
         list,
         (a, b) => {
@@ -194,7 +194,7 @@ export function max(list, callback) {
     );
 }
 
-export function min(list, callback) {
+function min(list, callback) {
     return reduce(
         list,
         (a, b) => {
@@ -207,7 +207,7 @@ export function min(list, callback) {
     );
 }
 
-export function paginate(list, itemsPerPage) {
+function paginate(list, itemsPerPage) {
     const itemsTotal = list.length;
     const pagesTotal = itemsPerPage > 0 ? Math.ceil(itemsTotal / itemsPerPage) : 0;
     const pages = [];
@@ -219,7 +219,7 @@ export function paginate(list, itemsPerPage) {
     return pages;
 }
 
-export function reduce(list, reducer, initialValue) {
+function reduce(list, reducer, initialValue) {
     let value = TypeUtil.isUndefined(initialValue) ? 0 : initialValue;
     for (let i = 0, j = list.length; i < j; i++) {
         value = reducer(value, list[i], i, list);
@@ -227,7 +227,7 @@ export function reduce(list, reducer, initialValue) {
     return value;
 }
 
-export function replace(list, searchValue, replacementValue) {
+function replace(list, searchValue, replacementValue) {
     for (let i = 0, j = list.length; i < j; i++) {
         if (ObjectUtil.equals(list[i], searchValue)) {
             list[i] = replacementValue;
@@ -236,7 +236,7 @@ export function replace(list, searchValue, replacementValue) {
     return list;
 }
 
-export function remove(list, value) {
+function remove(list, value) {
     const values = [value].concat(FunctionUtil.args(arguments, 2));
     for (let k = 0, m = values.length; k < m; k++) {
         for (let i = 0, j = list.length; i < j; i++) {
@@ -250,12 +250,12 @@ export function remove(list, value) {
     return list;
 }
 
-export function rotate(list, count) {
+function rotate(list, count) {
     const cursor = MathUtil.cycle(count, list.length);
     return list.slice(cursor).concat(list.slice(0, cursor));
 }
 
-export function shuffle(list) {
+function shuffle(list) {
     const items = list.slice();
     let randomIndex;
     let randomItems;
@@ -268,7 +268,7 @@ export function shuffle(list) {
     return items;
 }
 
-export function sort(list, key) {
+function sort(list, key) {
     const isArray = TypeUtil.isArray;
     const isObject = TypeUtil.isObject;
     const isNumber = TypeUtil.isNumber;
@@ -311,7 +311,7 @@ export function sort(list, key) {
     return list.sort(compare);
 }
 
-export function sum(list, callback) {
+function sum(list, callback) {
     return reduce(
         list,
         (a, b) => {
@@ -324,7 +324,7 @@ export function sum(list, callback) {
     );
 }
 
-export function unique(list) {
+function unique(list) {
     let item;
     const items = [];
     const itemsNotEquals = (itemUnique) => {
@@ -339,11 +339,11 @@ export function unique(list) {
     return items;
 }
 
-export function unzip(list) {
+function unzip(list) {
     return zip.apply(null, list);
 }
 
-export function zip(list1, list2) {
+function zip(list1, list2) {
     const lists = [list1, list2].concat(FunctionUtil.args(arguments, 2));
     let listLength = 0;
     lists.forEach((item) => {

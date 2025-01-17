@@ -3,44 +3,22 @@ import * as FunctionUtil from './function.js';
 import * as InterpolationUtil from './interpolation.js';
 import * as TypeUtil from './type.js';
 
-export default {
-    average,
-    constrain,
-    cycle,
-    equals,
-    euclideanDistance,
-    factorial,
-    gcd,
-    lcm,
-    lerp,
-    map,
-    nearest,
-    normalize,
-    proportion,
-    roundDecimals,
-    roundToMultiple,
-    roundToNearest,
-    roundToPower,
-    sign,
-    summation,
-};
-
-export function average(values) {
+function average(values) {
     return summation(values) / values.length;
 }
 
-export function constrain(n, a, b) {
+function constrain(n, a, b) {
     return Math.min(Math.max(n, Math.min(a, b)), Math.max(a, b));
 }
 
-export function cycle(n, len, shift) {
+function cycle(n, len, shift) {
     if (!TypeUtil.isNumber(shift)) {
         shift = 0;
     }
     return ((((n - shift) % len) + len) % len) + shift;
 }
 
-export function equals(a, b, tolerance) {
+function equals(a, b, tolerance) {
     if (!TypeUtil.isNumber(tolerance)) {
         tolerance = 0.0000000001;
     } else if (tolerance > 0.0) {
@@ -49,7 +27,7 @@ export function equals(a, b, tolerance) {
     return Math.abs(a - b) <= tolerance;
 }
 
-export function euclideanDistance(a, b) {
+function euclideanDistance(a, b) {
     // https://en.wikipedia.org/wiki/Euclidean_distance#Higher_dimensions
     return Math.sqrt(
         summation(
@@ -60,7 +38,7 @@ export function euclideanDistance(a, b) {
     );
 }
 
-export function factorial(n) {
+function factorial(n) {
     let f = 1;
     for (let i = f; i <= n; i++) {
         f *= i;
@@ -68,7 +46,7 @@ export function factorial(n) {
     return f;
 }
 
-export function gcd(a, b) {
+function gcd(a, b) {
     if (a === b) {
         return a;
     }
@@ -82,27 +60,27 @@ export function gcd(a, b) {
 
 const interpolation = InterpolationUtil;
 
-export function lcm(a, b) {
+function lcm(a, b) {
     return (a * b) / gcd(a, b);
 }
 
-export function lerp(a, b, t) {
+function lerp(a, b, t) {
     return InterpolationUtil.linear(a, b, t);
 }
 
-export function map(n, a, b, c, d) {
+function map(n, a, b, c, d) {
     return InterpolationUtil.linear(c, d, normalize(n, a, b));
 }
 
-export function nearest(n, a, b) {
+function nearest(n, a, b) {
     return Math.abs(n - a) <= Math.abs(n - b) ? a : b;
 }
 
-export function normalize(n, a, b) {
+function normalize(n, a, b) {
     return (n - a) / (b - a);
 }
 
-export function proportion(a, b, x, y) {
+function proportion(a, b, x, y) {
     const args = FunctionUtil.args(arguments);
     const argsOk = ArrayUtil.clean(args);
     if (argsOk.length !== 3) {
@@ -122,15 +100,15 @@ export function proportion(a, b, x, y) {
     return NaN;
 }
 
-export function roundDecimals(n, decimalsPlaces) {
+function roundDecimals(n, decimalsPlaces) {
     return Number(n.toFixed(decimalsPlaces || 2));
 }
 
-export function roundToMultiple(n, multiplier) {
+function roundToMultiple(n, multiplier) {
     return Math.round(n / multiplier) * multiplier;
 }
 
-export function roundToNearest(n, values) {
+function roundToNearest(n, values) {
     const a = ArrayUtil.sort(values.concat());
     let i = 0,
         j = 0,
@@ -153,18 +131,41 @@ export function roundToNearest(n, values) {
     return nearest(n, a[i], a[j]);
 }
 
-export function roundToPower(n, base) {
+function roundToPower(n, base) {
     return base ** Math.round(Math.log(n) / Math.log(base));
 }
 
-export function sign(n) {
+function sign(n) {
     return n >= 0.0 ? 1 : -1;
 }
 
-export function summation(values) {
+function summation(values) {
     let s = 0.0;
     for (let i = 0, j = values.length; i < j; i++) {
         s += values[i];
     }
     return s;
 }
+
+export default {
+    average,
+    constrain,
+    cycle,
+    equals,
+    euclideanDistance,
+    factorial,
+    gcd,
+    interpolation,
+    lcm,
+    lerp,
+    map,
+    nearest,
+    normalize,
+    proportion,
+    roundDecimals,
+    roundToMultiple,
+    roundToNearest,
+    roundToPower,
+    sign,
+    summation,
+};

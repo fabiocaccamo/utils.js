@@ -14,40 +14,40 @@ export default {
     string,
 };
 
-export function argument() {
+function argument() {
     const args = FunctionUtil.args(arguments);
     return element(args);
 }
 
-export function bit(chance) {
+function bit(chance) {
     return boolean(chance) ? 1 : 0;
 }
 
-export function boolean(chance) {
+function boolean(chance) {
     return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
 }
 
-export function color() {
+function color() {
     return integer(0, 0xffffff);
 }
 
-export function element(array) {
+function element(array) {
     return array[index(array)];
 }
 
-export function float(min, max) {
+function float(min, max) {
     return min + Math.random() * (max - min);
 }
 
-export function index(array) {
+function index(array) {
     return integer(0, array.length - 1);
 }
 
-export function integer(min, max) {
+function integer(min, max) {
     return Math.floor(Math.round(float(min - 0.5, max + 0.5)));
 }
 
-export function map(func, count) {
+function map(func, count) {
     const m = [];
     for (let i = 0; i < count; i++) {
         m.push(func(i));
@@ -55,11 +55,11 @@ export function map(func, count) {
     return m;
 }
 
-export function sign(chance) {
+function sign(chance) {
     return boolean(chance) ? 1 : -1;
 }
 
-export function string(
+function string(
     length,
     charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
 ) {

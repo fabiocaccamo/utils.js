@@ -40,7 +40,7 @@ const UNDEFINED = 'undefined';
 const UNKNOWN = 'unknown';
 // const XML = 'xml';
 
-export function isArray(val) {
+function isArray(val) {
     // https://stackoverflow.com/questions/4775722/check-if-object-is-array
     if (Array.isArray) {
         return Array.isArray(val);
@@ -48,7 +48,7 @@ export function isArray(val) {
     return Object.prototype.toString.call(val) === '[object Array]';
 }
 
-export function isBase64(val) {
+function isBase64(val) {
     if (isString(val)) {
         try {
             if (Base64Util.decode(val) !== '') {
@@ -61,23 +61,23 @@ export function isBase64(val) {
     return false;
 }
 
-export function isBoolean(val) {
+function isBoolean(val) {
     return typeof val === 'boolean';
 }
 
-export function isDate(val) {
+function isDate(val) {
     return Object.prototype.toString.call(val) === '[object Date]';
 }
 
-export function isError(val) {
+function isError(val) {
     return val instanceof Error;
 }
 
-export function isFunction(val) {
+function isFunction(val) {
     return typeof val === 'function';
 }
 
-export function isJSON(val) {
+function isJSON(val) {
     if (isString(val)) {
         try {
             JSONUtil.decode(val);
@@ -89,42 +89,42 @@ export function isJSON(val) {
     return false;
 }
 
-export function isModule(val) {
+function isModule(val) {
     return Object.prototype.toString.call(val) === '[object Module]';
 }
 
-export function isNaN(val) {
+function isNaN(val) {
     return ObjectUtil.is(val, NaN);
 }
 
-export function isNone(val) {
+function isNone(val) {
     return isUndefined(val) || isNull(val) || isNaN(val);
 }
 
-export function isNumber(val) {
+function isNumber(val) {
     return typeof val === 'number' && !isNaN(val) && isFinite(val);
 }
 
-export function isNull(val) {
+function isNull(val) {
     return val === null;
 }
 
-export function isObject(val) {
+function isObject(val) {
     return (
         typeof val === 'object' &&
         Object.prototype.toString.call(val) === '[object Object]'
     );
 }
 
-export function isRegExp(val) {
+function isRegExp(val) {
     return val instanceof RegExp;
 }
 
-export function isString(val) {
+function isString(val) {
     return typeof val === 'string';
 }
 
-export function isType(val) {
+function isType(val) {
     switch (val) {
         case ARRAY:
         case BOOLEAN:
@@ -147,16 +147,16 @@ export function isType(val) {
     }
 }
 
-export function isUndefined(val) {
+function isUndefined(val) {
     return typeof val === 'undefined';
 }
 
-// export function isXML(val) {
+// function isXML(val) {
 //     // TODO
 //     return false;
 // };
 
-export function of(val) {
+function of(val) {
     if (isArray(val)) {
         return ARRAY;
     } else if (isBoolean(val)) {
