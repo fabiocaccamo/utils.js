@@ -56,7 +56,6 @@ function fastDeg(degFrom, degTo) {
 }
 
 function haversine(lat1, lon1, lat2, lon2, km) {
-    const degToRad = degToRad;
     const lat1Rad = degToRad(lat1);
     const lon1Rad = degToRad(lon1);
     const lat2Rad = degToRad(lat2);
