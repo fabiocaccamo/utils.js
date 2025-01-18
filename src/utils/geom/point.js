@@ -43,11 +43,11 @@ function interpolate(a, b, t) {
 }
 
 function length(p) {
-    return PointUtil.distance(p, { x: 0, y: 0 });
+    return distance(p, { x: 0, y: 0 });
 }
 
 function magnitude(p) {
-    return PointUtil.length(p);
+    return length(p);
 }
 
 function project(p, distance, angle) {
@@ -85,14 +85,14 @@ function rect(points) {
 
 function rotate(p, angle, pivot) {
     const pointPivot = pivot || { x: 0.0, y: 0.0 };
-    const pointRel = PointUtil.subtract(p, pointPivot);
+    const pointRel = subtract(p, pointPivot);
     const angleCos = TrigoUtil.cosDeg(angle);
     const angleSin = TrigoUtil.sinDeg(angle);
     const pointRot = {
         x: pointRel.x * angleCos - pointRel.y * angleSin,
         y: pointRel.x * angleSin + pointRel.y * angleCos,
     };
-    const pointAbs = PointUtil.add(pointRot, pointPivot);
+    const pointAbs = add(pointRot, pointPivot);
     return pointAbs;
 }
 
