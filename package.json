@@ -42,7 +42,7 @@
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=production rimraf dist && rollup -c",
-    "coverage": "nyc report --reporter=text-lcov --disable=gcov > coverage.lcov && codecov",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "docs": "npm run build --production && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md",
     "format": "prettier --config .prettierrc --loglevel warn --write src/utils/*.js && prettier --config .prettierrc --loglevel warn --write test/*.js",
     "test": "npm run build --production && nyc mocha",
