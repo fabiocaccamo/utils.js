@@ -1,5 +1,4 @@
 import ArrayUtil from './array.js';
-import FunctionUtil from './function.js';
 import InterpolationUtil from './interpolation.js';
 import TypeUtil from './type.js';
 
@@ -81,20 +80,21 @@ function normalize(n, a, b) {
 }
 
 function proportion(a, b, x, y) {
-    const args = FunctionUtil.args(arguments);
+    const args = [a, b, x, y];
     const argsOk = ArrayUtil.clean(args);
     if (argsOk.length !== 3) {
         return NaN;
     }
 
     // a : b = x : y
-    if (!TypeUtil.isNumber(a)) {
+    const isNumber = TypeUtil.isNumber;
+    if (!isNumber(a)) {
         return (b * x) / y;
-    } else if (!TypeUtil.isNumber(b)) {
+    } else if (!isNumber(b)) {
         return (a * y) / x;
-    } else if (!TypeUtil.isNumber(x)) {
+    } else if (!isNumber(x)) {
         return (y * a) / b;
-    } else if (!TypeUtil.isNumber(y)) {
+    } else if (!isNumber(y)) {
         return (x * b) / a;
     }
     return NaN;

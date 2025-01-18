@@ -84,8 +84,8 @@ function clone(list) {
     return cln;
 }
 
-function contains(list, value) {
-    const values = [value].concat(FunctionUtil.args(arguments, 2));
+function contains(list, value, ...otherValues) {
+    const values = [value].concat(otherValues);
     let val, valFound;
 
     for (let i = 0, j = values.length; i < j; i++) {
@@ -211,8 +211,8 @@ function replace(list, searchValue, replacementValue) {
     return list;
 }
 
-function remove(list, value) {
-    const values = [value].concat(FunctionUtil.args(arguments, 2));
+function remove(list, value, ...otherValues) {
+    const values = [value].concat(otherValues);
     for (let k = 0, m = values.length; k < m; k++) {
         for (let i = 0, j = list.length; i < j; i++) {
             if (ObjectUtil.equals(list[i], values[k])) {
@@ -318,8 +318,8 @@ function unzip(list) {
     return zip.apply(null, list);
 }
 
-function zip(list1, list2) {
-    const lists = [list1, list2].concat(FunctionUtil.args(arguments, 2));
+function zip(list1, list2, ...otherLists) {
+    const lists = [list1, list2].concat(otherLists);
     let listLength = 0;
     lists.forEach((item) => {
         listLength = listLength === 0 ? item.length : Math.min(listLength, item.length);

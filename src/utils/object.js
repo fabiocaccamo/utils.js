@@ -1,15 +1,14 @@
 import ArrayUtil from './array.js';
 import Base64Util from './base64.js';
 import DateUtil from './date.js';
-import FunctionUtil from './function.js';
 import JSONUtil from './json.js';
 import MathUtil from './math.js';
 import StringUtil from './string.js';
 import TypeUtil from './type.js';
 import URLUtil from './url.js';
 
-function assign(obj, other) {
-    const objs = [other].concat(FunctionUtil.args(arguments, 2));
+function assign(obj, other, ...others) {
+    const objs = [other].concat(others);
     let i, j, k;
     for (i = 0, j = objs.length; i < j; i++) {
         for (k in objs[i]) {
@@ -238,9 +237,9 @@ function map(obj, func) {
     return m;
 }
 
-function merge(obj1, obj2) {
-    const objs = [{}, obj1, obj2].concat(FunctionUtil.args(arguments, 2));
-    const obj = assign.apply(null, objs);
+function merge(obj1, obj2, ...objs) {
+    const objsList = [{}, obj1, obj2].concat(objs);
+    const obj = assign.apply(null, objsList);
     return obj;
 }
 

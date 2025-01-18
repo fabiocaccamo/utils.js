@@ -1,7 +1,6 @@
 import FuncUtil from './func.js';
 
-function argument() {
-    const args = FunctionUtil.args(arguments);
+function argument(...args) {
     return element(args);
 }
 

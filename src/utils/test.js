@@ -236,13 +236,11 @@ function assertString(val) {
     }
 }
 
-function assertThrows(val) {
+function assertThrows(val, ...args) {
     assertFunction(val);
     try {
         const scope = null;
-        let args = FunctionUtil.args(arguments, 1);
-        args = [val, scope].concat(args);
-        FunctionUtil.call.apply(null, args);
+        FunctionUtil.call.apply(null, [val, scope].concat(args));
     } catch (e) {
         return;
     }
