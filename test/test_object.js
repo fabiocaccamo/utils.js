@@ -1,30 +1,30 @@
-var utils = require('../dist/utils.js');
-var test = utils.test;
-var obj = utils.object;
+import utils from '../src/utils.js';
+const test = utils.test;
+const obj = utils.object;
 
-describe('object', function () {
-    describe('assign', function () {
-        var f = obj.assign;
-        it('test same instance', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1, o1);
+describe('object', () => {
+    describe('assign', () => {
+        const f = obj.assign;
+        it('test same instance', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1, o1);
             test.assertEqual(r, { a: 1, b: 2, c: 3 });
         });
-        it('test diff instance', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var o2 = { d: 4, e: 5, f: 6 };
-            var r = f(o1, o2);
+        it('test diff instance', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const o2 = { d: 4, e: 5, f: 6 };
+            const r = f(o1, o2);
             test.assertTrue(o1 !== o2);
             test.assertTrue(o1 === r);
             test.assertTrue(o2 !== r);
             test.assertEqual(r, { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 });
         });
-        it('test multiple instances', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var o2 = { d: 4, e: 5, f: 6 };
-            var o3 = { g: 7, h: 8, i: 9 };
-            var o4 = { a: 0, e: 0, i: 0 };
-            var r = f(o1, o2, o3, o4);
+        it('test multiple instances', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const o2 = { d: 4, e: 5, f: 6 };
+            const o3 = { g: 7, h: 8, i: 9 };
+            const o4 = { a: 0, e: 0, i: 0 };
+            const r = f(o1, o2, o3, o4);
             test.assertEqual(r, {
                 a: 0,
                 b: 2,
@@ -37,20 +37,20 @@ describe('object', function () {
                 i: 0,
             });
         });
-        it('test props overwrite', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var o2 = { a: 4, b: 5, c: 6 };
-            var r = f(o1, o2);
+        it('test props overwrite', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const o2 = { a: 4, b: 5, c: 6 };
+            const r = f(o1, o2);
             test.assertEqual(r['a'], 4);
             test.assertEqual(r['b'], 5);
             test.assertEqual(r['c'], 6);
             test.assertEqual(r, { a: 4, b: 5, c: 6 });
         });
     });
-    describe('clean', function () {
-        var f = obj.clean;
-        it('test soft', function () {
-            var o1 = {
+    describe('clean', () => {
+        const f = obj.clean;
+        it('test soft', () => {
+            const o1 = {
                 a: 1,
                 b: undefined,
                 c: 3,
@@ -62,7 +62,7 @@ describe('object', function () {
                 i: [null],
                 j: { k: null },
             };
-            var r = f(o1);
+            const r = f(o1);
             test.assertEqual(obj.length(r), 7);
             test.assertEqual(r, {
                 a: 1,
@@ -74,8 +74,8 @@ describe('object', function () {
                 j: { k: null },
             });
         });
-        it('test hard', function () {
-            var o1 = {
+        it('test hard', () => {
+            const o1 = {
                 a: 1,
                 b: undefined,
                 c: 3,
@@ -87,58 +87,58 @@ describe('object', function () {
                 i: [null],
                 j: { k: null },
             };
-            var r = f(o1, true);
+            const r = f(o1, true);
             test.assertEqual(obj.length(r), 4);
             test.assertEqual(r, { a: 1, c: 3, f: 0, h: false });
         });
     });
-    describe('clone', function () {
-        var f = obj.clone;
-        it('test new instance and key/values cloned', function () {
-            var o = { a: 1, b: 2, c: 3 };
-            var r = f(o);
+    describe('clone', () => {
+        const f = obj.clone;
+        it('test new instance and key/values cloned', () => {
+            const o = { a: 1, b: 2, c: 3 };
+            const r = f(o);
             test.assertFalse(r === o);
             test.assertEqual(r, o);
         });
-        it('test array property cloned', function () {
-            var a = { a: [1, 2, 3] };
-            var o = { a: a };
-            var r = f(o);
+        it('test array property cloned', () => {
+            const a = { a: [1, 2, 3] };
+            const o = { a: a };
+            const r = f(o);
             test.assertFalse(r['a'] === a);
             test.assertEqual(r['a'], a);
         });
-        it('test boolean property cloned', function () {
-            var b = true;
-            var o = { b: b };
-            var r = f(o);
+        it('test boolean property cloned', () => {
+            const b = true;
+            const o = { b: b };
+            const r = f(o);
             test.assertTrue(r['b'] === b);
             test.assertEqual(r['b'], b);
         });
-        it('test date property cloned', function () {
-            var d = new Date(1900);
-            var o = { d: d };
-            var r = f(o);
+        it('test date property cloned', () => {
+            const d = new Date(1900);
+            const o = { d: d };
+            const r = f(o);
             test.assertFalse(r['d'] === d);
             test.assertEqual(r['d'], d);
         });
-        it('test object property cloned', function () {
-            var a = { a: 1, b: 2, c: 3 };
-            var o = { o: a };
-            var r = f(o);
+        it('test object property cloned', () => {
+            const a = { a: 1, b: 2, c: 3 };
+            const o = { o: a };
+            const r = f(o);
             test.assertFalse(r['o'] === a);
             test.assertEqual(r['o'], a);
         });
-        it('test number property cloned', function () {
-            var n = 123;
-            var o = { n: n };
-            var r = f(o);
+        it('test number property cloned', () => {
+            const n = 123;
+            const o = { n: n };
+            const r = f(o);
             test.assertTrue(r['n'] === n);
             test.assertEqual(r['n'], n);
         });
-        it('test string property cloned', function () {
-            var s = 'ok';
-            var o = { s: s };
-            var r = f(o);
+        it('test string property cloned', () => {
+            const s = 'ok';
+            const o = { s: s };
+            const r = f(o);
             test.assertTrue(r['s'] === s);
             test.assertEqual(r['s'], s);
         });
@@ -163,9 +163,9 @@ describe('object', function () {
     //         test.assertTrue(true);
     //     });
     // });
-    describe('equals', function () {
-        var f = obj.equals;
-        var a = {
+    describe('equals', () => {
+        const f = obj.equals;
+        const a = {
             foods: {
                 fruits: ['orange', 'lemon'],
             },
@@ -181,7 +181,7 @@ describe('object', function () {
             },
             bikes: ['recumbent', 'upright'],
         };
-        var b = {
+        const b = {
             foods: {
                 fruits: ['orange', 'lemon'],
             },
@@ -197,7 +197,7 @@ describe('object', function () {
             },
             bikes: ['recumbent', 'upright'],
         };
-        var c = {
+        const c = {
             foods: {
                 fruits: ['orange', 'lemon'],
             },
@@ -213,56 +213,56 @@ describe('object', function () {
             },
             bikes: ['recumbent', 'upright'],
         };
-        it('test simple', function () {
+        it('test simple', () => {
             test.assertTrue(f(a, a));
             test.assertTrue(f(a, b));
             test.assertFalse(f(a, c));
             test.assertFalse(f(b, c));
         });
-        it('test objects containing numbers', function () {
-            var a = { x: 0.0, y: 0.0 };
-            var b = { x: 0.0, y: 0.0000000001 };
-            var c = { x: 0.0, y: 0.0001 };
+        it('test objects containing numbers', () => {
+            const a = { x: 0.0, y: 0.0 };
+            const b = { x: 0.0, y: 0.0000000001 };
+            const c = { x: 0.0, y: 0.0001 };
             test.assertTrue(f(a, b));
             test.assertFalse(f(a, c));
         });
-        it('test objects containing different keys', function () {
-            var a = { x: 0.0, y: 0.0 };
-            var b = { x: 0.0, y: 0.0, z: 0.0 };
-            var c = { x: 0.0 };
+        it('test objects containing different keys', () => {
+            const a = { x: 0.0, y: 0.0 };
+            const b = { x: 0.0, y: 0.0, z: 0.0 };
+            const c = { x: 0.0 };
             test.assertFalse(f(a, b));
             test.assertFalse(f(a, c));
             test.assertFalse(f(b, c));
         });
     });
-    describe('keys', function () {
-        var f = obj.keys;
-        it('test no keys', function () {
-            var o1 = {};
-            var r = f(o1);
+    describe('keys', () => {
+        const f = obj.keys;
+        it('test no keys', () => {
+            const o1 = {};
+            const r = f(o1);
             test.assertEqual(r, []);
         });
-        it('test keys unsorted', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1);
-            test.assertTrue(r.indexOf('a') !== -1);
-            test.assertTrue(r.indexOf('b') !== -1);
-            test.assertTrue(r.indexOf('c') !== -1);
+        it('test keys unsorted', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1);
+            test.assertTrue(r.includes('a'));
+            test.assertTrue(r.includes('b'));
+            test.assertTrue(r.includes('c'));
         });
-        it('test keys sorted', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1, true);
+        it('test keys sorted', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1, true);
             test.assertEqual(r, ['a', 'b', 'c']);
         });
     });
-    describe('keypath', function () {
-        it('test object', function () {
+    describe('keypath', () => {
+        it('test object', () => {
             test.assertObject(obj.keypath);
         });
     });
-    describe('keypath.get', function () {
-        var f = obj.keypath.get;
-        var o = {
+    describe('keypath.get', () => {
+        const f = obj.keypath.get;
+        const o = {
             a: 1,
             b: {
                 y: 'ok',
@@ -275,137 +275,137 @@ describe('object', function () {
                 },
             },
         };
-        var r;
-        it('test on 1 non-existing key', function () {
+        let r;
+        it('test on 1 non-existing key', () => {
             r = f(o, 'z');
             test.assertEqual(r, undefined);
         });
-        it('test on 1 non-existing key default value', function () {
+        it('test on 1 non-existing key default value', () => {
             r = f(o, 'z', 0);
             test.assertEqual(r, 0);
         });
-        it('test on 1 existing key', function () {
+        it('test on 1 existing key', () => {
             r = f(o, 'a');
             test.assertEqual(r, 1);
         });
-        it('test on 2 non-existing keys', function () {
+        it('test on 2 non-existing keys', () => {
             r = f(o, 'a.x');
             test.assertEqual(r, undefined);
         });
-        it('test on 2 non-existing keys default value', function () {
+        it('test on 2 non-existing keys default value', () => {
             r = f(o, 'a.x', 2);
             test.assertEqual(r, 2);
         });
-        it('test on 2 existing keys', function () {
+        it('test on 2 existing keys', () => {
             r = f(o, 'b.y');
             test.assertEqual(r, 'ok');
         });
-        it('test on 3 non-existing keys', function () {
+        it('test on 3 non-existing keys', () => {
             r = f(o, 'x.y.z');
             test.assertEqual(r, undefined);
         });
-        it('test on 3 non-existing keys default value', function () {
+        it('test on 3 non-existing keys default value', () => {
             r = f(o, 'x.y.z', 1000);
             test.assertEqual(r, 1000);
         });
-        it('test on 3 existing keys', function () {
+        it('test on 3 existing keys', () => {
             r = f(o, 'e.f.g');
             test.assertEqual(r, 'ok');
         });
     });
-    describe('keypath.set', function () {
-        var f = obj.keypath.set;
-        var o = {
+    describe('keypath.set', () => {
+        const f = obj.keypath.set;
+        const o = {
             a: {},
             b: {},
             c: {},
         };
-        it('test on 1 non-existing key', function () {
+        it('test on 1 non-existing key', () => {
             f(o, 'd', 'ok 1');
             test.assertEqual(o['d'], 'ok 1');
         });
-        it('test on 1 existing key', function () {
+        it('test on 1 existing key', () => {
             f(o, 'd', 'ok 2');
             test.assertEqual(o['d'], 'ok 2');
         });
-        it('test on 2 non-existing keys', function () {
+        it('test on 2 non-existing keys', () => {
             f(o, 'e.f', 'ok 1');
             test.assertEqual(o['e']['f'], 'ok 1');
         });
-        it('test on 2 existing keys', function () {
+        it('test on 2 existing keys', () => {
             f(o, 'e.f', 'ok 2');
             test.assertEqual(o['e']['f'], 'ok 2');
         });
-        it('test on 3 non-existing keys', function () {
+        it('test on 3 non-existing keys', () => {
             f(o, 'e.f.g', 'ok 1');
             test.assertEqual(o['e']['f']['g'], 'ok 1');
         });
-        it('test on 3 existing keys', function () {
+        it('test on 3 existing keys', () => {
             f(o, 'e.f.g', 'ok 2');
             test.assertEqual(o['e']['f']['g'], 'ok 2');
         });
-        it('test prototype pollution', function () {
+        it('test prototype pollution', () => {
             f(o, '__proto__.polluted', true);
             test.assertUndefined(o['polluted']);
             test.assertUndefined({}.polluted);
         });
     });
-    describe('length', function () {
-        var f = obj.length;
-        it('test empty object', function () {
-            var o1 = {};
-            var r = f(o1);
+    describe('length', () => {
+        const f = obj.length;
+        it('test empty object', () => {
+            const o1 = {};
+            const r = f(o1);
             test.assertEqual(r, 0);
         });
-        it('test simple object', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1);
+        it('test simple object', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1);
             test.assertEqual(r, 3);
         });
     });
-    describe('map', function () {
-        var f = obj.map;
-        it('test all items', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var keys = obj.keys(o1);
-            var values = obj.values(o1);
-            var r = f(o1, function (val, key, item) {
+    describe('map', () => {
+        const f = obj.map;
+        it('test all items', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const keys = obj.keys(o1);
+            const values = obj.values(o1);
+            const r = f(o1, (val, key, item) => {
                 test.assertTrue(item === o1);
-                test.assertTrue(keys.indexOf(key) !== -1);
-                test.assertTrue(values.indexOf(val) !== -1);
+                test.assertTrue(keys.includes(key));
+                test.assertTrue(values.includes(val));
             });
         });
-        it('test result', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1, function (val, key, item) {
+        it('test result', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1, (val, key, item) => {
                 return val * 2;
             });
             test.assertEqual(r, { a: 2, b: 4, c: 6 });
         });
     });
-    describe('merge', function () {
-        var f = obj.merge;
-        it('test same instance', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1, o1);
+    describe('merge', () => {
+        const f = obj.merge;
+        it('test same instance', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1, o1);
             test.assertFalse(o1 === r);
             test.assertEqual(r, { a: 1, b: 2, c: 3 });
         });
-        it('test diff instance', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var o2 = { d: 4, e: 5, f: 6 };
-            var r = f(o1, o2);
+        it('test diff instance', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const o2 = { d: 4, e: 5, f: 6 };
+            const r = f(o1, o2);
             test.assertTrue(o1 !== o2);
             test.assertTrue(o1 !== r);
             test.assertTrue(o2 !== r);
             test.assertEqual(r, { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6 });
         });
-        it('test multiple instances', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var o2 = { d: 4, e: 5, f: 6 };
-            var o3 = { g: 7, h: 8, i: 9 };
-            var o4 = { a: 0, e: 0, i: 0 };
-            var r = f(o1, o2, o3, o4);
+        it('test multiple instances', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const o2 = { d: 4, e: 5, f: 6 };
+            const o3 = { g: 7, h: 8, i: 9 };
+            const o4 = { a: 0, e: 0, i: 0 };
+            const r = f(o1, o2, o3, o4);
             test.assertEqual(r, {
                 a: 0,
                 b: 2,
@@ -418,47 +418,47 @@ describe('object', function () {
                 i: 0,
             });
         });
-        it('test props overwrite', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var o2 = { a: 4, b: 5, c: 6 };
-            var r = f(o1, o2);
+        it('test props overwrite', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const o2 = { a: 4, b: 5, c: 6 };
+            const r = f(o1, o2);
             test.assertEqual(r, { a: 4, b: 5, c: 6 });
         });
     });
-    describe('search', function () {
-        var f = obj.search;
-        it('test empty filter', function () {
-            var objs = [
+    describe('search', () => {
+        const f = obj.search;
+        it('test empty filter', () => {
+            const objs = [
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
             ];
-            var r = f(objs, {});
+            const r = f(objs, {});
             test.assertEqual(r, objs);
         });
-        it('test simple filter result found', function () {
-            var objs = [
+        it('test simple filter result found', () => {
+            const objs = [
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 2, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 3, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 4, b: 2, c: null, d: 'ok', e: false, f: true },
             ];
-            var r = f(objs, { a: 3 });
+            const r = f(objs, { a: 3 });
             test.assertEqual(r, [objs[2]]);
         });
-        it('test simple filter result not found', function () {
-            var objs = [
+        it('test simple filter result not found', () => {
+            const objs = [
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 2, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 3, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 4, b: 2, c: null, d: 'ok', e: false, f: true },
             ];
-            var r = f(objs, { a: 5 });
+            const r = f(objs, { a: 5 });
             test.assertEqual(r, []);
         });
-        it('test simple filter multiple result found', function () {
-            var objs = [
+        it('test simple filter multiple result found', () => {
+            const objs = [
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 2, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: false },
@@ -466,27 +466,27 @@ describe('object', function () {
                 { a: 1, b: 2, c: null, d: 'ok', e: false, f: true },
                 { a: 2, b: 2, c: null, d: 'ok', e: false, f: true },
             ];
-            var r = f(objs, { a: 1, f: true });
+            const r = f(objs, { a: 1, f: true });
             test.assertEqual(r, [objs[0], objs[4]]);
         });
     });
-    describe('values', function () {
-        var f = obj.values;
-        it('test no values', function () {
-            var o1 = {};
-            var r = f(o1);
+    describe('values', () => {
+        const f = obj.values;
+        it('test no values', () => {
+            const o1 = {};
+            const r = f(o1);
             test.assertEqual(r, []);
         });
-        it('test values unsorted', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1);
-            test.assertTrue(r.indexOf(1) !== -1);
-            test.assertTrue(r.indexOf(2) !== -1);
-            test.assertTrue(r.indexOf(3) !== -1);
+        it('test values unsorted', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1);
+            test.assertTrue(r.includes(1));
+            test.assertTrue(r.includes(2));
+            test.assertTrue(r.includes(3));
         });
-        it('test values sorted', function () {
-            var o1 = { a: 1, b: 2, c: 3 };
-            var r = f(o1, true);
+        it('test values sorted', () => {
+            const o1 = { a: 1, b: 2, c: 3 };
+            const r = f(o1, true);
             test.assertEqual(r, [1, 2, 3]);
         });
     });
