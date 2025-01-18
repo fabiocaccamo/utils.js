@@ -20,10 +20,10 @@ function assign(obj, other) {
 }
 
 function clean(obj, hard) {
-    const keys = keys(obj);
+    const objKeys = keys(obj);
     let key, val;
-    for (let i = 0, j = keys.length; i < j; i++) {
-        key = keys[i];
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        key = objKeys[i];
         val = obj[key];
         if (hard === true) {
             switch (TypeUtil.of(val)) {
@@ -56,10 +56,10 @@ function clean(obj, hard) {
 
 function clone(obj) {
     const cln = {};
-    const keys = keys(obj);
+    const objKeys = keys(obj);
     let key, val;
-    for (let i = 0, j = keys.length; i < j; i++) {
-        key = keys[i];
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        key = objKeys[i];
         val = obj[key];
         switch (TypeUtil.of(val)) {
             case TypeUtil.ARRAY:
@@ -99,15 +99,15 @@ function encodeJSON(obj) {
     return JSONUtil.encode(obj);
 }
 
-function encodeParameters(obj, keysFilter) {
+function encodeParameters(obj, objKeysFilter) {
     const objClean = clean(clone(obj), true);
-    const keys = TypeUtil.isArray(keysFilter) ? keysFilter : keys(obj, true);
+    const objKeys = TypeUtil.isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
     let key;
     let val;
     const keyval = [];
 
-    for (let i = 0, j = keys.length; i < j; i++) {
-        key = keys[i];
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        key = objKeys[i];
         if (key in objClean) {
             val = objClean[key];
             keyval.push(`${key}=${encodeURIComponent(val)}`);
@@ -183,11 +183,11 @@ function is(obj1, obj2) {
 
 const keypath = {
     get(obj, path, defaultValue) {
-        const keys = path.split('.');
+        const objKeys = path.split('.');
         let key;
         let cursor = obj;
-        for (let i = 0, j = keys.length; i < j; i++) {
-            key = keys[i];
+        for (let i = 0, j = objKeys.length; i < j; i++) {
+            key = objKeys[i];
             try {
                 cursor = cursor[key];
             } catch (e) {
@@ -198,11 +198,11 @@ const keypath = {
     },
 
     set(obj, path, value) {
-        const keys = path.split('.');
+        const objKeys = path.split('.');
         let key;
         let cursor = obj;
-        for (let i = 0, j = keys.length; i < j; i++) {
-            key = keys[i];
+        for (let i = 0, j = objKeys.length; i < j; i++) {
+            key = objKeys[i];
             if (key === '__proto__' || key === 'constructor') {
                 break;
             }
@@ -247,13 +247,13 @@ function merge(obj1, obj2) {
 function search(objs, filter) {
     // prettier-ignore
     const results = [];
-    let i, j, k, m, obj, res, keys, key, val;
+    let i, j, k, m, obj, res, objKeys, key, val;
     for (i = 0, j = objs.length; i < j; i++) {
         obj = objs[i];
         res = obj;
-        keys = keys(filter);
-        for (k = 0, m = keys.length; k < m; k++) {
-            key = keys[k];
+        objKeys = keys(filter);
+        for (k = 0, m = objKeys.length; k < m; k++) {
+            key = objKeys[k];
             val = filter[key];
             if (!equals(obj[key], val)) {
                 res = null;
@@ -267,10 +267,10 @@ function search(objs, filter) {
 }
 
 function values(obj, sorted) {
-    const keys = keys(obj, sorted);
+    const objKeys = keys(obj, sorted);
     const vals = [];
-    for (let i = 0, j = keys.length; i < j; i++) {
-        vals.push(obj[keys[i]]);
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        vals.push(obj[objKeys[i]]);
     }
     return vals;
 }
