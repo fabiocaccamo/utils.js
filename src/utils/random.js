@@ -1,4 +1,4 @@
-import FunctionUtil from './function.js';
+import FuncUtil from './func.js';
 
 function argument() {
     const args = FunctionUtil.args(arguments);

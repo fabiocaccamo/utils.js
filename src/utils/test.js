@@ -1,4 +1,4 @@
-import FunctionUtil from './function.js';
+import FuncUtil from './func.js';
 import JSONUtil from './json.js';
 import MathUtil from './math.js';
 import ObjectUtil from './object.js';

@@ -3,7 +3,7 @@ import Base64Util from './utils/base64.js';
 import ColorUtil from './utils/color.js';
 import DateUtil from './utils/date.js';
 import EaseUtil from './utils/ease.js';
-import FunctionUtil from './utils/function.js';
+import FuncUtil from './utils/func.js';
 import GeomUtil from './utils/geom.js';
 import HexUtil from './utils/hex.js';
 import InterpolationUtil from './utils/interpolation.js';
@@ -27,7 +27,7 @@ export const utils = {
     color: ColorUtil,
     date: DateUtil,
     ease: EaseUtil,
-    func: FunctionUtil,
+    func: FuncUtil,
     geom: GeomUtil,
     hex: HexUtil,
     json: JSONUtil,
