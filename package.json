@@ -42,7 +42,7 @@
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=production rimraf dist && rollup -c",
-    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
     "docs": "npm run build --production && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md",
     "format": "prettier --config .prettierrc --loglevel warn --write src/utils/*.js && prettier --config .prettierrc --loglevel warn --write test/*.js",
     "test": "npm run build --production && nyc mocha",
@@ -52,7 +52,6 @@
     "@rollup/plugin-commonjs": "^28.0.2",
     "@rollup/plugin-node-resolve": "^16.0.0",
     "@rollup/plugin-terser": "^0.4.4",
-    "codecov": "^3.8.3",
     "jsdoc": "^4.0.4",
     "jsdoc-to-markdown": "^9.1.1",
     "mocha": "^11.0.1",
