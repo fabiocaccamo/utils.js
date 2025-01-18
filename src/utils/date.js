@@ -1,4 +1,5 @@
 import StringUtil from './string.js';
+import TypeUtil from './type.js';
 
 function clone(date) {
     return new Date(date.getTime());
