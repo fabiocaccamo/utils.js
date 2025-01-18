@@ -62,9 +62,9 @@ export default {
                       contentBase: path.resolve(currentDir, 'dist'),
                       port: 3000,
                   }),
-                  livereload({
-                      watch: 'dist',
-                  }),
+                  // livereload({
+                  //     watch: 'dist',
+                  // }),
               ]),
     ],
     watch: {
