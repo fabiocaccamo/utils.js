@@ -20,7 +20,6 @@ import URLUtil from './utils/url.js';
 import UTF8Util from './utils/utf8.js';
 import XMLUtil from './utils/xml.js';
 
-
 export const utils = {
     array: ArrayUtil,
     base64: Base64Util,
@@ -42,7 +41,7 @@ export const utils = {
     xml: XMLUtil,
     url: URLUtil,
     utf8: UTF8Util,
-    version: '0.24.1',
+    version: '1.0.0',
 };
 
 export default utils;
