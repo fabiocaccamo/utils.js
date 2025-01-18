@@ -46,14 +46,3 @@ export const utils = {
 };
 
 export default utils;
-
-// backward compatibility - add to global scope for legacy usage
-if (typeof window !== 'undefined') {
-    // for browsers
-    window.utils = utils;
-    window.u = utils; // alias for legacy code
-} else if (typeof global !== 'undefined') {
-    // for Node.js
-    global.utils = utils;
-    global.u = utils; // alias for legacy code
-}

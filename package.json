@@ -33,36 +33,35 @@
     "url": "https://github.com/fabiocaccamo/utils.js"
   },
   "main": "dist/utils.js",
+  "exports": {
+    ".": {
+      "import": "dist/utils.esm.js",
+      "require": "dist/utils.umd.js"
+    }
+  },
   "type": "module",
   "scripts": {
-    "build": "npm run format && gulp build --production",
-    "docs": "gulp build && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md && gulp build --production",
+    "build": "NODE_ENV=production rimraf dist && rollup -c",
     "coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
-    "format": "./node_modules/.bin/prettier --config .prettierrc --loglevel warn --write src/utils/*.js",
-    "test": "gulp build --production && nyc mocha",
-    "watch": "gulp"
+    "docs": "npm run build --production && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md",
+    "format": "prettier --config .prettierrc --loglevel warn --write src/utils/*.js && prettier --config .prettierrc --loglevel warn --write test/*.js",
+    "test": "npm run build --production && nyc mocha",
+    "watch": "rollup -c --watch"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/register": "^7.25.9",
-    "browser-sync": "^3.0.3",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
     "codecov": "^3.8.3",
-    "gulp": "^5.0.0",
-    "gulp-cli": "^3.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-extname": "^0.2.2",
-    "gulp-if": "^3.0.0",
-    "gulp-load-plugins": "^2.0.8",
-    "gulp-minify": "^3.1.0",
-    "gulp-sourcemaps": "^3.0.0",
     "jsdoc": "^4.0.4",
     "jsdoc-to-markdown": "^9.1.1",
     "mocha": "^11.0.1",
     "nyc": "^17.1.0",
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
-    "yargs": "^17.7.2"
+    "rollup": "^4.30.1",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.1"
   },
   "babel": {
     "presets": [

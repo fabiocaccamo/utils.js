@@ -48,6 +48,12 @@ This library is available through [npm](https://www.npmjs.com/package/@fabiocacc
 var utils = require("@fabiocaccamo/utils.js");
 ```
 
+### ESM
+
+```JavaScript
+import utils from '@fabiocaccamo/utils.js';
+```
+
 ## APIs
 
 <details><summary><code>utils.array</code></summary>
