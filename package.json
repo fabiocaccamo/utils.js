@@ -33,6 +33,12 @@
     "url": "https://github.com/fabiocaccamo/utils.js"
   },
   "main": "dist/utils.js",
+  "exports": {
+    ".": {
+      "import": "dist/utils.esm.js",
+      "require": "dist/utils.umd.js"
+    }
+  },
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=production rimraf dist && rollup -c",
