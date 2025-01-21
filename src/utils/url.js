@@ -86,8 +86,7 @@ function isHttps(url) {
 }
 
 function isLocalhost(url) {
-    const re =
-        /^(https?\:\/\/)(localhost(.[a-z0-9\-])*|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
+    const re = /^(https?:\/\/)(localhost(\.[a-z0-9-]+)*|127\.0\.0\.1)(:\d+)?(\/.*)?$/i;
     return re.test(url || getURL());
 }
 
