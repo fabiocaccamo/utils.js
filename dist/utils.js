@@ -479,8 +479,7 @@
     }
 
     function isLocalhost(url) {
-        const re =
-            /^(https?\:\/\/)(localhost(.[a-z0-9\-])*|127\.0\.0\.1)(\:[\d]+)?(\/(.)*)?$/;
+        const re = /^(https?:\/\/)(localhost(\.[a-z0-9-]+)*|127\.0\.0\.1)(:\d+)?(\/.*)?$/i;
         return re.test(url || getURL());
     }
 
@@ -3709,8 +3708,8 @@
     // };
 
     function removeNamespaces(str) {
-        return str.replace(/(\<(.|\n)+?\>)/g, (tag) => {
-            return tag.replace(/(\s|\<\/?){1}([\w]+\:){1}/g, '$1');
+        return str.replace(/<[^>]*>/g, (tag) => {
+            return tag.replace(/(\s|<\/?)[a-zA-Z0-9]+\:/g, '$1');
         });
     }
 
