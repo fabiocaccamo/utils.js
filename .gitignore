@@ -8,3 +8,4 @@ src/*.html
 .nyc_output
 coverage.lcov
 venv
+/coverage
