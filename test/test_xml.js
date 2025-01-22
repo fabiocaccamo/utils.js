@@ -1,11 +1,11 @@
-var utils = require('../dist/utils.js');
-var test = utils.test;
-var xml = utils.xml;
+import utils from '../src/utils.js';
+const test = utils.test;
+const xml = utils.xml;
 
-describe('xml', function () {
-    describe('removeNamespaces', function () {
-        it('test simple', function () {
-            var s = '';
+describe('xml', () => {
+    describe('removeNamespaces', () => {
+        it('test simple', () => {
+            let s = '';
             s +=
                 '<root xmlns:h="http://www.w3.org/TR/html4/" xmlns:f="https://www.w3schools.com/furniture">';
             s += '<h:table>';
@@ -21,7 +21,7 @@ describe('xml', function () {
             s += '</f:table>';
             s += '</root>';
 
-            var r = '';
+            let r = '';
             r +=
                 '<root h="http://www.w3.org/TR/html4/" f="https://www.w3schools.com/furniture">';
             r += '<table>';

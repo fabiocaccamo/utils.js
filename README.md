@@ -15,12 +15,12 @@
 
 ## Table of contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [APIs](#apis)
-- [Development](#development)
-- [Security](#security)
-- [License](#license)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [APIs](#apis)
+-   [Development](#development)
+-   [Security](#security)
+-   [License](#license)
 
 ## Installation
 
@@ -46,6 +46,12 @@ This library is available through [npm](https://www.npmjs.com/package/@fabiocacc
 
 ```JavaScript
 var utils = require("@fabiocaccamo/utils.js");
+```
+
+### ESM
+
+```JavaScript
+import utils from '@fabiocaccamo/utils.js';
 ```
 
 ## APIs
@@ -730,6 +736,8 @@ var utils = require("@fabiocaccamo/utils.js");
 
 <details><summary><code>utils.url</code></summary>
 <p>
+
+-   `getDomain`
 
 -   `getParameterByName`
 

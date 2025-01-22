@@ -1,19 +1,19 @@
-var utils = require('../dist/utils.js');
-var test = utils.test;
-var cmyk = utils.color.cmyk;
-var hex = utils.color.hex;
-var rgb = utils.color.rgb;
+import utils from '../src/utils.js';
+const test = utils.test;
+const cmyk = utils.color.cmyk;
+const hex = utils.color.hex;
+const rgb = utils.color.rgb;
 
-describe('color.cmyk', function () {
+describe('color.cmyk', () => {
     // describe('average', function() {
-    //     var f = cmyk.average;
+    //     const f = cmyk.average;
     //     it('test simple', function() {
     //         r = f([{ c:0, m:0, y:0, k:100 }, { c:0, m:50, y:75, k:22 }, { c:0, m:50, y:75, k:22 }]);
     //         test.assertEqual(r, { c:0, m:50.4, y:75.2, k:47.8 });
     //     });
     // });
     // describe('distance', function() {
-    //     var f = cmyk.distance;
+    //     const f = cmyk.distance;
     //     var r;
     //     it('test simple', function() {
     //         r = f({ c:0, m:0, y:0, k:100 }, { c:0, m:0, y:0, k:0 });
@@ -21,7 +21,7 @@ describe('color.cmyk', function () {
     //     });
     // });
     // describe('gradient', function() {
-    //     var f = cmyk.gradient;
+    //     const f = cmyk.gradient;
     //     var r;
     //     it('test 2 colors and 1 step', function() {
     //         r = f([{ c:0, m:100, y:100, k:0 }, { c:100, m:0, y:100, k:0 }], 1);
@@ -41,7 +41,7 @@ describe('color.cmyk', function () {
     //     });
     // });
     // describe('gradientMatrix', function() {
-    //     var f = cmyk.gradientMatrix;
+    //     const f = cmyk.gradientMatrix;
     //     var r;
     //     it('test 5x4 matrix with 4 required points', function() {
     //         r = f({
@@ -59,7 +59,7 @@ describe('color.cmyk', function () {
     //     });
     // });
     // describe('interpolateBilinear', function() {
-    //     var f = cmyk.interpolateBilinear;
+    //     const f = cmyk.interpolateBilinear;
     //     var r;
     //     var a = { c:0, m:0, y:0, k:0 };
     //     var b = { c:0, m:100, y:100, k:0 };
@@ -87,7 +87,7 @@ describe('color.cmyk', function () {
     //     });
     // });
     // describe('interpolateLinear', function() {
-    //     var f = cmyk.interpolateLinear;
+    //     const f = cmyk.interpolateLinear;
     //     var r;
     //     it('test interpolate 0.0', function() {
     //         r = f({ c:100, m:50, y:0, k:61 }, { c:75, m:25, y:0, k:22 }, 0.0);
@@ -103,7 +103,7 @@ describe('color.cmyk', function () {
     //     });
     // });
     // describe('interpolateMultilinear', function() {
-    //     var f = cmyk.interpolateMultilinear;
+    //     const f = cmyk.interpolateMultilinear;
     //     var r;
     //     var c = [{ c:0, m:0, y:0, k:0 }, { c:0, m:100, y:100, k:0 }, { c:0, m:0, y:0, k:100 }];
     //     it('test interpolate 0.0', function() {
@@ -137,30 +137,30 @@ describe('color.cmyk', function () {
     //         test.assertTrue(true);
     //     });
     // });
-    describe('toHex', function () {
-        var f = cmyk.toHex;
-        var r;
-        it('test black', function () {
+    describe('toHex', () => {
+        const f = cmyk.toHex;
+        let r;
+        it('test black', () => {
             r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, '#000000');
         });
-        it('test white', function () {
+        it('test white', () => {
             r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, '#FFFFFF');
         });
-        it('test red', function () {
+        it('test red', () => {
             r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, '#FF0000');
         });
-        it('test green', function () {
+        it('test green', () => {
             r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, '#00FF00');
         });
-        it('test blue', function () {
+        it('test blue', () => {
             r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, '#0000FF');
         });
-        it('test gray', function () {
+        it('test gray', () => {
             r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, '#808080');
         });
@@ -175,86 +175,86 @@ describe('color.cmyk', function () {
     //         test.assertTrue(true);
     //     });
     // });
-    describe('toRgb', function () {
-        var f = cmyk.toRgb;
-        var r;
-        it('test black', function () {
+    describe('toRgb', () => {
+        const f = cmyk.toRgb;
+        let r;
+        it('test black', () => {
             r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, { r: 0, g: 0, b: 0, a: 1.0 });
         });
-        it('test white', function () {
+        it('test white', () => {
             r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, { r: 255, g: 255, b: 255, a: 1.0 });
         });
-        it('test red', function () {
+        it('test red', () => {
             r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, { r: 255, g: 0, b: 0, a: 1.0 });
         });
-        it('test green', function () {
+        it('test green', () => {
             r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, { r: 0, g: 255, b: 0, a: 1.0 });
         });
-        it('test blue', function () {
+        it('test blue', () => {
             r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, { r: 0, g: 0, b: 255, a: 1.0 });
         });
-        it('test gray', function () {
+        it('test gray', () => {
             r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, { r: 128, g: 128, b: 128, a: 1.0 });
         });
     });
-    describe('toString', function () {
-        var f = cmyk.toString;
-        var r;
-        it('test black', function () {
+    describe('toString', () => {
+        const f = cmyk.toString;
+        let r;
+        it('test black', () => {
             r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, '{ c:0, m:0, y:0, k:100 }');
         });
-        it('test white', function () {
+        it('test white', () => {
             r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, '{ c:0, m:0, y:0, k:0 }');
         });
-        it('test red', function () {
+        it('test red', () => {
             r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, '{ c:0, m:100, y:100, k:0 }');
         });
-        it('test green', function () {
+        it('test green', () => {
             r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, '{ c:100, m:0, y:100, k:0 }');
         });
-        it('test blue', function () {
+        it('test blue', () => {
             r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, '{ c:100, m:100, y:0, k:0 }');
         });
-        it('test gray', function () {
+        it('test gray', () => {
             r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, '{ c:0, m:0, y:0, k:50 }');
         });
     });
-    describe('toStringCSS', function () {
-        var f = cmyk.toStringCSS;
-        var r;
-        it('test black', function () {
+    describe('toStringCSS', () => {
+        const f = cmyk.toStringCSS;
+        let r;
+        it('test black', () => {
             r = f({ c: 0, m: 0, y: 0, k: 100 });
             test.assertEqual(r, 'cmyk(0%, 0%, 0%, 100%)');
         });
-        it('test white', function () {
+        it('test white', () => {
             r = f({ c: 0, m: 0, y: 0, k: 0 });
             test.assertEqual(r, 'cmyk(0%, 0%, 0%, 0%)');
         });
-        it('test red', function () {
+        it('test red', () => {
             r = f({ c: 0, m: 100, y: 100, k: 0 });
             test.assertEqual(r, 'cmyk(0%, 100%, 100%, 0%)');
         });
-        it('test green', function () {
+        it('test green', () => {
             r = f({ c: 100, m: 0, y: 100, k: 0 });
             test.assertEqual(r, 'cmyk(100%, 0%, 100%, 0%)');
         });
-        it('test blue', function () {
+        it('test blue', () => {
             r = f({ c: 100, m: 100, y: 0, k: 0 });
             test.assertEqual(r, 'cmyk(100%, 100%, 0%, 0%)');
         });
-        it('test gray', function () {
+        it('test gray', () => {
             r = f({ c: 0, m: 0, y: 0, k: 50 });
             test.assertEqual(r, 'cmyk(0%, 0%, 0%, 50%)');
         });

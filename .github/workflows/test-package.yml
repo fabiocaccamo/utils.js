@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: ['14', '16', '17', '18']
+        node-version: ['18', '20', '22']
 
     steps:
 
@@ -28,4 +28,8 @@ jobs:
     - name: Run tests
       run: |
         npm test
+
+    - name: Upload coverage report to Codecov
+      run: |
         npm run coverage
+        bash <(curl -s https://codecov.io/bash)
