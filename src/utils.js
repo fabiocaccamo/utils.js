@@ -41,7 +41,7 @@ const utils = {
     xml: XMLUtil,
     url: URLUtil,
     utf8: UTF8Util,
-    version: '1.0.0',
+    version: '1.1.0',
 };
 
 export default utils;
