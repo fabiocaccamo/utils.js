@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-    typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.utils = {}));
-})(this, (function (exports) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+    typeof define === 'function' && define.amd ? define(factory) :
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.utils = factory());
+})(this, (function () { 'use strict';
 
     function decode$2(input) {
         return decodeURIComponent(escape(input));
@@ -3739,9 +3739,6 @@
         version: '1.0.0',
     };
 
-    exports.default = utils;
-    exports.utils = utils;
-
-    Object.defineProperty(exports, '__esModule', { value: true });
+    return utils;
 
 }));

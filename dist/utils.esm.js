@@ -3733,4 +3733,4 @@ const utils = {
     version: '1.0.0',
 };
 
-export { utils as default, utils };
+export { utils as default };
