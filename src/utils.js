@@ -20,7 +20,7 @@ import URLUtil from './utils/url.js';
 import UTF8Util from './utils/utf8.js';
 import XMLUtil from './utils/xml.js';
 
-export const utils = {
+const utils = {
     array: ArrayUtil,
     base64: Base64Util,
     color: ColorUtil,
