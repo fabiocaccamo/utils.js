@@ -10,11 +10,17 @@ function decode(str) {
     return output;
 }
 
+function decodeById(id) {
+    const el = document?.getElementById(id);
+    return el ? decode(el.textContent) : null;
+}
+
 function encode(obj) {
     return JSON.stringify(obj);
 }
 
 export default {
     decode,
+    decodeById,
     encode,
 };

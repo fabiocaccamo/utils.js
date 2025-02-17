@@ -86,6 +86,10 @@ function decodeJSON(str) {
     return JSONUtil.decode(str);
 }
 
+function decodeJSONById(id) {
+    return JSONUtil.decodeById(id);
+}
+
 function decodeParameters(str) {
     return URLUtil.getParametersDict(`?${str}`);
 }
@@ -280,6 +284,7 @@ export default {
     clone,
     decodeBase64,
     decodeJSON,
+    decodeJSONById,
     decodeParameters,
     encodeBase64,
     encodeJSON,
