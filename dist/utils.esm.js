@@ -173,12 +173,18 @@ function decode(str) {
     return output;
 }
 
+function decodeById(id) {
+    const el = document?.getElementById(id);
+    return el ? decode(el.textContent) : null;
+}
+
 function encode(obj) {
     return JSON.stringify(obj);
 }
 
 var JSONUtil = {
     decode,
+    decodeById,
     encode,
 };
 
@@ -571,6 +577,10 @@ function decodeJSON(str) {
     return JSONUtil.decode(str);
 }
 
+function decodeJSONById(id) {
+    return JSONUtil.decodeById(id);
+}
+
 function decodeParameters(str) {
     return URLUtil.getParametersDict(`?${str}`);
 }
@@ -765,6 +775,7 @@ var ObjectUtil = {
     clone: clone$2,
     decodeBase64,
     decodeJSON,
+    decodeJSONById,
     decodeParameters,
     encodeBase64,
     encodeJSON,
@@ -3111,8 +3122,8 @@ function degToRad(deg) {
 function fastDeg(degFrom, degTo) {
     const degDiff = degTo - degFrom;
     if (degDiff > DEG_180) {
-        return -360 + degDiff;
-    } else if (degDiff < -180) {
+        return -DEG_360 + degDiff;
+    } else if (degDiff < -DEG_180) {
         return DEG_360 + degTo;
     } else {
         return degTo;
@@ -3702,7 +3713,7 @@ var TestUtil = {
 // };
 
 function removeNamespaces(str) {
-    return str.replace(/<[^>]*>/g, (tag) => {
+    return str.replace(/<[^>]*?>/g, (tag) => {
         return tag.replace(/(\s|<\/?)[a-zA-Z0-9]+\:/g, '$1');
     });
 }
@@ -3730,7 +3741,7 @@ const utils = {
     xml: XMLUtil,
     url: URLUtil,
     utf8: UTF8Util,
-    version: '1.0.0',
+    version: '1.1.0',
 };
 
 export { utils as default };
