@@ -8,6 +8,7 @@
 [![](https://img.shields.io/github/actions/workflow/status/fabiocaccamo/utils.js/test-package.yml?branch=main&label=build&logo=github)](https://github.com/fabiocaccamo/utils.js/actions/workflows/test-package.yml)
 [![](https://codecov.io/gh/fabiocaccamo/utils.js/branch/main/graph/badge.svg)](https://codecov.io/gh/fabiocaccamo/utils.js)
 [![](https://api.codacy.com/project/badge/Grade/6bc3162a50224b518ed7dc366535b3ba)](https://www.codacy.com/app/fabiocaccamo/utils.js)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/fabiocaccamo/utils.js/badge)](https://securityscorecards.dev/viewer/?uri=github.com/fabiocaccamo/utils.js)
 
 # utils.js
 
