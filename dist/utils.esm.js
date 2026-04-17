@@ -503,7 +503,12 @@ function assign(obj, other, ...others) {
     let i, j, k;
     for (i = 0, j = objs.length; i < j; i++) {
         for (k in objs[i]) {
-            obj[k] = objs[i][k];
+            if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
+                continue;
+            }
+            if (Object.prototype.hasOwnProperty.call(objs[i], k)) {
+                obj[k] = objs[i][k];
+            }
         }
     }
     return obj;
@@ -1296,7 +1301,9 @@ function padZeros(str, len) {
 }
 
 function render(str, data, placeholderStart, placeholderEnd) {
-    const pattern = `${placeholderStart || '{{'}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${placeholderEnd || '}}'}`;
+    const escapedStart = (placeholderStart || '{{').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedEnd = (placeholderEnd || '}}').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const pattern = `${escapedStart}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${escapedEnd}`;
     const regex = new RegExp(pattern, 'g');
     const matches = Array.from(str.matchAll(regex));
     let occurrence, replacement;
@@ -3741,7 +3748,7 @@ const utils = {
     xml: XMLUtil,
     url: URLUtil,
     utf8: UTF8Util,
-    version: '1.1.0',
+    version: '1.1.1',
 };
 
 export { utils as default };

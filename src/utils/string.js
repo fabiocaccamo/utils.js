@@ -70,7 +70,9 @@ function padZeros(str, len) {
 }
 
 function render(str, data, placeholderStart, placeholderEnd) {
-    const pattern = `${placeholderStart || '{{'}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${placeholderEnd || '}}'}`;
+    const escapedStart = (placeholderStart || '{{').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const escapedEnd = (placeholderEnd || '}}').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const pattern = `${escapedStart}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${escapedEnd}`;
     const regex = new RegExp(pattern, 'g');
     const matches = Array.from(str.matchAll(regex));
     let occurrence, replacement;

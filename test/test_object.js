@@ -46,6 +46,13 @@ describe('object', () => {
             test.assertEqual(r['c'], 6);
             test.assertEqual(r, { a: 4, b: 5, c: 6 });
         });
+        it('test prototype pollution', () => {
+            const o = {};
+            const evil = JSON.parse('{"__proto__": {"polluted": true}}');
+            f(o, evil);
+            test.assertUndefined(o['polluted']);
+            test.assertUndefined({}.polluted);
+        });
     });
     describe('clean', () => {
         const f = obj.clean;
