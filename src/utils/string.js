@@ -94,7 +94,7 @@ function render(str, data, placeholderStart, placeholderEnd) {
 }
 
 function replace(str, occurrence, replacement, caseSensitive) {
-    const pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const pattern = escapeRegex(occurrence);
     const flags = caseSensitive === false ? 'gi' : 'g';
     const regex = new RegExp(pattern, flags);
     return str.replace(regex, String(replacement));

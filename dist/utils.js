@@ -1307,7 +1307,8 @@
     }
 
     function escapeRegex(str) {
-        return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const normalized = str == null ? '' : String(str);
+        return normalized.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     }
 
     function render(str, data, placeholderStart, placeholderEnd) {
@@ -1330,7 +1331,7 @@
     }
 
     function replace$1(str, occurrence, replacement, caseSensitive) {
-        const pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const pattern = escapeRegex(occurrence);
         const flags = caseSensitive === false ? 'gi' : 'g';
         const regex = new RegExp(pattern, flags);
         return str.replace(regex, String(replacement));
