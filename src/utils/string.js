@@ -70,7 +70,8 @@ function padZeros(str, len) {
 }
 
 function escapeRegex(str) {
-    return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const normalized = str == null ? '' : String(str);
+    return normalized.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 function render(str, data, placeholderStart, placeholderEnd) {
