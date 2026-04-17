@@ -52,6 +52,7 @@ describe('object', () => {
             f(o, evil);
             test.assertUndefined(o['polluted']);
             test.assertUndefined({}.polluted);
+            test.assertUndefined(Object.prototype.polluted);
         });
     });
     describe('clean', () => {
