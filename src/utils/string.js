@@ -69,8 +69,15 @@ function padZeros(str, len) {
     return padLeft(String(str), len, '0');
 }
 
+function escapeRegex(str) {
+    const normalized = str == null ? '' : String(str);
+    return normalized.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+}
+
 function render(str, data, placeholderStart, placeholderEnd) {
-    const pattern = `${placeholderStart || '{{'}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${placeholderEnd || '}}'}`;
+    const escapedStart = escapeRegex(placeholderStart || '{{');
+    const escapedEnd = escapeRegex(placeholderEnd || '}}');
+    const pattern = `${escapedStart}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${escapedEnd}`;
     const regex = new RegExp(pattern, 'g');
     const matches = Array.from(str.matchAll(regex));
     let occurrence, replacement;
@@ -87,7 +94,7 @@ function render(str, data, placeholderStart, placeholderEnd) {
 }
 
 function replace(str, occurrence, replacement, caseSensitive) {
-    const pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const pattern = escapeRegex(occurrence);
     const flags = caseSensitive === false ? 'gi' : 'g';
     const regex = new RegExp(pattern, flags);
     return str.replace(regex, String(replacement));

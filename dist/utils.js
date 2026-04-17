@@ -509,7 +509,12 @@
         let i, j, k;
         for (i = 0, j = objs.length; i < j; i++) {
             for (k in objs[i]) {
-                obj[k] = objs[i][k];
+                if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
+                    continue;
+                }
+                if (Object.prototype.hasOwnProperty.call(objs[i], k)) {
+                    obj[k] = objs[i][k];
+                }
             }
         }
         return obj;
@@ -1301,8 +1306,15 @@
         return padLeft(String(str), len, '0');
     }
 
+    function escapeRegex(str) {
+        const normalized = str == null ? '' : String(str);
+        return normalized.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    }
+
     function render(str, data, placeholderStart, placeholderEnd) {
-        const pattern = `${placeholderStart || '{{'}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${placeholderEnd || '}}'}`;
+        const escapedStart = escapeRegex(placeholderStart || '{{');
+        const escapedEnd = escapeRegex(placeholderEnd || '}}');
+        const pattern = `${escapedStart}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${escapedEnd}`;
         const regex = new RegExp(pattern, 'g');
         const matches = Array.from(str.matchAll(regex));
         let occurrence, replacement;
@@ -1319,7 +1331,7 @@
     }
 
     function replace$1(str, occurrence, replacement, caseSensitive) {
-        const pattern = occurrence.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        const pattern = escapeRegex(occurrence);
         const flags = caseSensitive === false ? 'gi' : 'g';
         const regex = new RegExp(pattern, flags);
         return str.replace(regex, String(replacement));
@@ -3747,7 +3759,7 @@
         xml: XMLUtil,
         url: URLUtil,
         utf8: UTF8Util,
-        version: '1.1.0',
+        version: '1.1.1',
     };
 
     return utils;

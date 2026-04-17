@@ -12,7 +12,12 @@ function assign(obj, other, ...others) {
     let i, j, k;
     for (i = 0, j = objs.length; i < j; i++) {
         for (k in objs[i]) {
-            obj[k] = objs[i][k];
+            if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
+                continue;
+            }
+            if (Object.prototype.hasOwnProperty.call(objs[i], k)) {
+                obj[k] = objs[i][k];
+            }
         }
     }
     return obj;
