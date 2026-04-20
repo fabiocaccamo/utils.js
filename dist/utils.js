@@ -1307,8 +1307,7 @@
     }
 
     function escapeRegex(str) {
-        const normalized = str == null ? '' : String(str);
-        return normalized.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+        return String(str || '').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     }
 
     function render(str, data, placeholderStart, placeholderEnd) {
