@@ -171,6 +171,20 @@ describe('string', () => {
                 'npm install @fabiocaccamo/utils.js@latest --save-dev'
             );
         });
+        it('test render with regex metacharacter delimiters', () => {
+            test.assertEqual(
+                f('[(name)]', { name: 'utils.js' }, '[(', ')]'),
+                'utils.js'
+            );
+            test.assertEqual(
+                f('*.name.*', { name: 'utils.js' }, '*.', '.*'),
+                'utils.js'
+            );
+            test.assertEqual(
+                f('|name|', { name: 'utils.js' }, '|', '|'),
+                'utils.js'
+            );
+        });
     });
     describe('replace', () => {
         const f = string.replace;
