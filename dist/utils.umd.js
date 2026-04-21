@@ -3758,7 +3758,7 @@
         xml: XMLUtil,
         url: URLUtil,
         utf8: UTF8Util,
-        version: '1.1.1',
+        version: '1.2.0',
     };
 
     return utils;
