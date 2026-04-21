@@ -1,8 +1,6 @@
 [![](https://img.shields.io/npm/v/@fabiocaccamo/utils.js?color=blue&logo=npm)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
 [![](https://img.shields.io/npm/dt/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
 [![](https://img.shields.io/github/stars/fabiocaccamo/utils.js?color=blue&logo=github&logoColor=white&style=flat)](https://github.com/fabiocaccamo/utils.js/stargazers)
-[![](https://img.shields.io/bundlephobia/min/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
-[![](https://img.shields.io/bundlephobia/minzip/@fabiocaccamo/utils.js?color=blue)](https://www.npmjs.com/package/@fabiocaccamo/utils.js)
 [![](https://img.shields.io/github/license/fabiocaccamo/utils.js.svg?color=blue)](https://github.com/fabiocaccamo/utils.js/blob/main/README.md)
 
 [![](https://img.shields.io/github/actions/workflow/status/fabiocaccamo/utils.js/test-package.yml?branch=main&label=build&logo=github)](https://github.com/fabiocaccamo/utils.js/actions/workflows/test-package.yml)
