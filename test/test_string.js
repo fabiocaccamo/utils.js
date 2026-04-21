@@ -180,10 +180,7 @@ describe('string', () => {
                 f('*.name.*', { name: 'utils.js' }, '*.', '.*'),
                 'utils.js'
             );
-            test.assertEqual(
-                f('|name|', { name: 'utils.js' }, '|', '|'),
-                'utils.js'
-            );
+            test.assertEqual(f('|name|', { name: 'utils.js' }, '|', '|'), 'utils.js');
         });
     });
     describe('replace', () => {
