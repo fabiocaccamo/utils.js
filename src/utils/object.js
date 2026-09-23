@@ -102,8 +102,8 @@ export function decodeJSON(str) {
     return jsonDecode(str);
 }
 
-export function decodeJSONById(id) {
-    return decodeById(id);
+export function decodeJSONById(id, defaultValue = null) {
+    return decodeById(id, defaultValue);
 }
 
 export function decodeParameters(str) {
