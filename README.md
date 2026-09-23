@@ -49,9 +49,31 @@ var utils = require("@fabiocaccamo/utils.js");
 
 ### ESM
 
+Three import styles are supported:
+
 ```JavaScript
+// named imports from a module subpath (recommended with bundlers, most explicit)
+import { debounce } from '@fabiocaccamo/utils.js/func';
+import { slugify, toUpperCaseFirst } from '@fabiocaccamo/utils.js/string';
+
+// module namespaces from the root entry (tree-shakeable with static member access)
+import { func, string } from '@fabiocaccamo/utils.js';
+func.debounce(250, () => {});
+
+// default import (kept for backward compatibility)
 import utils from '@fabiocaccamo/utils.js';
+utils.func.debounce(250, () => {});
 ```
+
+When using a bundler (Rollup, webpack, esbuild, Vite, ...), prefer the **subpath** or the **named namespace** imports: the package is marked as `"sideEffects": false` and every function is exported by name, so only the functions actually used (and their real dependencies) end up in the bundle.
+
+The default import is kept for compatibility: it works as before, but it references the whole library object, so it can be tree-shaken only by bundlers able to track static property accesses on objects.
+
+Every module is available as a subpath: `array`, `base64`, `color` (and `color/cmyk`, `color/hex`, `color/rgb`), `date`, `ease`, `func`, `geom` (and `geom/point`), `hex`, `interpolation`, `json`, `math`, `number`, `object`, `random`, `string`, `test`, `trigo`, `type`, `url`, `utf8`, `xml`.
+
+Subpaths point to the ES modules sources: in CommonJS use `require('@fabiocaccamo/utils.js')`.
+
+Functions are not exported at root level because some names are shared by different modules (eg. `clone`, `decode`, `encode`, `equals`, `max`, `min`), import them from the module subpath instead.
 
 ## APIs
 
@@ -491,6 +513,8 @@ import utils from '@fabiocaccamo/utils.js';
 -   `encodeParameters`
 
 -   `equals`
+
+-   `hasOwnProp`
 
 -   `is`
 
