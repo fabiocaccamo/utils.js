@@ -1,78 +1,5 @@
 'use strict';
 
-function argument(...args) {
-    return element(args);
-}
-
-function bit(chance) {
-    return boolean(chance) ? 1 : 0;
-}
-
-function boolean(chance) {
-    return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
-}
-
-function color() {
-    return integer(0, 0xffffff);
-}
-
-function element(array) {
-    return array[index$1(array)];
-}
-
-function float(min, max) {
-    return min + Math.random() * (max - min);
-}
-
-function index$1(array) {
-    return integer(0, array.length - 1);
-}
-
-function integer(min, max) {
-    return Math.floor(Math.round(float(min - 0.5, max + 0.5)));
-}
-
-function map$2(func, count) {
-    const m = [];
-    for (let i = 0; i < count; i++) {
-        m.push(func(i));
-    }
-    return m;
-}
-
-function sign$1(chance) {
-    return boolean(chance) ? 1 : -1;
-}
-
-function string(
-    length,
-    charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
-) {
-    const c = charset.split('');
-    const r = element;
-    let i = 0;
-    let s = '';
-    while (i < length) {
-        s += r(c);
-        i++;
-    }
-    return s;
-}
-
-var RandomUtil = {
-    argument,
-    bit,
-    boolean,
-    color,
-    element,
-    float,
-    index: index$1,
-    integer,
-    map: map$2,
-    sign: sign$1,
-    string,
-};
-
 function decode$2(input) {
     return decodeURIComponent(escape(input));
 
@@ -162,7 +89,8 @@ function decode$1(str) {
     let output = '';
 
     try {
-        output = window.atob(input);
+        // native implementation when available (browsers, Node.js >= 16)
+        output = globalThis.atob(input);
     } catch (e) {
         const chars = CHARS_TABLE;
         let chr1, chr2, chr3;
@@ -201,7 +129,7 @@ function encode$1(str) {
     let output = '';
 
     try {
-        output = window.btoa(input);
+        output = globalThis.btoa(input);
     } catch (e) {
         const chars = CHARS_LIST;
         let chr1, chr2, chr3;
@@ -248,9 +176,12 @@ function decode(str) {
     return output;
 }
 
-function decodeById(id) {
-    const el = document?.getElementById(id);
-    return el ? decode(el.textContent) : null;
+function decodeById(id, defaultValue = null) {
+    if (typeof document === 'undefined') {
+        return defaultValue;
+    }
+    const el = document.getElementById(id);
+    return el ? decode(el.textContent) : defaultValue;
 }
 
 function encode(obj) {
@@ -290,579 +221,6 @@ function scalar(parts, t) {
     const tReduced = tScaled - tIndex;
     return { index: tIndex, t: tReduced };
 }
-
-function average$2(values) {
-    return summation(values) / values.length;
-}
-
-function constrain$1(n, a, b) {
-    return Math.min(Math.max(n, Math.min(a, b)), Math.max(a, b));
-}
-
-function cycle(n, len, shift) {
-    if (!isNumber(shift)) {
-        shift = 0;
-    }
-    return ((((n - shift) % len) + len) % len) + shift;
-}
-
-function equals$3(a, b, tolerance) {
-    if (!isNumber(tolerance)) {
-        tolerance = 0.0000000001;
-    } else if (tolerance > 0.0) {
-        tolerance += 0.0000000001;
-    }
-    return Math.abs(a - b) <= tolerance;
-}
-
-function euclideanDistance(a, b) {
-    // https://en.wikipedia.org/wiki/Euclidean_distance#Higher_dimensions
-    return Math.sqrt(
-        summation(
-            a.map((value, index) => {
-                return Math.abs(value - b[index]) ** 2;
-            })
-        )
-    );
-}
-
-function factorial(n) {
-    let f = 1;
-    for (let i = f; i <= n; i++) {
-        f *= i;
-    }
-    return f;
-}
-
-function gcd(a, b) {
-    if (a === b) {
-        return a;
-    }
-    if (a < b) {
-        a ^= b;
-        b ^= a;
-        a ^= b;
-    }
-    return gcd(a - b, b);
-}
-
-const interpolation = { bilinear, linear, multilinear, scalar };
-
-function lcm(a, b) {
-    return (a * b) / gcd(a, b);
-}
-
-function lerp(a, b, t) {
-    return linear(a, b, t);
-}
-
-function map$1(n, a, b, c, d) {
-    return linear(c, d, normalize$1(n, a, b));
-}
-
-function nearest$2(n, a, b) {
-    return Math.abs(n - a) <= Math.abs(n - b) ? a : b;
-}
-
-function normalize$1(n, a, b) {
-    return (n - a) / (b - a);
-}
-
-function proportion(a, b, x, y) {
-    const args = [a, b, x, y];
-    const argsOk = clean(args);
-    if (argsOk.length !== 3) {
-        return NaN;
-    }
-
-    // a : b = x : y
-    const isNumber$1 = isNumber;
-    if (!isNumber$1(a)) {
-        return (b * x) / y;
-    } else if (!isNumber$1(b)) {
-        return (a * y) / x;
-    } else if (!isNumber$1(x)) {
-        return (y * a) / b;
-    } else if (!isNumber$1(y)) {
-        return (x * b) / a;
-    }
-    return NaN;
-}
-
-function roundDecimals(n, decimalsPlaces) {
-    return Number(n.toFixed(decimalsPlaces || 2));
-}
-
-function roundToMultiple(n, multiplier) {
-    return Math.round(n / multiplier) * multiplier;
-}
-
-function roundToNearest(n, values) {
-    const a = sort(values.concat());
-    let i = 0,
-        j = 0,
-        k = a.length;
-    if (k === 0) {
-        return NaN;
-    } else if (k > 2) {
-        while (j < k) {
-            i = Math.floor((j + k) / 2.0);
-            if (n < a[i]) {
-                k = i;
-            } else if (n > a[i + 1]) {
-                j = i + 1;
-            } else {
-                break;
-            }
-        }
-    }
-    j = i + 1 in a ? i + 1 : i;
-    return nearest$2(n, a[i], a[j]);
-}
-
-function roundToPower(n, base) {
-    return base ** Math.round(Math.log(n) / Math.log(base));
-}
-
-function sign(n) {
-    return n >= 0.0 ? 1 : -1;
-}
-
-function summation(values) {
-    let s = 0.0;
-    for (let i = 0, j = values.length; i < j; i++) {
-        s += values[i];
-    }
-    return s;
-}
-
-var MathUtil = {
-    average: average$2,
-    constrain: constrain$1,
-    cycle,
-    equals: equals$3,
-    euclideanDistance,
-    factorial,
-    gcd,
-    interpolation,
-    lcm,
-    lerp,
-    map: map$1,
-    nearest: nearest$2,
-    normalize: normalize$1,
-    proportion,
-    roundDecimals,
-    roundToMultiple,
-    roundToNearest,
-    roundToPower,
-    sign,
-    summation,
-};
-
-function getDomain(url = getURL(), level) {
-    // remove protocol, www and port
-    let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
-    domain = domain.split(':')[0];
-    if (!level) {
-        return domain;
-    }
-    let parts = domain.split('.');
-    if (level > parts.length || level <= 0) {
-        return '';
-    }
-    let domainName = parts[parts.length - level];
-    return domainName;
-}
-
-function getParameterByName(url, name, defaultValue) {
-    const paramsDict = getParameters(url);
-    return name in paramsDict ? paramsDict[name] || defaultValue || '' : defaultValue;
-}
-
-function getParameters(url) {
-    return getParametersDict(url);
-}
-
-function getParametersDict(url) {
-    const paramsList = getParametersList(url);
-    let param;
-    const paramsDict = {};
-    for (let i = 0, j = paramsList.length; i < j; i++) {
-        param = paramsList[i];
-        paramsDict[param['key']] = param['value'];
-    }
-    return paramsDict;
-}
-
-function getParametersList(url) {
-    const paramsString = getParametersString(url);
-    const paramsList = [];
-    const paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
-    let paramMatch = paramsRE.exec(paramsString);
-    while (paramMatch) {
-        paramsList.push({
-            key: paramMatch[2],
-            value: decodeURIComponent(paramMatch[4] || ''),
-        });
-        paramMatch = paramsRE.exec(paramsString);
-    }
-    return paramsList;
-}
-
-function getParametersString(url = getURL()) {
-    const queryStringPosition = url.indexOf('?');
-    // prettier-ignore
-    let queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
-    const hashDelimiterPosition = queryString.indexOf('#');
-    if (hashDelimiterPosition > -1) {
-        queryString = queryString.substring(0, hashDelimiterPosition);
-    }
-    return queryString;
-}
-
-function getURL() {
-    let url = '';
-    try {
-        url = window.location.href;
-    } catch (e) {
-        // catch exception if not running in browser
-    }
-    return url;
-}
-
-function hasParameter(url, name) {
-    return name in getParametersDict(url);
-}
-
-function isFile(url) {
-    return (url || getURL()).indexOf('file://') === 0;
-}
-
-function isHttp(url) {
-    return (url || getURL()).indexOf('http://') === 0;
-}
-
-function isHttps(url) {
-    return (url || getURL()).indexOf('https://') === 0;
-}
-
-function isLocalhost(url) {
-    const re = /^(https?:\/\/)(localhost(\.[a-z0-9-]+)*|127\.0\.0\.1)(:\d+)?(\/.*)?$/i;
-    return re.test(url || getURL());
-}
-
-var URLUtil = {
-    getDomain,
-    getParameterByName,
-    getParameters,
-    getParametersDict,
-    getParametersList,
-    getParametersString,
-    getURL,
-    hasParameter,
-    isFile,
-    isHttp,
-    isHttps,
-    isLocalhost,
-};
-
-function assign(obj, other, ...others) {
-    const objs = [other].concat(others);
-    let i, j, k;
-    for (i = 0, j = objs.length; i < j; i++) {
-        for (k in objs[i]) {
-            if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
-                continue;
-            }
-            if (Object.prototype.hasOwnProperty.call(objs[i], k)) {
-                obj[k] = objs[i][k];
-            }
-        }
-    }
-    return obj;
-}
-
-function clean$1(obj, hard) {
-    const objKeys = keys(obj);
-    let key, val;
-    for (let i = 0, j = objKeys.length; i < j; i++) {
-        key = objKeys[i];
-        val = obj[key];
-        if (hard === true) {
-            switch (of(val)) {
-                case ARRAY:
-                    val = obj[key] = clean(val, hard);
-                    if (val.length === 0) {
-                        val = null;
-                    }
-                    break;
-                case OBJECT:
-                    val = obj[key] = clean$1(val, hard);
-                    if (length$1(val) === 0) {
-                        val = null;
-                    }
-                    break;
-                case STRING:
-                    val = obj[key] = trim(val);
-                    if (val === '') {
-                        val = null;
-                    }
-                    break;
-            }
-        }
-        if (isNone(val)) {
-            delete obj[key];
-        }
-    }
-    return obj;
-}
-
-function clone$2(obj) {
-    const cln = {};
-    const objKeys = keys(obj);
-    let key, val;
-    for (let i = 0, j = objKeys.length; i < j; i++) {
-        key = objKeys[i];
-        val = obj[key];
-        switch (of(val)) {
-            case ARRAY:
-                cln[key] = clone(val);
-                break;
-            case DATE:
-                cln[key] = clone$1(val);
-                break;
-            case OBJECT:
-                cln[key] = clone$2(val);
-                break;
-            default:
-                cln[key] = obj[key];
-                break;
-        }
-    }
-    return cln;
-}
-
-function decodeBase64(str) {
-    return decode(decode$1(str));
-}
-
-function decodeJSON(str) {
-    return decode(str);
-}
-
-function decodeJSONById(id) {
-    return decodeById(id);
-}
-
-function decodeParameters(str) {
-    return getParametersDict(`?${str}`);
-}
-
-function encodeBase64(obj) {
-    return encode$1(encode(obj));
-}
-
-function encodeJSON(obj) {
-    return encode(obj);
-}
-
-function encodeParameters(obj, objKeysFilter) {
-    const objClean = clean$1(clone$2(obj), true);
-    const objKeys = isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
-    let key;
-    let val;
-    const keyval = [];
-
-    for (let i = 0, j = objKeys.length; i < j; i++) {
-        key = objKeys[i];
-        if (key in objClean) {
-            val = objClean[key];
-            keyval.push(`${key}=${encodeURIComponent(val)}`);
-        }
-    }
-
-    return keyval.join('&');
-}
-
-function equals$2(obj1, obj2) {
-    if (obj1 === obj2 || is(obj1, obj2)) {
-        return true;
-    }
-
-    let key, val1, val2, type1, type2;
-
-    type1 = of(obj1);
-    type2 = of(obj2);
-
-    if (type1 !== type2) {
-        return false;
-    }
-
-    switch (type1) {
-        case ARRAY:
-        case OBJECT:
-            break;
-        case NUMBER:
-            return equals$3(obj1, obj2);
-        default:
-            return String(obj1) === String(obj2);
-    }
-
-    for (key in obj2) {
-        if (!(key in obj1)) {
-            return false;
-        }
-    }
-
-    for (key in obj1) {
-        val1 = obj1[key];
-        val2 = obj2[key];
-
-        if (is(obj1, val1) || is(obj2, val2) || is(val1, val2) || val1 === val2) {
-            continue;
-        }
-
-        if (!equals$2(val1, val2)) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
-function is(obj1, obj2) {
-    // https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-    if (!Object.is) {
-        Object.is = (x, y) => {
-            // Algoritmo SameValue
-            if (x === y) {
-                // Steps 1-5, 7-10
-                // Steps 6.b-6.e: +0 != -0
-                return x !== 0 || 1 / x === 1 / y;
-            } else {
-                // Step 6.a: NaN === NaN
-                return x !== x && y !== y;
-            }
-        };
-    }
-    return Object.is(obj1, obj2);
-}
-
-const keypath = {
-    get(obj, path, defaultValue) {
-        const objKeys = path.split('.');
-        let key;
-        let cursor = obj;
-        for (let i = 0, j = objKeys.length; i < j; i++) {
-            key = objKeys[i];
-            try {
-                cursor = cursor[key];
-            } catch (e) {
-                return defaultValue;
-            }
-        }
-        return isUndefined(cursor) ? defaultValue : cursor;
-    },
-
-    set(obj, path, value) {
-        const objKeys = path.split('.');
-        let key;
-        let cursor = obj;
-        for (let i = 0, j = objKeys.length; i < j; i++) {
-            key = objKeys[i];
-            if (key === '__proto__' || key === 'constructor') {
-                break;
-            }
-            if (!isObject(cursor[key])) {
-                cursor[key] = {};
-            }
-            if (i < j - 1) {
-                cursor = cursor[key];
-            } else {
-                cursor[key] = value;
-            }
-        }
-    },
-};
-
-function keys(obj, sorted) {
-    const k = Object.keys(obj);
-    if (sorted === true) {
-        k.sort();
-    }
-    return k;
-}
-
-function length$1(obj) {
-    return keys(obj).length;
-}
-
-function map(obj, func) {
-    const m = {};
-    keys(obj).forEach((k) => {
-        m[k] = func.call(null, obj[k], k, obj);
-    });
-    return m;
-}
-
-function merge(obj1, obj2, ...objs) {
-    const objsList = [{}, obj1, obj2].concat(objs);
-    const obj = assign.apply(null, objsList);
-    return obj;
-}
-
-function search(objs, filter) {
-    // prettier-ignore
-    const results = [];
-    let i, j, k, m, obj, res, objKeys, key, val;
-    for (i = 0, j = objs.length; i < j; i++) {
-        obj = objs[i];
-        res = obj;
-        objKeys = keys(filter);
-        for (k = 0, m = objKeys.length; k < m; k++) {
-            key = objKeys[k];
-            val = filter[key];
-            if (!equals$2(obj[key], val)) {
-                res = null;
-            }
-        }
-        if (res) {
-            results.push(res);
-        }
-    }
-    return results;
-}
-
-function values(obj, sorted) {
-    const objKeys = keys(obj, sorted);
-    const vals = [];
-    for (let i = 0, j = objKeys.length; i < j; i++) {
-        vals.push(obj[objKeys[i]]);
-    }
-    return vals;
-}
-
-var ObjectUtil = {
-    assign,
-    clean: clean$1,
-    clone: clone$2,
-    decodeBase64,
-    decodeJSON,
-    decodeJSONById,
-    decodeParameters,
-    encodeBase64,
-    encodeJSON,
-    encodeParameters,
-    equals: equals$2,
-    is,
-    keypath,
-    keys,
-    length: length$1,
-    map,
-    merge,
-    search,
-    values,
-};
 
 const ARRAY = 'array';
 const BOOLEAN = 'boolean';
@@ -1068,6 +426,649 @@ var TypeUtil = {
     of,
 };
 
+function average$2(values) {
+    return summation(values) / values.length;
+}
+
+function constrain$1(n, a, b) {
+    return Math.min(Math.max(n, Math.min(a, b)), Math.max(a, b));
+}
+
+function cycle(n, len, shift) {
+    if (!isNumber(shift)) {
+        shift = 0;
+    }
+    return ((((n - shift) % len) + len) % len) + shift;
+}
+
+function equals$3(a, b, tolerance) {
+    if (!isNumber(tolerance)) {
+        tolerance = 0.0000000001;
+    } else if (tolerance > 0.0) {
+        tolerance += 0.0000000001;
+    }
+    return Math.abs(a - b) <= tolerance;
+}
+
+function euclideanDistance(a, b) {
+    // https://en.wikipedia.org/wiki/Euclidean_distance#Higher_dimensions
+    return Math.sqrt(
+        summation(
+            a.map((value, index) => {
+                return Math.abs(value - b[index]) ** 2;
+            })
+        )
+    );
+}
+
+function factorial(n) {
+    let f = 1;
+    for (let i = f; i <= n; i++) {
+        f *= i;
+    }
+    return f;
+}
+
+function gcd(a, b) {
+    // iterative euclidean algorithm
+    a = Math.abs(a);
+    b = Math.abs(b);
+    while (b) {
+        [a, b] = [b, a % b];
+    }
+    return a;
+}
+
+const interpolation = { bilinear, linear, multilinear, scalar };
+
+function lcm(a, b) {
+    return (a * b) / gcd(a, b);
+}
+
+function lerp(a, b, t) {
+    return linear(a, b, t);
+}
+
+function map$2(n, a, b, c, d) {
+    return linear(c, d, normalize$1(n, a, b));
+}
+
+function nearest$2(n, a, b) {
+    return Math.abs(n - a) <= Math.abs(n - b) ? a : b;
+}
+
+function normalize$1(n, a, b) {
+    return (n - a) / (b - a);
+}
+
+function proportion(a, b, x, y) {
+    const args = [a, b, x, y];
+    const argsOk = clean(args);
+    if (argsOk.length !== 3) {
+        return NaN;
+    }
+
+    // a : b = x : y
+    const isNumber$1 = isNumber;
+    if (!isNumber$1(a)) {
+        return (b * x) / y;
+    } else if (!isNumber$1(b)) {
+        return (a * y) / x;
+    } else if (!isNumber$1(x)) {
+        return (y * a) / b;
+    } else if (!isNumber$1(y)) {
+        return (x * b) / a;
+    }
+    return NaN;
+}
+
+function roundDecimals(n, decimalsPlaces) {
+    return Number(n.toFixed(decimalsPlaces || 2));
+}
+
+function roundToMultiple(n, multiplier) {
+    return Math.round(n / multiplier) * multiplier;
+}
+
+function roundToNearest(n, values) {
+    const a = sort(values.concat());
+    let i = 0,
+        j = 0,
+        k = a.length;
+    if (k === 0) {
+        return NaN;
+    } else if (k > 2) {
+        while (j < k) {
+            i = Math.floor((j + k) / 2.0);
+            if (n < a[i]) {
+                k = i;
+            } else if (n > a[i + 1]) {
+                j = i + 1;
+            } else {
+                break;
+            }
+        }
+    }
+    j = i + 1 in a ? i + 1 : i;
+    return nearest$2(n, a[i], a[j]);
+}
+
+function roundToPower(n, base) {
+    return base ** Math.round(Math.log(n) / Math.log(base));
+}
+
+function sign$1(n) {
+    return n >= 0.0 ? 1 : -1;
+}
+
+function summation(values) {
+    let s = 0.0;
+    for (let i = 0, j = values.length; i < j; i++) {
+        s += values[i];
+    }
+    return s;
+}
+
+var MathUtil = {
+    average: average$2,
+    constrain: constrain$1,
+    cycle,
+    equals: equals$3,
+    euclideanDistance,
+    factorial,
+    gcd,
+    interpolation,
+    lcm,
+    lerp,
+    map: map$2,
+    nearest: nearest$2,
+    normalize: normalize$1,
+    proportion,
+    roundDecimals,
+    roundToMultiple,
+    roundToNearest,
+    roundToPower,
+    sign: sign$1,
+    summation,
+};
+
+function getDomain(url = getURL(), level) {
+    // remove protocol, www and port
+    let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
+    domain = domain.split(':')[0];
+    if (!level) {
+        return domain;
+    }
+    let parts = domain.split('.');
+    if (level > parts.length || level <= 0) {
+        return '';
+    }
+    let domainName = parts[parts.length - level];
+    return domainName;
+}
+
+function decodeParameter(value) {
+    try {
+        return decodeURIComponent(value);
+    } catch (e) {
+        // malformed URI sequence, eg. "100%"
+        return value;
+    }
+}
+
+function getParameterByName(url, name, defaultValue) {
+    const paramsDict = getParameters(url);
+    return hasOwnProp(paramsDict, name)
+        ? paramsDict[name] || defaultValue || ''
+        : defaultValue;
+}
+
+function getParameters(url) {
+    return getParametersDict(url);
+}
+
+function getParametersDict(url) {
+    const paramsList = getParametersList(url);
+    let param;
+    const paramsDict = {};
+    for (let i = 0, j = paramsList.length; i < j; i++) {
+        param = paramsList[i];
+        paramsDict[param['key']] = param['value'];
+    }
+    return paramsDict;
+}
+
+function getParametersList(url) {
+    const paramsString = getParametersString(url);
+    const paramsList = [];
+    const paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
+    let paramMatch = paramsRE.exec(paramsString);
+    while (paramMatch) {
+        paramsList.push({
+            key: paramMatch[2],
+            value: decodeParameter(paramMatch[4] || ''),
+        });
+        paramMatch = paramsRE.exec(paramsString);
+    }
+    return paramsList;
+}
+
+function getParametersString(url = getURL()) {
+    const queryStringPosition = url.indexOf('?');
+    // prettier-ignore
+    let queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
+    const hashDelimiterPosition = queryString.indexOf('#');
+    if (hashDelimiterPosition > -1) {
+        queryString = queryString.substring(0, hashDelimiterPosition);
+    }
+    return queryString;
+}
+
+function getURL() {
+    // location is not defined when not running in browser
+    return globalThis.location?.href ?? '';
+}
+
+function hasParameter(url, name) {
+    return hasOwnProp(getParametersDict(url), name);
+}
+
+function isFile(url) {
+    return (url || getURL()).indexOf('file://') === 0;
+}
+
+function isHttp(url) {
+    return (url || getURL()).indexOf('http://') === 0;
+}
+
+function isHttps(url) {
+    return (url || getURL()).indexOf('https://') === 0;
+}
+
+function isLocalhost(url) {
+    const re = /^(https?:\/\/)(localhost(\.[a-z0-9-]+)*|127\.0\.0\.1)(:\d+)?(\/.*)?$/i;
+    return re.test(url || getURL());
+}
+
+var URLUtil = {
+    getDomain,
+    getParameterByName,
+    getParameters,
+    getParametersDict,
+    getParametersList,
+    getParametersString,
+    getURL,
+    hasParameter,
+    isFile,
+    isHttp,
+    isHttps,
+    isLocalhost,
+};
+
+function assign(obj, other, ...others) {
+    const objs = [other].concat(others);
+    let i, j, k;
+    for (i = 0, j = objs.length; i < j; i++) {
+        for (k in objs[i]) {
+            if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
+                continue;
+            }
+            if (hasOwnProp(objs[i], k)) {
+                obj[k] = objs[i][k];
+            }
+        }
+    }
+    return obj;
+}
+
+function clean$1(obj, hard) {
+    const objKeys = keys(obj);
+    let key, val;
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        key = objKeys[i];
+        val = obj[key];
+        if (hard === true) {
+            switch (of(val)) {
+                case ARRAY:
+                    val = obj[key] = clean(val, hard);
+                    if (val.length === 0) {
+                        val = null;
+                    }
+                    break;
+                case OBJECT:
+                    val = obj[key] = clean$1(val, hard);
+                    if (length$1(val) === 0) {
+                        val = null;
+                    }
+                    break;
+                case STRING:
+                    val = obj[key] = trim(val);
+                    if (val === '') {
+                        val = null;
+                    }
+                    break;
+            }
+        }
+        if (isNone(val)) {
+            delete obj[key];
+        }
+    }
+    return obj;
+}
+
+function clone$2(obj) {
+    const cln = {};
+    const objKeys = keys(obj);
+    let key, val;
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        key = objKeys[i];
+        val = obj[key];
+        switch (of(val)) {
+            case ARRAY:
+                cln[key] = clone(val);
+                break;
+            case DATE:
+                cln[key] = clone$1(val);
+                break;
+            case OBJECT:
+                cln[key] = clone$2(val);
+                break;
+            default:
+                cln[key] = obj[key];
+                break;
+        }
+    }
+    return cln;
+}
+
+function decodeBase64(str) {
+    return decode(decode$1(str));
+}
+
+function decodeJSON(str) {
+    return decode(str);
+}
+
+function decodeJSONById(id, defaultValue = null) {
+    return decodeById(id, defaultValue);
+}
+
+function decodeParameters(str) {
+    return getParametersDict(`?${str}`);
+}
+
+function encodeBase64(obj) {
+    return encode$1(encode(obj));
+}
+
+function encodeJSON(obj) {
+    return encode(obj);
+}
+
+function encodeParameters(obj, objKeysFilter) {
+    const objClean = clean$1(clone$2(obj), true);
+    const objKeys = isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
+    let key;
+    let val;
+    const keyval = [];
+
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        key = objKeys[i];
+        if (hasOwnProp(objClean, key)) {
+            val = objClean[key];
+            keyval.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
+        }
+    }
+
+    return keyval.join('&');
+}
+
+function equals$2(obj1, obj2) {
+    if (obj1 === obj2 || is(obj1, obj2)) {
+        return true;
+    }
+
+    let key, val1, val2, type1, type2;
+
+    type1 = of(obj1);
+    type2 = of(obj2);
+
+    if (type1 !== type2) {
+        return false;
+    }
+
+    switch (type1) {
+        case ARRAY:
+        case OBJECT:
+            break;
+        case NUMBER:
+            return equals$3(obj1, obj2);
+        default:
+            return String(obj1) === String(obj2);
+    }
+
+    for (key in obj2) {
+        if (!(key in obj1)) {
+            return false;
+        }
+    }
+
+    for (key in obj1) {
+        val1 = obj1[key];
+        val2 = obj2[key];
+
+        if (is(obj1, val1) || is(obj2, val2) || is(val1, val2) || val1 === val2) {
+            continue;
+        }
+
+        if (!equals$2(val1, val2)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function hasOwnProp(obj, key) {
+    return Object.prototype.hasOwnProperty.call(obj, key);
+}
+
+function is(obj1, obj2) {
+    return Object.is(obj1, obj2);
+}
+
+const keypath = {
+    get(obj, path, defaultValue) {
+        const objKeys = path.split('.');
+        let key;
+        let cursor = obj;
+        for (let i = 0, j = objKeys.length; i < j; i++) {
+            key = objKeys[i];
+            try {
+                cursor = cursor[key];
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        return isUndefined(cursor) ? defaultValue : cursor;
+    },
+
+    set(obj, path, value) {
+        const objKeys = path.split('.');
+        let key;
+        let cursor = obj;
+        for (let i = 0, j = objKeys.length; i < j; i++) {
+            key = objKeys[i];
+            if (key === '__proto__' || key === 'constructor') {
+                break;
+            }
+            if (i < j - 1) {
+                // create missing containers, but never overwrite existing arrays
+                if (!isObject(cursor[key]) && !isArray(cursor[key])) {
+                    cursor[key] = {};
+                }
+                cursor = cursor[key];
+            } else {
+                cursor[key] = value;
+            }
+        }
+    },
+};
+
+function keys(obj, sorted) {
+    const k = Object.keys(obj);
+    if (sorted === true) {
+        k.sort();
+    }
+    return k;
+}
+
+function length$1(obj) {
+    return keys(obj).length;
+}
+
+function map$1(obj, func) {
+    const m = {};
+    keys(obj).forEach((k) => {
+        m[k] = func.call(null, obj[k], k, obj);
+    });
+    return m;
+}
+
+function merge(obj1, obj2, ...objs) {
+    const objsList = [{}, obj1, obj2].concat(objs);
+    const obj = assign.apply(null, objsList);
+    return obj;
+}
+
+function search(objs, filter) {
+    // prettier-ignore
+    const results = [];
+    let i, j, k, m, obj, res, objKeys, key, val;
+    for (i = 0, j = objs.length; i < j; i++) {
+        obj = objs[i];
+        res = obj;
+        objKeys = keys(filter);
+        for (k = 0, m = objKeys.length; k < m; k++) {
+            key = objKeys[k];
+            val = filter[key];
+            if (!equals$2(obj[key], val)) {
+                res = null;
+                break;
+            }
+        }
+        if (res) {
+            results.push(res);
+        }
+    }
+    return results;
+}
+
+function values(obj, sorted) {
+    const objKeys = keys(obj, sorted);
+    const vals = [];
+    for (let i = 0, j = objKeys.length; i < j; i++) {
+        vals.push(obj[objKeys[i]]);
+    }
+    return vals;
+}
+
+var ObjectUtil = {
+    assign,
+    clean: clean$1,
+    clone: clone$2,
+    decodeBase64,
+    decodeJSON,
+    decodeJSONById,
+    decodeParameters,
+    encodeBase64,
+    encodeJSON,
+    encodeParameters,
+    equals: equals$2,
+    hasOwnProp,
+    is,
+    keypath,
+    keys,
+    length: length$1,
+    map: map$1,
+    merge,
+    search,
+    values,
+};
+
+function argument(...args) {
+    return element(args);
+}
+
+function bit(chance) {
+    return boolean(chance) ? 1 : 0;
+}
+
+function boolean(chance) {
+    return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
+}
+
+function color() {
+    return integer(0, 0xffffff);
+}
+
+function element(array) {
+    return array[index$1(array)];
+}
+
+function float(min, max) {
+    return min + Math.random() * (max - min);
+}
+
+function index$1(array) {
+    return integer(0, array.length - 1);
+}
+
+function integer(min, max) {
+    return Math.floor(Math.round(float(min - 0.5, max + 0.5)));
+}
+
+function map(func, count) {
+    const m = [];
+    for (let i = 0; i < count; i++) {
+        m.push(func(i));
+    }
+    return m;
+}
+
+function sign(chance) {
+    return boolean(chance) ? 1 : -1;
+}
+
+function string(
+    length,
+    charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
+) {
+    const c = charset.split('');
+    const r = element;
+    let i = 0;
+    let s = '';
+    while (i < length) {
+        s += r(c);
+        i++;
+    }
+    return s;
+}
+
+var RandomUtil = {
+    argument,
+    bit,
+    boolean,
+    color,
+    element,
+    float,
+    index: index$1,
+    integer,
+    map,
+    sign,
+    string,
+};
+
 function contains$1(str, occurrence) {
     return Boolean(str.includes(occurrence));
 }
@@ -1086,24 +1087,20 @@ function icontains(str, occurrence) {
 function levenshteinDistance(a, b) {
     // taken from GitHub here:
     // https://gist.github.com/andrei-m/982927#gistcomment-586471
-    const m = [];
-    for (let i = 0; i <= b.length; i++) {
-        m[i] = [i];
-        if (i === 0) {
-            continue;
-        }
-        for (let j = 0; j <= a.length; j++) {
-            m[0][j] = j;
-            if (j === 0) {
-                continue;
-            }
-            m[i][j] =
+    // only the previous and the current rows of the matrix are needed
+    let prev = Array.from({ length: a.length + 1 }, (_, j) => j);
+    let curr = new Array(a.length + 1);
+    for (let i = 1; i <= b.length; i++) {
+        curr[0] = i;
+        for (let j = 1; j <= a.length; j++) {
+            curr[j] =
                 b.charAt(i - 1) === a.charAt(j - 1)
-                    ? m[i - 1][j - 1]
-                    : Math.min(m[i - 1][j - 1] + 1, m[i][j - 1] + 1, m[i - 1][j] + 1);
+                    ? prev[j - 1]
+                    : Math.min(prev[j - 1] + 1, curr[j - 1] + 1, prev[j] + 1);
         }
+        [prev, curr] = [curr, prev];
     }
-    return m[b.length][a.length];
+    return prev[a.length];
 }
 
 function levenshteinSimilarity(a, b) {
@@ -1136,7 +1133,7 @@ function padZeros(str, len) {
 }
 
 function escapeRegex(str) {
-    return String(str || '').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return String(str ?? '').replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 }
 
 function render(str, data, placeholderStart, placeholderEnd) {
@@ -1144,25 +1141,21 @@ function render(str, data, placeholderStart, placeholderEnd) {
     const escapedEnd = escapeRegex(placeholderEnd || '}}');
     const pattern = `${escapedStart}[\\s]*([a-zA-Z0-9\\-\\_]+){1}[\\s]*${escapedEnd}`;
     const regex = new RegExp(pattern, 'g');
-    const matches = Array.from(str.matchAll(regex));
-    let occurrence, replacement;
     data = data || {};
-    matches.forEach((match) => {
-        occurrence = match[0];
-        replacement = data[match[1]];
-        if (isNone(replacement)) {
-            replacement = '';
-        }
-        str = replace$1(str, occurrence, replacement);
+    // single pass: values are never parsed as placeholders or replacement patterns
+    return str.replace(regex, (occurrence, key) => {
+        const replacement = hasOwnProp(data, key) ? data[key] : undefined;
+        return isNone(replacement) ? '' : String(replacement);
     });
-    return str;
 }
 
 function replace$1(str, occurrence, replacement, caseSensitive) {
     const pattern = escapeRegex(occurrence);
     const flags = caseSensitive === false ? 'gi' : 'g';
     const regex = new RegExp(pattern, flags);
-    return str.replace(regex, String(replacement));
+    const replacementStr = String(replacement);
+    // use a function to avoid the special replacement patterns ($&, $1, $$, ...)
+    return str.replace(regex, () => replacementStr);
 }
 
 function reverse(str) {
@@ -1177,75 +1170,187 @@ function rotate$2(str, count) {
     return chars.join('');
 }
 
-function slugify(str) {
-    const sep = '-';
-    // prettier-ignore
-    const chars = {
-        // Latin
-        'À': 'A', 'Á': 'A', 'Â': 'A', 'Ã': 'A', 'Ä': 'A', 'Å': 'A', 'Æ': 'AE',
-        'Ç': 'C', 'È': 'E', 'É': 'E', 'Ê': 'E', 'Ë': 'E', 'Ì': 'I', 'Í': 'I',
-        'Î': 'I', 'Ï': 'I', 'Ð': 'D', 'Ñ': 'N', 'Ò': 'O', 'Ó': 'O', 'Ô': 'O',
-        'Õ': 'O', 'Ö': 'O', 'Ő': 'O', 'Ø': 'O', 'Ù': 'U', 'Ú': 'U', 'Û': 'U',
-        'Ü': 'U', 'Ű': 'U', 'Ý': 'Y', 'Þ': 'TH', 'ß': 'ss', 'à': 'a', 'á': 'a',
-        'â': 'a', 'ã': 'a', 'ä': 'a', 'å': 'a', 'æ': 'ae', 'ç': 'c', 'è': 'e',
-        'é': 'e', 'ê': 'e', 'ë': 'e', 'ì': 'i', 'í': 'i', 'î': 'i', 'ï': 'i',
-        'ð': 'd', 'ñ': 'n', 'ò': 'o', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ö': 'o',
-        'ő': 'o', 'ø': 'o', 'ù': 'u', 'ú': 'u', 'û': 'u', 'ü': 'u', 'ű': 'u',
-        'ý': 'y', 'þ': 'th', 'ÿ': 'y', 'ẞ': 'SS', 'œ': 'oe', 'Œ': 'OE',
-        // Greek
-        'α': 'a', 'β': 'b', 'γ': 'g', 'δ': 'd', 'ε': 'e', 'ζ': 'z', 'η': 'h',
-        'θ': '8', 'ι': 'i', 'κ': 'k', 'λ': 'l', 'μ': 'm', 'ν': 'n', 'ξ': '3',
-        'ο': 'o', 'π': 'p', 'ρ': 'r', 'σ': 's', 'τ': 't', 'υ': 'y', 'φ': 'f',
-        'χ': 'x', 'ψ': 'ps', 'ω': 'w', 'ά': 'a', 'έ': 'e', 'ί': 'i', 'ό': 'o',
-        'ύ': 'y', 'ή': 'h', 'ώ': 'w', 'ς': 's', 'ϊ': 'i', 'ΰ': 'y', 'ϋ': 'y',
-        'ΐ': 'i', 'Α': 'A', 'Β': 'B', 'Γ': 'G', 'Δ': 'D', 'Ε': 'E', 'Ζ': 'Z',
-        'Η': 'H', 'Θ': '8', 'Ι': 'I', 'Κ': 'K', 'Λ': 'L', 'Μ': 'M', 'Ν': 'N',
-        'Ξ': '3', 'Ο': 'O', 'Π': 'P', 'Ρ': 'R', 'Σ': 'S', 'Τ': 'T', 'Υ': 'Y',
-        'Φ': 'F', 'Χ': 'X', 'Ψ': 'PS', 'Ω': 'W', 'Ά': 'A', 'Έ': 'E', 'Ί': 'I',
-        'Ό': 'O', 'Ύ': 'Y', 'Ή': 'H', 'Ώ': 'W', 'Ϊ': 'I', 'Ϋ': 'Y',
-        // Turkish
-        'ş': 's', 'Ş': 'S', 'ı': 'i', 'İ': 'I', 'ğ': 'g', 'Ğ': 'G',
-        // Russian
-        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo',
-        'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'j', 'к': 'k', 'л': 'l', 'м': 'm',
-        'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u',
-        'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'sh', 'ъ': 'u',
-        'ы': 'y', 'э': 'e', 'ю': 'yu', 'я': 'ya', 'А': 'A', 'Б': 'B',
-        'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ё': 'Yo', 'Ж': 'Zh', 'З': 'Z',
-        'И': 'I', 'Й': 'J', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O',
-        'П': 'P', 'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'H',
-        'Ц': 'C', 'Ч': 'Ch', 'Ш': 'Sh', 'Щ': 'Sh', 'Ъ': 'U', 'Ы': 'Y',
-        'Э': 'E', 'Ю': 'Yu', 'Я': 'Ya',
-        // Ukranian
-        'Є': 'Ye', 'І': 'I', 'Ї': 'Yi', 'Ґ': 'G',
-        'є': 'ye', 'і': 'i', 'ї': 'yi', 'ґ': 'g',
-        // Czech
-        'č': 'c', 'ď': 'd', 'ě': 'e', 'ň': 'n', 'ř': 'r', 'š': 's',
-        'ť': 't', 'ů': 'u', 'ž': 'z', 'Č': 'C', 'Ď': 'D', 'Ě': 'E',
-        'Ň': 'N', 'Ř': 'R', 'Š': 'S', 'Ť': 'T', 'Ů': 'U', 'Ž': 'Z',
-        // Polish
-        'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ś': 's',
-        'ź': 'z', 'ż': 'z', 'Ą': 'A', 'Ć': 'C', 'Ę': 'e', 'Ł': 'L',
-        'Ń': 'N', 'Ś': 'S', 'Ź': 'Z', 'Ż': 'Z',
-        // Latvian
-        'ā': 'a', 'ē': 'e', 'ģ': 'g', 'ī': 'i', 'ķ': 'k', 'ļ': 'l',
-        'ņ': 'n', 'ū': 'u', 'Ā': 'A', 'Ē': 'E', 'Ģ': 'G', 'Ī': 'i',
-        'Ķ': 'k', 'Ļ': 'L', 'Ņ': 'N', 'Ū': 'u'
-    };
+// Transliteration table used by slugify, applied after the NFKD normalization
+// (accented chars are decomposed and their combining marks removed, eg. 'é' -> 'e').
+// It contains only the chars that NFKD does not reduce to ascii, with the values of Unidecode 1.4.0
+// as used by python-slugify 8.0.4 (unidecode quotes removed), for these Unicode blocks:
+// Latin-1 Supplement, Latin Extended-A/B, Spacing Modifier Letters, Greek, Cyrillic,
+// Latin Extended Additional, General Punctuation, Currency Symbols.
+// prettier-ignore
+const SLUGIFY_CHARS = {
+    // Latin-1 Supplement, Latin Extended-A/B
+    '¢': 'C/', '£': 'PS', '¥': 'Y=', '§': 'SS', '©': '(c)', '\u00AD': '', '®': '(r)',
+    '°': 'deg', '¶': 'P', 'Æ': 'AE', 'Ð': 'D', '×': 'x', 'Ø': 'O', 'Þ': 'Th', 'ß': 'ss',
+    'æ': 'ae', 'ð': 'd', 'ø': 'o', 'þ': 'th', 'Đ': 'D', 'đ': 'd', 'Ħ': 'H', 'ħ': 'h',
+    'ı': 'i', 'ĸ': 'k', 'Ł': 'L', 'ł': 'l', 'Ŋ': 'NG', 'ŋ': 'ng', 'Œ': 'OE', 'œ': 'oe',
+    'Ŧ': 'T', 'ŧ': 't', 'ƀ': 'b', 'Ɓ': 'B', 'Ƃ': 'B', 'ƃ': 'b', 'Ƅ': '6', 'ƅ': '6',
+    'Ɔ': 'O', 'Ƈ': 'C', 'ƈ': 'c', 'Ɖ': 'D', 'Ɗ': 'D', 'Ƌ': 'D', 'ƌ': 'd', 'ƍ': 'd',
+    'Ǝ': '3', 'Ɛ': 'E', 'Ƒ': 'F', 'ƒ': 'f', 'Ɠ': 'G', 'Ɣ': 'G', 'ƕ': 'hv', 'Ɩ': 'I',
+    'Ɨ': 'I', 'Ƙ': 'K', 'ƙ': 'k', 'ƚ': 'l', 'ƛ': 'l', 'Ɯ': 'W', 'Ɲ': 'N', 'ƞ': 'n',
+    'Ɵ': 'O', 'Ƣ': 'OI', 'ƣ': 'oi', 'Ƥ': 'P', 'ƥ': 'p', 'Ʀ': 'YR', 'Ƨ': '2', 'ƨ': '2',
+    'Ʃ': 'SH', 'ƪ': 'sh', 'ƫ': 't', 'Ƭ': 'T', 'ƭ': 't', 'Ʈ': 'T', 'Ʊ': 'Y', 'Ʋ': 'V',
+    'Ƴ': 'Y', 'ƴ': 'y', 'Ƶ': 'Z', 'ƶ': 'z', 'Ʒ': 'ZH', 'Ƹ': 'ZH', 'ƹ': 'zh', 'ƺ': 'zh',
+    'ƻ': '2', 'Ƽ': '5', 'ƽ': '5', 'ƾ': 'ts', 'ƿ': 'w', 'Ǥ': 'G', 'ǥ': 'g', 'Ƕ': 'HV',
+    'Ƿ': 'W', 'Ȝ': 'Y', 'ȝ': 'y', 'Ƞ': 'N', 'ȡ': 'd', 'Ȣ': 'OU', 'ȣ': 'ou', 'Ȥ': 'Z',
+    'ȥ': 'z', 'ȴ': 'l', 'ȵ': 'n', 'ȶ': 't', 'ȷ': 'j', 'ȸ': 'db', 'ȹ': 'qp', 'Ⱥ': 'A',
+    'Ȼ': 'C', 'ȼ': 'c', 'Ƚ': 'L', 'Ⱦ': 'T', 'ȿ': 's', 'ɀ': 'z', 'Ɂ': '', 'ɂ': '',
+    'Ƀ': 'B', 'Ʉ': 'U', 'Ɇ': 'E', 'ɇ': 'e', 'Ɉ': 'J', 'ɉ': 'j', 'Ɋ': 'q', 'ɋ': 'q',
+    'Ɍ': 'R', 'ɍ': 'r', 'Ɏ': 'Y', 'ɏ': 'y',
+    // Spacing Modifier Letters
+    'ʹ': '', 'ʼ': '', 'ʿ': '', '˅': 'V', 'ˇ': 'V', 'ˈ': '', '˓': '', '˕': 'V', '˞': 'R',
+    '˟': 'X', '˥': '', '˦': '', '˧': '', '˨': '', '˩': '', '˪': '', '˫': '', 'ˬ': 'V',
+    '˯': '', '˰': '', '˱': '', '˲': '', '˳': '', '˴': '', '˵': '', '˶': '', '˷': '',
+    '˸': '', '˹': '', '˺': '', '˻': '', '˼': '', '˽': '', '˾': '', '˿': '',
+    // Greek
+    'Ͱ': '', 'ͱ': '', 'Ͳ': '', 'ͳ': '', 'Ͷ': '', 'ͷ': '', 'ͻ': '', 'ͼ': '', 'ͽ': '',
+    'Ϳ': '', 'Α': 'A', 'Β': 'B', 'Γ': 'G', 'Δ': 'D', 'Ε': 'E', 'Ζ': 'Z', 'Η': 'E',
+    'Θ': 'Th', 'Ι': 'I', 'Κ': 'K', 'Λ': 'L', 'Μ': 'M', 'Ν': 'N', 'Ξ': 'Ks', 'Ο': 'O',
+    'Π': 'P', 'Ρ': 'R', 'Σ': 'S', 'Τ': 'T', 'Υ': 'U', 'Φ': 'Ph', 'Χ': 'Kh', 'Ψ': 'Ps',
+    'Ω': 'O', 'α': 'a', 'β': 'b', 'γ': 'g', 'δ': 'd', 'ε': 'e', 'ζ': 'z', 'η': 'e',
+    'θ': 'th', 'ι': 'i', 'κ': 'k', 'λ': 'l', 'μ': 'm', 'ν': 'n', 'ξ': 'x', 'ο': 'o',
+    'π': 'p', 'ρ': 'r', 'ς': 's', 'σ': 's', 'τ': 't', 'υ': 'u', 'φ': 'ph', 'χ': 'kh',
+    'ψ': 'ps', 'ω': 'o', 'Ϗ': '', 'Ϙ': '', 'ϙ': '', 'Ϛ': 'St', 'ϛ': 'st', 'Ϝ': 'W',
+    'ϝ': 'w', 'Ϟ': 'Q', 'ϟ': 'q', 'Ϡ': 'Sp', 'ϡ': 'sp', 'Ϣ': 'Sh', 'ϣ': 'sh', 'Ϥ': 'F',
+    'ϥ': 'f', 'Ϧ': 'Kh', 'ϧ': 'kh', 'Ϩ': 'H', 'ϩ': 'h', 'Ϫ': 'G', 'ϫ': 'g', 'Ϭ': 'CH',
+    'ϭ': 'ch', 'Ϯ': 'Ti', 'ϯ': 'ti', 'ϳ': 'j', '϶': '', 'Ϸ': '', 'ϸ': '', 'Ϻ': '',
+    'ϻ': '', 'ϼ': '', 'Ͻ': '', 'Ͼ': '', 'Ͽ': '',
+    // Cyrillic
+    'Ђ': 'Dj', 'Є': 'Ie', 'Ѕ': 'Dz', 'І': 'I', 'Ј': 'J', 'Љ': 'Lj', 'Њ': 'Nj', 'Ћ': 'Tsh',
+    'Џ': 'Dzh', 'А': 'A', 'Б': 'B', 'В': 'V', 'Г': 'G', 'Д': 'D', 'Е': 'E', 'Ж': 'Zh',
+    'З': 'Z', 'И': 'I', 'К': 'K', 'Л': 'L', 'М': 'M', 'Н': 'N', 'О': 'O', 'П': 'P',
+    'Р': 'R', 'С': 'S', 'Т': 'T', 'У': 'U', 'Ф': 'F', 'Х': 'Kh', 'Ц': 'Ts', 'Ч': 'Ch',
+    'Ш': 'Sh', 'Щ': 'Shch', 'Ъ': '', 'Ы': 'Y', 'Ь': '', 'Э': 'E', 'Ю': 'Iu', 'Я': 'Ia',
+    'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ж': 'zh', 'з': 'z',
+    'и': 'i', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r',
+    'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'kh', 'ц': 'ts', 'ч': 'ch', 'ш': 'sh',
+    'щ': 'shch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'iu', 'я': 'ia', 'ђ': 'dj',
+    'є': 'ie', 'ѕ': 'dz', 'і': 'i', 'ј': 'j', 'љ': 'lj', 'њ': 'nj', 'ћ': 'tsh',
+    'џ': 'dzh', 'Ѡ': 'O', 'ѡ': 'o', 'Ѣ': 'E', 'ѣ': 'e', 'Ѥ': 'Ie', 'ѥ': 'ie', 'Ѧ': 'E',
+    'ѧ': 'e', 'Ѩ': 'Ie', 'ѩ': 'ie', 'Ѫ': 'O', 'ѫ': 'o', 'Ѭ': 'Io', 'ѭ': 'io', 'Ѯ': 'Ks',
+    'ѯ': 'ks', 'Ѱ': 'Ps', 'ѱ': 'ps', 'Ѳ': 'F', 'ѳ': 'f', 'Ѵ': 'Y', 'ѵ': 'y', 'Ѹ': 'u',
+    'ѹ': 'u', 'Ѻ': 'O', 'ѻ': 'o', 'Ѽ': 'O', 'ѽ': 'o', 'Ѿ': 'Ot', 'ѿ': 'ot', 'Ҁ': 'Q',
+    'ҁ': 'q', '҂': '*1000*', '҈': '*100.000*', '҉': '*1.000.000*', 'Ҋ': '', 'ҋ': '',
+    'Ҏ': 'R', 'ҏ': 'r', 'Ґ': 'G', 'ґ': 'g', 'Ғ': 'G', 'ғ': 'g', 'Ҕ': 'G', 'ҕ': 'g',
+    'Җ': 'Zh', 'җ': 'zh', 'Ҙ': 'Z', 'ҙ': 'z', 'Қ': 'K', 'қ': 'k', 'Ҝ': 'K', 'ҝ': 'k',
+    'Ҟ': 'K', 'ҟ': 'k', 'Ҡ': 'K', 'ҡ': 'k', 'Ң': 'N', 'ң': 'n', 'Ҥ': 'Ng', 'ҥ': 'ng',
+    'Ҧ': 'P', 'ҧ': 'p', 'Ҩ': 'Kh', 'ҩ': 'kh', 'Ҫ': 'S', 'ҫ': 's', 'Ҭ': 'T', 'ҭ': 't',
+    'Ү': 'U', 'ү': 'u', 'Ұ': 'U', 'ұ': 'u', 'Ҳ': 'Kh', 'ҳ': 'kh', 'Ҵ': 'Tts', 'ҵ': 'tts',
+    'Ҷ': 'Ch', 'ҷ': 'ch', 'Ҹ': 'Ch', 'ҹ': 'ch', 'Һ': 'H', 'һ': 'h', 'Ҽ': 'Ch', 'ҽ': 'ch',
+    'Ҿ': 'Ch', 'ҿ': 'ch', 'Ӄ': 'K', 'ӄ': 'k', 'Ӆ': '', 'ӆ': '', 'Ӈ': 'N', 'ӈ': 'n',
+    'Ӊ': '', 'ӊ': '', 'Ӌ': 'Ch', 'ӌ': 'ch', 'Ӎ': '', 'ӎ': '', 'ӏ': '', 'Ӕ': 'Ae',
+    'ӕ': 'ae', 'Ӡ': 'Dz', 'ӡ': 'dz', 'Ө': 'O', 'ө': 'o', 'Ӷ': '', 'ӷ': '', 'Ӻ': '',
+    'ӻ': '', 'Ӽ': '', 'ӽ': '', 'Ӿ': '', 'ӿ': '',
+    // Latin Extended Additional
+    'ẜ': '', 'ẝ': '', 'ẞ': 'SS', 'ẟ': '', 'Ỻ': '', 'ỻ': '', 'Ỽ': '', 'ỽ': '', 'Ỿ': '',
+    'ỿ': '',
+    // General Punctuation
+    '\u200C': '', '\u200D': '', '\u200E': '', '\u200F': '', '‘': '', '’': '', '‛': '',
+    '\u202A': '', '\u202B': '', '\u202C': '', '\u202D': '', '\u202E': '', '‰': '%0',
+    '‱': '%00', '′': '', '⁋': 'PP', '⁏': '', '⁐': '', '⁑': '', '⁔': '', '⁕': '', '⁖': '',
+    '⁘': '', '⁙': '', '⁚': '', '⁛': '', '⁜': '', '⁝': '', '⁞': '', '\u2060': '',
+    '\u2061': '', '\u2062': '', '\u2063': '', '\u2064': '', '\u2066': '', '\u2067': '',
+    '\u2068': '', '\u2069': '', '\u206A': '', '\u206B': '', '\u206C': '', '\u206D': '',
+    '\u206E': '', '\u206F': '',
+    // Currency Symbols
+    '₠': 'ECU', '₡': 'CL', '₢': 'Cr', '₣': 'FF', '₤': 'L', '₥': 'mil', '₦': 'N',
+    '₧': 'Pts', '₩': 'W', '₪': 'NS', '₫': 'D', '€': 'EUR', '₭': 'K', '₮': 'T', '₯': 'Dr',
+    '₰': 'Pf', '₱': 'P', '₲': 'G', '₳': 'A', '₴': 'UAH', '₵': 'C|', '₶': 'L', '₷': 'Sm',
+    '₸': 'T', '₹': 'Rs', '₺': 'L', '₻': 'M', '₼': 'm', '₽': 'R', '₾': 'l', '₿': 'BTC',
+    '⃀': '',
+    // Other chars produced by NFKD
+    'ɣ': 'g', 'ɦ': 'h', 'ɹ': 'r', 'ɻ': 'r', 'ʁ': 'R', 'ʒ': 'Z'
+};
 
-    // transliterate non-english characters for their english equivalent
-    for (let i = 0, len = str.length; i < len; i++) {
-        if (chars[str.charAt(i)]) {
-            str = str.replace(str.charAt(i), chars[str.charAt(i)]);
+function truncateSlug(str, maxLength, wordBoundary, separator) {
+    // same algorithm of python-slugify smart_truncate (with save_order = false)
+    if (str.length < maxLength) {
+        return str;
+    }
+    if (!wordBoundary) {
+        return str.substring(0, maxLength).replace(/^-+|-+$/g, '');
+    }
+    if (!str.includes(separator)) {
+        return str.substring(0, maxLength);
+    }
+    let truncated = '';
+    let nextLength;
+    for (const word of str.split(separator)) {
+        if (!word) {
+            continue;
+        }
+        nextLength = truncated.length + word.length;
+        if (nextLength < maxLength) {
+            truncated += word + separator;
+        } else if (nextLength === maxLength) {
+            truncated += word;
+            break;
         }
     }
+    if (!truncated) {
+        truncated = str.substring(0, maxLength);
+    }
+    return truncated.replace(/^-+|-+$/g, '');
+}
 
-    str = str.toLowerCase();
-    str = str.replace(/[^a-z0-9]/gm, sep);
-    // replace multiple sep with single sep
-    str = str.replace(/[\-]+/gm, sep);
-    // strip sep from the beginning and from the end
-    str = str.replace(/^[\-]|[\-]$/gm, '');
+/**
+ * Converts a value to a URL friendly slug.
+ *
+ * The output is the same of python-slugify (8.0.4, with Unidecode) with the same options,
+ * for the scripts covered by the transliteration table: Latin (including Vietnamese),
+ * Greek and Cyrillic.
+ *
+ * Known divergences from python-slugify:
+ * - chars of other scripts (eg. CJK, Arabic, Hebrew, Armenian) are not transliterated,
+ *   they are dropped and act as separators: 'Noto Sans 日本' -> 'noto-sans'
+ *   (python-slugify returns 'noto-sans-ri-ben');
+ * - HTML entities are not decoded (eg. '&amp;', '&#233;').
+ *
+ * @param {*} value The value to slugify, converted with `String(value ?? '')`.
+ * @param {Object} [options]
+ * @param {string} [options.separator='-'] The separator that replaces every run of non alphanumeric chars.
+ * @param {boolean} [options.lowercase=true] Convert the slug to lowercase.
+ * @param {number} [options.maxLength=0] The max length of the slug, 0 means unlimited.
+ * @param {boolean} [options.wordBoundary=false] When truncating, keep only full words.
+ * @returns {string} The slug.
+ */
+function slugify(value, options) {
+    const {
+        separator = '-',
+        lowercase = true,
+        maxLength = 0,
+        wordBoundary = false,
+    } = options || {};
+    const sep = '-';
+
+    // decompose accented chars into base char + combining marks (eg. 'é' -> 'e' + '\u0301')
+    let str = String(value ?? '').normalize('NFKD');
+
+    // transliterate chars for their ascii equivalent, in a single pass
+    let transliterated = '';
+    let replacement;
+    for (const char of str) {
+        replacement = SLUGIFY_CHARS[char];
+        transliterated += replacement === undefined ? char : replacement;
+    }
+    // remove the combining marks
+    str = transliterated.replace(/\p{M}/gu, '');
+
+    if (lowercase) {
+        str = str.toLowerCase();
+    }
+    // remove thousands separators between digits, eg. '1,000' -> '1000'
+    str = str.replace(/(\d),(?=\d)/g, '$1');
+    // replace every run of non alphanumeric chars with a single separator
+    str = str.replace(/[^A-Za-z0-9]+/g, sep);
+    // strip separator from the beginning and from the end
+    str = str.replace(/^-|-$/g, '');
+
+    if (maxLength > 0) {
+        str = truncateSlug(str, maxLength, wordBoundary, sep);
+    }
+    if (separator !== sep) {
+        str = str.split(sep).join(separator);
+    }
     return str;
 }
 
@@ -1380,7 +1485,7 @@ function format(date, str) {
         ['m', minutes],
         ['ss', padZeros$1(seconds, 2)],
         ['s', seconds],
-        ['ll', padZeros$1(milliseconds, 2)],
+        ['ll', padZeros$1(milliseconds, 3)],
         ['XX', monthName],
         ['X', monthName.substring(0, 3)],
         ['ZZ', days[day]],
@@ -1630,6 +1735,7 @@ function contains(list, value, ...otherValues) {
         for (let k = 0, m = list.length; k < m; k++) {
             if (equals$2(list[k], val)) {
                 valFound = true;
+                break;
             }
         }
         if (!valFound) {
@@ -1701,7 +1807,7 @@ function max(list, callback) {
             }
             return Math.max(a, b);
         },
-        Number.MIN_VALUE
+        -Infinity
     );
 }
 
@@ -1714,7 +1820,7 @@ function min(list, callback) {
             }
             return Math.min(a, b);
         },
-        Number.MAX_VALUE
+        Infinity
     );
 }
 
@@ -1767,14 +1873,12 @@ function rotate$1(list, count) {
 }
 
 function shuffle(list) {
+    // Fisher-Yates shuffle
     const items = list.slice();
     let randomIndex;
-    let randomItems;
-    let sortedItems = list.length;
-    while (sortedItems) {
-        randomIndex = integer(0, --sortedItems);
-        randomItems = items.splice(randomIndex, 1);
-        items.push(...randomItems);
+    for (let i = items.length - 1; i > 0; i--) {
+        randomIndex = integer(0, i);
+        [items[i], items[randomIndex]] = [items[randomIndex], items[i]];
     }
     return items;
 }
@@ -1807,15 +1911,19 @@ function sort(list, key) {
         const bValIsNum = isNumber$1(bVal);
 
         if (aValIsNum && bValIsNum) {
-            return aVal <= bVal ? -1 : 1;
+            return aVal - bVal;
         } else if (aValIsNum) {
             return -1;
         } else if (bValIsNum) {
             return 1;
+        } else if (aVal === undefined || bVal === undefined) {
+            // same as the default sort: undefined values go last
+            return (aVal === undefined) - (bVal === undefined);
         } else {
-            const ab = [aVal, bVal];
-            ab.sort();
-            return ab.indexOf(aVal) <= ab.indexOf(bVal) ? -1 : 1;
+            // same as the default sort: compare string values
+            const aStr = String(aVal);
+            const bStr = String(bVal);
+            return aStr < bStr ? -1 : aStr > bStr ? 1 : 0;
         }
     };
 
@@ -1856,9 +1964,9 @@ function unzip(list) {
 
 function zip(list1, list2, ...otherLists) {
     const lists = [list1, list2].concat(otherLists);
-    let listLength = 0;
+    let listLength = Infinity;
     lists.forEach((item) => {
-        listLength = listLength === 0 ? item.length : Math.min(listLength, item.length);
+        listLength = Math.min(listLength, item.length);
     });
     const list = [];
     for (let i = 0; i < listLength; i++) {
@@ -1928,7 +2036,8 @@ function average$1(colors) {
     r = round(r / j);
     g = round(g / j);
     b = round(b / j);
-    a = round(a / j);
+    // alpha is in the 0.0 - 1.0 range, rounding it to integer would lose it
+    a = roundDecimals(a / j, 2);
     return { r: r, g: g, b: b, a: a };
 }
 
@@ -2083,12 +2192,13 @@ function interpolateLinear$1(colorFrom, colorTo, t) {
         r: round(lerp(colorFrom.r, colorTo.r, t)),
         g: round(lerp(colorFrom.g, colorTo.g, t)),
         b: round(lerp(colorFrom.b, colorTo.b, t)),
-        a: round(
+        a: roundDecimals(
             lerp(
                 isNaN(colorFrom.a) ? 1.0 : colorFrom.a,
                 isNaN(colorTo.a) ? 1.0 : colorTo.a,
                 t
-            )
+            ),
+            2
         ),
     };
 }
@@ -2102,8 +2212,7 @@ function interpolateMultilinear$1(colors, t) {
 function nearest$1(colorSearch, colors) {
     const calcDistance = distance$2;
     let tempDistance;
-    let nearestDistance =
-        calcDistance({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 }) + 1.0;
+    let nearestDistance = Infinity;
     let nearestColor = null;
     for (let i = 0, j = colors.length; i < j; i++) {
         tempDistance = calcDistance(colorSearch, colors[i]);
@@ -2343,7 +2452,7 @@ function gradient(colors, steps) {
 
 function gradientMatrix(colors, stepsX, stepsY) {
     return gradientMatrix$1(
-        map(colors, (color) => {
+        map$1(colors, (color) => {
             return toRgb(color);
         }),
         stepsX,
@@ -2412,7 +2521,8 @@ function toRgb(color) {
 
     let hex;
     if (isNumber(color)) {
-        hex = toHex(color);
+        // restore leading zeros, eg. 0x00FF00 -> '00FF00'
+        hex = toHex(color).padStart(6, '0');
     } else if (isString(color)) {
         hex = color.replace(/\#|0x/, '');
     } else {
@@ -2527,7 +2637,7 @@ var ColorUtil = {
     rgb: RGBColorUtil,
     rgbToCmyk: RGBColorUtil.toCmyk,
     // rgbToGrayscale: RGBColorUtil.toGrayscale,
-    rgbToHex: RGBColorUtil.toRgb,
+    rgbToHex: RGBColorUtil.toHex,
     // rgbToHsl: RGBColorUtil.toHsl,
     // rgbToHsv: RGBColorUtil.toHsv
 };
@@ -2970,14 +3080,15 @@ function delay(milliseconds, func, scope, ...args) {
 }
 
 function memoize(func, scope) {
-    const cache = {};
+    // Map avoids collisions with Object.prototype keys (eg. "constructor", "__proto__")
+    const cache = new Map();
 
     return function (...args) {
         const key = String(args);
-        if (!(key in cache)) {
-            cache[key] = call(func, scope, ...args);
+        if (!cache.has(key)) {
+            cache.set(key, call(func, scope, ...args));
         }
-        return cache[key];
+        return cache.get(key);
     };
 }
 
@@ -3124,7 +3235,7 @@ function degToRad(deg) {
 function fastDeg(degFrom, degTo) {
     const degDiff = degTo - degFrom;
     if (degDiff > DEG_180) {
-        return -DEG_360 + degDiff;
+        return -DEG_360 + degTo;
     } else if (degDiff < -DEG_180) {
         return DEG_360 + degTo;
     } else {
@@ -3251,22 +3362,20 @@ function project(p, distance, angle) {
 }
 
 function rect(points) {
+    // single loop instead of Math.min(...values), that throws a RangeError with large arrays
     let point;
-    const pointsX = [];
-    const pointsY = [];
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
 
     for (let i = 0, j = points.length; i < j; i++) {
         point = points[i];
-        pointsX.push(point.x);
-        pointsY.push(point.y);
+        minX = Math.min(minX, point.x);
+        minY = Math.min(minY, point.y);
+        maxX = Math.max(maxX, point.x);
+        maxY = Math.max(maxY, point.y);
     }
-
-    const minF = Math.min;
-    const minX = minF(...pointsX);
-    const minY = minF(...pointsY);
-    const maxF = Math.max;
-    const maxX = maxF(...pointsX);
-    const maxY = maxF(...pointsY);
 
     return {
         topLeft: { x: minX, y: minY },
@@ -3618,8 +3727,7 @@ function assertString(val) {
 function assertThrows(val, ...args) {
     assertFunction(val);
     try {
-        const scope = null;
-        FunctionUtil.call.apply(null, [val, scope].concat(args));
+        call(val, null, ...args);
     } catch (e) {
         return;
     }
@@ -3718,7 +3826,7 @@ function removeNamespaces(str) {
 
 var XMLUtil = { removeNamespaces };
 
-const version = '1.3.0';
+const version = '1.2.0';
 
 const utils = {
     array: ArrayUtil,
