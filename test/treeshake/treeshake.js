@@ -53,18 +53,18 @@ const fixtures = [
         check: (mod) => assert.strictEqual(mod.toUpperCaseFirst('hello'), 'Hello'),
     },
     {
-        // string.render depends on type.isNone (-> type.isUndefined, type.isNull, type.isNaN -> object.is):
+        // string.render depends on object.hasOwnProp and type.isNone (-> type.isUndefined, type.isNull, type.isNaN -> object.is):
         // only these functions of type/object must be included
         file: 'd-subpath-string-with-dependency.js',
         functions: [
             'escapeRegex',
+            'hasOwnProp',
             'is',
             'isNaN',
             'isNone',
             'isNull',
             'isUndefined',
             'render',
-            'replace',
         ],
         check: (mod) =>
             assert.strictEqual(
