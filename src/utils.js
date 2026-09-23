@@ -42,7 +42,7 @@ export * as url from './utils/url.js';
 export * as utf8 from './utils/utf8.js';
 export * as xml from './utils/xml.js';
 
-const version = '1.2.0';
+const version = '1.3.0';
 
 const utils = {
     array: ArrayUtil,

@@ -4,6 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0](https://github.com/fabiocaccamo/utils.js/releases/tag/1.3.0) - 2026-09-23
+-   Make the library tree-shakeable: add named exports, module namespaces and subpath exports (eg. `import { debounce } from '@fabiocaccamo/utils.js/func'`).
+-   Fix `exports` targets in `package.json` and `require` in Node.js (add `dist/utils.cjs` build).
+-   Improve `utils.string.slugify` transliteration and add `separator`, `lowercase`, `maxLength` and `wordBoundary` options. **Output may differ from previous versions** for Greek, Cyrillic and some Latin characters.
+-   Fix `utils.string.render` and `utils.string.replace` with special replacement patterns (`$&`, `$1`, ...) and placeholders injection.
+-   Fix `utils.string.levenshteinDistance` with empty strings.
+-   Add `utils.object.hasOwnProp` method.
+-   Add default value argument to `utils.json.decodeById` and `utils.object.decodeJSONById`.
+-   Fix `utils.array` `min`/`max` boundaries, `zip` with empty lists and improve `shuffle` and `sort` performance.
+-   Fix `utils.color.rgb` operations with alpha channel.
+-   Fix `utils.color.hex.toRgb` when hex value has leading zeros.
+-   Fix `utils.color.rgbToHex` wrong assignment.
+-   Fix `utils.date.format` milliseconds with 3 digits.
+-   Fix `utils.func.memoize` collisions with `Object.prototype` keys.
+-   Fix `utils.geom.point.rect` with many points throwing `RangeError`.
+-   Fix `utils.math.gcd` stack overflow (remove recursion).
+-   Fix `utils.object` minor issues and remove deprecated `Object.is` polyfill.
+-   Fix `utils.test.assertThrows` behavior.
+-   Fix `utils.trigo.fastDeg` with non zero start.
+-   Fix `utils.url.getParameterByName` decoding and keys inheritance.
+-   Use `globalThis` in `utils.base64` and `utils.url`.
+-   Add `test:treeshake` script and run it in CI.
+-   Update `README`.
+-   Bump requirements.
+
 ## [1.2.0](https://github.com/fabiocaccamo/utils.js/releases/tag/1.2.0) - 2026-04-21
 -   Fix prototype pollution in `assign` and regex injection in `render`. #193
 -   Add `OpenSSF Scorecard` badge, pin actions to SHA and fix workflow permissions. #192
