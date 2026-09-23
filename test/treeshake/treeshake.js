@@ -23,7 +23,7 @@ const isWindows = process.platform === 'win32';
 // markers of code that must never end up in a tree-shaken bundle
 // (checked against the non-minified output, where function names are preserved)
 const UNRELATED_CODE_MARKERS = {
-    'slugify transliteration table': /Ş/,
+    'slugify transliteration table': /shch/,
     'string.levenshtein*': /levenshtein/,
     'ease functions':
         /\b(backIn|bounceOut|elasticIn|exponentialOut|sineInOut|waveSine)\b/,

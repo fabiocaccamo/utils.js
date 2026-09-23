@@ -273,6 +273,99 @@ describe('string', () => {
         it('test special chars', () => {
             test.assertEqual(f('àèéìòùç'), 'aeeiouc');
         });
+        it('test chars at the end of the string are not lost', () => {
+            test.assertEqual(f('ßß'), 'ssss');
+        });
+        it('test non string values', () => {
+            test.assertEqual(f(null), '');
+            test.assertEqual(f(undefined), '');
+            test.assertEqual(f(12.5), '12-5');
+        });
+        describe('parity with python-slugify', () => {
+            // expected outputs generated with python-slugify 8.0.4 (Unidecode 1.4.0)
+            const cases = [
+                ['Hello World', 'hello-world'],
+                ['  Trim  me  ', 'trim-me'],
+                ['Café Sans', 'cafe-sans'],
+                ['Söhne Breit', 'sohne-breit'],
+                ['Straße Grotesk', 'strasse-grotesk'],
+                ['ßß', 'ssss'],
+                ['Grüße aus Köln', 'grusse-aus-koln'],
+                ['Ærø Æble', 'aero-aeble'],
+                ['Œuvre', 'oeuvre'],
+                ['Şoseaua Țării', 'soseaua-tarii'],
+                ['Șoseaua Țării', 'soseaua-tarii'],
+                ['Tiếng Việt', 'tieng-viet'],
+                ['Đakovo', 'dakovo'],
+                ['Łódź', 'lodz'],
+                ['Ağır Sans İstanbul', 'agir-sans-istanbul'],
+                ['Český Krumlov', 'cesky-krumlov'],
+                ['Žluťoučký kůň', 'zlutoucky-kun'],
+                ['Ελληνικά Θέμα ξ ψ', 'ellenika-thema-x-ps'],
+                ['Москва Щука Ёж', 'moskva-shchuka-ezh'],
+                ['Київ Ґанок', 'kiiv-ganok'],
+                ['Ångström', 'angstrom'],
+                ['Ñandú', 'nandu'],
+                ['Þórr', 'thorr'],
+                ['ÿes', 'yes'],
+                ['Foo.Bar', 'foo-bar'],
+                ['Foo_Bar', 'foo-bar'],
+                ['foo--bar', 'foo-bar'],
+                ["Don't Stop", 'don-t-stop'],
+                ['A & B', 'a-b'],
+                ['100% Pure', '100-pure'],
+                ['---', ''],
+                ['', ''],
+                // additional cases
+                ['1,000 Items', '1000-items'],
+                ['l’amour', 'lamour'],
+                ['мʼясо', 'miaso'],
+                ['Львів', 'lviv'],
+                ['объект', 'obekt'],
+                ['Ђорђе', 'djordje'],
+                ['Nguyễn Văn', 'nguyen-van'],
+                ['€100', 'eur100'],
+                ['© 2024 Café', 'c-2024-cafe'],
+            ];
+            cases.forEach(([value, expected]) => {
+                it(`test ${JSON.stringify(value)}`, () => {
+                    test.assertEqual(f(value), expected);
+                });
+            });
+            const casesWithOptions = [
+                ['Hello World', { separator: '_' }, 'hello_world'],
+                ['Hello World', { lowercase: false }, 'Hello-World'],
+                ['Hello Wonderful World', { maxLength: 12 }, 'hello-wonder'],
+                [
+                    'Hello Wonderful World',
+                    { maxLength: 12, wordBoundary: true },
+                    'hello-world',
+                ],
+                // additional cases
+                [
+                    'Hello Wonderful World',
+                    { maxLength: 12, separator: '_' },
+                    'hello_wonder',
+                ],
+                ['Hello World', { maxLength: 5, wordBoundary: true }, 'hello'],
+                ['Supercalifragilistic', { maxLength: 5, wordBoundary: true }, 'super'],
+            ];
+            casesWithOptions.forEach(([value, options, expected]) => {
+                it(`test ${JSON.stringify(value)} with ${JSON.stringify(options)}`, () => {
+                    test.assertEqual(f(value, options), expected);
+                });
+            });
+        });
+        describe('known divergences from python-slugify', () => {
+            it('test chars of scripts not covered by the table are dropped', () => {
+                // python-slugify returns 'noto-sans-ri-ben'
+                test.assertEqual(f('Noto Sans 日本'), 'noto-sans');
+            });
+            it('test html entities are not decoded', () => {
+                // python-slugify returns 'a-b'
+                test.assertEqual(f('A &amp; B'), 'a-amp-b');
+            });
+        });
     });
     describe('startsWith', () => {
         const f = string.startsWith;
@@ -375,6 +468,35 @@ describe('string', () => {
         it('test special white space chars', () => {
             const s = 'lorem ipsum \n \r \t';
             test.assertEqual(f(s), 'lorem ipsum');
+        });
+    });
+    describe('regressions', () => {
+        it('test render does not parse values as placeholders', () => {
+            const s = string.render('{{a}} {{b}}', { a: '{{b}}', b: 'x' });
+            test.assertEqual(s, '{{b}} x');
+        });
+        it('test render keeps replacement patterns in values', () => {
+            test.assertEqual(
+                string.render('{{a}}', { a: "$& $$ $1 $'" }),
+                "$& $$ $1 $'"
+            );
+        });
+        it('test render ignores inherited keys', () => {
+            test.assertEqual(string.render('{{constructor}}{{toString}}', {}), '');
+        });
+        it('test replace keeps replacement patterns', () => {
+            test.assertEqual(string.replace('price: X', 'X', '$&'), 'price: $&');
+        });
+        it('test replace with number occurrence', () => {
+            test.assertEqual(string.replace('a0b0', 0, '-'), 'a-b-');
+        });
+        it('test slugify with multiple expanding chars', () => {
+            test.assertEqual(string.slugify('ÆÆÆ ßß'), 'aeaeae-ssss');
+        });
+        it('test levenshteinDistance with empty string', () => {
+            test.assertEqual(string.levenshteinDistance('abc', ''), 3);
+            test.assertEqual(string.levenshteinDistance('', 'abc'), 3);
+            test.assertEqual(string.levenshteinDistance('', ''), 0);
         });
     });
 });
