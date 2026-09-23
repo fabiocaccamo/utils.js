@@ -61,7 +61,7 @@ export function format(date, str) {
         ['m', minutes],
         ['ss', padZeros(seconds, 2)],
         ['s', seconds],
-        ['ll', padZeros(milliseconds, 2)],
+        ['ll', padZeros(milliseconds, 3)],
         ['XX', monthName],
         ['X', monthName.substring(0, 3)],
         ['ZZ', days[day]],

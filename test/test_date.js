@@ -313,4 +313,10 @@ describe('date', () => {
             test.assertEqual(s, '1985-04-03');
         });
     });
+    describe('regressions', () => {
+        it('test format milliseconds with 3 digits', () => {
+            const a = new Date(1985, 3, 3, 23, 57, 5, 7);
+            test.assertEqual(d.format(a, 'ss.ll'), '05.007');
+        });
+    });
 });
