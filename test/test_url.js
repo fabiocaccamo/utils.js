@@ -251,4 +251,14 @@ describe('url', () => {
             test.assertFalse(f('https://127.0.0.2:8000/index.html'));
         });
     });
+    describe('regressions', () => {
+        it('test getParameters with malformed uri sequence', () => {
+            test.assertEqual(url.getParameters('https://x.com/?q=100%'), { q: '100%' });
+        });
+        it('test getParameterByName and hasParameter with inherited keys', () => {
+            const u = 'https://x.com/?a=1';
+            test.assertUndefined(url.getParameterByName(u, 'constructor'));
+            test.assertFalse(url.hasParameter(u, 'toString'));
+        });
+    });
 });

@@ -15,6 +15,15 @@ export function getDomain(url = getURL(), level) {
     return domainName;
 }
 
+function decodeParameter(value) {
+    try {
+        return decodeURIComponent(value);
+    } catch (e) {
+        // malformed URI sequence, eg. "100%"
+        return value;
+    }
+}
+
 export function getParameterByName(url, name, defaultValue) {
     const paramsDict = getParameters(url);
     return hasOwnProp(paramsDict, name)
@@ -45,7 +54,7 @@ export function getParametersList(url) {
     while (paramMatch) {
         paramsList.push({
             key: paramMatch[2],
-            value: decodeURIComponent(paramMatch[4] || ''),
+            value: decodeParameter(paramMatch[4] || ''),
         });
         paramMatch = paramsRE.exec(paramsString);
     }
