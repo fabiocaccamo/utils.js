@@ -183,20 +183,6 @@ export function equals(obj1, obj2) {
 }
 
 export function is(obj1, obj2) {
-    // https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-    if (!Object.is) {
-        Object.is = (x, y) => {
-            // Algoritmo SameValue
-            if (x === y) {
-                // Steps 1-5, 7-10
-                // Steps 6.b-6.e: +0 != -0
-                return x !== 0 || 1 / x === 1 / y;
-            } else {
-                // Step 6.a: NaN === NaN
-                return x !== x && y !== y;
-            }
-        };
-    }
     return Object.is(obj1, obj2);
 }
 
