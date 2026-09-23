@@ -1,81 +1,98 @@
-import DateUtil from './date.js';
-import FuncUtil from './func.js';
-import MathUtil from './math.js';
-import ObjectUtil from './object.js';
-import RandomUtil from './random.js';
-import StringUtil from './string.js';
-import TypeUtil from './type.js';
+import { clone as dateClone } from './date.js';
+import { cycle } from './math.js';
+import {
+    clean as objectClean,
+    clone as objectClone,
+    equals as objectEquals,
+    length,
+} from './object.js';
+import { integer } from './random.js';
+import { trim } from './string.js';
+import {
+    ARRAY,
+    DATE,
+    OBJECT,
+    STRING,
+    isArray as typeIsArray,
+    isFunction,
+    isNone,
+    isNumber as typeIsNumber,
+    isObject as typeIsObject,
+    isString as typeIsString,
+    isUndefined,
+    of,
+} from './type.js';
 
-function all(list) {
+export function all(list) {
     return list.every((item) => {
-        switch (TypeUtil.of(item)) {
-            case TypeUtil.ARRAY:
+        switch (of(item)) {
+            case ARRAY:
                 return item.length > 0;
-            case TypeUtil.OBJECT:
-                return ObjectUtil.length(item) > 0;
+            case OBJECT:
+                return length(item) > 0;
             default:
                 return Boolean(item);
         }
     });
 }
 
-function any(list) {
+export function any(list) {
     return list.some((item) => {
-        switch (TypeUtil.of(item)) {
-            case TypeUtil.ARRAY:
+        switch (of(item)) {
+            case ARRAY:
                 return item.length > 0;
-            case TypeUtil.OBJECT:
-                return ObjectUtil.length(item) > 0;
+            case OBJECT:
+                return length(item) > 0;
             default:
                 return Boolean(item);
         }
     });
 }
 
-function clean(list, hard) {
+export function clean(list, hard) {
     let items = list.slice();
     items = items.filter((item) => {
-        return !TypeUtil.isNone(item);
+        return !isNone(item);
     });
     if (hard === true) {
         items = items
             .map((item) => {
                 let itemClean;
-                switch (TypeUtil.of(item)) {
-                    case TypeUtil.ARRAY:
+                switch (of(item)) {
+                    case ARRAY:
                         itemClean = clean(item, hard);
                         return itemClean.length > 0 ? itemClean : null;
-                    case TypeUtil.OBJECT:
-                        itemClean = ObjectUtil.clean(item, hard);
-                        return ObjectUtil.length(itemClean) > 0 ? itemClean : null;
-                    case TypeUtil.STRING:
-                        itemClean = StringUtil.trim(item);
+                    case OBJECT:
+                        itemClean = objectClean(item, hard);
+                        return length(itemClean) > 0 ? itemClean : null;
+                    case STRING:
+                        itemClean = trim(item);
                         return itemClean !== '' ? item : null;
                     default:
                         return item;
                 }
             })
             .filter((item) => {
-                return !TypeUtil.isNone(item);
+                return !isNone(item);
             });
     }
     return items;
 }
 
-function clone(list) {
+export function clone(list) {
     const cln = list.slice();
     let val;
     for (let i = 0, j = cln.length; i < j; i++) {
         val = cln[i];
-        switch (TypeUtil.of(val)) {
-            case TypeUtil.ARRAY:
+        switch (of(val)) {
+            case ARRAY:
                 cln[i] = clone(val);
                 break;
-            case TypeUtil.DATE:
-                cln[i] = DateUtil.clone(val);
+            case DATE:
+                cln[i] = dateClone(val);
                 break;
-            case TypeUtil.OBJECT:
-                cln[i] = ObjectUtil.clone(val);
+            case OBJECT:
+                cln[i] = objectClone(val);
                 break;
             default:
                 break;
@@ -84,7 +101,7 @@ function clone(list) {
     return cln;
 }
 
-function contains(list, value, ...otherValues) {
+export function contains(list, value, ...otherValues) {
     const values = [value].concat(otherValues);
     let val, valFound;
 
@@ -92,7 +109,7 @@ function contains(list, value, ...otherValues) {
         val = values[i];
         valFound = false;
         for (let k = 0, m = list.length; k < m; k++) {
-            if (ObjectUtil.equals(list[k], val)) {
+            if (objectEquals(list[k], val)) {
                 valFound = true;
             }
         }
@@ -104,14 +121,14 @@ function contains(list, value, ...otherValues) {
     return true;
 }
 
-function equals(listA, listB) {
-    return ObjectUtil.equals(listA, listB);
+export function equals(listA, listB) {
+    return objectEquals(listA, listB);
 }
 
-function flatten(list) {
+export function flatten(list) {
     const items = [];
     for (let i = 0, j = list.length; i < j; i++) {
-        if (TypeUtil.isArray(list[i])) {
+        if (typeIsArray(list[i])) {
             items.push(...flatten(list[i]));
         } else {
             items.push(list[i]);
@@ -120,13 +137,13 @@ function flatten(list) {
     return items;
 }
 
-function index(list, keys, flat) {
+export function index(list, keys, flat) {
     const dict = {};
     let item;
     let key;
     let val;
 
-    if (TypeUtil.isString(keys)) {
+    if (typeIsString(keys)) {
         keys = [keys];
     }
 
@@ -140,7 +157,7 @@ function index(list, keys, flat) {
             if (flat === true) {
                 dict[val] = item;
             } else {
-                if (TypeUtil.isUndefined(dict[val])) {
+                if (isUndefined(dict[val])) {
                     dict[val] = [];
                 }
                 dict[val].push(item);
@@ -151,16 +168,16 @@ function index(list, keys, flat) {
     return dict;
 }
 
-function insert(list, index, item) {
+export function insert(list, index, item) {
     list.splice(index, 0, item);
     return list;
 }
 
-function max(list, callback) {
+export function max(list, callback) {
     return reduce(
         list,
         (a, b) => {
-            if (TypeUtil.isFunction(callback)) {
+            if (isFunction(callback)) {
                 return Math.max(a, callback(b));
             }
             return Math.max(a, b);
@@ -169,11 +186,11 @@ function max(list, callback) {
     );
 }
 
-function min(list, callback) {
+export function min(list, callback) {
     return reduce(
         list,
         (a, b) => {
-            if (TypeUtil.isFunction(callback)) {
+            if (isFunction(callback)) {
                 return Math.min(a, callback(b));
             }
             return Math.min(a, b);
@@ -182,7 +199,7 @@ function min(list, callback) {
     );
 }
 
-function paginate(list, itemsPerPage) {
+export function paginate(list, itemsPerPage) {
     const itemsTotal = list.length;
     const pagesTotal = itemsPerPage > 0 ? Math.ceil(itemsTotal / itemsPerPage) : 0;
     const pages = [];
@@ -194,28 +211,28 @@ function paginate(list, itemsPerPage) {
     return pages;
 }
 
-function reduce(list, reducer, initialValue) {
-    let value = TypeUtil.isUndefined(initialValue) ? 0 : initialValue;
+export function reduce(list, reducer, initialValue) {
+    let value = isUndefined(initialValue) ? 0 : initialValue;
     for (let i = 0, j = list.length; i < j; i++) {
         value = reducer(value, list[i], i, list);
     }
     return value;
 }
 
-function replace(list, searchValue, replacementValue) {
+export function replace(list, searchValue, replacementValue) {
     for (let i = 0, j = list.length; i < j; i++) {
-        if (ObjectUtil.equals(list[i], searchValue)) {
+        if (objectEquals(list[i], searchValue)) {
             list[i] = replacementValue;
         }
     }
     return list;
 }
 
-function remove(list, value, ...otherValues) {
+export function remove(list, value, ...otherValues) {
     const values = [value].concat(otherValues);
     for (let k = 0, m = values.length; k < m; k++) {
         for (let i = 0, j = list.length; i < j; i++) {
-            if (ObjectUtil.equals(list[i], values[k])) {
+            if (objectEquals(list[i], values[k])) {
                 list.splice(i, 1);
                 i--;
                 j--;
@@ -225,29 +242,29 @@ function remove(list, value, ...otherValues) {
     return list;
 }
 
-function rotate(list, count) {
-    const cursor = MathUtil.cycle(count, list.length);
+export function rotate(list, count) {
+    const cursor = cycle(count, list.length);
     return list.slice(cursor).concat(list.slice(0, cursor));
 }
 
-function shuffle(list) {
+export function shuffle(list) {
     const items = list.slice();
     let randomIndex;
     let randomItems;
     let sortedItems = list.length;
     while (sortedItems) {
-        randomIndex = RandomUtil.integer(0, --sortedItems);
+        randomIndex = integer(0, --sortedItems);
         randomItems = items.splice(randomIndex, 1);
         items.push(...randomItems);
     }
     return items;
 }
 
-function sort(list, key) {
-    const isArray = TypeUtil.isArray;
-    const isObject = TypeUtil.isObject;
-    const isNumber = TypeUtil.isNumber;
-    const isString = TypeUtil.isString;
+export function sort(list, key) {
+    const isArray = typeIsArray;
+    const isObject = typeIsObject;
+    const isNumber = typeIsNumber;
+    const isString = typeIsString;
 
     const compare = (a, b) => {
         let aVal;
@@ -286,11 +303,11 @@ function sort(list, key) {
     return list.sort(compare);
 }
 
-function sum(list, callback) {
+export function sum(list, callback) {
     return reduce(
         list,
         (a, b) => {
-            if (TypeUtil.isFunction(callback)) {
+            if (isFunction(callback)) {
                 return a + callback(b);
             }
             return a + b;
@@ -299,11 +316,11 @@ function sum(list, callback) {
     );
 }
 
-function unique(list) {
+export function unique(list) {
     let item;
     const items = [];
     const itemsNotEquals = (itemUnique) => {
-        return !ObjectUtil.equals(item, itemUnique);
+        return !objectEquals(item, itemUnique);
     };
     for (let i = 0, j = list.length; i < j; i++) {
         item = list[i];
@@ -314,11 +331,11 @@ function unique(list) {
     return items;
 }
 
-function unzip(list) {
+export function unzip(list) {
     return zip.apply(null, list);
 }
 
-function zip(list1, list2, ...otherLists) {
+export function zip(list1, list2, ...otherLists) {
     const lists = [list1, list2].concat(otherLists);
     let listLength = 0;
     lists.forEach((item) => {

@@ -1,4 +1,4 @@
-function decode(input) {
+export function decode(input) {
     return decodeURIComponent(escape(input));
 
     // var output = '';
@@ -30,7 +30,7 @@ function decode(input) {
     // return output;
 }
 
-function encode(input) {
+export function encode(input) {
     return unescape(encodeURIComponent(input));
 
     // input = input.replace(/\r\n/g, '\n');

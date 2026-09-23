@@ -33,12 +33,39 @@
     "url": "https://github.com/fabiocaccamo/utils.js"
   },
   "main": "dist/utils.js",
+  "module": "./src/utils.js",
   "exports": {
     ".": {
-      "import": "dist/utils.esm.js",
-      "require": "dist/utils.umd.js"
-    }
+      "import": "./src/utils.js",
+      "require": "./dist/utils.cjs"
+    },
+    "./array": "./src/utils/array.js",
+    "./base64": "./src/utils/base64.js",
+    "./color": "./src/utils/color.js",
+    "./color/cmyk": "./src/utils/color/cmyk.js",
+    "./color/hex": "./src/utils/color/hex.js",
+    "./color/rgb": "./src/utils/color/rgb.js",
+    "./date": "./src/utils/date.js",
+    "./ease": "./src/utils/ease.js",
+    "./func": "./src/utils/func.js",
+    "./geom": "./src/utils/geom.js",
+    "./geom/point": "./src/utils/geom/point.js",
+    "./hex": "./src/utils/hex.js",
+    "./interpolation": "./src/utils/interpolation.js",
+    "./json": "./src/utils/json.js",
+    "./math": "./src/utils/math.js",
+    "./number": "./src/utils/number.js",
+    "./object": "./src/utils/object.js",
+    "./random": "./src/utils/random.js",
+    "./string": "./src/utils/string.js",
+    "./test": "./src/utils/test.js",
+    "./trigo": "./src/utils/trigo.js",
+    "./type": "./src/utils/type.js",
+    "./url": "./src/utils/url.js",
+    "./utf8": "./src/utils/utf8.js",
+    "./xml": "./src/utils/xml.js"
   },
+  "sideEffects": false,
   "type": "module",
   "scripts": {
     "build": "NODE_ENV=production rimraf dist && rollup -c",
@@ -46,7 +73,8 @@
     "docs": "npm run build --production && ./node_modules/.bin/jsdoc2md ./dist/utils.js > ./docs/API.md",
     "format": "prettier --config .prettierrc --loglevel warn --write src/utils/*.js && prettier --config .prettierrc --loglevel warn --write test/*.js",
     "test": "npm run build --production && nyc mocha",
-    "watch": "rollup -c --watch"
+    "watch": "rollup -c --watch",
+    "test:treeshake": "node test/treeshake/treeshake.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",

@@ -1,20 +1,20 @@
-import StringUtil from './string.js';
-import TypeUtil from './type.js';
+import { padZeros as stringPadZeros, replace as stringReplace } from './string.js';
+import { isDate, isNumber, isString } from './type.js';
 
-function clone(date) {
+export function clone(date) {
     return new Date(date.getTime());
 }
 
-function constrain(date, a, b) {
+export function constrain(date, a, b) {
     const dateMin = min(a, b);
     const dateMax = max(a, b);
     return min(max(date, dateMin), dateMax);
 }
 
-function format(date, str) {
+export function format(date, str) {
     // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
-    const replace = StringUtil.replace;
-    const padZeros = StringUtil.padZeros;
+    const replace = stringReplace;
+    const padZeros = stringPadZeros;
     const months = [
         'January',
         'February',
@@ -79,7 +79,7 @@ function format(date, str) {
     return str;
 }
 
-function identifier(date) {
+export function identifier(date) {
     const d = date || new Date();
     const year = d.getFullYear();
     const month = d.getMonth() + 1; // getMonth() is zero-based
@@ -90,16 +90,16 @@ function identifier(date) {
     const milliseconds = d.getMilliseconds();
     return (
         String(year) +
-        StringUtil.padZeros(month, 2) +
-        StringUtil.padZeros(day, 2) +
-        StringUtil.padZeros(hours, 2) +
-        StringUtil.padZeros(minutes, 2) +
-        StringUtil.padZeros(seconds, 2) +
-        StringUtil.padZeros(milliseconds, 3)
+        stringPadZeros(month, 2) +
+        stringPadZeros(day, 2) +
+        stringPadZeros(hours, 2) +
+        stringPadZeros(minutes, 2) +
+        stringPadZeros(seconds, 2) +
+        stringPadZeros(milliseconds, 3)
     );
 }
 
-function isFuture(date, checkTime) {
+export function isFuture(date, checkTime) {
     const day = new Date(date.getTime());
     const now = new Date();
     if (checkTime !== true) {
@@ -112,7 +112,7 @@ function isFuture(date, checkTime) {
     return delta < 0;
 }
 
-function isPast(date, checkTime) {
+export function isPast(date, checkTime) {
     const day = new Date(date.getTime());
     const now = new Date();
     if (checkTime !== true) {
@@ -125,15 +125,15 @@ function isPast(date, checkTime) {
     return delta > 0;
 }
 
-function max(date, other) {
+export function max(date, other) {
     return date.getTime() > other.getTime() ? date : other;
 }
 
-function min(date, other) {
+export function min(date, other) {
     return date.getTime() <= other.getTime() ? date : other;
 }
 
-function normalize(ms) {
+export function normalize(ms) {
     const time = {
         milliseconds: ms % 1000,
         seconds: Math.floor(ms / 1000) % 60,
@@ -144,21 +144,19 @@ function normalize(ms) {
     return time;
 }
 
-function parse(date) {
+export function parse(date) {
     let timestamp;
     const timestampIsValid = (t) => {
-        return (
-            TypeUtil.isNumber(t) && t >= 0 && TypeUtil.isNumber(new Date(t).getTime())
-        );
+        return isNumber(t) && t >= 0 && isNumber(new Date(t).getTime());
     };
-    if (TypeUtil.isDate(date)) {
+    if (isDate(date)) {
         return date;
-    } else if (TypeUtil.isNumber(date)) {
+    } else if (isNumber(date)) {
         timestamp = date;
         if (timestampIsValid(timestamp)) {
             return new Date(timestamp);
         }
-    } else if (TypeUtil.isString(date)) {
+    } else if (isString(date)) {
         timestamp = Number(date);
         if (timestampIsValid(timestamp)) {
             return new Date(timestamp);
@@ -171,12 +169,12 @@ function parse(date) {
     return null;
 }
 
-function timestamp(date) {
+export function timestamp(date) {
     const d = date || new Date();
     return d.getTime();
 }
 
-function today() {
+export function today() {
     const d = new Date();
     d.setHours(0);
     d.setMinutes(0);
@@ -185,19 +183,19 @@ function today() {
     return d;
 }
 
-function tomorrow() {
+export function tomorrow() {
     const d = today();
     d.setDate(d.getDate() + 1);
     return d;
 }
 
-function yesterday() {
+export function yesterday() {
     const d = today();
     d.setDate(d.getDate() - 1);
     return d;
 }
 
-function yyyymmdd(date, separator) {
+export function yyyymmdd(date, separator) {
     const d = date || new Date();
     const year = d.getFullYear();
     const month = d.getMonth() + 1; // getMonth() is zero-based
@@ -205,8 +203,8 @@ function yyyymmdd(date, separator) {
     const sep = separator || '';
     // prettier-ignore
     return (String(year) + sep +
-            StringUtil.padZeros(month, 2) + sep +
-            StringUtil.padZeros(day, 2));
+            stringPadZeros(month, 2) + sep +
+            stringPadZeros(day, 2));
 }
 
 export default {

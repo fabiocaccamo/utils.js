@@ -4,6 +4,79 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.utils = factory());
 })(this, (function () { 'use strict';
 
+    function argument(...args) {
+        return element(args);
+    }
+
+    function bit(chance) {
+        return boolean(chance) ? 1 : 0;
+    }
+
+    function boolean(chance) {
+        return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
+    }
+
+    function color() {
+        return integer(0, 0xffffff);
+    }
+
+    function element(array) {
+        return array[index$1(array)];
+    }
+
+    function float(min, max) {
+        return min + Math.random() * (max - min);
+    }
+
+    function index$1(array) {
+        return integer(0, array.length - 1);
+    }
+
+    function integer(min, max) {
+        return Math.floor(Math.round(float(min - 0.5, max + 0.5)));
+    }
+
+    function map$2(func, count) {
+        const m = [];
+        for (let i = 0; i < count; i++) {
+            m.push(func(i));
+        }
+        return m;
+    }
+
+    function sign$1(chance) {
+        return boolean(chance) ? 1 : -1;
+    }
+
+    function string(
+        length,
+        charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
+    ) {
+        const c = charset.split('');
+        const r = element;
+        let i = 0;
+        let s = '';
+        while (i < length) {
+            s += r(c);
+            i++;
+        }
+        return s;
+    }
+
+    var RandomUtil = {
+        argument,
+        bit,
+        boolean,
+        color,
+        element,
+        float,
+        index: index$1,
+        integer,
+        map: map$2,
+        sign: sign$1,
+        string,
+    };
+
     function decode$2(input) {
         return decodeURIComponent(escape(input));
 
@@ -123,12 +196,12 @@
             }
         }
 
-        output = UTF8Util.decode(output);
+        output = decode$2(output);
         return output;
     }
 
     function encode$1(str) {
-        const input = UTF8Util.encode(str);
+        const input = encode$2(str);
         let output = '';
 
         try {
@@ -217,17 +290,10 @@
         const tMinIndex = 0;
         const tMaxIndex = parts - 1;
 
-        const tIndex = MathUtil.constrain(tScaledIndex, tMinIndex, tMaxIndex);
+        const tIndex = constrain$1(tScaledIndex, tMinIndex, tMaxIndex);
         const tReduced = tScaled - tIndex;
         return { index: tIndex, t: tReduced };
     }
-
-    var InterpolationUtil = {
-        bilinear,
-        linear,
-        multilinear,
-        scalar,
-    };
 
     function average$2(values) {
         return summation(values) / values.length;
@@ -238,14 +304,14 @@
     }
 
     function cycle(n, len, shift) {
-        if (!TypeUtil.isNumber(shift)) {
+        if (!isNumber(shift)) {
             shift = 0;
         }
         return ((((n - shift) % len) + len) % len) + shift;
     }
 
     function equals$3(a, b, tolerance) {
-        if (!TypeUtil.isNumber(tolerance)) {
+        if (!isNumber(tolerance)) {
             tolerance = 0.0000000001;
         } else if (tolerance > 0.0) {
             tolerance += 0.0000000001;
@@ -284,18 +350,18 @@
         return gcd(a - b, b);
     }
 
-    const interpolation = InterpolationUtil;
+    const interpolation = { bilinear, linear, multilinear, scalar };
 
     function lcm(a, b) {
         return (a * b) / gcd(a, b);
     }
 
     function lerp(a, b, t) {
-        return InterpolationUtil.linear(a, b, t);
+        return linear(a, b, t);
     }
 
-    function map$2(n, a, b, c, d) {
-        return InterpolationUtil.linear(c, d, normalize$1(n, a, b));
+    function map$1(n, a, b, c, d) {
+        return linear(c, d, normalize$1(n, a, b));
     }
 
     function nearest$2(n, a, b) {
@@ -308,20 +374,20 @@
 
     function proportion(a, b, x, y) {
         const args = [a, b, x, y];
-        const argsOk = ArrayUtil.clean(args);
+        const argsOk = clean(args);
         if (argsOk.length !== 3) {
             return NaN;
         }
 
         // a : b = x : y
-        const isNumber = TypeUtil.isNumber;
-        if (!isNumber(a)) {
+        const isNumber$1 = isNumber;
+        if (!isNumber$1(a)) {
             return (b * x) / y;
-        } else if (!isNumber(b)) {
+        } else if (!isNumber$1(b)) {
             return (a * y) / x;
-        } else if (!isNumber(x)) {
+        } else if (!isNumber$1(x)) {
             return (y * a) / b;
-        } else if (!isNumber(y)) {
+        } else if (!isNumber$1(y)) {
             return (x * b) / a;
         }
         return NaN;
@@ -336,7 +402,7 @@
     }
 
     function roundToNearest(n, values) {
-        const a = ArrayUtil.sort(values.concat());
+        const a = sort(values.concat());
         let i = 0,
             j = 0,
             k = a.length;
@@ -362,7 +428,7 @@
         return base ** Math.round(Math.log(n) / Math.log(base));
     }
 
-    function sign$1(n) {
+    function sign(n) {
         return n >= 0.0 ? 1 : -1;
     }
 
@@ -385,7 +451,7 @@
         interpolation,
         lcm,
         lerp,
-        map: map$2,
+        map: map$1,
         nearest: nearest$2,
         normalize: normalize$1,
         proportion,
@@ -393,7 +459,7 @@
         roundToMultiple,
         roundToNearest,
         roundToPower,
-        sign: sign$1,
+        sign,
         summation,
     };
 
@@ -527,28 +593,28 @@
             key = objKeys[i];
             val = obj[key];
             if (hard === true) {
-                switch (TypeUtil.of(val)) {
-                    case TypeUtil.ARRAY:
-                        val = obj[key] = ArrayUtil.clean(val, hard);
+                switch (of(val)) {
+                    case ARRAY:
+                        val = obj[key] = clean(val, hard);
                         if (val.length === 0) {
                             val = null;
                         }
                         break;
-                    case TypeUtil.OBJECT:
+                    case OBJECT:
                         val = obj[key] = clean$1(val, hard);
                         if (length$1(val) === 0) {
                             val = null;
                         }
                         break;
-                    case TypeUtil.STRING:
-                        val = obj[key] = StringUtil.trim(val);
+                    case STRING:
+                        val = obj[key] = trim(val);
                         if (val === '') {
                             val = null;
                         }
                         break;
                 }
             }
-            if (TypeUtil.isNone(val)) {
+            if (isNone(val)) {
                 delete obj[key];
             }
         }
@@ -562,14 +628,14 @@
         for (let i = 0, j = objKeys.length; i < j; i++) {
             key = objKeys[i];
             val = obj[key];
-            switch (TypeUtil.of(val)) {
-                case TypeUtil.ARRAY:
-                    cln[key] = ArrayUtil.clone(val);
+            switch (of(val)) {
+                case ARRAY:
+                    cln[key] = clone(val);
                     break;
-                case TypeUtil.DATE:
-                    cln[key] = DateUtil.clone(val);
+                case DATE:
+                    cln[key] = clone$1(val);
                     break;
-                case TypeUtil.OBJECT:
+                case OBJECT:
                     cln[key] = clone$2(val);
                     break;
                 default:
@@ -581,32 +647,32 @@
     }
 
     function decodeBase64(str) {
-        return JSONUtil.decode(Base64Util.decode(str));
+        return decode(decode$1(str));
     }
 
     function decodeJSON(str) {
-        return JSONUtil.decode(str);
+        return decode(str);
     }
 
     function decodeJSONById(id) {
-        return JSONUtil.decodeById(id);
+        return decodeById(id);
     }
 
     function decodeParameters(str) {
-        return URLUtil.getParametersDict(`?${str}`);
+        return getParametersDict(`?${str}`);
     }
 
     function encodeBase64(obj) {
-        return Base64Util.encode(JSONUtil.encode(obj));
+        return encode$1(encode(obj));
     }
 
     function encodeJSON(obj) {
-        return JSONUtil.encode(obj);
+        return encode(obj);
     }
 
     function encodeParameters(obj, objKeysFilter) {
         const objClean = clean$1(clone$2(obj), true);
-        const objKeys = TypeUtil.isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
+        const objKeys = isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
         let key;
         let val;
         const keyval = [];
@@ -629,19 +695,19 @@
 
         let key, val1, val2, type1, type2;
 
-        type1 = TypeUtil.of(obj1);
-        type2 = TypeUtil.of(obj2);
+        type1 = of(obj1);
+        type2 = of(obj2);
 
         if (type1 !== type2) {
             return false;
         }
 
         switch (type1) {
-            case TypeUtil.ARRAY:
-            case TypeUtil.OBJECT:
+            case ARRAY:
+            case OBJECT:
                 break;
-            case TypeUtil.NUMBER:
-                return MathUtil.equals(obj1, obj2);
+            case NUMBER:
+                return equals$3(obj1, obj2);
             default:
                 return String(obj1) === String(obj2);
         }
@@ -699,7 +765,7 @@
                     return defaultValue;
                 }
             }
-            return TypeUtil.isUndefined(cursor) ? defaultValue : cursor;
+            return isUndefined(cursor) ? defaultValue : cursor;
         },
 
         set(obj, path, value) {
@@ -711,7 +777,7 @@
                 if (key === '__proto__' || key === 'constructor') {
                     break;
                 }
-                if (!TypeUtil.isObject(cursor[key])) {
+                if (!isObject(cursor[key])) {
                     cursor[key] = {};
                 }
                 if (i < j - 1) {
@@ -735,7 +801,7 @@
         return keys(obj).length;
     }
 
-    function map$1(obj, func) {
+    function map(obj, func) {
         const m = {};
         keys(obj).forEach((k) => {
             m[k] = func.call(null, obj[k], k, obj);
@@ -796,7 +862,7 @@
         keypath,
         keys,
         length: length$1,
-        map: map$1,
+        map,
         merge,
         search,
         values,
@@ -829,7 +895,7 @@
     function isBase64(val) {
         if (isString(val)) {
             try {
-                if (Base64Util.decode(val) !== '') {
+                if (decode$1(val) !== '') {
                     return true;
                 }
             } catch (e) {
@@ -858,7 +924,7 @@
     function isJSON(val) {
         if (isString(val)) {
             try {
-                JSONUtil.decode(val);
+                decode(val);
                 return true;
             } catch (e) {
                 // value is not valid json data
@@ -872,7 +938,7 @@
     }
 
     function isNaN$1(val) {
-        return ObjectUtil.is(val, NaN);
+        return is(val, NaN);
     }
 
     function isNone(val) {
@@ -1006,239 +1072,6 @@
         of,
     };
 
-    function args(argumentsObj, skipCount = 0) {
-        return Array.prototype.slice.call(argumentsObj, skipCount);
-    }
-
-    function attempt(func, scope, ...args) {
-        try {
-            const result = call(func, scope, ...args);
-            return result;
-        } catch (e) {
-            return e;
-        }
-    }
-
-    function bind(func, scope, ...argsBinded) {
-        return (...args) => {
-            const result = call(func, scope, ...argsBinded.concat(args));
-            return result;
-        };
-    }
-
-    function call(func, scope, ...args) {
-        if (TypeUtil.isString(func)) {
-            func = scope[func];
-        }
-        return func.apply(scope, args);
-    }
-
-    function debounce(milliseconds, func, scope) {
-        let timeoutId;
-        return function (...args) {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-                timeoutId = null;
-            }
-            timeoutId = setTimeout(() => {
-                func.apply(scope, args);
-            }, milliseconds);
-        };
-    }
-
-    function delay(milliseconds, func, scope, ...args) {
-        const wrapper = bind(func, scope, ...args);
-        const timeoutId = setTimeout(wrapper, milliseconds);
-        return {
-            cancel() {
-                clearTimeout(timeoutId);
-            },
-            func: wrapper,
-            id: timeoutId,
-        };
-    }
-
-    function memoize(func, scope) {
-        const cache = {};
-
-        return function (...args) {
-            const key = String(args);
-            if (!(key in cache)) {
-                cache[key] = call(func, scope, ...args);
-            }
-            return cache[key];
-        };
-    }
-
-    function noop() {
-        return true;
-    }
-
-    function repeat(milliseconds, func, scope, ...args) {
-        const wrapper = bind(func, scope, ...args);
-        const intervalId = setInterval(wrapper, milliseconds);
-        return {
-            cancel() {
-                clearInterval(intervalId);
-            },
-            func: wrapper,
-            id: intervalId,
-        };
-    }
-
-    function throttle(milliseconds, func, scope) {
-        let timeoutId;
-        return (...args) => {
-            if (timeoutId) {
-                return;
-            }
-            func.apply(scope, args);
-            timeoutId = setTimeout(() => {
-                clearTimeout(timeoutId);
-                timeoutId = null;
-            }, milliseconds);
-        };
-    }
-
-    function until(milliseconds, func, scope, ...args) {
-        const wrapper = bind(func, scope, ...args);
-        const interval = repeat(milliseconds, () => {
-            if (wrapper() === false) {
-                interval.cancel();
-            }
-        });
-        return interval;
-    }
-
-    function validate(argumentsObj, ...types) {
-        // validate(arguments, 'number', 'string', ['string', 'undefined']);
-
-        const argsList = args(argumentsObj);
-        types = types.map((type) => (Array.isArray(type) ? type : [type]));
-
-        let argsExpectedCount = types.length;
-        while (argsExpectedCount > 0) {
-            if (!types[argsExpectedCount - 1].includes('undefined')) {
-                break;
-            }
-            argsExpectedCount--;
-        }
-
-        if (argsList.length < argsExpectedCount) {
-            throw new TypeError(
-                `invalid arguments count: received ${argsList.length}, expected ${argsExpectedCount} arguments.`
-            );
-        }
-
-        for (let i = 0; i < types.length; i++) {
-            for (const type of types[i]) {
-                if (!TypeUtil.isType(type)) {
-                    throw new TypeError(
-                        `invalid argument: expected type "${type}" is not a valid type.`
-                    );
-                }
-            }
-        }
-
-        argsList.forEach((arg, i) => {
-            const argType = TypeUtil.of(arg);
-            const argTypes = types[Math.min(i, types.length - 1)];
-            if (!argTypes.includes(argType)) {
-                throw new TypeError(
-                    `invalid argument: type of argument[${i}] is "${argType}", expected "${argTypes.join('" or "')}".`
-                );
-            }
-        });
-    }
-
-    var FuncUtil = {
-        args,
-        attempt,
-        bind,
-        call,
-        debounce,
-        delay,
-        memoize,
-        noop,
-        repeat,
-        throttle,
-        until,
-        validate,
-    };
-
-    function argument(...args) {
-        return element(args);
-    }
-
-    function bit(chance) {
-        return boolean(chance) ? 1 : 0;
-    }
-
-    function boolean(chance) {
-        return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
-    }
-
-    function color() {
-        return integer(0, 0xffffff);
-    }
-
-    function element(array) {
-        return array[index$1(array)];
-    }
-
-    function float(min, max) {
-        return min + Math.random() * (max - min);
-    }
-
-    function index$1(array) {
-        return integer(0, array.length - 1);
-    }
-
-    function integer(min, max) {
-        return Math.floor(Math.round(float(min - 0.5, max + 0.5)));
-    }
-
-    function map(func, count) {
-        const m = [];
-        for (let i = 0; i < count; i++) {
-            m.push(func(i));
-        }
-        return m;
-    }
-
-    function sign(chance) {
-        return boolean(chance) ? 1 : -1;
-    }
-
-    function string(
-        length,
-        charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
-    ) {
-        const c = charset.split('');
-        const r = element;
-        let i = 0;
-        let s = '';
-        while (i < length) {
-            s += r(c);
-            i++;
-        }
-        return s;
-    }
-
-    var RandomUtil = {
-        argument,
-        bit,
-        boolean,
-        color,
-        element,
-        float,
-        index: index$1,
-        integer,
-        map,
-        sign,
-        string,
-    };
-
     function contains$1(str, occurrence) {
         return Boolean(str.includes(occurrence));
     }
@@ -1321,7 +1154,7 @@
         matches.forEach((match) => {
             occurrence = match[0];
             replacement = data[match[1]];
-            if (TypeUtil.isNone(replacement)) {
+            if (isNone(replacement)) {
                 replacement = '';
             }
             str = replace$1(str, occurrence, replacement);
@@ -1344,7 +1177,7 @@
 
     function rotate$2(str, count) {
         let chars = str.split('');
-        chars = ArrayUtil.rotate(chars, count);
+        chars = rotate$1(chars, count);
         return chars.join('');
     }
 
@@ -1433,7 +1266,7 @@
 
     function toRandomCase(str) {
         return str.replace(/./gm, (match) => {
-            return RandomUtil.boolean() ? match.toUpperCase() : match.toLowerCase();
+            return boolean() ? match.toUpperCase() : match.toLowerCase();
         });
     }
 
@@ -1503,8 +1336,8 @@
 
     function format(date, str) {
         // https://docs.djangoproject.com/en/4.0/ref/templates/builtins/#date
-        const replace = StringUtil.replace;
-        const padZeros = StringUtil.padZeros;
+        const replace = replace$1;
+        const padZeros$1 = padZeros;
         const months = [
             'January',
             'February',
@@ -1540,18 +1373,18 @@
         const milliseconds = date.getMilliseconds();
         const placeholders = [
             ['YYYY', year],
-            ['YY', padZeros(year, 4).substring(2, 4)],
-            ['MM', padZeros(monthNum, 2)],
+            ['YY', padZeros$1(year, 4).substring(2, 4)],
+            ['MM', padZeros$1(monthNum, 2)],
             ['M', monthNum],
-            ['DD', padZeros(dt, 2)],
+            ['DD', padZeros$1(dt, 2)],
             ['D', dt],
-            ['hh', padZeros(hours, 2)],
+            ['hh', padZeros$1(hours, 2)],
             ['h', hours],
-            ['mm', padZeros(minutes, 2)],
+            ['mm', padZeros$1(minutes, 2)],
             ['m', minutes],
-            ['ss', padZeros(seconds, 2)],
+            ['ss', padZeros$1(seconds, 2)],
             ['s', seconds],
-            ['ll', padZeros(milliseconds, 2)],
+            ['ll', padZeros$1(milliseconds, 2)],
             ['XX', monthName],
             ['X', monthName.substring(0, 3)],
             ['ZZ', days[day]],
@@ -1580,12 +1413,12 @@
         const milliseconds = d.getMilliseconds();
         return (
             String(year) +
-            StringUtil.padZeros(month, 2) +
-            StringUtil.padZeros(day, 2) +
-            StringUtil.padZeros(hours, 2) +
-            StringUtil.padZeros(minutes, 2) +
-            StringUtil.padZeros(seconds, 2) +
-            StringUtil.padZeros(milliseconds, 3)
+            padZeros(month, 2) +
+            padZeros(day, 2) +
+            padZeros(hours, 2) +
+            padZeros(minutes, 2) +
+            padZeros(seconds, 2) +
+            padZeros(milliseconds, 3)
         );
     }
 
@@ -1637,18 +1470,16 @@
     function parse(date) {
         let timestamp;
         const timestampIsValid = (t) => {
-            return (
-                TypeUtil.isNumber(t) && t >= 0 && TypeUtil.isNumber(new Date(t).getTime())
-            );
+            return isNumber(t) && t >= 0 && isNumber(new Date(t).getTime());
         };
-        if (TypeUtil.isDate(date)) {
+        if (isDate(date)) {
             return date;
-        } else if (TypeUtil.isNumber(date)) {
+        } else if (isNumber(date)) {
             timestamp = date;
             if (timestampIsValid(timestamp)) {
                 return new Date(timestamp);
             }
-        } else if (TypeUtil.isString(date)) {
+        } else if (isString(date)) {
             timestamp = Number(date);
             if (timestampIsValid(timestamp)) {
                 return new Date(timestamp);
@@ -1695,8 +1526,8 @@
         const sep = separator || '';
         // prettier-ignore
         return (String(year) + sep +
-                StringUtil.padZeros(month, 2) + sep +
-                StringUtil.padZeros(day, 2));
+                padZeros(month, 2) + sep +
+                padZeros(day, 2));
     }
 
     var DateUtil = {
@@ -1719,11 +1550,11 @@
 
     function all(list) {
         return list.every((item) => {
-            switch (TypeUtil.of(item)) {
-                case TypeUtil.ARRAY:
+            switch (of(item)) {
+                case ARRAY:
                     return item.length > 0;
-                case TypeUtil.OBJECT:
-                    return ObjectUtil.length(item) > 0;
+                case OBJECT:
+                    return length$1(item) > 0;
                 default:
                     return Boolean(item);
             }
@@ -1732,11 +1563,11 @@
 
     function any(list) {
         return list.some((item) => {
-            switch (TypeUtil.of(item)) {
-                case TypeUtil.ARRAY:
+            switch (of(item)) {
+                case ARRAY:
                     return item.length > 0;
-                case TypeUtil.OBJECT:
-                    return ObjectUtil.length(item) > 0;
+                case OBJECT:
+                    return length$1(item) > 0;
                 default:
                     return Boolean(item);
             }
@@ -1746,28 +1577,28 @@
     function clean(list, hard) {
         let items = list.slice();
         items = items.filter((item) => {
-            return !TypeUtil.isNone(item);
+            return !isNone(item);
         });
         if (hard === true) {
             items = items
                 .map((item) => {
                     let itemClean;
-                    switch (TypeUtil.of(item)) {
-                        case TypeUtil.ARRAY:
+                    switch (of(item)) {
+                        case ARRAY:
                             itemClean = clean(item, hard);
                             return itemClean.length > 0 ? itemClean : null;
-                        case TypeUtil.OBJECT:
-                            itemClean = ObjectUtil.clean(item, hard);
-                            return ObjectUtil.length(itemClean) > 0 ? itemClean : null;
-                        case TypeUtil.STRING:
-                            itemClean = StringUtil.trim(item);
+                        case OBJECT:
+                            itemClean = clean$1(item, hard);
+                            return length$1(itemClean) > 0 ? itemClean : null;
+                        case STRING:
+                            itemClean = trim(item);
                             return itemClean !== '' ? item : null;
                         default:
                             return item;
                     }
                 })
                 .filter((item) => {
-                    return !TypeUtil.isNone(item);
+                    return !isNone(item);
                 });
         }
         return items;
@@ -1778,15 +1609,15 @@
         let val;
         for (let i = 0, j = cln.length; i < j; i++) {
             val = cln[i];
-            switch (TypeUtil.of(val)) {
-                case TypeUtil.ARRAY:
+            switch (of(val)) {
+                case ARRAY:
                     cln[i] = clone(val);
                     break;
-                case TypeUtil.DATE:
-                    cln[i] = DateUtil.clone(val);
+                case DATE:
+                    cln[i] = clone$1(val);
                     break;
-                case TypeUtil.OBJECT:
-                    cln[i] = ObjectUtil.clone(val);
+                case OBJECT:
+                    cln[i] = clone$2(val);
                     break;
             }
         }
@@ -1801,7 +1632,7 @@
             val = values[i];
             valFound = false;
             for (let k = 0, m = list.length; k < m; k++) {
-                if (ObjectUtil.equals(list[k], val)) {
+                if (equals$2(list[k], val)) {
                     valFound = true;
                 }
             }
@@ -1814,13 +1645,13 @@
     }
 
     function equals$1(listA, listB) {
-        return ObjectUtil.equals(listA, listB);
+        return equals$2(listA, listB);
     }
 
     function flatten(list) {
         const items = [];
         for (let i = 0, j = list.length; i < j; i++) {
-            if (TypeUtil.isArray(list[i])) {
+            if (isArray(list[i])) {
                 items.push(...flatten(list[i]));
             } else {
                 items.push(list[i]);
@@ -1835,7 +1666,7 @@
         let key;
         let val;
 
-        if (TypeUtil.isString(keys)) {
+        if (isString(keys)) {
             keys = [keys];
         }
 
@@ -1849,7 +1680,7 @@
                 if (flat === true) {
                     dict[val] = item;
                 } else {
-                    if (TypeUtil.isUndefined(dict[val])) {
+                    if (isUndefined(dict[val])) {
                         dict[val] = [];
                     }
                     dict[val].push(item);
@@ -1869,7 +1700,7 @@
         return reduce(
             list,
             (a, b) => {
-                if (TypeUtil.isFunction(callback)) {
+                if (isFunction(callback)) {
                     return Math.max(a, callback(b));
                 }
                 return Math.max(a, b);
@@ -1882,7 +1713,7 @@
         return reduce(
             list,
             (a, b) => {
-                if (TypeUtil.isFunction(callback)) {
+                if (isFunction(callback)) {
                     return Math.min(a, callback(b));
                 }
                 return Math.min(a, b);
@@ -1904,7 +1735,7 @@
     }
 
     function reduce(list, reducer, initialValue) {
-        let value = TypeUtil.isUndefined(initialValue) ? 0 : initialValue;
+        let value = isUndefined(initialValue) ? 0 : initialValue;
         for (let i = 0, j = list.length; i < j; i++) {
             value = reducer(value, list[i], i, list);
         }
@@ -1913,7 +1744,7 @@
 
     function replace(list, searchValue, replacementValue) {
         for (let i = 0, j = list.length; i < j; i++) {
-            if (ObjectUtil.equals(list[i], searchValue)) {
+            if (equals$2(list[i], searchValue)) {
                 list[i] = replacementValue;
             }
         }
@@ -1924,7 +1755,7 @@
         const values = [value].concat(otherValues);
         for (let k = 0, m = values.length; k < m; k++) {
             for (let i = 0, j = list.length; i < j; i++) {
-                if (ObjectUtil.equals(list[i], values[k])) {
+                if (equals$2(list[i], values[k])) {
                     list.splice(i, 1);
                     i--;
                     j--;
@@ -1935,7 +1766,7 @@
     }
 
     function rotate$1(list, count) {
-        const cursor = MathUtil.cycle(count, list.length);
+        const cursor = cycle(count, list.length);
         return list.slice(cursor).concat(list.slice(0, cursor));
     }
 
@@ -1945,7 +1776,7 @@
         let randomItems;
         let sortedItems = list.length;
         while (sortedItems) {
-            randomIndex = RandomUtil.integer(0, --sortedItems);
+            randomIndex = integer(0, --sortedItems);
             randomItems = items.splice(randomIndex, 1);
             items.push(...randomItems);
         }
@@ -1953,20 +1784,20 @@
     }
 
     function sort(list, key) {
-        const isArray = TypeUtil.isArray;
-        const isObject = TypeUtil.isObject;
-        const isNumber = TypeUtil.isNumber;
-        const isString = TypeUtil.isString;
+        const isArray$1 = isArray;
+        const isObject$1 = isObject;
+        const isNumber$1 = isNumber;
+        const isString$1 = isString;
 
         const compare = (a, b) => {
             let aVal;
             let bVal;
 
-            if (isObject(a) && isObject(b) && isString(key)) {
+            if (isObject$1(a) && isObject$1(b) && isString$1(key)) {
                 // comparing objects
                 aVal = key in a ? a[key] : a;
                 bVal = key in b ? b[key] : b;
-            } else if (isArray(a) && isArray(b) && isNumber(key)) {
+            } else if (isArray$1(a) && isArray$1(b) && isNumber$1(key)) {
                 // comparing arrays
                 const index = key;
                 aVal = index >= 0 && index < a.length ? a[index] : a;
@@ -1976,8 +1807,8 @@
                 bVal = b;
             }
 
-            const aValIsNum = isNumber(aVal);
-            const bValIsNum = isNumber(bVal);
+            const aValIsNum = isNumber$1(aVal);
+            const bValIsNum = isNumber$1(bVal);
 
             if (aValIsNum && bValIsNum) {
                 return aVal <= bVal ? -1 : 1;
@@ -1999,7 +1830,7 @@
         return reduce(
             list,
             (a, b) => {
-                if (TypeUtil.isFunction(callback)) {
+                if (isFunction(callback)) {
                     return a + callback(b);
                 }
                 return a + b;
@@ -2012,7 +1843,7 @@
         let item;
         const items = [];
         const itemsNotEquals = (itemUnique) => {
-            return !ObjectUtil.equals(item, itemUnique);
+            return !equals$2(item, itemUnique);
         };
         for (let i = 0, j = list.length; i < j; i++) {
             item = list[i];
@@ -2121,7 +1952,7 @@
         const mlerp = interpolateMultilinear$1;
         let t = 0.0;
         const tInc = 1.0 / Math.max(1, steps - 1);
-        const tConstrain = MathUtil.constrain;
+        const tConstrain = constrain$1;
         for (let i = 0; i < steps; i++) {
             t = i * tInc;
             t = tConstrain(t, 0.0, 1.0);
@@ -2191,7 +2022,7 @@
 
         let tX, tXScaled;
         let tY, tYScaled;
-        const tScalar = InterpolationUtil.scalar;
+        const tScalar = scalar;
 
         let x, y;
 
@@ -2250,7 +2081,7 @@
     }
 
     function interpolateLinear$1(colorFrom, colorTo, t) {
-        const lerp = InterpolationUtil.linear;
+        const lerp = linear;
         const round = Math.round;
         return {
             r: round(lerp(colorFrom.r, colorTo.r, t)),
@@ -2267,7 +2098,7 @@
     }
 
     function interpolateMultilinear$1(colors, t) {
-        const s = InterpolationUtil.scalar(colors.length - 1, t);
+        const s = scalar(colors.length - 1, t);
         const i = s.index;
         return interpolateLinear$1(colors[i], colors[i + 1], s.t);
     }
@@ -2327,7 +2158,7 @@
         const r = isNaN(color.r) ? 0 : color.r;
         const g = isNaN(color.g) ? 0 : color.g;
         const b = isNaN(color.b) ? 0 : color.b;
-        const hex = HexUtil.encodeInt;
+        const hex = encodeInt;
         return String(
             (prefix || '#') +
                 (a === null || a >= 1.0 ? '' : hex(a * 255)) +
@@ -2445,7 +2276,7 @@
     // };
 
     function toHex(color, prefix) {
-        return RGBColorUtil.toHex(toRgb$1(color), prefix);
+        return toHex$1(toRgb$1(color), prefix);
     }
 
     // function toHsl(color) {
@@ -2490,8 +2321,8 @@
     var CMYKColorUtil = { toHex, toRgb: toRgb$1, toString: toString$1, toStringCSS: toStringCSS$1 };
 
     function average(colors) {
-        return RGBColorUtil.toHex(
-            RGBColorUtil.average(
+        return toHex$1(
+            average$1(
                 colors.map((color) => {
                     return toRgb(color);
                 })
@@ -2500,49 +2331,47 @@
     }
 
     function distance$1(colorA, colorB) {
-        return RGBColorUtil.distance(toRgb(colorA), toRgb(colorB));
+        return distance$2(toRgb(colorA), toRgb(colorB));
     }
 
     function gradient(colors, steps) {
-        return RGBColorUtil.gradient(
+        return gradient$1(
             colors.map((color) => {
                 return toRgb(color);
             }),
             steps
         ).map((color) => {
-            return RGBColorUtil.toHex(color);
+            return toHex$1(color);
         });
     }
 
     function gradientMatrix(colors, stepsX, stepsY) {
-        return RGBColorUtil.gradientMatrix(
-            ObjectUtil.map(colors, (color) => {
+        return gradientMatrix$1(
+            map(colors, (color) => {
                 return toRgb(color);
             }),
             stepsX,
             stepsY
         ).map((colors) => {
             return colors.map((color) => {
-                return RGBColorUtil.toHex(color);
+                return toHex$1(color);
             });
         });
     }
 
     function interpolateBilinear(a, b, c, d, u, v) {
-        return RGBColorUtil.toHex(
-            RGBColorUtil.interpolateBilinear(toRgb(a), toRgb(b), toRgb(c), toRgb(d), u, v)
+        return toHex$1(
+            interpolateBilinear$1(toRgb(a), toRgb(b), toRgb(c), toRgb(d), u, v)
         );
     }
 
     function interpolateLinear(colorFrom, colorTo, t) {
-        return RGBColorUtil.toHex(
-            RGBColorUtil.interpolateLinear(toRgb(colorFrom), toRgb(colorTo), t)
-        );
+        return toHex$1(interpolateLinear$1(toRgb(colorFrom), toRgb(colorTo), t));
     }
 
     function interpolateMultilinear(colors, t) {
-        return RGBColorUtil.toHex(
-            RGBColorUtil.interpolateMultilinear(
+        return toHex$1(
+            interpolateMultilinear$1(
                 colors.map((color) => {
                     return toRgb(color);
                 }),
@@ -2552,8 +2381,8 @@
     }
 
     function nearest(colorSearch, colors) {
-        return RGBColorUtil.toHex(
-            RGBColorUtil.nearest(
+        return toHex$1(
+            nearest$1(
                 toRgb(colorSearch),
                 colors.map((color) => {
                     return toRgb(color);
@@ -2563,7 +2392,7 @@
     }
 
     function toCmyk(color) {
-        return RGBColorUtil.toCmyk(toRgb(color));
+        return toCmyk$1(toRgb(color));
     }
 
     // function toGrayscale(color) {
@@ -2582,13 +2411,13 @@
     // };
 
     function toRgb(color) {
-        const fromHex = HexUtil.decodeInt;
-        const toHex = HexUtil.encodeInt;
+        const fromHex = decodeInt;
+        const toHex = encodeInt;
 
         let hex;
-        if (TypeUtil.isNumber(color)) {
+        if (isNumber(color)) {
             hex = toHex(color);
-        } else if (TypeUtil.isString(color)) {
+        } else if (isString(color)) {
             hex = color.replace(/\#|0x/, '');
         } else {
             return null;
@@ -2625,7 +2454,7 @@
                 // eg. #FF000000
                 comps = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
                 rgb = {
-                    a: MathUtil.roundDecimals(fromHex(comps[1]) / 255, 2),
+                    a: roundDecimals(fromHex(comps[1]) / 255, 2),
                     r: fromHex(comps[2]),
                     g: fromHex(comps[3]),
                     b: fromHex(comps[4]),
@@ -2641,7 +2470,7 @@
     }
 
     function toString(color, prefix) {
-        return RGBColorUtil.toHex(toRgb(color), prefix);
+        return toHex$1(toRgb(color), prefix);
     }
 
     function toStringCSS(color) {
@@ -3092,6 +2921,166 @@
         waveSine,
     };
 
+    function args(argumentsObj, skipCount = 0) {
+        return Array.prototype.slice.call(argumentsObj, skipCount);
+    }
+
+    function attempt(func, scope, ...args) {
+        try {
+            const result = call(func, scope, ...args);
+            return result;
+        } catch (e) {
+            return e;
+        }
+    }
+
+    function bind(func, scope, ...argsBinded) {
+        return (...args) => {
+            const result = call(func, scope, ...argsBinded.concat(args));
+            return result;
+        };
+    }
+
+    function call(func, scope, ...args) {
+        if (isString(func)) {
+            func = scope[func];
+        }
+        return func.apply(scope, args);
+    }
+
+    function debounce(milliseconds, func, scope) {
+        let timeoutId;
+        return function (...args) {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            timeoutId = setTimeout(() => {
+                func.apply(scope, args);
+            }, milliseconds);
+        };
+    }
+
+    function delay(milliseconds, func, scope, ...args) {
+        const wrapper = bind(func, scope, ...args);
+        const timeoutId = setTimeout(wrapper, milliseconds);
+        return {
+            cancel() {
+                clearTimeout(timeoutId);
+            },
+            func: wrapper,
+            id: timeoutId,
+        };
+    }
+
+    function memoize(func, scope) {
+        const cache = {};
+
+        return function (...args) {
+            const key = String(args);
+            if (!(key in cache)) {
+                cache[key] = call(func, scope, ...args);
+            }
+            return cache[key];
+        };
+    }
+
+    function noop() {
+        return true;
+    }
+
+    function repeat(milliseconds, func, scope, ...args) {
+        const wrapper = bind(func, scope, ...args);
+        const intervalId = setInterval(wrapper, milliseconds);
+        return {
+            cancel() {
+                clearInterval(intervalId);
+            },
+            func: wrapper,
+            id: intervalId,
+        };
+    }
+
+    function throttle(milliseconds, func, scope) {
+        let timeoutId;
+        return (...args) => {
+            if (timeoutId) {
+                return;
+            }
+            func.apply(scope, args);
+            timeoutId = setTimeout(() => {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }, milliseconds);
+        };
+    }
+
+    function until(milliseconds, func, scope, ...args) {
+        const wrapper = bind(func, scope, ...args);
+        const interval = repeat(milliseconds, () => {
+            if (wrapper() === false) {
+                interval.cancel();
+            }
+        });
+        return interval;
+    }
+
+    function validate(argumentsObj, ...types) {
+        // validate(arguments, 'number', 'string', ['string', 'undefined']);
+
+        const argsList = args(argumentsObj);
+        types = types.map((type) => (Array.isArray(type) ? type : [type]));
+
+        let argsExpectedCount = types.length;
+        while (argsExpectedCount > 0) {
+            if (!types[argsExpectedCount - 1].includes('undefined')) {
+                break;
+            }
+            argsExpectedCount--;
+        }
+
+        if (argsList.length < argsExpectedCount) {
+            throw new TypeError(
+                `invalid arguments count: received ${argsList.length}, expected ${argsExpectedCount} arguments.`
+            );
+        }
+
+        for (let i = 0; i < types.length; i++) {
+            for (const type of types[i]) {
+                if (!isType(type)) {
+                    throw new TypeError(
+                        `invalid argument: expected type "${type}" is not a valid type.`
+                    );
+                }
+            }
+        }
+
+        argsList.forEach((arg, i) => {
+            const argType = of(arg);
+            const argTypes = types[Math.min(i, types.length - 1)];
+            if (!argTypes.includes(argType)) {
+                throw new TypeError(
+                    `invalid argument: type of argument[${i}] is "${argType}", expected "${argTypes.join('" or "')}".`
+                );
+            }
+        });
+    }
+
+    var FuncUtil = {
+        args,
+        attempt,
+        bind,
+        call,
+        debounce,
+        delay,
+        memoize,
+        noop,
+        repeat,
+        throttle,
+        until,
+        validate,
+    };
+
     const DEG_0 = 0.0;
     const DEG_90 = 90.0;
     const DEG_180 = 180.0;
@@ -3129,7 +3118,7 @@
     }
 
     function cycleDeg(deg) {
-        return MathUtil.cycle(deg, DEG_360);
+        return cycle(deg, DEG_360);
     }
 
     function degToRad(deg) {
@@ -3165,7 +3154,7 @@
         } else {
             r = 6371; // km
         }
-        const distance = MathUtil.roundDecimals(r * c, 3);
+        const distance = roundDecimals(r * c, 3);
         return distance;
     }
 
@@ -3218,8 +3207,8 @@
     }
 
     function angle(a, b) {
-        const angle = TrigoUtil.angleDeg(b.y - a.y, b.x - a.x);
-        return TrigoUtil.cycleDeg(angle);
+        const angle = angleDeg(b.y - a.y, b.x - a.x);
+        return cycleDeg(angle);
     }
 
     function cross(a, b) {
@@ -3238,12 +3227,12 @@
     }
 
     function equals(a, b, tolerance) {
-        const f = MathUtil.equals;
+        const f = equals$3;
         return f(a.x, b.x, tolerance) && f(a.y, b.y, tolerance);
     }
 
     function interpolate(a, b, t) {
-        const f = InterpolationUtil.linear;
+        const f = linear;
         return {
             x: f(a.x, b.x, t),
             y: f(a.y, b.y, t),
@@ -3260,8 +3249,8 @@
 
     function project(p, distance, angle) {
         return {
-            x: p.x + distance * TrigoUtil.cosDeg(angle),
-            y: p.y + distance * TrigoUtil.sinDeg(angle),
+            x: p.x + distance * cosDeg(angle),
+            y: p.y + distance * sinDeg(angle),
         };
     }
 
@@ -3294,8 +3283,8 @@
     function rotate(p, angle, pivot) {
         const pointPivot = pivot || { x: 0.0, y: 0.0 };
         const pointRel = subtract(p, pointPivot);
-        const angleCos = TrigoUtil.cosDeg(angle);
-        const angleSin = TrigoUtil.sinDeg(angle);
+        const angleCos = cosDeg(angle);
+        const angleSin = sinDeg(angle);
         const pointRot = {
             x: pointRel.x * angleCos - pointRel.y * angleSin,
             y: pointRel.x * angleSin + pointRel.y * angleCos,
@@ -3403,45 +3392,45 @@
     };
 
     function assertArray(val, len) {
-        if (!TypeUtil.isArray(val)) {
+        if (!isArray(val)) {
             throw new Error(`value is not array: ${String(val)}.`);
         }
-        if (TypeUtil.isNumber(len)) {
+        if (isNumber(len)) {
             assertEqual(val.length, len);
         }
     }
 
     function assertBase64(val) {
-        if (!TypeUtil.isBase64(val)) {
+        if (!isBase64(val)) {
             throw new Error(`value is not base64: ${String(val)}.`);
         }
     }
 
     function assertBoolean(val) {
-        if (!TypeUtil.isBoolean(val)) {
+        if (!isBoolean(val)) {
             throw new Error(`value is not boolean: ${String(val)}.`);
         }
     }
 
     function assertDate(val) {
-        if (!TypeUtil.isDate(val)) {
+        if (!isDate(val)) {
             throw new Error(`value is not date: ${String(val)}.`);
         }
     }
 
     function assertEqual(val1, val2) {
         // prettier-ignore
-        if (!ObjectUtil.equals(val1, val2)) {
-            let out1 = ((TypeUtil.isArray(val1) || TypeUtil.isObject(val1)) ? `\n${JSONUtil.encode(val1)}\n` : String(val1));
-            let out2 = ((TypeUtil.isArray(val2) || TypeUtil.isObject(val2)) ? `\n${JSONUtil.encode(val2)}` : String(val2));
-            out1 = (TypeUtil.isString(val1) ? String(`"${out1}"`) : out1);
-            out2 = (TypeUtil.isString(val2) ? String(`"${out2}"`) : out2);
+        if (!equals$2(val1, val2)) {
+            let out1 = ((isArray(val1) || isObject(val1)) ? `\n${encode(val1)}\n` : String(val1));
+            let out2 = ((isArray(val2) || isObject(val2)) ? `\n${encode(val2)}` : String(val2));
+            out1 = (isString(val1) ? String(`"${out1}"`) : out1);
+            out2 = (isString(val2) ? String(`"${out2}"`) : out2);
             throw new Error(`values are not equal: ${out1} != ${out2}`);
         }
     }
 
     function assertError(val) {
-        if (!TypeUtil.isError(val)) {
+        if (!isError(val)) {
             throw new Error(`value is not error: ${String(val)}.`);
         }
     }
@@ -3454,135 +3443,131 @@
     }
 
     function assertFunction(val) {
-        if (!TypeUtil.isFunction(val)) {
+        if (!isFunction(val)) {
             throw new Error(`value is not function: ${String(val)}.`);
         }
     }
 
     function assertJSON(val) {
-        if (!TypeUtil.isJSON(val)) {
+        if (!isJSON(val)) {
             throw new Error(`value is not json: ${String(val)}.`);
         }
     }
 
     function assertModule(val) {
-        if (!TypeUtil.isModule(val)) {
+        if (!isModule(val)) {
             throw new Error(`value is not module: ${String(val)}.`);
         }
     }
 
     function assertNaN(val) {
-        if (!TypeUtil.isNaN(val)) {
+        if (!isNaN$1(val)) {
             throw new Error(`value is not NaN: ${String(val)}.`);
         }
     }
 
     function assertNone(val) {
-        if (!TypeUtil.isNone(val)) {
+        if (!isNone(val)) {
             throw new Error(`value is not none: ${String(val)}.`);
         }
     }
 
     function assertNotArray(val) {
-        if (TypeUtil.isArray(val)) {
+        if (isArray(val)) {
             throw new Error(`value is array: ${String(val)}.`);
         }
     }
 
     function assertNotBase64(val) {
-        if (TypeUtil.isBase64(val)) {
+        if (isBase64(val)) {
             throw new Error(`value is base64: ${String(val)}.`);
         }
     }
 
     function assertNotBoolean(val) {
-        if (TypeUtil.isBoolean(val)) {
+        if (isBoolean(val)) {
             throw new Error(`value is boolean: ${String(val)}.`);
         }
     }
 
     function assertNotDate(val) {
-        if (TypeUtil.isDate(val)) {
+        if (isDate(val)) {
             throw new Error(`value is date: ${String(val)}.`);
         }
     }
 
     function assertNotEqual(val1, val2) {
-        if (ObjectUtil.equals(val1, val2)) {
+        if (equals$2(val1, val2)) {
             const out1 =
-                TypeUtil.isArray(val1) || TypeUtil.isObject(val1)
-                    ? `\n${JSONUtil.encode(val1)}\n`
-                    : String(val1);
+                isArray(val1) || isObject(val1) ? `\n${encode(val1)}\n` : String(val1);
             const out2 =
-                TypeUtil.isArray(val2) || TypeUtil.isObject(val2)
-                    ? `\n${JSONUtil.encode(val2)}`
-                    : String(val2);
+                isArray(val2) || isObject(val2) ? `\n${encode(val2)}` : String(val2);
             throw new Error(`values are equal: ${out1} == ${out2}`);
         }
     }
 
     function assertNotError(val) {
-        if (TypeUtil.isError(val)) {
+        if (isError(val)) {
             throw new Error(`value is error: ${String(val)}.`);
         }
     }
 
     function assertNotFunction(val) {
-        if (TypeUtil.isFunction(val)) {
+        if (isFunction(val)) {
             throw new Error(`value is function: ${String(val)}.`);
         }
     }
 
     function assertNotJSON(val) {
-        if (TypeUtil.isJSON(val)) {
+        if (isJSON(val)) {
             throw new Error(`value is json: ${String(val)}.`);
         }
     }
 
     function assertNotModule(val) {
-        if (TypeUtil.isModule(val)) {
+        if (isModule(val)) {
             throw new Error(`value is module: ${String(val)}.`);
         }
     }
 
     function assertNotNone(val) {
-        if (TypeUtil.isNone(val)) {
+        if (isNone(val)) {
             throw new Error(`value is none: ${String(val)}.`);
         }
     }
 
     function assertNotNumber(val) {
-        if (TypeUtil.isNumber(val)) {
+        if (isNumber(val)) {
             throw new Error(`value is number: ${String(val)}.`);
         }
     }
 
     function assertNotNull(val) {
-        if (TypeUtil.isNull(val)) {
+        if (isNull(val)) {
             throw new Error(`value is null: ${String(val)}.`);
         }
     }
 
     function assertNotObject(val) {
-        if (TypeUtil.isObject(val)) {
+        if (isObject(val)) {
             throw new Error(`value is object: ${String(val)}.`);
         }
     }
 
     function assertNotRegExp(val) {
-        if (TypeUtil.isRegExp(val)) {
+        if (isRegExp(val)) {
             throw new Error(`value is regexp: ${String(val)}.`);
         }
     }
 
     function assertNotString(val) {
-        if (TypeUtil.isString(val)) {
+        if (isString(val)) {
             throw new Error(`value is string: ${String(val)}.`);
         }
     }
 
     function assertNotUndefined(val) {
-        if (TypeUtil.isUndefined(val)) {
+        if (isUndefined(val)) {
             throw new Error(`value is undefined: ${String(val)}.`);
         }
     }
@@ -3595,7 +3580,7 @@
     // };
 
     function assertNumber(val) {
-        if (!TypeUtil.isNumber(val)) {
+        if (!isNumber(val)) {
             throw new Error(`value is not number: ${String(val)}.`);
         }
     }
@@ -3603,7 +3588,7 @@
     function assertNumberAlmostEqual(val1, val2, tolerance) {
         assertNumber(val1);
         assertNumber(val2);
-        if (!MathUtil.equals(val1, val2, tolerance)) {
+        if (!equals$3(val1, val2, tolerance)) {
             throw new Error(
                 `values are not almost equals (tolerance = ${String(tolerance)}): ${String(val1)} != ${String(val2)}.`
             );
@@ -3611,25 +3596,25 @@
     }
 
     function assertNull(val) {
-        if (!TypeUtil.isNull(val)) {
+        if (!isNull(val)) {
             throw new Error(`value is not null: ${String(val)}.`);
         }
     }
 
     function assertObject(val) {
-        if (!TypeUtil.isObject(val)) {
+        if (!isObject(val)) {
             throw new Error(`value is not object: ${String(val)}.`);
         }
     }
 
     function assertRegExp(val) {
-        if (!TypeUtil.isRegExp(val)) {
+        if (!isRegExp(val)) {
             throw new Error(`value is not regexp: ${String(val)}.`);
         }
     }
 
     function assertString(val) {
-        if (!TypeUtil.isString(val)) {
+        if (!isString(val)) {
             throw new Error(`value is not string: ${String(val)}.`);
         }
     }
@@ -3653,7 +3638,7 @@
     }
 
     function assertUndefined(val) {
-        if (!TypeUtil.isUndefined(val)) {
+        if (!isUndefined(val)) {
             throw new Error(`value is not undefined: ${String(val)}.`);
         }
     }
@@ -3737,6 +3722,8 @@
 
     var XMLUtil = { removeNamespaces };
 
+    const version = '1.3.0';
+
     const utils = {
         array: ArrayUtil,
         base64: Base64Util,
@@ -3758,7 +3745,7 @@
         xml: XMLUtil,
         url: URLUtil,
         utf8: UTF8Util,
-        version: '1.2.0',
+        version,
     };
 
     return utils;

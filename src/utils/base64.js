@@ -1,4 +1,4 @@
-import UTF8Util from './utf8.js';
+import { decode as utf8Decode, encode as utf8Encode } from './utf8.js';
 
 const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 // prettier-ignore
@@ -18,7 +18,7 @@ const CHARS_TABLE = {
     '0': 52, '1': 53, '2': 54, '3': 55, '4': 56, '5': 57, '6': 58, '7': 59, '8': 60, '9': 61, '+': 62, '/': 63, '=': 64
 };
 
-function decode(str) {
+export function decode(str) {
     const input = str.replace(/[^A-Za-z0-9\+\/\=]/g, '');
     let output = '';
 
@@ -53,12 +53,12 @@ function decode(str) {
         }
     }
 
-    output = UTF8Util.decode(output);
+    output = utf8Decode(output);
     return output;
 }
 
-function encode(str) {
-    const input = UTF8Util.encode(str);
+export function encode(str) {
+    const input = utf8Encode(str);
     let output = '';
 
     try {

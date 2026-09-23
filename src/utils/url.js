@@ -1,4 +1,4 @@
-function getDomain(url = getURL(), level) {
+export function getDomain(url = getURL(), level) {
     // remove protocol, www and port
     let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
     domain = domain.split(':')[0];
@@ -13,16 +13,16 @@ function getDomain(url = getURL(), level) {
     return domainName;
 }
 
-function getParameterByName(url, name, defaultValue) {
+export function getParameterByName(url, name, defaultValue) {
     const paramsDict = getParameters(url);
     return name in paramsDict ? paramsDict[name] || defaultValue || '' : defaultValue;
 }
 
-function getParameters(url) {
+export function getParameters(url) {
     return getParametersDict(url);
 }
 
-function getParametersDict(url) {
+export function getParametersDict(url) {
     const paramsList = getParametersList(url);
     let param;
     const paramsDict = {};
@@ -33,7 +33,7 @@ function getParametersDict(url) {
     return paramsDict;
 }
 
-function getParametersList(url) {
+export function getParametersList(url) {
     const paramsString = getParametersString(url);
     const paramsList = [];
     const paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
@@ -48,7 +48,7 @@ function getParametersList(url) {
     return paramsList;
 }
 
-function getParametersString(url = getURL()) {
+export function getParametersString(url = getURL()) {
     const queryStringPosition = url.indexOf('?');
     // prettier-ignore
     let queryString = (queryStringPosition > -1 ? url.substr(queryStringPosition + 1) : '');
@@ -59,7 +59,7 @@ function getParametersString(url = getURL()) {
     return queryString;
 }
 
-function getURL() {
+export function getURL() {
     let url = '';
     try {
         url = window.location.href;
@@ -69,23 +69,23 @@ function getURL() {
     return url;
 }
 
-function hasParameter(url, name) {
+export function hasParameter(url, name) {
     return name in getParametersDict(url);
 }
 
-function isFile(url) {
+export function isFile(url) {
     return (url || getURL()).indexOf('file://') === 0;
 }
 
-function isHttp(url) {
+export function isHttp(url) {
     return (url || getURL()).indexOf('http://') === 0;
 }
 
-function isHttps(url) {
+export function isHttps(url) {
     return (url || getURL()).indexOf('https://') === 0;
 }
 
-function isLocalhost(url) {
+export function isLocalhost(url) {
     const re = /^(https?:\/\/)(localhost(\.[a-z0-9-]+)*|127\.0\.0\.1)(:\d+)?(\/.*)?$/i;
     return re.test(url || getURL());
 }

@@ -1,13 +1,23 @@
-import RGBColorUtil from './rgb.js';
-import HexUtil from '../hex.js';
-import InterpolationUtil from '../interpolation.js';
-import MathUtil from '../math.js';
-import ObjectUtil from '../object.js';
-import TypeUtil from '../type.js';
+import {
+    average as rgbAverage,
+    distance as rgbDistance,
+    gradient as rgbGradient,
+    gradientMatrix as rgbGradientMatrix,
+    interpolateBilinear as rgbInterpolateBilinear,
+    interpolateLinear as rgbInterpolateLinear,
+    interpolateMultilinear as rgbInterpolateMultilinear,
+    nearest as rgbNearest,
+    toCmyk as rgbToCmyk,
+    toHex as rgbToHex,
+} from './rgb.js';
+import { decodeInt, encodeInt } from '../hex.js';
+import { roundDecimals } from '../math.js';
+import { map } from '../object.js';
+import { isNumber, isString } from '../type.js';
 
-function average(colors) {
-    return RGBColorUtil.toHex(
-        RGBColorUtil.average(
+export function average(colors) {
+    return rgbToHex(
+        rgbAverage(
             colors.map((color) => {
                 return toRgb(color);
             })
@@ -15,50 +25,48 @@ function average(colors) {
     );
 }
 
-function distance(colorA, colorB) {
-    return RGBColorUtil.distance(toRgb(colorA), toRgb(colorB));
+export function distance(colorA, colorB) {
+    return rgbDistance(toRgb(colorA), toRgb(colorB));
 }
 
-function gradient(colors, steps) {
-    return RGBColorUtil.gradient(
+export function gradient(colors, steps) {
+    return rgbGradient(
         colors.map((color) => {
             return toRgb(color);
         }),
         steps
     ).map((color) => {
-        return RGBColorUtil.toHex(color);
+        return rgbToHex(color);
     });
 }
 
-function gradientMatrix(colors, stepsX, stepsY) {
-    return RGBColorUtil.gradientMatrix(
-        ObjectUtil.map(colors, (color) => {
+export function gradientMatrix(colors, stepsX, stepsY) {
+    return rgbGradientMatrix(
+        map(colors, (color) => {
             return toRgb(color);
         }),
         stepsX,
         stepsY
     ).map((colors) => {
         return colors.map((color) => {
-            return RGBColorUtil.toHex(color);
+            return rgbToHex(color);
         });
     });
 }
 
-function interpolateBilinear(a, b, c, d, u, v) {
-    return RGBColorUtil.toHex(
-        RGBColorUtil.interpolateBilinear(toRgb(a), toRgb(b), toRgb(c), toRgb(d), u, v)
+export function interpolateBilinear(a, b, c, d, u, v) {
+    return rgbToHex(
+        rgbInterpolateBilinear(toRgb(a), toRgb(b), toRgb(c), toRgb(d), u, v)
     );
 }
 
-function interpolateLinear(colorFrom, colorTo, t) {
-    return RGBColorUtil.toHex(
-        RGBColorUtil.interpolateLinear(toRgb(colorFrom), toRgb(colorTo), t)
-    );
+export function interpolateLinear(colorFrom, colorTo, t) {
+    return rgbToHex(rgbInterpolateLinear(toRgb(colorFrom), toRgb(colorTo), t));
 }
 
-function interpolateMultilinear(colors, t) {
-    return RGBColorUtil.toHex(
-        RGBColorUtil.interpolateMultilinear(
+export function interpolateMultilinear(colors, t) {
+    return rgbToHex(
+        rgbInterpolateMultilinear(
             colors.map((color) => {
                 return toRgb(color);
             }),
@@ -67,9 +75,9 @@ function interpolateMultilinear(colors, t) {
     );
 }
 
-function nearest(colorSearch, colors) {
-    return RGBColorUtil.toHex(
-        RGBColorUtil.nearest(
+export function nearest(colorSearch, colors) {
+    return rgbToHex(
+        rgbNearest(
             toRgb(colorSearch),
             colors.map((color) => {
                 return toRgb(color);
@@ -78,8 +86,8 @@ function nearest(colorSearch, colors) {
     );
 }
 
-function toCmyk(color) {
-    return RGBColorUtil.toCmyk(toRgb(color));
+export function toCmyk(color) {
+    return rgbToCmyk(toRgb(color));
 }
 
 // function toGrayscale(color) {
@@ -97,14 +105,14 @@ function toCmyk(color) {
 //         toRgb(color));
 // };
 
-function toRgb(color) {
-    const fromHex = HexUtil.decodeInt;
-    const toHex = HexUtil.encodeInt;
+export function toRgb(color) {
+    const fromHex = decodeInt;
+    const toHex = encodeInt;
 
     let hex;
-    if (TypeUtil.isNumber(color)) {
+    if (isNumber(color)) {
         hex = toHex(color);
-    } else if (TypeUtil.isString(color)) {
+    } else if (isString(color)) {
         hex = color.replace(/\#|0x/, '');
     } else {
         return null;
@@ -141,7 +149,7 @@ function toRgb(color) {
             // eg. #FF000000
             comps = /^([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
             rgb = {
-                a: MathUtil.roundDecimals(fromHex(comps[1]) / 255, 2),
+                a: roundDecimals(fromHex(comps[1]) / 255, 2),
                 r: fromHex(comps[2]),
                 g: fromHex(comps[3]),
                 b: fromHex(comps[4]),
@@ -156,11 +164,11 @@ function toRgb(color) {
     return rgb;
 }
 
-function toString(color, prefix) {
-    return RGBColorUtil.toHex(toRgb(color), prefix);
+export function toString(color, prefix) {
+    return rgbToHex(toRgb(color), prefix);
 }
 
-function toStringCSS(color) {
+export function toStringCSS(color) {
     return toString(color, '#');
 }
 

@@ -1,3 +1,5 @@
+'use strict';
+
 function argument(...args) {
     return element(args);
 }
@@ -10,7 +12,7 @@ function boolean(chance) {
     return Boolean(Math.random() < (isNaN(chance) ? 0.5 : chance));
 }
 
-function color$1() {
+function color() {
     return integer(0, 0xffffff);
 }
 
@@ -42,7 +44,7 @@ function sign$1(chance) {
     return boolean(chance) ? 1 : -1;
 }
 
-function string$1(
+function string(
     length,
     charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?@#$%^&*(-_=+).,;'
 ) {
@@ -61,31 +63,15 @@ var RandomUtil = {
     argument,
     bit,
     boolean,
-    color: color$1,
+    color,
     element,
     float,
     index: index$1,
     integer,
     map: map$2,
     sign: sign$1,
-    string: string$1,
+    string,
 };
-
-var random = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    argument: argument,
-    bit: bit,
-    boolean: boolean,
-    color: color$1,
-    default: RandomUtil,
-    element: element,
-    float: float,
-    index: index$1,
-    integer: integer,
-    map: map$2,
-    sign: sign$1,
-    string: string$1
-});
 
 function decode$2(input) {
     return decodeURIComponent(escape(input));
@@ -153,13 +139,6 @@ var UTF8Util = {
     decode: decode$2,
     encode: encode$2,
 };
-
-var utf8 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    decode: decode$2,
-    default: UTF8Util,
-    encode: encode$2
-});
 
 // prettier-ignore
 const CHARS_LIST = [
@@ -257,13 +236,6 @@ function encode$1(str) {
 
 var Base64Util = { decode: decode$1, encode: encode$1 };
 
-var base64 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    decode: decode$1,
-    default: Base64Util,
-    encode: encode$1
-});
-
 function decode(str) {
     let output = '';
     try {
@@ -290,14 +262,6 @@ var JSONUtil = {
     decodeById,
     encode,
 };
-
-var json = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    decode: decode,
-    decodeById: decodeById,
-    default: JSONUtil,
-    encode: encode
-});
 
 function bilinear(a, b, c, d, u, v) {
     const f = linear;
@@ -326,22 +290,6 @@ function scalar(parts, t) {
     const tReduced = tScaled - tIndex;
     return { index: tIndex, t: tReduced };
 }
-
-var interpolation$1 = {
-    bilinear,
-    linear,
-    multilinear,
-    scalar,
-};
-
-var interpolation$2 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    bilinear: bilinear,
-    default: interpolation$1,
-    linear: linear,
-    multilinear: multilinear,
-    scalar: scalar
-});
 
 function average$2(values) {
     return summation(values) / values.length;
@@ -511,31 +459,6 @@ var MathUtil = {
     summation,
 };
 
-var math = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    average: average$2,
-    constrain: constrain$1,
-    cycle: cycle,
-    default: MathUtil,
-    equals: equals$3,
-    euclideanDistance: euclideanDistance,
-    factorial: factorial,
-    gcd: gcd,
-    interpolation: interpolation,
-    lcm: lcm,
-    lerp: lerp,
-    map: map$1,
-    nearest: nearest$2,
-    normalize: normalize$1,
-    proportion: proportion,
-    roundDecimals: roundDecimals,
-    roundToMultiple: roundToMultiple,
-    roundToNearest: roundToNearest,
-    roundToPower: roundToPower,
-    sign: sign,
-    summation: summation
-});
-
 function getDomain(url = getURL(), level) {
     // remove protocol, www and port
     let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
@@ -642,23 +565,6 @@ var URLUtil = {
     isHttps,
     isLocalhost,
 };
-
-var url = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: URLUtil,
-    getDomain: getDomain,
-    getParameterByName: getParameterByName,
-    getParameters: getParameters,
-    getParametersDict: getParametersDict,
-    getParametersList: getParametersList,
-    getParametersString: getParametersString,
-    getURL: getURL,
-    hasParameter: hasParameter,
-    isFile: isFile,
-    isHttp: isHttp,
-    isHttps: isHttps,
-    isLocalhost: isLocalhost
-});
 
 function assign(obj, other, ...others) {
     const objs = [other].concat(others);
@@ -958,30 +864,6 @@ var ObjectUtil = {
     values,
 };
 
-var object = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    assign: assign,
-    clean: clean$1,
-    clone: clone$2,
-    decodeBase64: decodeBase64,
-    decodeJSON: decodeJSON,
-    decodeJSONById: decodeJSONById,
-    decodeParameters: decodeParameters,
-    default: ObjectUtil,
-    encodeBase64: encodeBase64,
-    encodeJSON: encodeJSON,
-    encodeParameters: encodeParameters,
-    equals: equals$2,
-    is: is,
-    keypath: keypath,
-    keys: keys,
-    length: length$1,
-    map: map,
-    merge: merge,
-    search: search,
-    values: values
-});
-
 const ARRAY = 'array';
 const BOOLEAN = 'boolean';
 const DATE = 'date';
@@ -1185,43 +1067,6 @@ var TypeUtil = {
     isUndefined,
     of,
 };
-
-var type = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    ARRAY: ARRAY,
-    BOOLEAN: BOOLEAN,
-    DATE: DATE,
-    ERROR: ERROR,
-    FUNCTION: FUNCTION,
-    MODULE: MODULE,
-    NAN: NAN,
-    NULL: NULL,
-    NUMBER: NUMBER,
-    OBJECT: OBJECT,
-    REGEXP: REGEXP,
-    STRING: STRING,
-    UNDEFINED: UNDEFINED,
-    UNKNOWN: UNKNOWN,
-    default: TypeUtil,
-    isArray: isArray,
-    isBase64: isBase64,
-    isBoolean: isBoolean,
-    isDate: isDate,
-    isError: isError,
-    isFunction: isFunction,
-    isJSON: isJSON,
-    isModule: isModule,
-    isNaN: isNaN$1,
-    isNone: isNone,
-    isNull: isNull,
-    isNumber: isNumber,
-    isObject: isObject,
-    isRegExp: isRegExp,
-    isString: isString,
-    isType: isType,
-    isUndefined: isUndefined,
-    of: of
-});
 
 function contains$1(str, occurrence) {
     return Boolean(str.includes(occurrence));
@@ -1475,32 +1320,6 @@ var StringUtil = {
     trimRight,
 };
 
-var string = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    contains: contains$1,
-    default: StringUtil,
-    endsWith: endsWith,
-    icontains: icontains,
-    levenshteinDistance: levenshteinDistance,
-    levenshteinSimilarity: levenshteinSimilarity,
-    padLeft: padLeft,
-    padRight: padRight,
-    padZeros: padZeros,
-    render: render,
-    replace: replace$1,
-    reverse: reverse,
-    rotate: rotate$2,
-    slugify: slugify,
-    startsWith: startsWith,
-    toConstantCase: toConstantCase,
-    toRandomCase: toRandomCase,
-    toTitleCase: toTitleCase,
-    toUpperCaseFirst: toUpperCaseFirst,
-    trim: trim,
-    trimLeft: trimLeft,
-    trimRight: trimRight
-});
-
 function clone$1(date) {
     return new Date(date.getTime());
 }
@@ -1724,26 +1543,6 @@ var DateUtil = {
     yesterday,
     yyyymmdd,
 };
-
-var date = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    clone: clone$1,
-    constrain: constrain,
-    default: DateUtil,
-    format: format,
-    identifier: identifier,
-    isFuture: isFuture,
-    isPast: isPast,
-    max: max$1,
-    min: min$1,
-    normalize: normalize,
-    parse: parse,
-    timestamp: timestamp,
-    today: today,
-    tomorrow: tomorrow,
-    yesterday: yesterday,
-    yyyymmdd: yyyymmdd
-});
 
 function all(list) {
     return list.every((item) => {
@@ -2096,33 +1895,6 @@ var ArrayUtil = {
     zip,
 };
 
-var array = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    all: all,
-    any: any,
-    clean: clean,
-    clone: clone,
-    contains: contains,
-    default: ArrayUtil,
-    equals: equals$1,
-    flatten: flatten,
-    index: index,
-    insert: insert,
-    max: max,
-    min: min,
-    paginate: paginate,
-    reduce: reduce,
-    remove: remove,
-    replace: replace,
-    rotate: rotate$1,
-    shuffle: shuffle,
-    sort: sort,
-    sum: sum,
-    unique: unique,
-    unzip: unzip,
-    zip: zip
-});
-
 function decodeInt(s) {
     return parseInt(s, 16);
 }
@@ -2136,13 +1908,6 @@ var HexUtil = {
     decodeInt,
     encodeInt,
 };
-
-var hex$1 = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    decodeInt: decodeInt,
-    default: HexUtil,
-    encodeInt: encodeInt
-});
 
 function average$1(colors) {
     let c;
@@ -2433,23 +2198,6 @@ var RGBColorUtil = {
     toStringCSS: toStringCSS$2,
 };
 
-var rgb = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    average: average$1,
-    default: RGBColorUtil,
-    distance: distance$2,
-    gradient: gradient$1,
-    gradientMatrix: gradientMatrix$1,
-    interpolateBilinear: interpolateBilinear$1,
-    interpolateLinear: interpolateLinear$1,
-    interpolateMultilinear: interpolateMultilinear$1,
-    nearest: nearest$1,
-    toCmyk: toCmyk$1,
-    toHex: toHex$1,
-    toString: toString$2,
-    toStringCSS: toStringCSS$2
-});
-
 // function average(colors) {
 //     return RGBColorUtil.toCmyk(
 //         RGBColorUtil.average(
@@ -2567,15 +2315,6 @@ function toStringCSS$1(color) {
 }
 
 var CMYKColorUtil = { toHex, toRgb: toRgb$1, toString: toString$1, toStringCSS: toStringCSS$1 };
-
-var cmyk = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: CMYKColorUtil,
-    toHex: toHex,
-    toRgb: toRgb$1,
-    toString: toString$1,
-    toStringCSS: toStringCSS$1
-});
 
 function average(colors) {
     return toHex$1(
@@ -2749,23 +2488,6 @@ var HexColorUtil = {
     toStringCSS,
 };
 
-var hex = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    average: average,
-    default: HexColorUtil,
-    distance: distance$1,
-    gradient: gradient,
-    gradientMatrix: gradientMatrix,
-    interpolateBilinear: interpolateBilinear,
-    interpolateLinear: interpolateLinear,
-    interpolateMultilinear: interpolateMultilinear,
-    nearest: nearest,
-    toCmyk: toCmyk,
-    toRgb: toRgb,
-    toString: toString,
-    toStringCSS: toStringCSS
-});
-
 var ColorUtil = {
     cmyk: CMYKColorUtil,
     // cmykToGrayscale: CMYKColorUtil.toGrayscale,
@@ -2809,19 +2531,6 @@ var ColorUtil = {
     // rgbToHsl: RGBColorUtil.toHsl,
     // rgbToHsv: RGBColorUtil.toHsv
 };
-
-var color = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    cmyk: cmyk,
-    cmykToHex: toHex,
-    cmykToRgb: toRgb$1,
-    default: ColorUtil,
-    hex: hex,
-    hexToCmyk: toCmyk,
-    hexToRgb: toRgb,
-    rgb: rgb,
-    rgbToCmyk: toCmyk$1
-});
 
 function backIn(t, s) {
     // s = overshoot = 1.70158
@@ -3208,48 +2917,6 @@ var EaseUtil = {
     waveSine,
 };
 
-var ease = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    backIn: backIn,
-    backInOut: backInOut,
-    backOut: backOut,
-    bounceIn: bounceIn,
-    bounceInOut: bounceInOut,
-    bounceOut: bounceOut,
-    circularIn: circularIn,
-    circularInOut: circularInOut,
-    circularOut: circularOut,
-    cubicIn: cubicIn,
-    cubicInOut: cubicInOut,
-    cubicOut: cubicOut,
-    default: EaseUtil,
-    elasticIn: elasticIn,
-    elasticInOut: elasticInOut,
-    elasticOut: elasticOut,
-    exponentialIn: exponentialIn,
-    exponentialInOut: exponentialInOut,
-    exponentialOut: exponentialOut,
-    none: none,
-    quadraticIn: quadraticIn,
-    quadraticInOut: quadraticInOut,
-    quadraticOut: quadraticOut,
-    quarticIn: quarticIn,
-    quarticInOut: quarticInOut,
-    quarticOut: quarticOut,
-    quinticIn: quinticIn,
-    quinticInOut: quinticInOut,
-    quinticOut: quinticOut,
-    sexticIn: sexticIn,
-    sexticInOut: sexticInOut,
-    sexticOut: sexticOut,
-    sineIn: sineIn,
-    sineInOut: sineInOut,
-    sineOut: sineOut,
-    waveCosine: waveCosine,
-    waveSawtooth: waveSawtooth,
-    waveSine: waveSine
-});
-
 function args(argumentsObj, skipCount = 0) {
     return Array.prototype.slice.call(argumentsObj, skipCount);
 }
@@ -3410,23 +3077,6 @@ var FuncUtil = {
     validate,
 };
 
-var func = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    args: args,
-    attempt: attempt,
-    bind: bind,
-    call: call,
-    debounce: debounce,
-    default: FuncUtil,
-    delay: delay,
-    memoize: memoize,
-    noop: noop,
-    repeat: repeat,
-    throttle: throttle,
-    until: until,
-    validate: validate
-});
-
 const DEG_0 = 0.0;
 const DEG_90 = 90.0;
 const DEG_180 = 180.0;
@@ -3544,33 +3194,6 @@ var TrigoUtil = {
     sinDeg,
     tanDeg,
 };
-
-var trigo = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    DEG_0: DEG_0,
-    DEG_180: DEG_180,
-    DEG_270: DEG_270,
-    DEG_360: DEG_360,
-    DEG_90: DEG_90,
-    DEG_TO_RAD: DEG_TO_RAD,
-    RAD_TO_DEG: RAD_TO_DEG,
-    acosDeg: acosDeg,
-    angleDeg: angleDeg,
-    angleRad: angleRad,
-    asinDeg: asinDeg,
-    atan2Deg: atan2Deg,
-    atanDeg: atanDeg,
-    cosDeg: cosDeg,
-    cycleDeg: cycleDeg,
-    default: TrigoUtil,
-    degToRad: degToRad,
-    fastDeg: fastDeg,
-    haversine: haversine,
-    hypo: hypo,
-    radToDeg: radToDeg,
-    sinDeg: sinDeg,
-    tanDeg: tanDeg
-});
 
 function add(a, b) {
     return {
@@ -3705,35 +3328,9 @@ var PointUtil = {
     translate,
 };
 
-var point = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    add: add,
-    angle: angle,
-    cross: cross,
-    default: PointUtil,
-    distance: distance,
-    dot: dot,
-    equals: equals,
-    interpolate: interpolate,
-    length: length,
-    magnitude: magnitude,
-    project: project,
-    rect: rect,
-    rotate: rotate,
-    scale: scale,
-    subtract: subtract,
-    translate: translate
-});
-
 var GeomUtil = {
     point: PointUtil,
 };
-
-var geom = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: GeomUtil,
-    point: point
-});
 
 function isBetween(n, min, max) {
     return n >= min && n <= max;
@@ -3789,18 +3386,6 @@ var NumberUtil = {
     isPositive,
     isPrime,
 };
-
-var number = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: NumberUtil,
-    isBetween: isBetween,
-    isEven: isEven,
-    isFloat: isFloat,
-    isNegative: isNegative,
-    isOdd: isOdd,
-    isPositive: isPositive,
-    isPrime: isPrime
-});
 
 function assertArray(val, len) {
     if (!isArray(val)) {
@@ -4101,48 +3686,6 @@ var TestUtil = {
     assertUndefined,
 };
 
-var test = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    assertArray: assertArray,
-    assertBase64: assertBase64,
-    assertBoolean: assertBoolean,
-    assertDate: assertDate,
-    assertEqual: assertEqual,
-    assertError: assertError,
-    assertFalse: assertFalse,
-    assertFunction: assertFunction,
-    assertJSON: assertJSON,
-    assertModule: assertModule,
-    assertNaN: assertNaN,
-    assertNone: assertNone,
-    assertNotArray: assertNotArray,
-    assertNotBase64: assertNotBase64,
-    assertNotBoolean: assertNotBoolean,
-    assertNotDate: assertNotDate,
-    assertNotEqual: assertNotEqual,
-    assertNotError: assertNotError,
-    assertNotFunction: assertNotFunction,
-    assertNotJSON: assertNotJSON,
-    assertNotModule: assertNotModule,
-    assertNotNone: assertNotNone,
-    assertNotNull: assertNotNull,
-    assertNotNumber: assertNotNumber,
-    assertNotObject: assertNotObject,
-    assertNotRegExp: assertNotRegExp,
-    assertNotString: assertNotString,
-    assertNotUndefined: assertNotUndefined,
-    assertNull: assertNull,
-    assertNumber: assertNumber,
-    assertNumberAlmostEqual: assertNumberAlmostEqual,
-    assertObject: assertObject,
-    assertRegExp: assertRegExp,
-    assertString: assertString,
-    assertThrows: assertThrows,
-    assertTrue: assertTrue,
-    assertUndefined: assertUndefined,
-    default: TestUtil
-});
-
 // function decode(str) {
 //     // https://stackoverflow.com/questions/17604071/parse-xml-using-javascript
 //     var doc = null;
@@ -4175,12 +3718,6 @@ function removeNamespaces(str) {
 
 var XMLUtil = { removeNamespaces };
 
-var xml = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    default: XMLUtil,
-    removeNamespaces: removeNamespaces
-});
-
 const version = '1.3.0';
 
 const utils = {
@@ -4207,4 +3744,4 @@ const utils = {
     version,
 };
 
-export { array, base64, color, date, utils as default, ease, func, geom, hex$1 as hex, interpolation$2 as interpolation, json, math, number, object, random, string, test, trigo, type, url, utf8, version, xml };
+module.exports = utils;

@@ -1,10 +1,10 @@
-function backIn(t, s) {
+export function backIn(t, s) {
     // s = overshoot = 1.70158
     s = isNaN(s) ? 1.70158 : s;
     return t * t * ((s + 1.0) * t - s);
 }
 
-function backInOut(t, s) {
+export function backInOut(t, s) {
     // s = overshoot = 1.70158
     s = isNaN(s) ? 1.70158 : s;
     t /= 0.5;
@@ -17,14 +17,14 @@ function backInOut(t, s) {
     return 0.5 * (t * t * ((s + 1.0) * t + s) + 2.0);
 }
 
-function backOut(t, s) {
+export function backOut(t, s) {
     // s = overshoot = 1.70158
     s = isNaN(s) ? 1.70158 : s;
     t -= 1.0;
     return t * t * ((s + 1.0) * t + s) + 1.0;
 }
 
-function bounceIn(t) {
+export function bounceIn(t) {
     t = 1.0 - t;
     if (t < 1.0 / 2.75) {
         return 1.0 - 7.5625 * t * t;
@@ -39,7 +39,7 @@ function bounceIn(t) {
     return 1.0 - (7.5625 * t * t + 0.984375);
 }
 
-function bounceInOut(t) {
+export function bounceInOut(t) {
     if (t < 0.5) {
         t = 1.0 - t;
         if (t < 1.0 / 2.75) {
@@ -67,7 +67,7 @@ function bounceInOut(t) {
     return 7.5625 * t * t + 0.984375;
 }
 
-function bounceOut(t) {
+export function bounceOut(t) {
     if (t < 1.0 / 2.75) {
         return 7.5625 * t * t;
     } else if (t < 2.0 / 2.75) {
@@ -81,11 +81,11 @@ function bounceOut(t) {
     return 7.5625 * t * t + 0.984375;
 }
 
-function circularIn(t) {
+export function circularIn(t) {
     return -(Math.sqrt(1.0 - t * t) - 1.0);
 }
 
-function circularInOut(t) {
+export function circularInOut(t) {
     t /= 0.5;
     if (t < 1.0) {
         return -0.5 * (Math.sqrt(1.0 - t * t) - 1.0);
@@ -94,16 +94,16 @@ function circularInOut(t) {
     return 0.5 * (Math.sqrt(1.0 - t * t) + 1.0);
 }
 
-function circularOut(t) {
+export function circularOut(t) {
     t -= 1.0;
     return Math.sqrt(1.0 - t * t);
 }
 
-function cubicIn(t) {
+export function cubicIn(t) {
     return t * t * t;
 }
 
-function cubicInOut(t) {
+export function cubicInOut(t) {
     t /= 0.5;
     if (t < 1.0) {
         return 0.5 * t * t * t;
@@ -112,12 +112,12 @@ function cubicInOut(t) {
     return 0.5 * (t * t * t + 2.0);
 }
 
-function cubicOut(t) {
+export function cubicOut(t) {
     t -= 1.0;
     return t * t * t + 1.0;
 }
 
-function elasticIn(t, a, p) {
+export function elasticIn(t, a, p) {
     // a = amplitude = 0.0, p = period = 0.3
     if (t === 0.0) {
         return 0.0;
@@ -138,7 +138,7 @@ function elasticIn(t, a, p) {
     return -(a * 2.0 ** (10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p));
 }
 
-function elasticInOut(t, a, p) {
+export function elasticInOut(t, a, p) {
     // a = amplitude = 0.0, p = period = 0.3
     if (t === 0.0) {
         return 0.0;
@@ -171,7 +171,7 @@ function elasticInOut(t, a, p) {
     );
 }
 
-function elasticOut(t, a, p) {
+export function elasticOut(t, a, p) {
     // a = amplitude = 0.0, p = period = 0.3
     if (t === 0.0) {
         return 0.0;
@@ -191,14 +191,14 @@ function elasticOut(t, a, p) {
     return a * 2.0 ** (-10.0 * t) * Math.sin(((t - s) * (2.0 * Math.PI)) / p) + 1.0;
 }
 
-function exponentialIn(t) {
+export function exponentialIn(t) {
     if (t === 0.0) {
         return 0.0;
     }
     return 2.0 ** (10.0 * (t - 1.0));
 }
 
-function exponentialInOut(t) {
+export function exponentialInOut(t) {
     if (t === 0.0) {
         return 0.0;
     }
@@ -213,22 +213,22 @@ function exponentialInOut(t) {
     return 0.5 * (-(2.0 ** (-10.0 * t)) + 2.0);
 }
 
-function exponentialOut(t) {
+export function exponentialOut(t) {
     if (t === 1.0) {
         return t;
     }
     return -(2.0 ** (-10.0 * t)) + 1.0;
 }
 
-function none(t) {
+export function none(t) {
     return t;
 }
 
-function quadraticIn(t) {
+export function quadraticIn(t) {
     return t * t;
 }
 
-function quadraticInOut(t) {
+export function quadraticInOut(t) {
     t /= 0.5;
     if (t < 1.0) {
         return 0.5 * t * t;
@@ -237,15 +237,15 @@ function quadraticInOut(t) {
     return -0.5 * (t * (t - 2.0) - 1.0);
 }
 
-function quadraticOut(t) {
+export function quadraticOut(t) {
     return -t * (t - 2.0);
 }
 
-function quarticIn(t) {
+export function quarticIn(t) {
     return t * t * t * t;
 }
 
-function quarticInOut(t) {
+export function quarticInOut(t) {
     t /= 0.5;
     if (t < 1.0) {
         return 0.5 * t * t * t * t;
@@ -254,16 +254,16 @@ function quarticInOut(t) {
     return -0.5 * (t * t * t * t - 2.0);
 }
 
-function quarticOut(t) {
+export function quarticOut(t) {
     t -= 1.0;
     return -(t * t * t * t - 1.0);
 }
 
-function quinticIn(t) {
+export function quinticIn(t) {
     return t * t * t * t * t;
 }
 
-function quinticInOut(t) {
+export function quinticInOut(t) {
     t /= 0.5;
     if (t < 1.0) {
         return 0.5 * t * t * t * t * t;
@@ -272,16 +272,16 @@ function quinticInOut(t) {
     return 0.5 * (t * t * t * t * t + 2.0);
 }
 
-function quinticOut(t) {
+export function quinticOut(t) {
     t -= 1.0;
     return t * t * t * t * t + 1.0;
 }
 
-function sexticIn(t) {
+export function sexticIn(t) {
     return t * t * t * t * t * t;
 }
 
-function sexticInOut(t) {
+export function sexticInOut(t) {
     t /= 0.5;
     if (t < 1.0) {
         return 0.5 * t * t * t * t * t * t;
@@ -290,24 +290,24 @@ function sexticInOut(t) {
     return -0.5 * (t * t * t * t * t * t - 2.0);
 }
 
-function sexticOut(t) {
+export function sexticOut(t) {
     t -= 1.0;
     return -(t * t * t * t * t * t - 1.0);
 }
 
-function sineIn(t) {
+export function sineIn(t) {
     return -Math.cos(t * (Math.PI / 2.0)) + 1.0;
 }
 
-function sineInOut(t) {
+export function sineInOut(t) {
     return -0.5 * (Math.cos(Math.PI * t) - 1.0);
 }
 
-function sineOut(t) {
+export function sineOut(t) {
     return Math.sin(t * (Math.PI / 2.0));
 }
 
-function waveCosine(t, f, a, i) {
+export function waveCosine(t, f, a, i) {
     // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
     f = isNaN(f) ? 1.0 : f;
     a = a === true ? true : false;
@@ -319,7 +319,7 @@ function waveCosine(t, f, a, i) {
     return w;
 }
 
-function waveSawtooth(t, f, a, i) {
+export function waveSawtooth(t, f, a, i) {
     // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
     f = isNaN(f) ? 1.0 : f;
     a = a === true ? true : false;
@@ -331,7 +331,7 @@ function waveSawtooth(t, f, a, i) {
     return w;
 }
 
-function waveSine(t, f, a, i) {
+export function waveSine(t, f, a, i) {
     // t, f = frequency = 1.0, a = absolute = false, i = inverse = false
     f = isNaN(f) ? 1.0 : f;
     a = a === true ? true : false;

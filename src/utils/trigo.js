@@ -1,50 +1,50 @@
-import MathUtil from './math.js';
+import { cycle, roundDecimals } from './math.js';
 
-const DEG_0 = 0.0;
-const DEG_90 = 90.0;
-const DEG_180 = 180.0;
-const DEG_270 = 270.0;
-const DEG_360 = 360.0;
-const DEG_TO_RAD = Math.PI / 180.0; // 0.017453292519943295
-const RAD_TO_DEG = 180.0 / Math.PI; // 57.29577951308232
+export const DEG_0 = 0.0;
+export const DEG_90 = 90.0;
+export const DEG_180 = 180.0;
+export const DEG_270 = 270.0;
+export const DEG_360 = 360.0;
+export const DEG_TO_RAD = Math.PI / 180.0; // 0.017453292519943295
+export const RAD_TO_DEG = 180.0 / Math.PI; // 57.29577951308232
 
-function acosDeg(rad) {
+export function acosDeg(rad) {
     return Math.acos(rad) * RAD_TO_DEG;
 }
 
-function angleDeg(y, x) {
+export function angleDeg(y, x) {
     return atan2Deg(y, x);
 }
 
-function angleRad(y, x) {
+export function angleRad(y, x) {
     return Math.atan2(y, x);
 }
 
-function asinDeg(rad) {
+export function asinDeg(rad) {
     return Math.asin(rad) * RAD_TO_DEG;
 }
 
-function atanDeg(rad) {
+export function atanDeg(rad) {
     return Math.atan(rad) * RAD_TO_DEG;
 }
 
-function atan2Deg(y, x) {
+export function atan2Deg(y, x) {
     return Math.atan2(y, x) * RAD_TO_DEG;
 }
 
-function cosDeg(deg) {
+export function cosDeg(deg) {
     return Math.cos(deg * DEG_TO_RAD);
 }
 
-function cycleDeg(deg) {
-    return MathUtil.cycle(deg, DEG_360);
+export function cycleDeg(deg) {
+    return cycle(deg, DEG_360);
 }
 
-function degToRad(deg) {
+export function degToRad(deg) {
     return deg * DEG_TO_RAD;
 }
 
-function fastDeg(degFrom, degTo) {
+export function fastDeg(degFrom, degTo) {
     const degDiff = degTo - degFrom;
     if (degDiff > DEG_180) {
         return -DEG_360 + degDiff;
@@ -55,7 +55,7 @@ function fastDeg(degFrom, degTo) {
     }
 }
 
-function haversine(lat1, lon1, lat2, lon2, km) {
+export function haversine(lat1, lon1, lat2, lon2, km) {
     const lat1Rad = degToRad(lat1);
     const lon1Rad = degToRad(lon1);
     const lat2Rad = degToRad(lat2);
@@ -73,23 +73,23 @@ function haversine(lat1, lon1, lat2, lon2, km) {
     } else {
         r = 6371; // km
     }
-    const distance = MathUtil.roundDecimals(r * c, 3);
+    const distance = roundDecimals(r * c, 3);
     return distance;
 }
 
-function hypo(distanceX, distanceY) {
+export function hypo(distanceX, distanceY) {
     return Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 }
 
-function radToDeg(rad) {
+export function radToDeg(rad) {
     return rad * RAD_TO_DEG;
 }
 
-function sinDeg(deg) {
+export function sinDeg(deg) {
     return Math.sin(deg * DEG_TO_RAD);
 }
 
-function tanDeg(deg) {
+export function tanDeg(deg) {
     return Math.tan(deg * DEG_TO_RAD);
 }
 

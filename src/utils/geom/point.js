@@ -1,63 +1,63 @@
-import MathUtil from '../math.js';
-import InterpolationUtil from '../interpolation.js';
-import TrigoUtil from '../trigo.js';
+import { equals as mathEquals } from '../math.js';
+import { linear } from '../interpolation.js';
+import { angleDeg, cosDeg, cycleDeg, sinDeg } from '../trigo.js';
 
-function add(a, b) {
+export function add(a, b) {
     return {
         x: a.x + b.x,
         y: a.y + b.y,
     };
 }
 
-function angle(a, b) {
-    const angle = TrigoUtil.angleDeg(b.y - a.y, b.x - a.x);
-    return TrigoUtil.cycleDeg(angle);
+export function angle(a, b) {
+    const angle = angleDeg(b.y - a.y, b.x - a.x);
+    return cycleDeg(angle);
 }
 
-function cross(a, b) {
+export function cross(a, b) {
     // z coordinate of the cross product; x and y coordinates are zero
     return a.x * b.y - a.y * b.x;
 }
 
-function distance(a, b) {
+export function distance(a, b) {
     const dX = b.x - a.x;
     const dY = b.y - a.y;
     return Math.sqrt(dX * dX + dY * dY);
 }
 
-function dot(a, b) {
+export function dot(a, b) {
     return a.x * b.x + a.y * b.y;
 }
 
-function equals(a, b, tolerance) {
-    const f = MathUtil.equals;
+export function equals(a, b, tolerance) {
+    const f = mathEquals;
     return f(a.x, b.x, tolerance) && f(a.y, b.y, tolerance);
 }
 
-function interpolate(a, b, t) {
-    const f = InterpolationUtil.linear;
+export function interpolate(a, b, t) {
+    const f = linear;
     return {
         x: f(a.x, b.x, t),
         y: f(a.y, b.y, t),
     };
 }
 
-function length(p) {
+export function length(p) {
     return distance(p, { x: 0, y: 0 });
 }
 
-function magnitude(p) {
+export function magnitude(p) {
     return length(p);
 }
 
-function project(p, distance, angle) {
+export function project(p, distance, angle) {
     return {
-        x: p.x + distance * TrigoUtil.cosDeg(angle),
-        y: p.y + distance * TrigoUtil.sinDeg(angle),
+        x: p.x + distance * cosDeg(angle),
+        y: p.y + distance * sinDeg(angle),
     };
 }
 
-function rect(points) {
+export function rect(points) {
     let point;
     const pointsX = [];
     const pointsY = [];
@@ -83,11 +83,11 @@ function rect(points) {
     };
 }
 
-function rotate(p, angle, pivot) {
+export function rotate(p, angle, pivot) {
     const pointPivot = pivot || { x: 0.0, y: 0.0 };
     const pointRel = subtract(p, pointPivot);
-    const angleCos = TrigoUtil.cosDeg(angle);
-    const angleSin = TrigoUtil.sinDeg(angle);
+    const angleCos = cosDeg(angle);
+    const angleSin = sinDeg(angle);
     const pointRot = {
         x: pointRel.x * angleCos - pointRel.y * angleSin,
         y: pointRel.x * angleSin + pointRel.y * angleCos,
@@ -96,21 +96,21 @@ function rotate(p, angle, pivot) {
     return pointAbs;
 }
 
-function scale(p, amount) {
+export function scale(p, amount) {
     return {
         x: p.x * amount,
         y: p.y * amount,
     };
 }
 
-function subtract(a, b) {
+export function subtract(a, b) {
     return {
         x: a.x - b.x,
         y: a.y - b.y,
     };
 }
 
-function translate(p, x, y) {
+export function translate(p, x, y) {
     return {
         x: p.x + x,
         y: p.y + y,

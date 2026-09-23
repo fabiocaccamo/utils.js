@@ -22,7 +22,7 @@
 //     return str;
 // };
 
-function removeNamespaces(str) {
+export function removeNamespaces(str) {
     return str.replace(/<[^<>]*?>/g, (tag) => {
         return tag.replace(/(\s|<\/?)[a-zA-Z0-9]+\:/g, '$1');
     });

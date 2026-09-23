@@ -10,64 +10,81 @@ const currentDir = path.dirname(new URL(import.meta.url).pathname);
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-export default {
-    input: 'src/utils.js',
-    output: [
-        {
-            file: 'dist/utils.esm.js',
-            format: 'esm',
-            exports: 'named',
+const plugins = () => [resolve(), commonjs()];
+
+export default [
+    {
+        input: 'src/utils.js',
+        output: [
+            {
+                file: 'dist/utils.esm.js',
+                format: 'esm',
+                exports: 'named',
+            },
+            {
+                file: 'dist/utils.esm.min.js',
+                format: 'esm',
+                plugins: [terser()],
+                exports: 'named',
+            },
+        ],
+        plugins: plugins(),
+        watch: {
+            clearScreen: false,
         },
-        {
-            file: 'dist/utils.esm.min.js',
-            format: 'esm',
-            plugins: [terser()],
-            exports: 'named',
-        },
-        {
-            file: 'dist/utils.umd.js',
-            format: 'umd',
-            name: 'utils',
-            exports: 'default',
-        },
-        {
-            file: 'dist/utils.umd.min.js',
-            format: 'umd',
-            name: 'utils',
-            plugins: [terser()],
-            exports: 'default',
-        },
-        {
-            file: 'dist/utils.js',
-            format: 'umd',
-            name: 'utils',
-            exports: 'default',
-        },
-        {
-            file: 'dist/utils.min.js',
-            format: 'umd',
-            name: 'utils',
-            plugins: [terser()],
-            exports: 'default',
-        },
-    ],
-    plugins: [
-        resolve(),
-        commonjs(),
-        ...(isProduction
-            ? []
-            : [
-                  serve({
-                      open: false,
-                      contentBase: path.resolve(currentDir, 'dist'),
-                      port: 3000,
-                  }),
-                  // livereload({
-                  //     watch: 'dist',
-                  // }),
-              ]),
-    ],
-    watch: {
-        clearScreen: false,
     },
-};
+    {
+        input: 'src/utils.default.js',
+        output: [
+            {
+                file: 'dist/utils.cjs',
+                format: 'cjs',
+                exports: 'default',
+            },
+            {
+                file: 'dist/utils.umd.js',
+                format: 'umd',
+                name: 'utils',
+                exports: 'default',
+            },
+            {
+                file: 'dist/utils.umd.min.js',
+                format: 'umd',
+                name: 'utils',
+                plugins: [terser()],
+                exports: 'default',
+            },
+            {
+                file: 'dist/utils.js',
+                format: 'umd',
+                name: 'utils',
+                exports: 'default',
+            },
+            {
+                file: 'dist/utils.min.js',
+                format: 'umd',
+                name: 'utils',
+                plugins: [terser()],
+                exports: 'default',
+            },
+        ],
+        plugins: [
+            ...plugins(),
+            ...(isProduction
+                ? []
+                : [
+                      serve({
+                          open: false,
+                          contentBase: path.resolve(currentDir, 'dist'),
+                          port: 3000,
+                      }),
+                      // livereload({
+                      //     watch: 'dist',
+                      // }),
+                  ]),
+        ],
+        watch: {
+            clearScreen: false,
+        },
+    },
+];

@@ -1,4 +1,4 @@
-function decode(str) {
+export function decode(str) {
     let output = '';
     try {
         output = JSON.parse(str);
@@ -10,12 +10,12 @@ function decode(str) {
     return output;
 }
 
-function decodeById(id) {
+export function decodeById(id) {
     const el = document?.getElementById(id);
     return el ? decode(el.textContent) : null;
 }
 
-function encode(obj) {
+export function encode(obj) {
     return JSON.stringify(obj);
 }
 

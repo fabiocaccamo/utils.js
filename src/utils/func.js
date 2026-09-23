@@ -1,10 +1,10 @@
-import TypeUtil from './type.js';
+import { isString, isType, of as typeOf } from './type.js';
 
-function args(argumentsObj, skipCount = 0) {
+export function args(argumentsObj, skipCount = 0) {
     return Array.prototype.slice.call(argumentsObj, skipCount);
 }
 
-function attempt(func, scope, ...args) {
+export function attempt(func, scope, ...args) {
     try {
         const result = call(func, scope, ...args);
         return result;
@@ -13,21 +13,21 @@ function attempt(func, scope, ...args) {
     }
 }
 
-function bind(func, scope, ...argsBinded) {
+export function bind(func, scope, ...argsBinded) {
     return (...args) => {
         const result = call(func, scope, ...argsBinded.concat(args));
         return result;
     };
 }
 
-function call(func, scope, ...args) {
-    if (TypeUtil.isString(func)) {
+export function call(func, scope, ...args) {
+    if (isString(func)) {
         func = scope[func];
     }
     return func.apply(scope, args);
 }
 
-function debounce(milliseconds, func, scope) {
+export function debounce(milliseconds, func, scope) {
     let timeoutId;
     return function (...args) {
         if (timeoutId) {
@@ -40,7 +40,7 @@ function debounce(milliseconds, func, scope) {
     };
 }
 
-function delay(milliseconds, func, scope, ...args) {
+export function delay(milliseconds, func, scope, ...args) {
     const wrapper = bind(func, scope, ...args);
     const timeoutId = setTimeout(wrapper, milliseconds);
     return {
@@ -52,7 +52,7 @@ function delay(milliseconds, func, scope, ...args) {
     };
 }
 
-function memoize(func, scope) {
+export function memoize(func, scope) {
     const cache = {};
 
     return function (...args) {
@@ -64,11 +64,11 @@ function memoize(func, scope) {
     };
 }
 
-function noop() {
+export function noop() {
     return true;
 }
 
-function repeat(milliseconds, func, scope, ...args) {
+export function repeat(milliseconds, func, scope, ...args) {
     const wrapper = bind(func, scope, ...args);
     const intervalId = setInterval(wrapper, milliseconds);
     return {
@@ -80,7 +80,7 @@ function repeat(milliseconds, func, scope, ...args) {
     };
 }
 
-function throttle(milliseconds, func, scope) {
+export function throttle(milliseconds, func, scope) {
     let timeoutId;
     return (...args) => {
         if (timeoutId) {
@@ -94,7 +94,7 @@ function throttle(milliseconds, func, scope) {
     };
 }
 
-function until(milliseconds, func, scope, ...args) {
+export function until(milliseconds, func, scope, ...args) {
     const wrapper = bind(func, scope, ...args);
     const interval = repeat(milliseconds, () => {
         if (wrapper() === false) {
@@ -104,7 +104,7 @@ function until(milliseconds, func, scope, ...args) {
     return interval;
 }
 
-function validate(argumentsObj, ...types) {
+export function validate(argumentsObj, ...types) {
     // validate(arguments, 'number', 'string', ['string', 'undefined']);
 
     const argsList = args(argumentsObj);
@@ -126,7 +126,7 @@ function validate(argumentsObj, ...types) {
 
     for (let i = 0; i < types.length; i++) {
         for (const type of types[i]) {
-            if (!TypeUtil.isType(type)) {
+            if (!isType(type)) {
                 throw new TypeError(
                     `invalid argument: expected type "${type}" is not a valid type.`
                 );
@@ -135,7 +135,7 @@ function validate(argumentsObj, ...types) {
     }
 
     argsList.forEach((arg, i) => {
-        const argType = TypeUtil.of(arg);
+        const argType = typeOf(arg);
         const argTypes = types[Math.min(i, types.length - 1)];
         if (!argTypes.includes(argType)) {
             throw new TypeError(

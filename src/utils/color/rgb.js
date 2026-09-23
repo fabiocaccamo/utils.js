@@ -1,8 +1,8 @@
-import HexUtil from '../hex.js';
-import InterpolationUtil from '../interpolation.js';
-import MathUtil from '../math.js';
+import { encodeInt } from '../hex.js';
+import { linear, scalar } from '../interpolation.js';
+import { constrain } from '../math.js';
 
-function average(colors) {
+export function average(colors) {
     let c;
     let r = 0;
     let g = 0;
@@ -25,7 +25,7 @@ function average(colors) {
     return { r: r, g: g, b: b, a: a };
 }
 
-function distance(colorA, colorB) {
+export function distance(colorA, colorB) {
     const rDiff = colorA.r - colorB.r;
     const gDiff = colorA.g - colorB.g;
     const bDiff = colorA.b - colorB.b;
@@ -35,13 +35,13 @@ function distance(colorA, colorB) {
     return Math.sqrt(rDiff * rDiff + gDiff * gDiff + bDiff * bDiff + aDiff * aDiff);
 }
 
-function gradient(colors, steps) {
+export function gradient(colors, steps) {
     const colorsOutput = [];
     let color;
     const mlerp = interpolateMultilinear;
     let t = 0.0;
     const tInc = 1.0 / Math.max(1, steps - 1);
-    const tConstrain = MathUtil.constrain;
+    const tConstrain = constrain;
     for (let i = 0; i < steps; i++) {
         t = i * tInc;
         t = tConstrain(t, 0.0, 1.0);
@@ -51,7 +51,7 @@ function gradient(colors, steps) {
     return colorsOutput;
 }
 
-function gradientMatrix(colors, stepsX, stepsY) {
+export function gradientMatrix(colors, stepsX, stepsY) {
     // colors: { top, topRight, right, bottomLeft, bottom, bottomRight, left, center };
     // only 4 corners are required
     let colorTopLeft = colors.topLeft;
@@ -111,7 +111,7 @@ function gradientMatrix(colors, stepsX, stepsY) {
 
     let tX, tXScaled;
     let tY, tYScaled;
-    const tScalar = InterpolationUtil.scalar;
+    const tScalar = scalar;
 
     let x, y;
 
@@ -153,7 +153,7 @@ function gradientMatrix(colors, stepsX, stepsY) {
     return colorsMatrix;
 }
 
-function interpolateBilinear(
+export function interpolateBilinear(
     colorTopLeft,
     colorBottomLeft,
     colorTopRight,
@@ -169,8 +169,8 @@ function interpolateBilinear(
     );
 }
 
-function interpolateLinear(colorFrom, colorTo, t) {
-    const lerp = InterpolationUtil.linear;
+export function interpolateLinear(colorFrom, colorTo, t) {
+    const lerp = linear;
     const round = Math.round;
     return {
         r: round(lerp(colorFrom.r, colorTo.r, t)),
@@ -186,13 +186,13 @@ function interpolateLinear(colorFrom, colorTo, t) {
     };
 }
 
-function interpolateMultilinear(colors, t) {
-    const s = InterpolationUtil.scalar(colors.length - 1, t);
+export function interpolateMultilinear(colors, t) {
+    const s = scalar(colors.length - 1, t);
     const i = s.index;
     return interpolateLinear(colors[i], colors[i + 1], s.t);
 }
 
-function nearest(colorSearch, colors) {
+export function nearest(colorSearch, colors) {
     const calcDistance = distance;
     let tempDistance;
     let nearestDistance =
@@ -208,7 +208,7 @@ function nearest(colorSearch, colors) {
     return nearestColor;
 }
 
-function toCmyk(color) {
+export function toCmyk(color) {
     const r = color.r / 255;
     const g = color.g / 255;
     const b = color.b / 255;
@@ -242,12 +242,12 @@ function toCmyk(color) {
 //     // http://cadik.posvete.cz/color_to_gray_evaluation/
 // };
 
-function toHex(color, prefix) {
+export function toHex(color, prefix) {
     const a = isNaN(color.a) ? null : color.a;
     const r = isNaN(color.r) ? 0 : color.r;
     const g = isNaN(color.g) ? 0 : color.g;
     const b = isNaN(color.b) ? 0 : color.b;
-    const hex = HexUtil.encodeInt;
+    const hex = encodeInt;
     return String(
         (prefix || '#') +
             (a === null || a >= 1.0 ? '' : hex(a * 255)) +
@@ -266,12 +266,12 @@ function toHex(color, prefix) {
 //     // https://gist.github.com/felipesabino/5066336/revisions
 // };
 
-function toString(color) {
+export function toString(color) {
     // prettier-ignore
     return `{ r:${String(color.r)}, g:${String(color.g)}, b:${String(color.b)}, a:${String(isNaN(color.a) ? 1.0 : color.a)} }`;
 }
 
-function toStringCSS(color) {
+export function toStringCSS(color) {
     // prettier-ignore
     return `rgba(${String(color.r)}, ${String(color.g)}, ${String(color.b)}, ${String(isNaN(color.a) ? 1.0 : color.a)})`;
 }

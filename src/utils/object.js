@@ -1,13 +1,24 @@
-import ArrayUtil from './array.js';
-import Base64Util from './base64.js';
-import DateUtil from './date.js';
-import JSONUtil from './json.js';
-import MathUtil from './math.js';
-import StringUtil from './string.js';
-import TypeUtil from './type.js';
-import URLUtil from './url.js';
+import { clean as arrayClean, clone as arrayClone } from './array.js';
+import { decode as base64Decode, encode as base64Encode } from './base64.js';
+import { clone as dateClone } from './date.js';
+import { decode as jsonDecode, decodeById, encode as jsonEncode } from './json.js';
+import { equals as mathEquals } from './math.js';
+import { trim } from './string.js';
+import {
+    ARRAY,
+    DATE,
+    NUMBER,
+    OBJECT,
+    STRING,
+    isArray,
+    isNone,
+    isObject,
+    isUndefined,
+    of,
+} from './type.js';
+import { getParametersDict } from './url.js';
 
-function assign(obj, other, ...others) {
+export function assign(obj, other, ...others) {
     const objs = [other].concat(others);
     let i, j, k;
     for (i = 0, j = objs.length; i < j; i++) {
@@ -23,56 +34,56 @@ function assign(obj, other, ...others) {
     return obj;
 }
 
-function clean(obj, hard) {
+export function clean(obj, hard) {
     const objKeys = keys(obj);
     let key, val;
     for (let i = 0, j = objKeys.length; i < j; i++) {
         key = objKeys[i];
         val = obj[key];
         if (hard === true) {
-            switch (TypeUtil.of(val)) {
-                case TypeUtil.ARRAY:
-                    val = obj[key] = ArrayUtil.clean(val, hard);
+            switch (of(val)) {
+                case ARRAY:
+                    val = obj[key] = arrayClean(val, hard);
                     if (val.length === 0) {
                         val = null;
                     }
                     break;
-                case TypeUtil.OBJECT:
+                case OBJECT:
                     val = obj[key] = clean(val, hard);
                     if (length(val) === 0) {
                         val = null;
                     }
                     break;
-                case TypeUtil.STRING:
-                    val = obj[key] = StringUtil.trim(val);
+                case STRING:
+                    val = obj[key] = trim(val);
                     if (val === '') {
                         val = null;
                     }
                     break;
             }
         }
-        if (TypeUtil.isNone(val)) {
+        if (isNone(val)) {
             delete obj[key];
         }
     }
     return obj;
 }
 
-function clone(obj) {
+export function clone(obj) {
     const cln = {};
     const objKeys = keys(obj);
     let key, val;
     for (let i = 0, j = objKeys.length; i < j; i++) {
         key = objKeys[i];
         val = obj[key];
-        switch (TypeUtil.of(val)) {
-            case TypeUtil.ARRAY:
-                cln[key] = ArrayUtil.clone(val);
+        switch (of(val)) {
+            case ARRAY:
+                cln[key] = arrayClone(val);
                 break;
-            case TypeUtil.DATE:
-                cln[key] = DateUtil.clone(val);
+            case DATE:
+                cln[key] = dateClone(val);
                 break;
-            case TypeUtil.OBJECT:
+            case OBJECT:
                 cln[key] = clone(val);
                 break;
             default:
@@ -83,33 +94,33 @@ function clone(obj) {
     return cln;
 }
 
-function decodeBase64(str) {
-    return JSONUtil.decode(Base64Util.decode(str));
+export function decodeBase64(str) {
+    return jsonDecode(base64Decode(str));
 }
 
-function decodeJSON(str) {
-    return JSONUtil.decode(str);
+export function decodeJSON(str) {
+    return jsonDecode(str);
 }
 
-function decodeJSONById(id) {
-    return JSONUtil.decodeById(id);
+export function decodeJSONById(id) {
+    return decodeById(id);
 }
 
-function decodeParameters(str) {
-    return URLUtil.getParametersDict(`?${str}`);
+export function decodeParameters(str) {
+    return getParametersDict(`?${str}`);
 }
 
-function encodeBase64(obj) {
-    return Base64Util.encode(JSONUtil.encode(obj));
+export function encodeBase64(obj) {
+    return base64Encode(jsonEncode(obj));
 }
 
-function encodeJSON(obj) {
-    return JSONUtil.encode(obj);
+export function encodeJSON(obj) {
+    return jsonEncode(obj);
 }
 
-function encodeParameters(obj, objKeysFilter) {
+export function encodeParameters(obj, objKeysFilter) {
     const objClean = clean(clone(obj), true);
-    const objKeys = TypeUtil.isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
+    const objKeys = isArray(objKeysFilter) ? objKeysFilter : keys(obj, true);
     let key;
     let val;
     const keyval = [];
@@ -125,26 +136,26 @@ function encodeParameters(obj, objKeysFilter) {
     return keyval.join('&');
 }
 
-function equals(obj1, obj2) {
+export function equals(obj1, obj2) {
     if (obj1 === obj2 || is(obj1, obj2)) {
         return true;
     }
 
     let key, val1, val2, type1, type2;
 
-    type1 = TypeUtil.of(obj1);
-    type2 = TypeUtil.of(obj2);
+    type1 = of(obj1);
+    type2 = of(obj2);
 
     if (type1 !== type2) {
         return false;
     }
 
     switch (type1) {
-        case TypeUtil.ARRAY:
-        case TypeUtil.OBJECT:
+        case ARRAY:
+        case OBJECT:
             break;
-        case TypeUtil.NUMBER:
-            return MathUtil.equals(obj1, obj2);
+        case NUMBER:
+            return mathEquals(obj1, obj2);
         default:
             return String(obj1) === String(obj2);
     }
@@ -171,7 +182,7 @@ function equals(obj1, obj2) {
     return true;
 }
 
-function is(obj1, obj2) {
+export function is(obj1, obj2) {
     // https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Object/is
     if (!Object.is) {
         Object.is = (x, y) => {
@@ -189,7 +200,7 @@ function is(obj1, obj2) {
     return Object.is(obj1, obj2);
 }
 
-const keypath = {
+export const keypath = {
     get(obj, path, defaultValue) {
         const objKeys = path.split('.');
         let key;
@@ -202,7 +213,7 @@ const keypath = {
                 return defaultValue;
             }
         }
-        return TypeUtil.isUndefined(cursor) ? defaultValue : cursor;
+        return isUndefined(cursor) ? defaultValue : cursor;
     },
 
     set(obj, path, value) {
@@ -214,7 +225,7 @@ const keypath = {
             if (key === '__proto__' || key === 'constructor') {
                 break;
             }
-            if (!TypeUtil.isObject(cursor[key])) {
+            if (!isObject(cursor[key])) {
                 cursor[key] = {};
             }
             if (i < j - 1) {
@@ -226,7 +237,7 @@ const keypath = {
     },
 };
 
-function keys(obj, sorted) {
+export function keys(obj, sorted) {
     const k = Object.keys(obj);
     if (sorted === true) {
         k.sort();
@@ -234,11 +245,11 @@ function keys(obj, sorted) {
     return k;
 }
 
-function length(obj) {
+export function length(obj) {
     return keys(obj).length;
 }
 
-function map(obj, func) {
+export function map(obj, func) {
     const m = {};
     keys(obj).forEach((k) => {
         m[k] = func.call(null, obj[k], k, obj);
@@ -246,13 +257,13 @@ function map(obj, func) {
     return m;
 }
 
-function merge(obj1, obj2, ...objs) {
+export function merge(obj1, obj2, ...objs) {
     const objsList = [{}, obj1, obj2].concat(objs);
     const obj = assign.apply(null, objsList);
     return obj;
 }
 
-function search(objs, filter) {
+export function search(objs, filter) {
     // prettier-ignore
     const results = [];
     let i, j, k, m, obj, res, objKeys, key, val;
@@ -274,7 +285,7 @@ function search(objs, filter) {
     return results;
 }
 
-function values(obj, sorted) {
+export function values(obj, sorted) {
     const objKeys = keys(obj, sorted);
     const vals = [];
     for (let i = 0, j = objKeys.length; i < j; i++) {

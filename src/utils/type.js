@@ -1,25 +1,24 @@
-import Base64Util from './base64.js';
-import JSONUtil from './json.js';
-import ObjectUtil from './object.js';
-import URLUtil from './url.js';
+import { decode as base64Decode } from './base64.js';
+import { decode as jsonDecode } from './json.js';
+import { is as objectIs } from './object.js';
 
-const ARRAY = 'array';
-const BOOLEAN = 'boolean';
-const DATE = 'date';
-const ERROR = 'error';
-const FUNCTION = 'function';
-const MODULE = 'module';
-const NAN = 'nan';
-const NUMBER = 'number';
-const NULL = 'null';
-const OBJECT = 'object';
-const REGEXP = 'regexp';
-const STRING = 'string';
-const UNDEFINED = 'undefined';
-const UNKNOWN = 'unknown';
+export const ARRAY = 'array';
+export const BOOLEAN = 'boolean';
+export const DATE = 'date';
+export const ERROR = 'error';
+export const FUNCTION = 'function';
+export const MODULE = 'module';
+export const NAN = 'nan';
+export const NUMBER = 'number';
+export const NULL = 'null';
+export const OBJECT = 'object';
+export const REGEXP = 'regexp';
+export const STRING = 'string';
+export const UNDEFINED = 'undefined';
+export const UNKNOWN = 'unknown';
 // const XML = 'xml';
 
-function isArray(val) {
+export function isArray(val) {
     // https://stackoverflow.com/questions/4775722/check-if-object-is-array
     if (Array.isArray) {
         return Array.isArray(val);
@@ -27,10 +26,10 @@ function isArray(val) {
     return Object.prototype.toString.call(val) === '[object Array]';
 }
 
-function isBase64(val) {
+export function isBase64(val) {
     if (isString(val)) {
         try {
-            if (Base64Util.decode(val) !== '') {
+            if (base64Decode(val) !== '') {
                 return true;
             }
         } catch (e) {
@@ -40,26 +39,26 @@ function isBase64(val) {
     return false;
 }
 
-function isBoolean(val) {
+export function isBoolean(val) {
     return typeof val === 'boolean';
 }
 
-function isDate(val) {
+export function isDate(val) {
     return Object.prototype.toString.call(val) === '[object Date]';
 }
 
-function isError(val) {
+export function isError(val) {
     return val instanceof Error;
 }
 
-function isFunction(val) {
+export function isFunction(val) {
     return typeof val === 'function';
 }
 
-function isJSON(val) {
+export function isJSON(val) {
     if (isString(val)) {
         try {
-            JSONUtil.decode(val);
+            jsonDecode(val);
             return true;
         } catch (e) {
             // value is not valid json data
@@ -68,42 +67,42 @@ function isJSON(val) {
     return false;
 }
 
-function isModule(val) {
+export function isModule(val) {
     return Object.prototype.toString.call(val) === '[object Module]';
 }
 
-function isNaN(val) {
-    return ObjectUtil.is(val, NaN);
+export function isNaN(val) {
+    return objectIs(val, NaN);
 }
 
-function isNone(val) {
+export function isNone(val) {
     return isUndefined(val) || isNull(val) || isNaN(val);
 }
 
-function isNumber(val) {
+export function isNumber(val) {
     return typeof val === 'number' && !isNaN(val) && isFinite(val);
 }
 
-function isNull(val) {
+export function isNull(val) {
     return val === null;
 }
 
-function isObject(val) {
+export function isObject(val) {
     return (
         typeof val === 'object' &&
         Object.prototype.toString.call(val) === '[object Object]'
     );
 }
 
-function isRegExp(val) {
+export function isRegExp(val) {
     return val instanceof RegExp;
 }
 
-function isString(val) {
+export function isString(val) {
     return typeof val === 'string';
 }
 
-function isType(val) {
+export function isType(val) {
     switch (val) {
         case ARRAY:
         case BOOLEAN:
@@ -126,7 +125,7 @@ function isType(val) {
     }
 }
 
-function isUndefined(val) {
+export function isUndefined(val) {
     return typeof val === 'undefined';
 }
 
@@ -135,7 +134,7 @@ function isUndefined(val) {
 //     return false;
 // };
 
-function of(val) {
+export function of(val) {
     if (isArray(val)) {
         return ARRAY;
     } else if (isBoolean(val)) {

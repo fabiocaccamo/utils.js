@@ -1,28 +1,28 @@
-function isBetween(n, min, max) {
+export function isBetween(n, min, max) {
     return n >= min && n <= max;
 }
 
-function isEven(n) {
+export function isEven(n) {
     return n % 2.0 === 0.0 && !isFloat(n);
 }
 
-function isFloat(n) {
+export function isFloat(n) {
     return n % 1 !== 0;
 }
 
-function isNegative(n) {
+export function isNegative(n) {
     return n < 0.0;
 }
 
-function isOdd(n) {
+export function isOdd(n) {
     return n % 2.0 !== 0.0 && !isFloat(n);
 }
 
-function isPositive(n) {
+export function isPositive(n) {
     return n >= 0.0;
 }
 
-function isPrime(n) {
+export function isPrime(n) {
     if (typeof n !== 'number' || Number.isNaN(n) || isFloat(n)) {
         return false;
     }

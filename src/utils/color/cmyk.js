@@ -1,4 +1,4 @@
-import RGBColorUtil from './rgb.js';
+import { toHex as rgbToHex } from './rgb.js';
 
 // function average(colors) {
 //     return RGBColorUtil.toCmyk(
@@ -73,8 +73,8 @@ import RGBColorUtil from './rgb.js';
 //         toRgb(color));
 // };
 
-function toHex(color, prefix) {
-    return RGBColorUtil.toHex(toRgb(color), prefix);
+export function toHex(color, prefix) {
+    return rgbToHex(toRgb(color), prefix);
 }
 
 // function toHsl(color) {
@@ -87,7 +87,7 @@ function toHex(color, prefix) {
 //         toRgb(color));
 // };
 
-function toRgb(color) {
+export function toRgb(color) {
     const c = color.c / 100;
     const m = color.m / 100;
     const y = color.y / 100;
@@ -106,12 +106,12 @@ function toRgb(color) {
     return { r: r, g: g, b: b, a: 1.0 };
 }
 
-function toString(color) {
+export function toString(color) {
     // prettier-ignore
     return `{ c:${String(color.c)}, m:${String(color.m)}, y:${String(color.y)}, k:${String(color.k)} }`;
 }
 
-function toStringCSS(color) {
+export function toStringCSS(color) {
     // prettier-ignore
     return `cmyk(${String(color.c)}%, ${String(color.m)}%, ${String(color.y)}%, ${String(color.k)}%)`;
 }

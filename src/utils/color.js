@@ -2,6 +2,13 @@ import CMYKColorUtil from './color/cmyk.js';
 import HexColorUtil from './color/hex.js';
 import RGBColorUtil from './color/rgb.js';
 
+export * as cmyk from './color/cmyk.js';
+export * as hex from './color/hex.js';
+export * as rgb from './color/rgb.js';
+export { toHex as cmykToHex, toRgb as cmykToRgb } from './color/cmyk.js';
+export { toCmyk as hexToCmyk, toRgb as hexToRgb } from './color/hex.js';
+export { toCmyk as rgbToCmyk } from './color/rgb.js';
+
 export default {
     cmyk: CMYKColorUtil,
     // cmykToGrayscale: CMYKColorUtil.toGrayscale,
