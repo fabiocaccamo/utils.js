@@ -23,7 +23,8 @@ export function decode(str) {
     let output = '';
 
     try {
-        output = window.atob(input);
+        // native implementation when available (browsers, Node.js >= 16)
+        output = globalThis.atob(input);
     } catch (e) {
         const chars = CHARS_TABLE;
         let chr1, chr2, chr3;
@@ -62,7 +63,7 @@ export function encode(str) {
     let output = '';
 
     try {
-        output = window.btoa(input);
+        output = globalThis.btoa(input);
     } catch (e) {
         const chars = CHARS_LIST;
         let chr1, chr2, chr3;
