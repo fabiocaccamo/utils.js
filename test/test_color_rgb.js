@@ -419,4 +419,25 @@ describe('color.rgb', () => {
             test.assertEqual(r, 'rgba(0, 0, 255, 1)');
         });
     });
+    describe('regressions', () => {
+        it('test average keeps alpha', () => {
+            const r = rgb.average([
+                { r: 0, g: 0, b: 0, a: 0.2 },
+                { r: 0, g: 0, b: 0, a: 0.4 },
+            ]);
+            test.assertEqual(r, { r: 0, g: 0, b: 0, a: 0.3 });
+        });
+        it('test interpolateLinear keeps alpha', () => {
+            const r = rgb.interpolateLinear(
+                { r: 0, g: 0, b: 0, a: 0.0 },
+                { r: 0, g: 0, b: 0, a: 1.0 },
+                0.25
+            );
+            test.assertEqual(r, { r: 0, g: 0, b: 0, a: 0.25 });
+        });
+        it('test nearest with alpha', () => {
+            const c = { r: 255, g: 255, b: 255, a: 0.0 };
+            test.assertEqual(rgb.nearest({ r: 0, g: 0, b: 0, a: 1.0 }, [c]), c);
+        });
+    });
 });

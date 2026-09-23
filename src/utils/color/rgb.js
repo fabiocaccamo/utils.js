@@ -1,6 +1,6 @@
 import { encodeInt } from '../hex.js';
 import { linear, scalar } from '../interpolation.js';
-import { constrain } from '../math.js';
+import { constrain, roundDecimals } from '../math.js';
 
 export function average(colors) {
     let c;
@@ -21,7 +21,8 @@ export function average(colors) {
     r = round(r / j);
     g = round(g / j);
     b = round(b / j);
-    a = round(a / j);
+    // alpha is in the 0.0 - 1.0 range, rounding it to integer would lose it
+    a = roundDecimals(a / j, 2);
     return { r: r, g: g, b: b, a: a };
 }
 
@@ -176,12 +177,13 @@ export function interpolateLinear(colorFrom, colorTo, t) {
         r: round(lerp(colorFrom.r, colorTo.r, t)),
         g: round(lerp(colorFrom.g, colorTo.g, t)),
         b: round(lerp(colorFrom.b, colorTo.b, t)),
-        a: round(
+        a: roundDecimals(
             lerp(
                 isNaN(colorFrom.a) ? 1.0 : colorFrom.a,
                 isNaN(colorTo.a) ? 1.0 : colorTo.a,
                 t
-            )
+            ),
+            2
         ),
     };
 }
@@ -195,8 +197,7 @@ export function interpolateMultilinear(colors, t) {
 export function nearest(colorSearch, colors) {
     const calcDistance = distance;
     let tempDistance;
-    let nearestDistance =
-        calcDistance({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 }) + 1.0;
+    let nearestDistance = Infinity;
     let nearestColor = null;
     for (let i = 0, j = colors.length; i < j; i++) {
         tempDistance = calcDistance(colorSearch, colors[i]);
