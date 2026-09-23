@@ -58,22 +58,20 @@ export function project(p, distance, angle) {
 }
 
 export function rect(points) {
+    // single loop instead of Math.min(...values), that throws a RangeError with large arrays
     let point;
-    const pointsX = [];
-    const pointsY = [];
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
 
     for (let i = 0, j = points.length; i < j; i++) {
         point = points[i];
-        pointsX.push(point.x);
-        pointsY.push(point.y);
+        minX = Math.min(minX, point.x);
+        minY = Math.min(minY, point.y);
+        maxX = Math.max(maxX, point.x);
+        maxY = Math.max(maxY, point.y);
     }
-
-    const minF = Math.min;
-    const minX = minF(...pointsX);
-    const minY = minF(...pointsY);
-    const maxF = Math.max;
-    const maxX = maxF(...pointsX);
-    const maxY = maxF(...pointsY);
 
     return {
         topLeft: { x: minX, y: minY },

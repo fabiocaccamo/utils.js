@@ -273,4 +273,15 @@ describe('point', () => {
             test.assertEqual(r, { x: -40, y: 20 });
         });
     });
+    describe('regressions', () => {
+        it('test rect with many points', () => {
+            const points = [];
+            for (let i = 0; i < 200000; i++) {
+                points.push({ x: i, y: -i });
+            }
+            const r = point.rect(points);
+            test.assertEqual(r.topLeft, { x: 0, y: -199999 });
+            test.assertEqual(r.bottomRight, { x: 199999, y: 0 });
+        });
+    });
 });
