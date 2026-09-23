@@ -111,7 +111,8 @@ export function toRgb(color) {
 
     let hex;
     if (isNumber(color)) {
-        hex = toHex(color);
+        // restore leading zeros, eg. 0x00FF00 -> '00FF00'
+        hex = toHex(color).padStart(6, '0');
     } else if (isString(color)) {
         hex = color.replace(/\#|0x/, '');
     } else {

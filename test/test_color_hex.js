@@ -315,4 +315,10 @@ describe('color.hex', () => {
             test.assertEqual(s, '#80FF0000');
         });
     });
+    describe('regressions', () => {
+        it('test toRgb with number with leading zeros', () => {
+            test.assertEqual(hex.toRgb(0x00ff00), { r: 0, g: 255, b: 0, a: 1.0 });
+            test.assertEqual(hex.toRgb(0x0000ff), { r: 0, g: 0, b: 255, a: 1.0 });
+        });
+    });
 });
