@@ -26,7 +26,7 @@ export function assign(obj, other, ...others) {
             if (k === '__proto__' || k === 'constructor' || k === 'prototype') {
                 continue;
             }
-            if (Object.prototype.hasOwnProperty.call(objs[i], k)) {
+            if (hasOwnProp(objs[i], k)) {
                 obj[k] = objs[i][k];
             }
         }
@@ -127,7 +127,7 @@ export function encodeParameters(obj, objKeysFilter) {
 
     for (let i = 0, j = objKeys.length; i < j; i++) {
         key = objKeys[i];
-        if (key in objClean) {
+        if (hasOwnProp(objClean, key)) {
             val = objClean[key];
             keyval.push(`${key}=${encodeURIComponent(val)}`);
         }
@@ -180,6 +180,10 @@ export function equals(obj1, obj2) {
     }
 
     return true;
+}
+
+export function hasOwnProp(obj, key) {
+    return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 export function is(obj1, obj2) {
@@ -292,6 +296,7 @@ export default {
     encodeJSON,
     encodeParameters,
     equals,
+    hasOwnProp,
     is,
     keypath,
     keys,

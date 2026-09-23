@@ -1,3 +1,5 @@
+import { hasOwnProp } from './object.js';
+
 export function getDomain(url = getURL(), level) {
     // remove protocol, www and port
     let domain = url.replace(/(^\w+:|^)\/\/(www\.)?/, '');
@@ -15,7 +17,9 @@ export function getDomain(url = getURL(), level) {
 
 export function getParameterByName(url, name, defaultValue) {
     const paramsDict = getParameters(url);
-    return name in paramsDict ? paramsDict[name] || defaultValue || '' : defaultValue;
+    return hasOwnProp(paramsDict, name)
+        ? paramsDict[name] || defaultValue || ''
+        : defaultValue;
 }
 
 export function getParameters(url) {
@@ -70,7 +74,7 @@ export function getURL() {
 }
 
 export function hasParameter(url, name) {
-    return name in getParametersDict(url);
+    return hasOwnProp(getParametersDict(url), name);
 }
 
 export function isFile(url) {

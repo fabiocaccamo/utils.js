@@ -498,4 +498,21 @@ describe('object', () => {
             test.assertEqual(r, [1, 2, 3]);
         });
     });
+    describe('hasOwnProp', () => {
+        const f = obj.hasOwnProp;
+        it('test own property', () => {
+            test.assertTrue(f({ a: 1 }, 'a'));
+            test.assertTrue(f({ a: undefined }, 'a'));
+        });
+        it('test inherited property', () => {
+            test.assertFalse(f({}, 'toString'));
+            test.assertFalse(f({}, 'constructor'));
+            test.assertFalse(f(Object.create({ a: 1 }), 'a'));
+        });
+        it('test object without prototype', () => {
+            const o = Object.create(null);
+            o.a = 1;
+            test.assertTrue(f(o, 'a'));
+        });
+    });
 });
