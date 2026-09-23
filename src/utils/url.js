@@ -73,13 +73,8 @@ export function getParametersString(url = getURL()) {
 }
 
 export function getURL() {
-    let url = '';
-    try {
-        url = window.location.href;
-    } catch (e) {
-        // catch exception if not running in browser
-    }
-    return url;
+    // location is not defined when not running in browser
+    return globalThis.location?.href ?? '';
 }
 
 export function hasParameter(url, name) {
