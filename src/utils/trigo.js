@@ -47,7 +47,7 @@ export function degToRad(deg) {
 export function fastDeg(degFrom, degTo) {
     const degDiff = degTo - degFrom;
     if (degDiff > DEG_180) {
-        return -DEG_360 + degDiff;
+        return -DEG_360 + degTo;
     } else if (degDiff < -DEG_180) {
         return DEG_360 + degTo;
     } else {

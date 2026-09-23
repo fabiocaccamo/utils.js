@@ -182,4 +182,10 @@ describe('trigo', () => {
             test.assertNumberAlmostEqual(f(-1.0), -0.017455064928217585);
         });
     });
+    describe('regressions', () => {
+        it('test fastDeg with non zero start', () => {
+            test.assertNumberAlmostEqual(trigo.fastDeg(90, 359), -1.0);
+            test.assertNumberAlmostEqual(trigo.fastDeg(359, 1), 361.0);
+        });
+    });
 });
