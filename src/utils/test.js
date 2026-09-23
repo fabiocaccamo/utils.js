@@ -1,3 +1,4 @@
+import { call } from './func.js';
 import { encode } from './json.js';
 import { equals as mathEquals } from './math.js';
 import { equals as objectEquals } from './object.js';
@@ -251,8 +252,7 @@ export function assertString(val) {
 export function assertThrows(val, ...args) {
     assertFunction(val);
     try {
-        const scope = null;
-        FunctionUtil.call.apply(null, [val, scope].concat(args));
+        call(val, null, ...args);
     } catch (e) {
         return;
     }

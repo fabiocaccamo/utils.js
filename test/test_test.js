@@ -407,4 +407,26 @@ describe('test', () => {
     //         test.assertTrue(true);
     //     });
     // });
+    describe('regressions', () => {
+        it('test assertThrows throws if function does not throw', () => {
+            let thrown = false;
+            try {
+                test.assertThrows(() => {});
+            } catch (e) {
+                thrown = true;
+            }
+            test.assertTrue(thrown);
+        });
+        it('test assertThrows passes arguments', () => {
+            test.assertThrows(
+                (a, b) => {
+                    if (a === 1 && b === 2) {
+                        throw new Error();
+                    }
+                },
+                1,
+                2
+            );
+        });
+    });
 });
