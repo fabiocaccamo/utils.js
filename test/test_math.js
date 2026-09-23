@@ -265,4 +265,17 @@ describe('math', () => {
             test.assertNumberAlmostEqual(f([1, 2, 3, 4, -5]), 5);
         });
     });
+    describe('regressions', () => {
+        it('test gcd with large ratio does not overflow the stack', () => {
+            test.assertEqual(math.gcd(1000000, 1), 1);
+            test.assertEqual(math.gcd(1, 1000000), 1);
+        });
+        it('test gcd with zero', () => {
+            test.assertEqual(math.gcd(0, 5), 5);
+            test.assertEqual(math.gcd(5, 0), 5);
+        });
+        it('test gcd with values over 32 bit', () => {
+            test.assertEqual(math.gcd(2 ** 40, 2 ** 35), 2 ** 35);
+        });
+    });
 });

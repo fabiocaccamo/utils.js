@@ -46,15 +46,13 @@ export function factorial(n) {
 }
 
 export function gcd(a, b) {
-    if (a === b) {
-        return a;
+    // iterative euclidean algorithm
+    a = Math.abs(a);
+    b = Math.abs(b);
+    while (b) {
+        [a, b] = [b, a % b];
     }
-    if (a < b) {
-        a ^= b;
-        b ^= a;
-        a ^= b;
-    }
-    return gcd(a - b, b);
+    return a;
 }
 
 export const interpolation = { bilinear, linear, multilinear, scalar };
