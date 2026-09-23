@@ -188,4 +188,9 @@ describe('color', () => {
     //         test.assertTrue(true);
     //     });
     // });
+    describe('regressions', () => {
+        it('test rgbToHex', () => {
+            test.assertEqual(color.rgbToHex({ r: 255, g: 0, b: 0 }), '#FF0000');
+        });
+    });
 });

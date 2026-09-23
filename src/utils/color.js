@@ -7,7 +7,7 @@ export * as hex from './color/hex.js';
 export * as rgb from './color/rgb.js';
 export { toHex as cmykToHex, toRgb as cmykToRgb } from './color/cmyk.js';
 export { toCmyk as hexToCmyk, toRgb as hexToRgb } from './color/hex.js';
-export { toCmyk as rgbToCmyk } from './color/rgb.js';
+export { toCmyk as rgbToCmyk, toHex as rgbToHex } from './color/rgb.js';
 
 export default {
     cmyk: CMYKColorUtil,
@@ -48,7 +48,7 @@ export default {
     rgb: RGBColorUtil,
     rgbToCmyk: RGBColorUtil.toCmyk,
     // rgbToGrayscale: RGBColorUtil.toGrayscale,
-    rgbToHex: RGBColorUtil.toRgb,
+    rgbToHex: RGBColorUtil.toHex,
     // rgbToHsl: RGBColorUtil.toHsl,
     // rgbToHsv: RGBColorUtil.toHsv
 };
