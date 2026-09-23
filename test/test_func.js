@@ -507,4 +507,11 @@ describe('func', () => {
             test.assertThrows(v, true);
         });
     });
+    describe('regressions', () => {
+        it('test memoize with Object.prototype keys', () => {
+            const m = func.memoize((key) => `value of ${key}`);
+            test.assertEqual(m('constructor'), 'value of constructor');
+            test.assertEqual(m('__proto__'), 'value of __proto__');
+        });
+    });
 });

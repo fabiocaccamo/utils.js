@@ -53,14 +53,15 @@ export function delay(milliseconds, func, scope, ...args) {
 }
 
 export function memoize(func, scope) {
-    const cache = {};
+    // Map avoids collisions with Object.prototype keys (eg. "constructor", "__proto__")
+    const cache = new Map();
 
     return function (...args) {
         const key = String(args);
-        if (!(key in cache)) {
-            cache[key] = call(func, scope, ...args);
+        if (!cache.has(key)) {
+            cache.set(key, call(func, scope, ...args));
         }
-        return cache[key];
+        return cache.get(key);
     };
 }
 
