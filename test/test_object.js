@@ -515,4 +515,17 @@ describe('object', () => {
             test.assertTrue(f(o, 'a'));
         });
     });
+    describe('regressions', () => {
+        it('test keypath set does not overwrite arrays', () => {
+            const o = { list: [{ a: 1 }] };
+            obj.keypath.set(o, 'list.0.a', 2);
+            test.assertEqual(o, { list: [{ a: 2 }] });
+        });
+        it('test encodeParameters encodes keys', () => {
+            test.assertEqual(obj.encodeParameters({ 'a&b=c': 1 }), 'a%26b%3Dc=1');
+        });
+        it('test encodeParameters ignores inherited keys', () => {
+            test.assertEqual(obj.encodeParameters({ a: 1 }, ['a', 'toString']), 'a=1');
+        });
+    });
 });

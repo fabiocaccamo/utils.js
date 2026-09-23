@@ -129,7 +129,7 @@ export function encodeParameters(obj, objKeysFilter) {
         key = objKeys[i];
         if (hasOwnProp(objClean, key)) {
             val = objClean[key];
-            keyval.push(`${key}=${encodeURIComponent(val)}`);
+            keyval.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
         }
     }
 
@@ -215,10 +215,11 @@ export const keypath = {
             if (key === '__proto__' || key === 'constructor') {
                 break;
             }
-            if (!isObject(cursor[key])) {
-                cursor[key] = {};
-            }
             if (i < j - 1) {
+                // create missing containers, but never overwrite existing arrays
+                if (!isObject(cursor[key]) && !isArray(cursor[key])) {
+                    cursor[key] = {};
+                }
                 cursor = cursor[key];
             } else {
                 cursor[key] = value;
@@ -266,6 +267,7 @@ export function search(objs, filter) {
             val = filter[key];
             if (!equals(obj[key], val)) {
                 res = null;
+                break;
             }
         }
         if (res) {
