@@ -10,9 +10,12 @@ export function decode(str) {
     return output;
 }
 
-export function decodeById(id) {
-    const el = document?.getElementById(id);
-    return el ? decode(el.textContent) : null;
+export function decodeById(id, defaultValue = null) {
+    if (typeof document === 'undefined') {
+        return defaultValue;
+    }
+    const el = document.getElementById(id);
+    return el ? decode(el.textContent) : defaultValue;
 }
 
 export function encode(obj) {

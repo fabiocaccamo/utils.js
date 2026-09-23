@@ -111,4 +111,33 @@ describe('json', () => {
             );
         });
     });
+    describe('regressions', () => {
+        it('test decodeById outside of browser', () => {
+            test.assertNull(utils.json.decodeById('data'));
+        });
+        it('test decodeById with default value', () => {
+            test.assertEqual(utils.json.decodeById('data', {}), {});
+            test.assertEqual(utils.json.decodeById('data', []), []);
+        });
+        it('test decodeById with element', () => {
+            const hadDocument = 'document' in globalThis;
+            const doc = globalThis.document;
+            globalThis.document = {
+                getElementById: (id) =>
+                    id === 'data' ? { textContent: '{"a":1}' } : null,
+            };
+            try {
+                test.assertEqual(utils.json.decodeById('data', {}), { a: 1 });
+                test.assertEqual(utils.json.decodeById('missing', { b: 2 }), { b: 2 });
+                test.assertNull(utils.json.decodeById('missing'));
+                test.assertEqual(utils.object.decodeJSONById('missing', 0), 0);
+            } finally {
+                if (hadDocument) {
+                    globalThis.document = doc;
+                } else {
+                    delete globalThis.document;
+                }
+            }
+        });
+    });
 });
