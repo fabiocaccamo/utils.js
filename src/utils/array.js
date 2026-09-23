@@ -111,6 +111,7 @@ export function contains(list, value, ...otherValues) {
         for (let k = 0, m = list.length; k < m; k++) {
             if (objectEquals(list[k], val)) {
                 valFound = true;
+                break;
             }
         }
         if (!valFound) {
@@ -182,7 +183,7 @@ export function max(list, callback) {
             }
             return Math.max(a, b);
         },
-        Number.MIN_VALUE
+        -Infinity
     );
 }
 
@@ -195,7 +196,7 @@ export function min(list, callback) {
             }
             return Math.min(a, b);
         },
-        Number.MAX_VALUE
+        Infinity
     );
 }
 
@@ -248,14 +249,12 @@ export function rotate(list, count) {
 }
 
 export function shuffle(list) {
+    // Fisher-Yates shuffle
     const items = list.slice();
     let randomIndex;
-    let randomItems;
-    let sortedItems = list.length;
-    while (sortedItems) {
-        randomIndex = integer(0, --sortedItems);
-        randomItems = items.splice(randomIndex, 1);
-        items.push(...randomItems);
+    for (let i = items.length - 1; i > 0; i--) {
+        randomIndex = integer(0, i);
+        [items[i], items[randomIndex]] = [items[randomIndex], items[i]];
     }
     return items;
 }
@@ -288,15 +287,19 @@ export function sort(list, key) {
         const bValIsNum = isNumber(bVal);
 
         if (aValIsNum && bValIsNum) {
-            return aVal <= bVal ? -1 : 1;
+            return aVal - bVal;
         } else if (aValIsNum) {
             return -1;
         } else if (bValIsNum) {
             return 1;
+        } else if (aVal === undefined || bVal === undefined) {
+            // same as the default sort: undefined values go last
+            return (aVal === undefined) - (bVal === undefined);
         } else {
-            const ab = [aVal, bVal];
-            ab.sort();
-            return ab.indexOf(aVal) <= ab.indexOf(bVal) ? -1 : 1;
+            // same as the default sort: compare string values
+            const aStr = String(aVal);
+            const bStr = String(bVal);
+            return aStr < bStr ? -1 : aStr > bStr ? 1 : 0;
         }
     };
 
@@ -337,9 +340,9 @@ export function unzip(list) {
 
 export function zip(list1, list2, ...otherLists) {
     const lists = [list1, list2].concat(otherLists);
-    let listLength = 0;
+    let listLength = Infinity;
     lists.forEach((item) => {
-        listLength = listLength === 0 ? item.length : Math.min(listLength, item.length);
+        listLength = Math.min(listLength, item.length);
     });
     const list = [];
     for (let i = 0; i < listLength; i++) {

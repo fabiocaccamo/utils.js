@@ -1377,4 +1377,38 @@ describe('array', () => {
             test.assertEqual(z(...u(zipped)), zipped);
         });
     });
+    describe('regressions', () => {
+        it('test max with negative numbers', () => {
+            test.assertEqual(arr.max([-5, -2, -9]), -2);
+        });
+        it('test min with numbers greater than max value', () => {
+            test.assertEqual(arr.min([Infinity]), Infinity);
+        });
+        it('test zip with empty list', () => {
+            test.assertEqual(arr.zip([], [1, 2]), []);
+            test.assertEqual(arr.zip([1, 2], []), []);
+        });
+        it('test sort keeps the order of equal items', () => {
+            const a = [
+                { k: 1, id: 'a' },
+                { k: 0, id: 'b' },
+                { k: 1, id: 'c' },
+                { k: 0, id: 'd' },
+            ];
+            const r = arr.sort(a, 'k').map((item) => item.id);
+            test.assertEqual(r, ['b', 'd', 'a', 'c']);
+        });
+        it('test sort strings and undefined', () => {
+            test.assertEqual(arr.sort(['b', undefined, 'a', 'c']), [
+                'a',
+                'b',
+                'c',
+                undefined,
+            ]);
+        });
+        it('test shuffle keeps all items', () => {
+            const a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+            test.assertEqual(arr.shuffle(a).sort(), a);
+        });
+    });
 });
