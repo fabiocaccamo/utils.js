@@ -42,7 +42,7 @@ describe('url', () => {
         });
         it('test invalid param against params', () => {
             s = 'http://localhost:8000/?page=16&code=0123456789&';
-            test.assertEqual(f(s, 'status'), undefined);
+            test.assertNull(f(s, 'status'));
         });
         it('test invalid param against params with default value', () => {
             s = 'http://localhost:8000/?page=16&code=0123456789&';
@@ -50,7 +50,7 @@ describe('url', () => {
         });
         it('test invalid param against no params ', () => {
             s = 'http://localhost:8000/';
-            test.assertEqual(f(s, 'page'), undefined);
+            test.assertNull(f(s, 'page'));
         });
         it('test invalid param against no params with default value', () => {
             s = 'http://localhost:8000/';
@@ -69,11 +69,12 @@ describe('url', () => {
             test.assertEqual(f(s, 'ok'), '');
         });
         it('test empty param with default value', () => {
+            // the param exists, so the default value is not used
             s = 'http://localhost:8000/?page=&code=&status=&ok=';
-            test.assertEqual(f(s, 'page', 'ok'), 'ok');
-            test.assertEqual(f(s, 'code', 'ok'), 'ok');
-            test.assertEqual(f(s, 'status', 'ok'), 'ok');
-            test.assertEqual(f(s, 'ok', 'ok'), 'ok');
+            test.assertEqual(f(s, 'page', 'ok'), '');
+            test.assertEqual(f(s, 'code', 'ok'), '');
+            test.assertEqual(f(s, 'status', 'ok'), '');
+            test.assertEqual(f(s, 'ok', 'ok'), '');
         });
         it('test empty param (only name)', () => {
             s = 'http://localhost:8000/?page&code&status&ok';
@@ -83,11 +84,31 @@ describe('url', () => {
             test.assertEqual(f(s, 'ok'), '');
         });
         it('test empty param (only name) with default value', () => {
+            // the param exists, so the default value is not used
             s = 'http://localhost:8000/?page&code&status&ok';
-            test.assertEqual(f(s, 'page', 'ok'), 'ok');
-            test.assertEqual(f(s, 'code', 'ok'), 'ok');
-            test.assertEqual(f(s, 'status', 'ok'), 'ok');
-            test.assertEqual(f(s, 'ok', 'ok'), 'ok');
+            test.assertEqual(f(s, 'page', 'ok'), '');
+            test.assertEqual(f(s, 'code', 'ok'), '');
+            test.assertEqual(f(s, 'status', 'ok'), '');
+            test.assertEqual(f(s, 'ok', 'ok'), '');
+        });
+        it('test same behavior of URLSearchParams', () => {
+            const cases = [
+                ['https://x.com/?q=a+b', 'q'],
+                ['https://x.com/?q=a%20b', 'q'],
+                ['https://x.com/?q=100%', 'q'],
+                ['https://x.com/?a.b=1', 'a.b'],
+                ['https://x.com/?tags[]=1', 'tags[]'],
+                ['https://x.com/?my%20key=1', 'my key'],
+                ['https://x.com/?a=1&a=2', 'a'],
+                ['https://x.com/?a=', 'a'],
+                ['https://x.com/?a', 'a'],
+                ['https://x.com/?b=1', 'a'],
+                ['https://x.com/?a=1#b=2', 'b'],
+                ['https://x.com/?a=x=y', 'a'],
+            ];
+            cases.forEach(([u, name]) => {
+                test.assertEqual(f(u, name), new URL(u).searchParams.get(name));
+            });
         });
     });
     describe('getParameters', () => {
@@ -252,12 +273,37 @@ describe('url', () => {
         });
     });
     describe('regressions', () => {
+        it('test getParameters with any key', () => {
+            test.assertEqual(
+                url.getParameters('https://x.com/?tags[]=1&a.b=2&my%20key=3'),
+                {
+                    'tags[]': '1',
+                    'a.b': '2',
+                    'my key': '3',
+                }
+            );
+        });
+        it('test getParameters with repeated param returns the first value', () => {
+            test.assertEqual(url.getParameters('https://x.com/?a=1&a=2'), { a: '1' });
+        });
+        it('test getParametersList keeps repeated params', () => {
+            test.assertEqual(url.getParametersList('https://x.com/?a=1&a=2&b=a+b'), [
+                { key: 'a', value: '1' },
+                { key: 'a', value: '2' },
+                { key: 'b', value: 'a b' },
+            ]);
+        });
+        it('test getParameters with __proto__ key', () => {
+            const params = url.getParameters('https://x.com/?__proto__=1');
+            test.assertTrue(Object.prototype.hasOwnProperty.call(params, '__proto__'));
+            test.assertEqual(Object.getPrototypeOf(params), Object.prototype);
+        });
         it('test getParameters with malformed uri sequence', () => {
             test.assertEqual(url.getParameters('https://x.com/?q=100%'), { q: '100%' });
         });
         it('test getParameterByName and hasParameter with inherited keys', () => {
             const u = 'https://x.com/?a=1';
-            test.assertUndefined(url.getParameterByName(u, 'constructor'));
+            test.assertNull(url.getParameterByName(u, 'constructor'));
             test.assertFalse(url.hasParameter(u, 'toString'));
         });
     });

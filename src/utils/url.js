@@ -15,20 +15,16 @@ export function getDomain(url = getURL(), level) {
     return domainName;
 }
 
-function decodeParameter(value) {
-    try {
-        return decodeURIComponent(value);
-    } catch (e) {
-        // malformed URI sequence, eg. "100%"
-        return value;
-    }
+function getSearchParams(url) {
+    // same parsing of URL.searchParams: keys and values are decoded, '+' is decoded as space
+    return new URLSearchParams(getParametersString(url));
 }
 
-export function getParameterByName(url, name, defaultValue) {
-    const paramsDict = getParameters(url);
-    return hasOwnProp(paramsDict, name)
-        ? paramsDict[name] || defaultValue || ''
-        : defaultValue;
+export function getParameterByName(url, name, defaultValue = null) {
+    // same behavior of URLSearchParams.get: first value of a repeated parameter,
+    // empty string for a parameter without value, defaultValue only if missing
+    const params = getSearchParams(url);
+    return params.has(name) ? params.get(name) : defaultValue;
 }
 
 export function getParameters(url) {
@@ -36,27 +32,26 @@ export function getParameters(url) {
 }
 
 export function getParametersDict(url) {
-    const paramsList = getParametersList(url);
-    let param;
+    // first value of a repeated parameter, same as getParameterByName
     const paramsDict = {};
-    for (let i = 0, j = paramsList.length; i < j; i++) {
-        param = paramsList[i];
-        paramsDict[param['key']] = param['value'];
+    for (const [key, value] of getSearchParams(url)) {
+        if (!hasOwnProp(paramsDict, key)) {
+            // defineProperty stores keys like "__proto__" as own properties
+            Object.defineProperty(paramsDict, key, {
+                value,
+                enumerable: true,
+                writable: true,
+                configurable: true,
+            });
+        }
     }
     return paramsDict;
 }
 
 export function getParametersList(url) {
-    const paramsString = getParametersString(url);
     const paramsList = [];
-    const paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
-    let paramMatch = paramsRE.exec(paramsString);
-    while (paramMatch) {
-        paramsList.push({
-            key: paramMatch[2],
-            value: decodeParameter(paramMatch[4] || ''),
-        });
-        paramMatch = paramsRE.exec(paramsString);
+    for (const [key, value] of getSearchParams(url)) {
+        paramsList.push({ key, value });
     }
     return paramsList;
 }
@@ -78,7 +73,7 @@ export function getURL() {
 }
 
 export function hasParameter(url, name) {
-    return hasOwnProp(getParametersDict(url), name);
+    return getSearchParams(url).has(name);
 }
 
 export function isFile(url) {
