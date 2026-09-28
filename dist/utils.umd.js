@@ -611,20 +611,16 @@
         return domainName;
     }
 
-    function decodeParameter(value) {
-        try {
-            return decodeURIComponent(value);
-        } catch (e) {
-            // malformed URI sequence, eg. "100%"
-            return value;
-        }
+    function getSearchParams(url) {
+        // same parsing of URL.searchParams: keys and values are decoded, '+' is decoded as space
+        return new URLSearchParams(getParametersString(url));
     }
 
-    function getParameterByName(url, name, defaultValue) {
-        const paramsDict = getParameters(url);
-        return hasOwnProp(paramsDict, name)
-            ? paramsDict[name] || defaultValue || ''
-            : defaultValue;
+    function getParameterByName(url, name, defaultValue = null) {
+        // same behavior of URLSearchParams.get: first value of a repeated parameter,
+        // empty string for a parameter without value, defaultValue only if missing
+        const params = getSearchParams(url);
+        return params.has(name) ? params.get(name) : defaultValue;
     }
 
     function getParameters(url) {
@@ -632,27 +628,26 @@
     }
 
     function getParametersDict(url) {
-        const paramsList = getParametersList(url);
-        let param;
+        // first value of a repeated parameter, same as getParameterByName
         const paramsDict = {};
-        for (let i = 0, j = paramsList.length; i < j; i++) {
-            param = paramsList[i];
-            paramsDict[param['key']] = param['value'];
+        for (const [key, value] of getSearchParams(url)) {
+            if (!hasOwnProp(paramsDict, key)) {
+                // defineProperty stores keys like "__proto__" as own properties
+                Object.defineProperty(paramsDict, key, {
+                    value,
+                    enumerable: true,
+                    writable: true,
+                    configurable: true,
+                });
+            }
         }
         return paramsDict;
     }
 
     function getParametersList(url) {
-        const paramsString = getParametersString(url);
         const paramsList = [];
-        const paramsRE = /(([\w\-]+){1}(\=([^\&\n\r\t]*){1})?)/g;
-        let paramMatch = paramsRE.exec(paramsString);
-        while (paramMatch) {
-            paramsList.push({
-                key: paramMatch[2],
-                value: decodeParameter(paramMatch[4] || ''),
-            });
-            paramMatch = paramsRE.exec(paramsString);
+        for (const [key, value] of getSearchParams(url)) {
+            paramsList.push({ key, value });
         }
         return paramsList;
     }
@@ -674,7 +669,7 @@
     }
 
     function hasParameter(url, name) {
-        return hasOwnProp(getParametersDict(url), name);
+        return getSearchParams(url).has(name);
     }
 
     function isFile(url) {
@@ -1084,6 +1079,34 @@
         return str.substring(str.length - search.length, str.length) === search;
     }
 
+    let hashEncoder;
+
+    /**
+     * Returns the FNV-1a 32-bit hash of a value, as 8 hex chars.
+     *
+     * The hash is computed over the UTF-8 bytes, so the output is the same of the standard
+     * FNV-1a implementations in other languages (eg. Python, Go, PHP).
+     *
+     * It is fast and not cryptographic: use it for cache keys, stable ids or bucketing,
+     * never for passwords, tokens or integrity checks (use `crypto.subtle.digest` instead).
+     * With 32 bits, collisions are likely with many values (about 50% with 77000 values).
+     *
+     * @param {*} value The value to hash, converted with `String(value ?? '')`:
+     * `null`, `undefined` and `''` have the same hash, and objects should be serialized first.
+     * @returns {string} The hash, eg. `hash('foobar')` -> `'bf9cf968'`.
+     */
+    function hash(value) {
+        // lazy instance, to keep the module free of side effects at import time
+        hashEncoder = hashEncoder || new TextEncoder();
+        const bytes = hashEncoder.encode(String(value ?? ''));
+        let h = 0x811c9dc5;
+        for (let i = 0, j = bytes.length; i < j; i++) {
+            h ^= bytes[i];
+            h = Math.imul(h, 0x01000193);
+        }
+        return (h >>> 0).toString(16).padStart(8, '0');
+    }
+
     function icontains(str, occurrence) {
         return contains$1(str.toLowerCase(), occurrence.toLowerCase());
     }
@@ -1408,6 +1431,7 @@
     var StringUtil = {
         contains: contains$1,
         endsWith,
+        hash,
         icontains,
         levenshteinDistance,
         levenshteinSimilarity,
