@@ -28,6 +28,34 @@ describe('string', () => {
             test.assertFalse(f(s, 'culpa'));
         });
     });
+    describe('hash', () => {
+        const f = string.hash;
+        it('test standard FNV-1a 32-bit vectors', () => {
+            test.assertEqual(f(''), '811c9dc5');
+            test.assertEqual(f('a'), 'e40c292c');
+            test.assertEqual(f('foobar'), 'bf9cf968');
+            test.assertEqual(f('hello world'), 'd58b3fa7');
+        });
+        it('test non ascii chars are hashed as utf-8 bytes', () => {
+            test.assertEqual(f('é'), '1e9de8c1');
+            test.assertEqual(f('Straße'), '1dc32e38');
+            test.assertEqual(f('Москва'), 'feb471b1');
+            test.assertEqual(f('😀'), '33a29608');
+        });
+        it('test lone surrogate is hashed as replacement char', () => {
+            test.assertEqual(f('\ud800'), '03479c4a');
+        });
+        it('test non string values', () => {
+            test.assertEqual(f(null), '811c9dc5');
+            test.assertEqual(f(undefined), '811c9dc5');
+            test.assertEqual(f(123), f('123'));
+        });
+        it('test output is always 8 hex chars', () => {
+            for (let i = 0; i < 1000; i++) {
+                test.assertTrue(/^[0-9a-f]{8}$/.test(f(i)));
+            }
+        });
+    });
     describe('icontains', () => {
         const f = string.icontains;
         const s =

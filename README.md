@@ -568,6 +568,8 @@ Functions are not exported at root level because some names are shared by differ
 
 -   `endsWith`
 
+-   `hash`
+
 -   `icontains`
 
 -   `levenshteinDistance`

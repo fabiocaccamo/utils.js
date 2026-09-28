@@ -14,6 +14,34 @@ export function endsWith(str, search) {
     return str.substring(str.length - search.length, str.length) === search;
 }
 
+let hashEncoder;
+
+/**
+ * Returns the FNV-1a 32-bit hash of a value, as 8 hex chars.
+ *
+ * The hash is computed over the UTF-8 bytes, so the output is the same of the standard
+ * FNV-1a implementations in other languages (eg. Python, Go, PHP).
+ *
+ * It is fast and not cryptographic: use it for cache keys, stable ids or bucketing,
+ * never for passwords, tokens or integrity checks (use `crypto.subtle.digest` instead).
+ * With 32 bits, collisions are likely with many values (about 50% with 77000 values).
+ *
+ * @param {*} value The value to hash, converted with `String(value ?? '')`:
+ * `null`, `undefined` and `''` have the same hash, and objects should be serialized first.
+ * @returns {string} The hash, eg. `hash('foobar')` -> `'bf9cf968'`.
+ */
+export function hash(value) {
+    // lazy instance, to keep the module free of side effects at import time
+    hashEncoder = hashEncoder || new TextEncoder();
+    const bytes = hashEncoder.encode(String(value ?? ''));
+    let h = 0x811c9dc5;
+    for (let i = 0, j = bytes.length; i < j; i++) {
+        h ^= bytes[i];
+        h = Math.imul(h, 0x01000193);
+    }
+    return (h >>> 0).toString(16).padStart(8, '0');
+}
+
 export function icontains(str, occurrence) {
     return contains(str.toLowerCase(), occurrence.toLowerCase());
 }
@@ -338,6 +366,7 @@ export function trimRight(str) {
 export default {
     contains,
     endsWith,
+    hash,
     icontains,
     levenshteinDistance,
     levenshteinSimilarity,
