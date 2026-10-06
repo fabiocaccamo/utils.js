@@ -119,6 +119,90 @@ describe('point', () => {
             test.assertEqual(r, { x: 25, y: 550 });
         });
     });
+    describe('isInRect', () => {
+        const f = point.isInRect;
+        const points = [
+            { x: 10, y: 20 },
+            { x: 50, y: 0 },
+            { x: 30, y: 60 },
+        ];
+        it('test with points inside', () => {
+            test.assertTrue(f({ x: 30, y: 30 }, points));
+            test.assertTrue(f({ x: 30, y: 30 }, point.rect(points)));
+        });
+        it('test with points outside', () => {
+            test.assertFalse(f({ x: 5, y: 30 }, points));
+            test.assertFalse(f({ x: 30, y: 70 }, points));
+            test.assertFalse(f({ x: 5, y: 30 }, point.rect(points)));
+            test.assertFalse(f({ x: 30, y: 70 }, point.rect(points)));
+        });
+        it('test with points on edges and corners', () => {
+            test.assertTrue(f({ x: 10, y: 30 }, points));
+            test.assertTrue(f({ x: 50, y: 60 }, points));
+            test.assertTrue(f({ x: 10, y: 0 }, point.rect(points)));
+        });
+    });
+    describe('isInTriangle', () => {
+        const f = point.isInTriangle;
+        const points = [
+            { x: 0, y: 0 },
+            { x: 100, y: 0 },
+            { x: 0, y: 100 },
+        ];
+        it('test with points inside', () => {
+            test.assertTrue(f({ x: 25, y: 25 }, points));
+        });
+        it('test with points outside', () => {
+            test.assertFalse(f({ x: 75, y: 75 }, points));
+            test.assertFalse(f({ x: -1, y: 50 }, points));
+        });
+        it('test with points on edges and vertices', () => {
+            test.assertTrue(f({ x: 50, y: 50 }, points));
+            test.assertTrue(f({ x: 0, y: 50 }, points));
+            test.assertTrue(f({ x: 100, y: 0 }, points));
+        });
+        it('test with vertices in reverse order', () => {
+            const pointsReversed = points.slice().reverse();
+            test.assertTrue(f({ x: 25, y: 25 }, pointsReversed));
+            test.assertFalse(f({ x: 75, y: 75 }, pointsReversed));
+        });
+    });
+    describe('isOnSegment', () => {
+        const f = point.isOnSegment;
+        const points = [
+            { x: 0, y: 0 },
+            { x: 100, y: 50 },
+        ];
+        it('test with points on segment', () => {
+            test.assertTrue(f({ x: 50, y: 25 }, points));
+            test.assertTrue(f({ x: 0, y: 0 }, points));
+            test.assertTrue(f({ x: 100, y: 50 }, points));
+        });
+        it('test with points on line but outside segment', () => {
+            test.assertFalse(f({ x: -50, y: -25 }, points));
+            test.assertFalse(f({ x: 200, y: 100 }, points));
+        });
+        it('test with points outside line', () => {
+            test.assertFalse(f({ x: 50, y: 26 }, points));
+        });
+        it('test with tolerance', () => {
+            test.assertTrue(f({ x: 50, y: 26 }, points, 1));
+            test.assertTrue(f({ x: 101, y: 50 }, points, 1));
+            test.assertFalse(f({ x: 50, y: 28 }, points, 1));
+        });
+        it('test with computed points', () => {
+            const p = point.rotate(point.interpolate(points[0], points[1], 0.3), 0);
+            test.assertTrue(f(point.rotate(p, 360, points[0]), points));
+        });
+        it('test with degenerate segment', () => {
+            const pointsDegenerate = [
+                { x: 10, y: 10 },
+                { x: 10, y: 10 },
+            ];
+            test.assertTrue(f({ x: 10, y: 10 }, pointsDegenerate));
+            test.assertFalse(f({ x: 11, y: 10 }, pointsDegenerate));
+        });
+    });
     describe('length', () => {
         const f = point.length;
         it('test simple', () => {

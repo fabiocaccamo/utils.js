@@ -380,6 +380,12 @@ Functions are not exported at root level because some names are shared by differ
 
 -   `interpolate`
 
+-   `isInRect`
+
+-   `isInTriangle`
+
+-   `isOnSegment`
+
 -   `length`
 
 -   `magnitude`
