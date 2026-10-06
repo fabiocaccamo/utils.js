@@ -3374,6 +3374,40 @@
         };
     }
 
+    function isInRect(p, rectOrPoints) {
+        // accepts both an array of points and a rect object returned by the rect function
+        const r = isArray(rectOrPoints) ? rect(rectOrPoints) : rectOrPoints;
+        return (
+            p.x >= r.topLeft.x &&
+            p.x <= r.bottomRight.x &&
+            p.y >= r.topLeft.y &&
+            p.y <= r.bottomRight.y
+        );
+    }
+
+    function isInTriangle(p, points) {
+        // the point is inside (or on the edges of) the triangle when it lies on
+        // the same side of all three edges
+        const [a, b, c] = points;
+        const crossAB = cross(subtract(b, a), subtract(p, a));
+        const crossBC = cross(subtract(c, b), subtract(p, b));
+        const crossCA = cross(subtract(a, c), subtract(p, c));
+        const hasNegative = crossAB < 0 || crossBC < 0 || crossCA < 0;
+        const hasPositive = crossAB > 0 || crossBC > 0 || crossCA > 0;
+        return !(hasNegative && hasPositive);
+    }
+
+    function isOnSegment(p, points, tolerance) {
+        const [a, b] = points;
+        const ab = subtract(b, a);
+        const ap = subtract(p, a);
+        const abLengthSq = dot(ab, ab);
+        // when a and b coincide the segment is a single point
+        const t = abLengthSq > 0 ? Math.max(0, Math.min(1, dot(ap, ab) / abLengthSq)) : 0;
+        const closest = interpolate(a, b, t);
+        return equals$3(distance(p, closest), 0, tolerance);
+    }
+
     function length(p) {
         return distance(p, { x: 0, y: 0 });
     }
@@ -3455,6 +3489,9 @@
         dot,
         equals,
         interpolate,
+        isInRect,
+        isInTriangle,
+        isOnSegment,
         length,
         magnitude,
         project,
@@ -3854,7 +3891,7 @@
 
     var XMLUtil = { removeNamespaces };
 
-    const version = '1.3.0';
+    const version = '1.4.0';
 
     const utils = {
         array: ArrayUtil,

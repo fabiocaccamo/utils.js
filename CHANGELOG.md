@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0](https://github.com/fabiocaccamo/utils.js/releases/tag/1.4.0) - 2026-10-06
+-   Add `utils.string.hash` function (FNV-1a 32-bit, not cryptographic).
+-   Add `utils.geom.point` `isInRect`, `isInTriangle` and `isOnSegment` functions.
+-   Refactor `utils.url` functions to use `URLSearchParams`. **Output may differ from previous versions**: any key is supported, `+` is decoded as space, repeated parameters return the first value, `getParameterByName` returns `''` for an empty parameter and `null` when missing without a default value.
+
 ## [1.3.0](https://github.com/fabiocaccamo/utils.js/releases/tag/1.3.0) - 2026-09-23
 -   Make the library tree-shakeable: add named exports, module namespaces and subpath exports (eg. `import { debounce } from '@fabiocaccamo/utils.js/func'`).
 -   Fix `exports` targets in `package.json` and `require` in Node.js (add `dist/utils.cjs` build).
